@@ -12,5 +12,7 @@ admin.site.index_title = 'システム管理'
 
 
 urlpatterns = [
+    path('', include('clans.urls')),
+    path('accounts/', include('accounts.urls')),
     path('admin/', admin.site.urls),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
