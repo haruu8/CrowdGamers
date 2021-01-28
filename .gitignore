@@ -1,2 +1,4 @@
 *.env
 django_environment_variable
+
+app/deploy/admin/
