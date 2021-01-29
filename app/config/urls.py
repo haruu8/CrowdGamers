@@ -14,5 +14,6 @@ admin.site.index_title = 'システム管理'
 urlpatterns = [
     path('', include('clans.urls')),
     path('accounts/', include('accounts.urls')),
+    path('accounts/', include('social_django.urls', namespace='social')),
     path('admin/', admin.site.urls),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -5,7 +5,8 @@ from django.contrib.auth.decorators import login_required
 
 
 
+# ユーザーのプロフィール
 class UserDetailView(DetailView):
-    template_name = 'accounts/user_detail.html'
+    template_name = 'accounts/account_detail.html'
 
-user_detail = UserDetailView.as_view()
+account_detail = UserDetailView.as_view()
