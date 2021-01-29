@@ -1,3 +1,5 @@
 from django.contrib import admin
+from .models import Clan, Invite
 
-# Register your models here.
+admin.site.register(Clan)
+admin.site.register(Invite)
