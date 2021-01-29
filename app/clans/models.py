@@ -4,7 +4,6 @@ from django.core.exceptions import ValidationError
 from accounts.models import User
 
 
-
 def user_directory_path(instance, filename):
     # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
     return 'user_{0}/{1}'.format(instance.user.id, filename)
@@ -16,7 +15,8 @@ def user_directory_path(instance, filename):
 class Clan(models.Model):
     class Meta():
         db_table = 't_clan'
-        verbose_name = verbose_name_plural = 'クラン'
+        verbose_name = 'クラン'
+        verbose_name_plural = 'クラン'
 
     def validate_icon_image(fieldfile_obj):
         image_size = fieldfile_obj.file.size
@@ -28,7 +28,7 @@ class Clan(models.Model):
         ('Daily_Activities', '毎日活動'),
     )
 
-    owner = models.OneToOneField(User, on_delete=models.CASCADE, null=False, blank=False)
+    id = models.AutoField(editable=False, primary_key=True)
     name = models.CharField(max_length=100, null=False, blank=False)
     icon = models.ImageField(
         upload_to=user_directory_path,
@@ -50,14 +50,31 @@ class Clan(models.Model):
 
 
 
+""" クランモデル """
+
+class UserClan(models.Model):
+    class Meta():
+        db_table = 't_user_clan'
+        verbose_name = 'ユーザークラン'
+        verbose_name_plural = 'ユーザークラン'
+
+    id = models.AutoField(editable=False, primary_key=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    clan = models.ForeignKey(Clan, on_delete=models.CASCADE)
+    is_owner = models.BooleanField(default=False, editable=False)
+
+
+
 """ 招待モデル """
 
 class Invite(models.Model):
     class Meta():
         db_table = 't_invite'
+        verbose_name = '招待'
         verbose_name = verbose_name_plural = '招待'
 
-    clan = models.OneToOneField(Clan, on_delete=models.CASCADE)
+    id = models.AutoField(editable=False, primary_key=True)
+    clan = models.OneToOneField(UserClan, on_delete=models.CASCADE)
     message = models.CharField(verbose_name='メッセージ', max_length=255, null=True, blank=False)
     invite_url = models.URLField(verbose_name='招待URL', null=False)
     created_at = models.DateTimeField(auto_now_add=True)

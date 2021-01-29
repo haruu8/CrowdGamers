@@ -25,7 +25,6 @@ INSTALLED_APPS = [
     'accounts.apps.AccountsConfig',
     'clans.apps.ClansConfig',
 
-    'django.contrib.sites',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -138,8 +137,8 @@ SITE_ID = 1
 
 # ログイン・ログアウト時のリダイレクト先
 LOGIN_REDIRECT_URL = ''
-ACCOUNT_LOGOUT_REDIRECT_URL = 'account_login'
-LOGIN_URL = 'account_login'
+ACCOUNT_LOGOUT_REDIRECT_URL = 'accounts:account_login'
+LOGIN_URL = 'accounts:account_login'
 
 
 

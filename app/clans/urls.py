@@ -12,4 +12,5 @@ urlpatterns = [
     path('clan/update/<int:pk>/', views.clan_update, name='clan_update'),
     path('clan/delete/<int:pk>/', views.clan_delete, name='clan_delete'),
     path('request/complete/', views.request_complete, name='request_complete'),
+    path('invite/complete/', views.invite_complete, name='invite_complete'),
 ]
