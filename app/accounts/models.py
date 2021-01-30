@@ -98,7 +98,6 @@ class User(AbstractBaseUser, PermissionsMixin):
             FileExtensionValidator(['mp4']),
         ]
     )
-    desired_condition = models.CharField(max_length=255)
     date_joined = models.DateTimeField(_('date joined'), default=timezone.now)
 
     objects = CustomUserManager()

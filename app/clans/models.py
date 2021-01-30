@@ -50,7 +50,7 @@ class Clan(models.Model):
 
 
 
-""" クランモデル """
+""" ユーザーのクランモデル """
 
 class UserClan(models.Model):
     class Meta():
@@ -61,7 +61,9 @@ class UserClan(models.Model):
     id = models.AutoField(editable=False, primary_key=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     clan = models.ForeignKey(Clan, on_delete=models.CASCADE)
-    is_owner = models.BooleanField(default=False, editable=False)
+    is_owner = models.BooleanField(default=False)
+    desired_condition = models.CharField(max_length=255)
+    disclosed = models.BooleanField(default=True)
 
 
 
@@ -74,9 +76,29 @@ class Invite(models.Model):
         verbose_name = verbose_name_plural = '招待'
 
     id = models.AutoField(editable=False, primary_key=True)
-    clan = models.OneToOneField(UserClan, on_delete=models.CASCADE)
+    clan = models.ForeignKey(Clan, on_delete=models.CASCADE)
     message = models.CharField(verbose_name='メッセージ', max_length=255, null=True, blank=False)
     invite_url = models.URLField(verbose_name='招待URL', null=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.message
+
+
+
+""" リクエストモデル """
+
+class Apply(models.Model):
+    class Meta():
+        db_table = 't_apply'
+        verbose_name = 'リクエスト'
+        verbose_name = verbose_name_plural = 'リクエスト'
+
+    id = models.AutoField(editable=False, primary_key=True)
+    user = models.ForeignKey(UserClan, on_delete=models.CASCADE)
+    message = models.CharField(verbose_name='志望理由', max_length=255, null=True, blank=False)
+    achievement = models.CharField(verbose_name='実績', max_length=255, null=True, blank=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
