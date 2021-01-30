@@ -45,3 +45,10 @@ class UserDeleteView(OnlyYouMixin, LoginRequiredMixin, DeleteView):
     success_url = reverse_lazy('clans:home')
 
 account_delete = UserDeleteView.as_view()
+
+
+
+class UserSettingsView(LoginRequiredMixin, generic.TemplateView):
+    template_name = 'accounts/account_settings.html'
+
+account_settings = UserSettingsView.as_view()
