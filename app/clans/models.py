@@ -76,6 +76,7 @@ class Invite(models.Model):
         verbose_name = verbose_name_plural = '招待'
 
     id = models.AutoField(editable=False, primary_key=True)
+    user = models.ForeignKey(UserClan, on_delete=models.CASCADE)
     clan = models.ForeignKey(Clan, on_delete=models.CASCADE)
     message = models.CharField(verbose_name='メッセージ', max_length=255, null=True, blank=False)
     invite_url = models.URLField(verbose_name='招待URL', null=False)
@@ -97,6 +98,7 @@ class Apply(models.Model):
 
     id = models.AutoField(editable=False, primary_key=True)
     user = models.ForeignKey(UserClan, on_delete=models.CASCADE)
+    clan = models.ForeignKey(Clan, on_delete=models.CASCADE)
     message = models.CharField(verbose_name='志望理由', max_length=255, null=True, blank=False)
     achievement = models.CharField(verbose_name='実績', max_length=255, null=True, blank=False)
     created_at = models.DateTimeField(auto_now_add=True)
