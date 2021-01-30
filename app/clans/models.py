@@ -50,7 +50,7 @@ class Clan(models.Model):
 
 
 
-""" ユーザーのクランモデル """
+""" クランに関するモデル """
 
 class UserClan(models.Model):
     class Meta():
@@ -59,7 +59,7 @@ class UserClan(models.Model):
         verbose_name_plural = 'ユーザークラン'
 
     id = models.AutoField(editable=False, primary_key=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     clan = models.ForeignKey(Clan, on_delete=models.CASCADE)
     is_owner = models.BooleanField(default=False)
     desired_condition = models.CharField(max_length=255)
