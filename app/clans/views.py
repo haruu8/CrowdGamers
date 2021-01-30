@@ -3,8 +3,8 @@ from django.urls import reverse_lazy
 from django.views.generic import TemplateView, CreateView, ListView, UpdateView, DeleteView
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from .models import Clan, Invite
-from .forms import ClanCreateForm, InviteCreateForm
+from .models import Clan, Invite, Apply
+from .forms import ClanCreateForm, InviteCreateForm, ClanApplyCreateForm
 
 
 
@@ -67,14 +67,28 @@ class ClanDeleteView(LoginRequiredMixin, OnlyYouMixin, DeleteView):
 clan_delete = ClanDeleteView.as_view()
 
 
-class RequestCompleteView(LoginRequiredMixin, generic.TemplateView):
-    template_name = 'clans/request_complete.html'
 
-request_complete = RequestCompleteView.as_view()
+class ClanApplyCreateView(LoginRequiredMixin, CreateView):
+    template_name = 'clans/clan_request_create.html'
+    model = Apply
+    form_class = ClanApplyCreateForm
+    success_url = reverse_lazy('clans:home')
+
+    def form_valid(self, form):
+        return redirect(self.get_success_url())
+
+clan_request_create = ClanApplyCreateView.as_view()
 
 
 
-class InviteCompleteView(LoginRequiredMixin, generic.TemplateView):
-    template_name = 'clans/invite_complete.html'
+class ClanRequestCompleteView(LoginRequiredMixin, generic.TemplateView):
+    template_name = 'clans/clan_request_complete.html'
 
-invite_complete = InviteCompleteView.as_view()
+clan_request_complete = ClanRequestCompleteView.as_view()
+
+
+
+class UserInviteCompleteView(LoginRequiredMixin, generic.TemplateView):
+    template_name = 'clans/user_invite_complete.html'
+
+user_invite_complete = UserInviteCompleteView.as_view()

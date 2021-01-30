@@ -11,6 +11,7 @@ urlpatterns = [
     path('clan/list/', views.clan_list, name='clan_list'),
     path('clan/update/<int:pk>/', views.clan_update, name='clan_update'),
     path('clan/delete/<int:pk>/', views.clan_delete, name='clan_delete'),
-    path('request/complete/', views.request_complete, name='request_complete'),
-    path('invite/complete/', views.invite_complete, name='invite_complete'),
+    path('clan/request/<int:pk>/', views.clan_request, name='clan_request'),
+    path('clan/request/complete/', views.clan_request_complete, name='clan_request_complete'),
+    path('invite/complete/', views.user_invite_complete, name='user_invite_complete'),
 ]

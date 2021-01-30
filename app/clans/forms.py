@@ -1,5 +1,5 @@
 from django import forms
-from .models import Clan, Invite
+from .models import Clan, Invite, Apply
 
 class ClanCreateForm(forms.ModelForm):
 
@@ -111,6 +111,36 @@ class InviteCreateForm(forms.ModelForm):
         self.fields['invite_url'].widget = forms.TextInput(
             attrs={
                 'placeholder': '招待が承認されたら、確認することのできるURLです。Discordの仮入隊用URLなどが良いかもしれません。',
+                'required': True,
+                'class': 'form-control',
+            }
+        )
+
+
+
+class ClanApplyCreateForm(forms.ModelForm):
+    class Meta:
+        model = Apply
+        fields = ('message', 'achievement')
+        labels = {
+            'message': '志望理由',
+            'achievement': '実績',
+        }
+
+    def __init__(self, *args, **kwargs):
+        super(ClanApplyCreateForm, self).__init__(*args, **kwargs)
+        for field in self.fields.values():
+            field.error_messages = {'required':'{fieldname} は必須です。'.format(fieldname=field.label)}
+        self.fields['message'].widget = forms.TextInput(
+            attrs={
+                'placeholder': '志望理由についてお書きください。また、仮入隊時に伝えたいことなどもありましたらお書きください。',
+                'required': True,
+                'class': 'form-control',
+            }
+        )
+        self.fields['achievement'].widget = forms.TextInput(
+            attrs={
+                'placeholder': '実績や、自己PRをお書きください。',
                 'required': True,
                 'class': 'form-control',
             }
