@@ -53,7 +53,7 @@ class Clan(models.Model):
     url = models.URLField(null=True)
     description = models.CharField(max_length=255)
     sponsor = models.CharField(max_length=50)
-    feature = models.IntegerField(verbose_name='特徴', choices=Tag, max_length=50)
+    feature = models.ManyToManyField(Tag, verbose_name='特徴')
     desired_condition = models.CharField(max_length=200)
     disclosed = models.BooleanField(verbose_name='公開・非公開', default=False)
     created_at = models.DateTimeField(auto_now_add=True)
