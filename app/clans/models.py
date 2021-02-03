@@ -10,6 +10,24 @@ def user_directory_path(instance, filename):
 
 
 
+""" タグモデル """
+
+class Tag(models.Model):
+    class Meta():
+        db_table = 't_tag'
+        verbose_name = 'タグ'
+        verbose_name_plural = 'タグ'
+
+    id = models.AutoField(editable=False, primary_key=True)
+    tag = models.CharField(max_length=50, null=False, blank=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.tag
+
+
+
 """ クランモデル """
 
 class Clan(models.Model):
@@ -24,10 +42,6 @@ class Clan(models.Model):
         if image_size > megabyte_limit*1024*1024:
             raise ValidationError("ファイルのサイズを%sMBより小さくしてください" % str(megabyte_limit))
 
-    FEATURE = (
-        ('Daily_Activities', '毎日活動'),
-    )
-
     id = models.AutoField(editable=False, primary_key=True)
     name = models.CharField(max_length=100, null=False, blank=False)
     icon = models.ImageField(
@@ -39,7 +53,7 @@ class Clan(models.Model):
     url = models.URLField(null=True)
     description = models.CharField(max_length=255)
     sponsor = models.CharField(max_length=50)
-    feature = models.CharField(verbose_name='メニュー', choices=FEATURE, max_length=50)
+    feature = models.IntegerField(verbose_name='特徴', choices=Tag, max_length=50)
     desired_condition = models.CharField(max_length=200)
     disclosed = models.BooleanField(verbose_name='公開・非公開', default=False)
     created_at = models.DateTimeField(auto_now_add=True)
