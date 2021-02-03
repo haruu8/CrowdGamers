@@ -88,7 +88,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         verbose_name='年齢',
         validators=[MinValueValidator(1), MaxValueValidator(100)],
         )
-    twitter_url = models.URLField()
+    twitter_url = models.URLField(max_length=255, null=True, blank=True)
     introduction = models.CharField(max_length=140)
     clip = models.FileField(
         blank=True,
@@ -104,7 +104,9 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     EMAIL_FIELD = 'email'
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = []
+
+    # superuser を作るときの必須フィールド
+    REQUIRED_FIELDS = ['age', 'twitter_url']
 
     class Meta:
         verbose_name = _('user')
