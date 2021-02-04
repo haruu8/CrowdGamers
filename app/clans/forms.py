@@ -1,5 +1,5 @@
 from django import forms
-from .models import Clan, Invite, Apply
+from .models import Clan, Invite, Apply, Feature
 
 class ClanCreateForm(forms.ModelForm):
 
@@ -20,8 +20,9 @@ class ClanCreateForm(forms.ModelForm):
 
     name = forms.CharField(required=True,
                             widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'クランの名前を入力してください'}))
-    icon = forms.ImageField(required=False,
-                            widget=forms.Media(attrs={'class': 'form-control'}))
+    icon = forms.ImageField(required=False)
+    # ここも改善
+                            # widget=forms.Media(attrs={'class': 'form-control'}))
     url = forms.URLField(required=False,
                             widget=forms.URLInput(attrs={'class': 'form-control', 'placeholder': 'クランの公式HPのURLを入力してください'}))
     description = forms.CharField(required=True,
@@ -29,12 +30,11 @@ class ClanCreateForm(forms.ModelForm):
     sponsor = forms.CharField(required=False,
                             widget=forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'スポンサー名を入力してください'}))
     # 質問する
-    feature = forms.(required=True,
-                            widget=forms.SelectMultiple(attrs={'class': 'form-control'}))
+    # feature = forms.(required=True,
+    #                         widget=forms.SelectMultiple(attrs={'class': 'form-control'}))
     desired_condition = forms.CharField(required=True,
                             widget=forms.Textarea(attrs={'class': 'form-control', 'placeholder': '募集する選手の希望条件を入力してください'}))
-    # クラス指定方法
-    disclosed = forms.BooleanField(required=True, defalut=False)
+    disclosed = forms.BooleanField(required=True)
 
 
     def __init__(self, *args, **kwargs):
@@ -81,7 +81,7 @@ class InviteCreateForm(forms.ModelForm):
 class ClanApplyCreateForm(forms.ModelForm):
     class Meta:
         model = Apply
-        fields = ('message')
+        fields = ('message',)
         labels = {
             'message': '志望理由',
         }

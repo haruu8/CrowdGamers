@@ -12,11 +12,11 @@ def user_directory_path(instance, filename):
 
 """ タグモデル """
 
-class Tag(models.Model):
+class Feature(models.Model):
     class Meta():
-        db_table = 't_tag'
-        verbose_name = 'タグ'
-        verbose_name_plural = 'タグ'
+        db_table = 't_feature'
+        verbose_name = '特徴'
+        verbose_name_plural = '特徴'
 
     id = models.AutoField(editable=False, primary_key=True)
     tag = models.CharField(max_length=50, null=False, blank=False)
@@ -53,7 +53,7 @@ class Clan(models.Model):
     url = models.URLField(null=True)
     description = models.CharField(max_length=255)
     sponsor = models.CharField(max_length=50)
-    feature = models.ManyToManyField(Tag, verbose_name='特徴')
+    feature = models.ManyToManyField(Feature, verbose_name='特徴')
     desired_condition = models.CharField(max_length=200)
     disclosed = models.BooleanField(verbose_name='公開・非公開', default=False)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -100,7 +100,7 @@ class Invite(models.Model):
     has_read = models.BooleanField(default=False)
 
     # 承認・拒否の選択
-    is_proceeded = models.NullBooleanField()
+    is_proceeded = models.BooleanField(null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -118,8 +118,8 @@ class Apply(models.Model):
         verbose_name = verbose_name_plural = 'リクエスト'
 
     id = models.AutoField(editable=False, primary_key=True)
-    from_user = models.ForeignKey(UserClan, on_delete=models.CASCADE, related_name='send_invitations')
-    to_user = models.ForeignKey(UserClan, on_delete=models.CASCADE, related_name='receive_invitations')
+    from_user = models.ForeignKey(UserClan, on_delete=models.CASCADE, related_name='send_apply')
+    to_user = models.ForeignKey(UserClan, on_delete=models.CASCADE, related_name='receive_apply')
     clan = models.ForeignKey(Clan, on_delete=models.CASCADE)
     message = models.CharField(verbose_name='志望理由', max_length=255, null=True, blank=False)
     created_at = models.DateTimeField(auto_now_add=True)

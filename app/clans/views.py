@@ -32,7 +32,8 @@ class ClanCreateView(LoginRequiredMixin, CreateView):
     success_url = reverse_lazy('clans:home')
 
     def form_valid(self, form):
-        return redirect(self.get_success_url())
+        form.instance.user = self.request.user
+        return super().form_valid(form)
 
 clan_create = ClanCreateView.as_view()
 
@@ -75,7 +76,8 @@ class ClanApplyCreateView(LoginRequiredMixin, CreateView):
     success_url = reverse_lazy('clans:home')
 
     def form_valid(self, form):
-        return redirect(self.get_success_url())
+        form.instance.user = self.request.user
+        return super().form_valid(form)
 
 clan_request_create = ClanApplyCreateView.as_view()
 
