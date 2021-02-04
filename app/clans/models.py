@@ -19,12 +19,12 @@ class Feature(models.Model):
         verbose_name_plural = '特徴'
 
     id = models.AutoField(editable=False, primary_key=True)
-    tag = models.CharField(max_length=50, null=False, blank=False)
+    feature = models.CharField(max_length=50, null=False, blank=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.tag
+        return self.feature
 
 
 

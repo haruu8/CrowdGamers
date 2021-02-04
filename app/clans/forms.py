@@ -21,8 +21,6 @@ class ClanCreateForm(forms.ModelForm):
     name = forms.CharField(required=True,
                             widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'クランの名前を入力してください'}))
     icon = forms.ImageField(required=False)
-    # ここも改善
-                            # widget=forms.Media(attrs={'class': 'form-control'}))
     url = forms.URLField(required=False,
                             widget=forms.URLInput(
                                 attrs={'class': 'form-control', 'placeholder': 'クランの公式HPのURLを入力してください'}))
@@ -30,9 +28,8 @@ class ClanCreateForm(forms.ModelForm):
                             widget=forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'クランについての説明を入力してください'}))
     sponsor = forms.CharField(required=False,
                             widget=forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'スポンサー名を入力してください'}))
-    # 質問する
-    # feature = forms.(required=True,
-    #                         widget=forms.SelectMultiple(attrs={'class': 'form-control'}))
+    feature = forms.MultipleChoiceField(required=False,
+                            widget=forms.CheckboxSelectMultiple(attrs={'class': 'form-control'}))
     desired_condition = forms.CharField(required=True,
                             widget=forms.Textarea(attrs={'class': 'form-control', 'placeholder': '募集する選手の希望条件を入力してください'}))
     disclosed = forms.BooleanField(required=True)

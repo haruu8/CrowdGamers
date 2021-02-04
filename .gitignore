@@ -1,4 +1,5 @@
 *.env
 django_environment_variable
+.vscode
 
 app/deploy/admin/
