@@ -42,8 +42,6 @@ class ClanCreateForm(forms.ModelForm):
         super(ClanCreateForm, self).__init__(*args, **kwargs)
         for field in self.fields.values():
             field.error_messages = {'required':'{fieldname} は必須です。'.format(fieldname=field.label)}
-            # class の指定方法を調べる
-            # field.class = 'form-control'
 
 
 
