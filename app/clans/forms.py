@@ -17,64 +17,32 @@ class ClanCreateForm(forms.ModelForm):
             'desired_condition': '希望条件',
             'disclosed': '公開・非公開',
         }
-    icon = forms.ImageField(required=False)
+
+    name = forms.CharField(required=True,
+                            widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'クランの名前を入力してください'}))
+    icon = forms.ImageField(required=False,
+                            widget=forms.Media(attrs={'class': 'form-control'}))
+    url = forms.URLField(required=False,
+                            widget=forms.URLInput(attrs={'class': 'form-control', 'placeholder': 'クランの公式HPのURLを入力してください'}))
+    description = forms.CharField(required=True,
+                            widget=forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'クランについての説明を入力してください'}))
+    sponsor = forms.CharField(required=False,
+                            widget=forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'スポンサー名を入力してください'}))
+    # 質問する
+    feature = forms.(required=True,
+                            widget=forms.SelectMultiple(attrs={'class': 'form-control'}))
+    desired_condition = forms.CharField(required=True,
+                            widget=forms.Textarea(attrs={'class': 'form-control', 'placeholder': '募集する選手の希望条件を入力してください'}))
+    # クラス指定方法
+    disclosed = forms.BooleanField(required=True, defalut=False)
+
 
     def __init__(self, *args, **kwargs):
         super(ClanCreateForm, self).__init__(*args, **kwargs)
         for field in self.fields.values():
             field.error_messages = {'required':'{fieldname} は必須です。'.format(fieldname=field.label)}
-
-        self.fields['name'].widget = forms.TextInput(
-            attrs={
-                'placeholder': 'クランの名前を入力してください',
-                'required': True,
-                'class': 'form-control',
-            }
-        )
-        self.fields['url'].widget = forms.URLInput(
-            attrs={
-                'placeholder': 'クランの公式HPのURLを表示してください',
-                'required': True,
-                'class': 'form-control',
-            }
-        )
-        self.fields['description'].widget = forms.Textarea(
-            attrs={
-                'placeholder': 'クランについての説明を記入ください。',
-                'required': True,
-                'class': 'form-control',
-            }
-        )
-        self.fields['sponsor'].widget = forms.Textarea(
-            attrs={
-                'placeholder': 'スポンサーがいる場合は、スポンサー名を入力してください。',
-                'required': True,
-                'class': 'form-control',
-            }
-        )
-        # 選択肢の付与方法がわからない
-        self.fields['feature'].widget = forms.SelectMultiple(
-            attrs={
-                'placeholder': 'クランの特徴を選択してください。',
-                'required': True,
-                'class': 'form-control',
-            }
-        )
-        self.fields['desired_condition'].widget = forms.Textarea(
-            attrs={
-                'placeholder': '募集する選手の希望条件を記入して下さい。',
-                'required': True,
-                'class': 'form-control',
-            }
-        )
-        # 自身で html 書く
-        self.fields['disclosed'].widget = forms.NullBooleanSelect(
-            attrs={
-                'placeholder': '希望条件の公開・非公開を選択してください。',
-                'required': True,
-                'class': 'form-control',
-            }
-        )
+            # class の指定方法を調べる
+            # field.class = 'form-control'
 
 
 
