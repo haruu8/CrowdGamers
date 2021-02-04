@@ -2,7 +2,7 @@ from django.db import models
 from django.core.validators import FileExtensionValidator
 from django.core.exceptions import ValidationError
 from accounts.models import User
-
+import uuid
 
 
 def user_directory_path(instance, filename):
@@ -117,7 +117,7 @@ class Apply(models.Model):
         verbose_name = 'リクエスト'
         verbose_name = verbose_name_plural = 'リクエスト'
 
-    id = models.AutoField(editable=False, primary_key=True)
+    apply_id = models.UUIDField(default=uuid.uuid4, primary_key=True)
     from_user = models.ForeignKey(UserClan, on_delete=models.CASCADE, related_name='send_apply')
     to_user = models.ForeignKey(UserClan, on_delete=models.CASCADE, related_name='receive_apply')
     clan = models.ForeignKey(Clan, on_delete=models.CASCADE)
