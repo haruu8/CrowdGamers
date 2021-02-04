@@ -81,6 +81,13 @@ clan_request_create = ClanApplyCreateView.as_view()
 
 
 
+class ClanRequestConfirmView(LoginRequiredMixin, OnlyYouMixin, generic.TemplateView):
+    template_name = 'clans/clan_request_confirm.html'
+
+clan_request_confirm
+
+
+
 class ClanRequestCompleteView(LoginRequiredMixin, generic.TemplateView):
     template_name = 'clans/clan_request_complete.html'
 

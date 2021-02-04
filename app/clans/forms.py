@@ -17,6 +17,7 @@ class ClanCreateForm(forms.ModelForm):
             'desired_condition': '希望条件',
             'disclosed': '公開・非公開',
         }
+    icon = forms.ImageField(required=False)
 
     def __init__(self, *args, **kwargs):
         super(ClanCreateForm, self).__init__(*args, **kwargs)
@@ -30,53 +31,44 @@ class ClanCreateForm(forms.ModelForm):
                 'class': 'form-control',
             }
         )
-        # 画像は clearableFileInput でいいのか
-        self.fields['icon'].widget = forms.ClearableFileInput(
-            attrs={
-                'placeholder': 'アイコン',
-                'required': True,
-                'class': 'form-control',
-            }
-        )
-        # TextInput でいいのか
-        self.fields['url'].widget = forms.TextInput(
+        self.fields['url'].widget = forms.URLInput(
             attrs={
                 'placeholder': 'クランの公式HPのURLを表示してください',
                 'required': True,
                 'class': 'form-control',
             }
         )
-        self.fields['description'].widget = forms.TextInput(
+        self.fields['description'].widget = forms.Textarea(
             attrs={
                 'placeholder': 'クランについての説明を記入ください。',
                 'required': True,
                 'class': 'form-control',
             }
         )
-        self.fields['sponsor'].widget = forms.TextInput(
+        self.fields['sponsor'].widget = forms.Textarea(
             attrs={
                 'placeholder': 'スポンサーがいる場合は、スポンサー名を入力してください。',
                 'required': True,
                 'class': 'form-control',
             }
         )
-        # TextInput でいいのか
-        self.fields['feature'].widget = forms.TextInput(
+        # 選択肢の付与方法がわからない
+        self.fields['feature'].widget = forms.SelectMultiple(
             attrs={
                 'placeholder': 'クランの特徴を選択してください。',
                 'required': True,
                 'class': 'form-control',
             }
         )
-        self.fields['desired_condition'].widget = forms.TextInput(
+        self.fields['desired_condition'].widget = forms.Textarea(
             attrs={
                 'placeholder': '募集する選手の希望条件を記入して下さい。',
                 'required': True,
                 'class': 'form-control',
             }
         )
-        # TextInput でいいのか
-        self.fields['disclosed'].widget = forms.TextInput(
+        # 自身で html 書く
+        self.fields['disclosed'].widget = forms.NullBooleanSelect(
             attrs={
                 'placeholder': '希望条件の公開・非公開を選択してください。',
                 'required': True,
