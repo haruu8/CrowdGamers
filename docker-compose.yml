@@ -2,9 +2,7 @@ version: '3.7'
 
 services:
   django:
-    build: ./app  # Dockerfileがあるディレクトリへのパス
-    # ホストPCのカレントディレクトリとコンテナ内のcodeディレクトリを同期させる
-    # データを永続化させる場合の設定。`host:container`でパスを記載
+    build: ./app
     volumes:
       - ./app/:/code
     ports:
