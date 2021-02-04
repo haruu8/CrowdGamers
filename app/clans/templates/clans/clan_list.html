@@ -4,9 +4,7 @@
 
   {% for object in object_list %}
     <p>名前：{{ object.name }}</p>
-    {% if object.disclosed is True %}
-      <p>希望条件：{{ object.desired_condition }}</p>
-    {% endif %}
+    <a href="{% url 'clans:clan_detail' pk=object.pk %}">詳細</a>
   {% endfor %}
 
 {% endblock %}

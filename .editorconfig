@@ -20,6 +20,7 @@ insert_final_newline = true
 
 [*.html]
 indent_size = 2
+insert_final_newline = false
 
 [*.scss]
 indent_size = 2

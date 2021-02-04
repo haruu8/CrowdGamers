@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
-from django.views.generic import TemplateView, CreateView, ListView, UpdateView, DeleteView
+from django.views.generic import TemplateView, CreateView, DetailView, ListView, UpdateView, DeleteView
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from .models import Clan, Invite, Apply
@@ -44,6 +44,14 @@ class ClanListView(ListView):
     model = Clan
 
 clan_list = ClanListView.as_view()
+
+
+
+class ClanDetailView(DetailView):
+    template_name = 'clans/clan_detail.html'
+    model = Clan
+
+clan_detail = ClanDetailView.as_view()
 
 
 
@@ -94,6 +102,20 @@ class ClanRequestCompleteView(LoginRequiredMixin, generic.TemplateView):
     template_name = 'clans/clan_request_complete.html'
 
 clan_request_complete = ClanRequestCompleteView.as_view()
+
+
+
+class UserInviteCreateView(LoginRequiredMixin, CreateView):
+    template_name = 'clans/user_invite_create.html'
+    model = Invite
+    form_class = InviteCreateForm
+    success_url = reverse_lazy('clans:home')
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+
+user_invite_create = UserInviteCreateView.as_view()
 
 
 
