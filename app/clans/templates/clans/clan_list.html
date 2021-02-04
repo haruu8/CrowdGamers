@@ -3,7 +3,10 @@
 {% block content %}
 
   {% for object in object_list %}
-    <p>{{ object.name }}</p>
+    <p>名前：{{ object.name }}</p>
+    {% if object.disclosed is True %}
+      <p>希望条件：{{ object.desired_condition }}</p>
+    {% endif %}
   {% endfor %}
 
 {% endblock %}
