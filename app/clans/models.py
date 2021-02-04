@@ -76,7 +76,7 @@ class UserClan(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     clan = models.ForeignKey(Clan, on_delete=models.CASCADE)
     is_owner = models.BooleanField(default=False)
-    desired_condition = models.CharField(max_length=255)
+    desired_condition = models.CharField(verbose_name='希望条件', max_length=255)
     disclosed = models.BooleanField(default=True)
 
 
@@ -90,10 +90,17 @@ class Invite(models.Model):
         verbose_name = verbose_name_plural = '招待'
 
     id = models.AutoField(editable=False, primary_key=True)
-    user = models.ForeignKey(UserClan, on_delete=models.CASCADE)
+    from_user = models.ForeignKey(UserClan, on_delete=models.CASCADE, related_name='send_invitations')
+    to_user = models.ForeignKey(UserClan, on_delete=models.CASCADE, related_name='receive_invitations')
     clan = models.ForeignKey(Clan, on_delete=models.CASCADE)
     message = models.CharField(verbose_name='メッセージ', max_length=255, null=True, blank=False)
     invite_url = models.URLField(verbose_name='招待URL', null=False)
+
+    # 既読管理
+    has_read = models.BooleanField(default=False)
+
+    # 承認・拒否の選択
+    is_proceeded = models.NullBooleanField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -111,10 +118,10 @@ class Apply(models.Model):
         verbose_name = verbose_name_plural = 'リクエスト'
 
     id = models.AutoField(editable=False, primary_key=True)
-    user = models.ForeignKey(UserClan, on_delete=models.CASCADE)
+    from_user = models.ForeignKey(UserClan, on_delete=models.CASCADE, related_name='send_invitations')
+    to_user = models.ForeignKey(UserClan, on_delete=models.CASCADE, related_name='receive_invitations')
     clan = models.ForeignKey(Clan, on_delete=models.CASCADE)
     message = models.CharField(verbose_name='志望理由', max_length=255, null=True, blank=False)
-    achievement = models.CharField(verbose_name='実績', max_length=255, null=True, blank=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

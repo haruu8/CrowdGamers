@@ -81,10 +81,9 @@ class InviteCreateForm(forms.ModelForm):
 class ClanApplyCreateForm(forms.ModelForm):
     class Meta:
         model = Apply
-        fields = ('message', 'achievement')
+        fields = ('message')
         labels = {
             'message': '志望理由',
-            'achievement': '実績',
         }
 
     def __init__(self, *args, **kwargs):
@@ -94,13 +93,6 @@ class ClanApplyCreateForm(forms.ModelForm):
         self.fields['message'].widget = forms.TextInput(
             attrs={
                 'placeholder': '志望理由についてお書きください。また、仮入隊時に伝えたいことなどもありましたらお書きください。',
-                'required': True,
-                'class': 'form-control',
-            }
-        )
-        self.fields['achievement'].widget = forms.TextInput(
-            attrs={
-                'placeholder': '実績や、自己PRをお書きください。',
                 'required': True,
                 'class': 'form-control',
             }
