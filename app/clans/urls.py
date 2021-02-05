@@ -19,7 +19,7 @@ urlpatterns = [
     path('clan/request/create/', views.clan_request_create, name='clan_request_create'),
 
     # 招待送信
-    path('invite/create/', views.user_invite_create, name='user_invite_create'),
+    path('invite/input/', views.user_invite_input, name='user_invite_input'),
     path('invite/confirm/', views.user_invite_confirm, name='user_invite_confirm'),
-    path('invite/complete/', views.user_invite_complete, name='user_invite_complete'),
+    path('invite/create/', views.user_invite_create, name='user_invite_create'),
 ]

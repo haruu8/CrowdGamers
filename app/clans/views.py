@@ -119,28 +119,38 @@ clan_request_create = ClanRequestCreateView.as_view()
 
 """ ユーザー招待に関する view """
 
-class UserInviteCreateView(LoginRequiredMixin, CreateView):
-    template_name = 'clans/user_invite_create.html'
-    model = Invite
+class UserInviteInputView(LoginRequiredMixin, generic.FormView):
+    template_name = 'clans/user_invite_input.html'
     form_class = UserInviteCreateForm
-    success_url = reverse_lazy('clans:home')
 
     def form_valid(self, form):
-        form.instance.user = self.request.user
-        return super().form_valid(form)
+        return render(self.request, self.template_name, {'form': form})
 
-user_invite_create = UserInviteCreateView.as_view()
-
+user_invite_input = UserInviteInputView.as_view()
 
 
-class UserInviteConfirmView(LoginRequiredMixin, generic.TemplateView):
+
+class UserInviteConfirmView(LoginRequiredMixin, FormView):
     template_name = 'clans/user_invite_confirm.html'
+    form_class = UserInviteCreateForm
+
+    def form_valid(self, form):
+        return render(self.request, self.template_name, {'form': form})
+
+    def form_invalid(self, form):
+        return render(self.request, 'clans/user_invite_input.html', {'form': form})
 
 user_invite_confirm = UserInviteConfirmView.as_view()
 
 
 
-class UserInviteCompleteView(LoginRequiredMixin, generic.TemplateView):
-    template_name = 'clans/user_invite_complete.html'
+class UserInviteCreateView(LoginRequiredMixin, CreateView):
+    template_name = 'clans/user_invite_input.html'
+    form_class = UserInviteCreateForm
+    success_url = reverse_lazy('clans:home')
 
-user_invite_complete = UserInviteCompleteView.as_view()
+    # エラーページに遷移するのがいいのか
+    def form_invalid(self, form):
+        return render(self.request, self.template_name, {'form': form})
+
+user_invite_create = UserInviteCreateView.as_view()
