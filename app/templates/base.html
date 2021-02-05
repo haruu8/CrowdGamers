@@ -9,7 +9,10 @@
   <link rel='stylesheet' type='text/css' href={% block stylesheet %}{% endblock %}>
 </head>
 <body>
-  base.html
+  <p><a href="{% url 'accounts:account_settings' %}">設定</a></p>
+  <p><a href="{% url 'clans:clan_create' %}">クランを作成する</a></p>
+  <p><a href="{% url 'clans:clan_list' %}">クラン一覧</a></p>
+  <hr>
   {% block content %}{% endblock %}
 </body>
 </html>

@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+  <p>clan_request_input画面</p>
+  <form action="{% url 'clans:clan_request_confirm' %}" method="POST">
+    {{ form.non_field_errors }}
+    {% for field in form %}
+    <div class="form-group">
+        <label for="{{ field.id_for_label }}">{{ field.label_tag }}</label>
+        {{ field }}
+        {{ field.errors }}
+    </div>
+    {% endfor %}
+    {% csrf_token %}
+    <button type="submit">送信</button>
+  </form>
+
+{% endblock %}

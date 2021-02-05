@@ -43,7 +43,7 @@ class ClanCreateForm(forms.ModelForm):
 
 
 
-class InviteCreateForm(forms.ModelForm):
+class UserInviteCreateForm(forms.ModelForm):
     class Meta:
         model = Invite
         fields = ('message', 'invite_url')
@@ -58,14 +58,14 @@ class InviteCreateForm(forms.ModelForm):
                                 widget=forms.URLInput(attrs={'placeholder': '招待が承認された後に会話するDiscordのサーバー招待URLを入力してください', 'render_value': True}))
 
     def __init__(self, *args, **kwargs):
-        super(InviteCreateForm, self).__init__(*args, **kwargs)
+        super(UserInviteCreateForm, self).__init__(*args, **kwargs)
         for field in self.fields.values():
             field.error_messages = {'required':'{fieldname} は必須です。'.format(fieldname=field.label)}
             field.widget.attrs['class'] = 'form-control'
 
 
 
-class ClanApplyCreateForm(forms.ModelForm):
+class ClanRequestCreateForm(forms.ModelForm):
     class Meta:
         model = Apply
         fields = ('message',)
@@ -77,7 +77,7 @@ class ClanApplyCreateForm(forms.ModelForm):
                                 widget=forms.Textarea(attrs={'placeholder': '志望理由を入力してください', 'render_value': True}))
 
     def __init__(self, *args, **kwargs):
-        super(ClanApplyCreateForm, self).__init__(*args, **kwargs)
+        super(ClanRequestCreateForm, self).__init__(*args, **kwargs)
         for field in self.fields.values():
             field.error_messages = {'required':'{fieldname} は必須です。'.format(fieldname=field.label)}
             field.widget.attrs['class'] = 'form-control'
