@@ -19,19 +19,19 @@ class ClanCreateForm(forms.ModelForm):
         }
 
     name = forms.CharField(required=True,
-                            widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'クランの名前を入力してください'}))
+                            widget=forms.TextInput(attrs={'placeholder': 'クランの名前を入力してください', 'render_value': True}))
     icon = forms.ImageField(required=False)
     url = forms.URLField(required=False,
                             widget=forms.URLInput(
-                                attrs={'class': 'form-control', 'placeholder': 'クランの公式HPのURLを入力してください'}))
+                                attrs={'placeholder': 'クランの公式HPのURLを入力してください', 'render_value': True}))
     description = forms.CharField(required=True,
-                            widget=forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'クランについての説明を入力してください'}))
+                            widget=forms.Textarea(attrs={'placeholder': 'クランについての説明を入力してください', 'render_value': True}))
     sponsor = forms.CharField(required=False,
-                            widget=forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'スポンサー名を入力してください'}))
+                            widget=forms.Textarea(attrs={'placeholder': 'スポンサー名を入力してください', 'render_value': True}))
     feature = forms.MultipleChoiceField(required=False,
                             widget=forms.CheckboxSelectMultiple(attrs={'class': 'form-control'}))
     desired_condition = forms.CharField(required=True,
-                            widget=forms.Textarea(attrs={'class': 'form-control', 'placeholder': '募集する選手の希望条件を入力してください'}))
+                            widget=forms.Textarea(attrs={'placeholder': '募集する選手の希望条件を入力してください', 'render_value': True}))
     disclosed = forms.BooleanField(required=True)
 
 
@@ -39,6 +39,7 @@ class ClanCreateForm(forms.ModelForm):
         super(ClanCreateForm, self).__init__(*args, **kwargs)
         for field in self.fields.values():
             field.error_messages = {'required':'{fieldname} は必須です。'.format(fieldname=field.label)}
+            field.widget.attrs['class'] = 'form-control'
 
 
 
@@ -52,14 +53,15 @@ class InviteCreateForm(forms.ModelForm):
         }
 
     message = forms.CharField(required=True,
-                                widget=forms.Textarea(attrs={'class': 'form-control', 'placeholder': '招待理由を入力してください'}))
+                                widget=forms.Textarea(attrs={'placeholder': '招待理由を入力してください', 'render_value': True}))
     invite_url = forms.URLField(required=True,
-                                widget=forms.URLInput(attrs={'class': 'form-control', 'placeholder': '招待が承認された後に会話するDiscordのサーバー招待URLを入力してください'}))
+                                widget=forms.URLInput(attrs={'placeholder': '招待が承認された後に会話するDiscordのサーバー招待URLを入力してください', 'render_value': True}))
 
     def __init__(self, *args, **kwargs):
         super(InviteCreateForm, self).__init__(*args, **kwargs)
         for field in self.fields.values():
             field.error_messages = {'required':'{fieldname} は必須です。'.format(fieldname=field.label)}
+            field.widget.attrs['class'] = 'form-control'
 
 
 
@@ -72,9 +74,10 @@ class ClanApplyCreateForm(forms.ModelForm):
         }
 
     message = forms.CharField(required=True,
-                                widget=forms.Textarea(attrs={'class': 'form-control', 'placeholder': '志望理由を入力してください'}))
+                                widget=forms.Textarea(attrs={'placeholder': '志望理由を入力してください', 'render_value': True}))
 
     def __init__(self, *args, **kwargs):
         super(ClanApplyCreateForm, self).__init__(*args, **kwargs)
         for field in self.fields.values():
             field.error_messages = {'required':'{fieldname} は必須です。'.format(fieldname=field.label)}
+            field.widget.attrs['class'] = 'form-control'
