@@ -24,8 +24,9 @@ home = HomeView.as_view()
 
 
 
-class UserNoticeView(generic.TemplateView):
+class UserNoticeView(TemplateView):
     template_name = 'clans/user_notice.html'
+    # def get_context_data(self, **kwargs):
 
 user_notice = UserNoticeView.as_view()
 

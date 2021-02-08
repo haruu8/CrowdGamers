@@ -30,6 +30,20 @@ class Feature(models.Model):
 
 
 
+class Game(models.Model):
+    class Meta():
+        db_table = 't_game'
+        verbose_name = 'ゲーム'
+        verbose_name_plural = 'ゲーム'
+
+    id = models.AutoField(editable=False, primary_key=True)
+    title = models.CharField(max_length=255, null=False, blank=False)
+
+    def __str__(self):
+        return self.title
+
+
+
 """ クランモデル """
 
 class Clan(models.Model):
@@ -55,6 +69,7 @@ class Clan(models.Model):
     url = models.URLField(null=True)
     description = models.CharField(max_length=255)
     sponsor = models.CharField(max_length=50)
+    game_title = models.ManyToManyField(Game)
     feature = models.ManyToManyField(Feature, verbose_name='特徴')
     desired_condition = models.CharField(max_length=200)
     disclosed = models.BooleanField(verbose_name='公開・非公開', default=False)
@@ -77,6 +92,7 @@ class UserClan(models.Model):
     id = models.AutoField(editable=False, primary_key=True)
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user_clan')
     clan = models.ForeignKey(Clan, on_delete=models.CASCADE)
+    game_title = models.ManyToManyField(Game)
     is_owner = models.BooleanField(default=False)
     desired_condition = models.CharField(verbose_name='希望条件', max_length=255)
     disclosed = models.BooleanField(default=True)
