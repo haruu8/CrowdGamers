@@ -1,5 +1,7 @@
 from django.db import models
 from django.core.mail import send_mail
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 from django.contrib.auth.models import PermissionsMixin, UserManager
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.core.validators import MaxValueValidator, MinValueValidator
@@ -125,3 +127,9 @@ class User(AbstractBaseUser, PermissionsMixin):
         メールアドレスを返す
         """
         return self.email
+
+@receiver(post_save, sender=User)
+def create_user_clan(sender, **kwargs):
+    """ 新ユーザー作成時に空のUserClanも作成 """
+    if kwargs['created']:
+        user_clan = models.clans.UserClan.objects.get_or_create(user=kwargs['instance'])

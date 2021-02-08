@@ -3,6 +3,8 @@ from django.core.validators import FileExtensionValidator
 from django.core.exceptions import ValidationError
 from accounts.models import User
 import uuid
+from config import settings
+
 
 
 def user_directory_path(instance, filename):
@@ -73,7 +75,7 @@ class UserClan(models.Model):
         verbose_name_plural = 'ユーザークラン'
 
     id = models.AutoField(editable=False, primary_key=True)
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user_clan')
     clan = models.ForeignKey(Clan, on_delete=models.CASCADE)
     is_owner = models.BooleanField(default=False)
     desired_condition = models.CharField(verbose_name='希望条件', max_length=255)

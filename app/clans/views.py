@@ -24,7 +24,13 @@ home = HomeView.as_view()
 
 
 
-# クランと同時に招待の作成もする
+class UserNoticeView(generic.TemplateView):
+    template_name = 'clans/user_notice.html'
+
+user_notice = UserNoticeView.as_view()
+
+
+
 class ClanCreateView(LoginRequiredMixin, CreateView):
     template_name = 'clans/clan_create.html'
     model = Clan
@@ -32,6 +38,8 @@ class ClanCreateView(LoginRequiredMixin, CreateView):
     success_url = reverse_lazy('clans:home')
 
     def form_valid(self, form):
+        user = form.save(commit=True)
+        user.is_owner = True
         form.instance.user = self.request.user
         return super().form_valid(form)
 
