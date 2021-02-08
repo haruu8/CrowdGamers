@@ -13,7 +13,7 @@ from django.core.exceptions import ValidationError
 
 
 class CustomUserManager(UserManager):
-    """ユーザーマネージャー"""
+    """ ユーザーマネージャー """
     use_in_migrations = True
 
     def _create_user(self, email, password, **extra_fields):
@@ -48,7 +48,7 @@ def user_directory_path(instance, filename):
 
 
 class User(AbstractBaseUser, PermissionsMixin):
-    """カスタムユーザーモデル."""
+    """ カスタムユーザー """
 
     def validate_icon_image(fieldfile_obj):
         image_size = fieldfile_obj.file.size
@@ -130,6 +130,6 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 @receiver(post_save, sender=User)
 def create_user_clan(sender, **kwargs):
-    """ 新ユーザー作成時に空のUserClanも作成 """
+    # 新規ユーザー作成時に UserClan モデルの空インスタンスを生成
     if kwargs['created']:
         user_clan = models.clans.UserClan.objects.get_or_create(user=kwargs['instance'])
