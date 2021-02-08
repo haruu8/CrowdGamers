@@ -1,8 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
-  <a href="{% url 'accounts:account_delete' pk=account.pk %}">退会</a>
-  <a href="{% url 'accounts:account_detail' pk=account.pk %}">プロフィール</a>
+  <a href="{% url 'accounts:account_delete' pk=object.pk %}">退会</a>
+  <a href="{% url 'accounts:account_detail' pk=object.pk %}">プロフィール</a>
 
 {% endblock %}
