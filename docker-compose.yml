@@ -8,15 +8,15 @@ services:
     ports:
       - 8000:8000
     command: "python manage.py runserver 0.0.0.0:8000"
-    env_file: django_environment_variable/settings.env
+    env_file: environment_variable/settings.env
     depends_on:
       - postgres
 
   postgres:
     image: postgres:11.4
     volumes:
-      - postgres_data:/var/lib/postgresql/data
-    env_file: django_environment_variable/postgres.env
+      - db:/var/lib/postgresql/data
+    env_file: environment_variable/postgres.env
 
 volumes:
-    postgres_data:
+    db:

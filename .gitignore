@@ -1,5 +1,5 @@
 *.env
-django_environment_variable
+environment_variable
 .vscode
 
 app/deploy/admin/
