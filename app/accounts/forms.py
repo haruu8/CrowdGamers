@@ -17,44 +17,18 @@ class UserUpdateForm(forms.ModelForm):
             'clip': 'クリップ'
         }
 
+    name = forms.CharField(required=True,
+                            widget=forms.TextInput(attrs={'placeholder': '名前を入力してください', 'render_value': True}))
+    icon = forms.ImageField(required=False)
+    twitter_url = forms.URLField(required=False,
+                            widget=forms.URLInput(attrs={'placeholder': 'TwitterのURLを入力してください', 'render_value': True}))
+    introduction = forms.CharField(required=False,
+                            widget=forms.Textarea(attrs={'placeholder': '自身について入力してください', 'render_value': True}))
+    clip = forms.FileField(required=False,
+                            widget=forms.ClearableFileInput())
+
     def __init__(self, *args, **kwargs):
         super(UserUpdateForm, self).__init__(*args, **kwargs)
         for field in self.fields.values():
             field.error_messages = {'required':'{fieldname} は必須です。'.format(fieldname=field.label)}
-
-            self.fields['name'].widget = forms.TextInput(
-            attrs={
-                'placeholder': '自身のニックネームを入力',
-                'required': True,
-                'class': 'form-control',
-                }
-            )
-            # 画像は clearableFileInput でいいのか
-            self.fields['icon'].widget = forms.ClearableFileInput(
-                attrs={
-                    'placeholder': 'アイコン',
-                    'required': False,
-                    'class': 'form-control',
-                }
-            )
-            self.fields['twitter_url'].widget = forms.TextInput(
-            attrs={
-                'placeholder': '自身のTwitterのURLを入力してください。',
-                'required': False,
-                'class': 'form-control',
-                }
-            )
-            self.fields['introduction'].widget = forms.TextInput(
-            attrs={
-                'placeholder': '自己紹介を入力してください。',
-                'required': False,
-                'class': 'form-control',
-                }
-            )
-            self.fields['clip'].widget = forms.ClearableFileInput(
-                attrs={
-                    'placeholder': 'クリップ',
-                    'required': False,
-                    'class': 'form-control',
-                }
-            )
+            field.widget.attrs['class'] = 'form-control'

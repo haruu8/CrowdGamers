@@ -22,10 +22,9 @@ class ClanCreateForm(forms.ModelForm):
                             widget=forms.TextInput(attrs={'placeholder': 'クランの名前を入力してください', 'render_value': True}))
     icon = forms.ImageField(required=False)
     url = forms.URLField(required=False,
-                            widget=forms.URLInput(
-                                attrs={'placeholder': 'クランの公式HPのURLを入力してください', 'render_value': True}))
+                            widget=forms.URLInput(attrs={'placeholder': 'クランの公式HPのURLを入力してください', 'render_value': True}))
     description = forms.CharField(required=True,
-                            widget=forms.Textarea(attrs={'placeholder': 'クランについての説明を入力してください', 'render_value': True}))
+                            widget=forms.Textarea(attrs={'placeholder': 'クランについて入力してください', 'render_value': True}))
     sponsor = forms.CharField(required=False,
                             widget=forms.Textarea(attrs={'placeholder': 'スポンサー名を入力してください', 'render_value': True}))
     feature = forms.MultipleChoiceField(required=False,
