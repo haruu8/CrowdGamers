@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views import generic
-from django.views.generic import TemplateView, DetailView, UpdateView, DeleteView
+from django.views.generic import TemplateView, DetailView, UpdateView, DeleteView, ListView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.decorators import login_required
 from .models import User
@@ -45,6 +45,14 @@ class UserDeleteView(OnlyYouMixin, LoginRequiredMixin, DeleteView):
     success_url = reverse_lazy('clans:home')
 
 account_delete = UserDeleteView.as_view()
+
+
+
+class UserListView(ListView):
+    template_name = 'accounts/account_list.html'
+    model = User
+
+account_list = UserListView.as_view()
 
 
 

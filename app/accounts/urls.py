@@ -12,5 +12,6 @@ urlpatterns = [
     path('detail/<int:pk>/', views.account_detail, name='account_detail'),
     path('update/<int:pk>/', views.account_update, name='account_update'),
     path('delete/<int:pk>/', views.account_delete, name='account_delete'),
+    path('list/', views.account_list, name='account_list'),
     path('settings/', views.account_settings, name='account_settings'),
 ]
