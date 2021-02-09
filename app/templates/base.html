@@ -12,6 +12,8 @@
   <p><a href="{% url 'accounts:account_settings' %}">設定</a></p>
   <p><a href="{% url 'clans:clan_create' %}">クランを作成する</a></p>
   <p><a href="{% url 'clans:clan_list' %}">クラン一覧</a></p>
+  <p><a href="{% url 'accounts:account_list' %}">ユーザー一覧</a></p>
+  <p><a href="{% url 'clans:user_notice' pk=object.pk %}">お知らせ</a></p>
   <hr>
   {% block content %}{% endblock %}
 </body>

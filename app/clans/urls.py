@@ -7,7 +7,7 @@ app_name = 'clans'
 
 urlpatterns = [
     path('', views.home, name='home'),
-    path('notice/', views.user_notice, name='user_notice'),
+    path('notice/<int:pk>/', views.user_notice, name='user_notice'),
     path('clan/create/', views.clan_create, name='clan_create'),
     path('clan/list/', views.clan_list, name='clan_list'),
     path('clan/detail/<int:pk>/', views.clan_detail, name='clan_detail'),

@@ -24,9 +24,21 @@ home = HomeView.as_view()
 
 
 
-class UserNoticeView(TemplateView):
+class UserNoticeView(LoginRequiredMixin, TemplateView):
     template_name = 'clans/user_notice.html'
-    # def get_context_data(self, **kwargs):
+
+    def get_context_data(self, **kwargs):
+
+        """
+            01. 現在ログインしているユーザー情報を取得
+            02. 逆参照で招待情報を取得する(クランオーナーの場合はクランにきているリクエストも受信する・created_atで新着順に並べる。)
+            03. 返り値
+        """
+
+        context = super().get_context_data(**kwargs)
+        context['invite'] = Invite.objects.get(user=self.request.user)
+        context['apply'] = Apply.objects.get(user=self.request.user)
+        return context
 
 user_notice = UserNoticeView.as_view()
 
@@ -118,6 +130,10 @@ class ClanRequestCreateView(LoginRequiredMixin, CreateView):
     form_class = ClanRequestCreateForm
     success_url = reverse_lazy('clans:home')
 
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return redirect(self.success_url)
+
     # エラーページに遷移するのがいいのか
     def form_invalid(self, form):
         return render(self.request, self.template_name, {'form': form})
@@ -157,6 +173,10 @@ class UserInviteCreateView(LoginRequiredMixin, CreateView):
     template_name = 'clans/user_invite_input.html'
     form_class = UserInviteCreateForm
     success_url = reverse_lazy('clans:home')
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return redirect(self.success_url)
 
     # エラーページに遷移するのがいいのか
     def form_invalid(self, form):
