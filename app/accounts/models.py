@@ -9,6 +9,8 @@ from django.utils.translation import ugettext_lazy as _
 from django.utils import timezone
 from django.core.validators import FileExtensionValidator, MinLengthValidator, RegexValidator
 from django.core.exceptions import ValidationError
+import uuid
+
 
 
 class CustomUserManager(UserManager):
@@ -69,6 +71,7 @@ class User(AbstractBaseUser, PermissionsMixin):
             'Unselect this instead of deleting accounts.'
         ),
     )
+    user_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     username_regex = RegexValidator(regex=r'[a-xA-Z0-9_]')
     username = models.CharField(
         verbose_name='ユーザーネーム',

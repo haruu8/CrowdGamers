@@ -53,7 +53,7 @@ class UserApplyNoticeView(LoginRequiredMixin, TemplateView):
         context['apply'] = Apply.objects.get(user=self.request.user)
         return context
 
-user_apply_notice = UserApplyNoticeView.as_View()
+user_apply_notice = UserApplyNoticeView.as_view()
 
 
 

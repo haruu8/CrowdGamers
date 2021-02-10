@@ -69,8 +69,8 @@ class Clan(models.Model):
     url = models.URLField(null=True)
     description = models.CharField(max_length=255)
     sponsor = models.CharField(max_length=50)
-    game_title = models.ManyToManyField(Game)
-    feature = models.ManyToManyField(Feature, verbose_name='特徴')
+    game_title = models.ManyToManyField(Game, related_name='clan_game_title')
+    feature = models.ManyToManyField(Feature, verbose_name='特徴', related_name='clan_feature')
     desired_condition = models.CharField(max_length=200)
     disclosed = models.BooleanField(verbose_name='公開・非公開', default=False)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -96,10 +96,10 @@ class UserClan(models.Model):
             raise ValidationError("ファイルのサイズを%sMBより小さくしてください" % str(megabyte_limit))
 
     id = models.AutoField(editable=False, primary_key=True)
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user_clan')
+    user = models.OneToOneField(settings.SOCIAL_AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user_clan')
     is_owner = models.BooleanField(default=False)
     clan = models.ForeignKey(Clan, on_delete=models.CASCADE, related_name='clan')
-    game_title = models.ManyToManyField(Game)
+    game_title = models.ManyToManyField(Game, related_name='user_game_title')
     twitter_url = models.URLField(max_length=255, null=True, blank=True)
     introduction = models.CharField(max_length=140)
     clip = models.FileField(
