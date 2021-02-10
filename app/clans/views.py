@@ -24,23 +24,36 @@ home = HomeView.as_view()
 
 
 
-class UserNoticeView(LoginRequiredMixin, TemplateView):
-    template_name = 'clans/user_notice.html'
+class UserInviteNoticeView(LoginRequiredMixin, TemplateView):
+    template_name = 'clans/user_invite_notice.html'
 
     def get_context_data(self, **kwargs):
 
         """
-            01. 現在ログインしているユーザー情報を取得
-            02. 逆参照で招待情報を取得する(クランオーナーの場合はクランにきているリクエストも受信する・created_atで新着順に並べる。)
-            03. 返り値
+            ユーザーに送った招待が承認・拒否された場合に通知
         """
+        if self.request.user.is_owner == True:
+            context = super().get_context_data(**kwargs)
+            context['invite'] = Invite.objects.get(user=self.request.user)
+            return context
 
+user_invite_notice = UserInviteNoticeView.as_view()
+
+
+
+class UserApplyNoticeView(LoginRequiredMixin, TemplateView):
+    template_name = 'clans/user_apply_notice.html'
+
+    def get_context_data(self, **kwargs):
+
+        """
+            クランに送ったリクエストの承認可否
+        """
         context = super().get_context_data(**kwargs)
-        context['invite'] = Invite.objects.get(user=self.request.user)
         context['apply'] = Apply.objects.get(user=self.request.user)
         return context
 
-user_notice = UserNoticeView.as_view()
+user_apply_notice = UserApplyNoticeView.as_View()
 
 
 

@@ -7,9 +7,8 @@ from django.contrib.auth.base_user import AbstractBaseUser
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.utils.translation import ugettext_lazy as _
 from django.utils import timezone
-from django.core.validators import FileExtensionValidator
+from django.core.validators import FileExtensionValidator, MinLengthValidator, RegexValidator
 from django.core.exceptions import ValidationError
-
 
 
 class CustomUserManager(UserManager):
@@ -56,12 +55,6 @@ class User(AbstractBaseUser, PermissionsMixin):
         if image_size > megabyte_limit*1024*1024:
             raise ValidationError("ファイルのサイズを%sMBより小さくしてください" % str(megabyte_limit))
 
-    def validate_clip_file(fieldfile_obj):
-        file_size = fieldfile_obj.file.size
-        megabyte_limit = 5.0
-        if file_size > megabyte_limit*1024*1024:
-            raise ValidationError("ファイルのサイズを%sMBより小さくしてください" % str(megabyte_limit))
-
     is_staff = models.BooleanField(
         _('staff status'),
         default=False,
@@ -76,6 +69,15 @@ class User(AbstractBaseUser, PermissionsMixin):
             'Unselect this instead of deleting accounts.'
         ),
     )
+    username_regex = RegexValidator(regex=r'[a-xA-Z0-9_]')
+    username = models.CharField(
+        verbose_name='ユーザーネーム',
+        null=False,
+        blank=False,
+        max_length=15,
+        unique=True,
+        db_index=True,
+        validators=[MinLengthValidator(4), username_regex])
     name = models.CharField(verbose_name='ニックネーム', max_length=100)
     email = models.EmailField(_('email address'), unique=True)
     icon = models.ImageField(
@@ -83,32 +85,19 @@ class User(AbstractBaseUser, PermissionsMixin):
         blank=True,
         validators=[
             validate_icon_image,
-        ]
-
-    )
+        ])
     age = models.IntegerField(
-        verbose_name='年齢',
-        validators=[MinValueValidator(1), MaxValueValidator(100)],
-        )
-    twitter_url = models.URLField(max_length=255, null=True, blank=True)
-    introduction = models.CharField(max_length=140)
-    clip = models.FileField(
-        blank=True,
-        upload_to=user_directory_path,
-        validators=[
-            validate_clip_file,
-            FileExtensionValidator(['mp4']),
-        ]
+            verbose_name='年齢',
+            validators=[MinValueValidator(1), MaxValueValidator(100)],
     )
     date_joined = models.DateTimeField(_('date joined'), default=timezone.now)
 
     objects = CustomUserManager()
 
-    EMAIL_FIELD = 'email'
-    USERNAME_FIELD = 'email'
+    USERNAME_FIELD = 'username'
 
     # superuser を作るときの必須フィールド
-    REQUIRED_FIELDS = ['age', 'twitter_url']
+    REQUIRED_FIELDS = ['username', 'age', 'twitter_url']
 
     class Meta:
         verbose_name = _('user')
@@ -124,12 +113,12 @@ class User(AbstractBaseUser, PermissionsMixin):
         """username属性のゲッター
 
         他アプリケーションが、username属性にアクセスした場合に備えて定義
-        メールアドレスを返す
+        username を返す
         """
-        return self.email
+        return self.username
 
 @receiver(post_save, sender=User)
 def create_user_clan(sender, **kwargs):
     # 新規ユーザー作成時に UserClan モデルの空インスタンスを生成
     if kwargs['created']:
-        user_clan = models.clans.UserClan.objects.get_or_create(user=kwargs['instance'])
+        user_clan = clans.models.UserClan.objects.get_or_create(user=kwargs['instance'])

@@ -89,11 +89,27 @@ class UserClan(models.Model):
         verbose_name = 'ユーザークラン'
         verbose_name_plural = 'ユーザークラン'
 
+    def validate_clip_file(fieldfile_obj):
+        file_size = fieldfile_obj.file.size
+        megabyte_limit = 5.0
+        if file_size > megabyte_limit*1024*1024:
+            raise ValidationError("ファイルのサイズを%sMBより小さくしてください" % str(megabyte_limit))
+
     id = models.AutoField(editable=False, primary_key=True)
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user_clan')
-    clan = models.ForeignKey(Clan, on_delete=models.CASCADE)
-    game_title = models.ManyToManyField(Game)
     is_owner = models.BooleanField(default=False)
+    clan = models.ForeignKey(Clan, on_delete=models.CASCADE, related_name='clan')
+    game_title = models.ManyToManyField(Game)
+    twitter_url = models.URLField(max_length=255, null=True, blank=True)
+    introduction = models.CharField(max_length=140)
+    clip = models.FileField(
+        blank=True,
+        upload_to=user_directory_path,
+        validators=[
+            validate_clip_file,
+            FileExtensionValidator(['mp4']),
+        ]
+    )
     desired_condition = models.CharField(verbose_name='希望条件', max_length=255)
     disclosed = models.BooleanField(default=True)
 
