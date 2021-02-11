@@ -100,7 +100,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = 'username'
 
     # superuser を作るときの必須フィールド
-    REQUIRED_FIELDS = ['username', 'age', 'twitter_url']
+    REQUIRED_FIELDS = ['username', 'age']
 
     class Meta:
         verbose_name = _('user')
