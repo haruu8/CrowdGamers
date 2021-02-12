@@ -20,12 +20,12 @@ urlpatterns = [
     path('<str:username>/notice/invite/<int:pk>/', views.user_invite_notice_detail, name='user_invite_notice_detail'),
 
     # リクエスト送信
-    path('clan/request/input/', views.clan_request_input, name='clan_request_input'),
-    path('clan/request/confirm/', views.clan_request_confirm, name='clan_request_confirm'),
-    path('clan/request/create/', views.clan_request_create, name='clan_request_create'),
+    path('<str:clan_name>/clan/request/input/', views.clan_request_input, name='clan_request_input'),
+    path('<str:clan_name>/clan/request/confirm/', views.clan_request_confirm, name='clan_request_confirm'),
+    path('<str:clan_name>/clan/request/create/', views.clan_request_create, name='clan_request_create'),
 
     # 招待送信
-    path('invite/input/', views.user_invite_input, name='user_invite_input'),
-    path('invite/confirm/', views.user_invite_confirm, name='user_invite_confirm'),
-    path('invite/create/', views.user_invite_create, name='user_invite_create'),
+    path('<str:username>/invite/input/', views.user_invite_input, name='user_invite_input'),
+    path('<str:username>/invite/confirm/', views.user_invite_confirm, name='user_invite_confirm'),
+    path('<str:username>/invite/create/', views.user_invite_create, name='user_invite_create'),
 ]
