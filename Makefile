@@ -10,3 +10,7 @@ showmigrations:
 	docker-compose exec django python3 manage.py showmigrations
 test:
 	docker-compose exec django python3 manage.py test
+insert-data-feature:
+	docker-compose exec django python3 manage.py loaddata feature_initial.json
+insert-data-game:
+	docker-compose exec django python3 manage.py loaddata game_initial.json

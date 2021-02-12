@@ -25,5 +25,8 @@ insert_final_newline = false
 [*.scss]
 indent_size = 2
 
+[*.json]
+indent_size = 2
+
 [Makefile]
 indent_style = tab

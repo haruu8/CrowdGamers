@@ -1,0 +1,16 @@
+[
+  {
+    "model": "clans.feature",
+    "pk": 1,
+    "fields": {
+      "feature": "毎日活動します"
+    }
+  },
+  {
+    "model": "clans.feature",
+    "pk": 2,
+    "fields": {
+      "feature": "ゆったりと活動します。"
+    }
+  }
+]
