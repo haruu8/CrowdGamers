@@ -14,10 +14,10 @@ urlpatterns = [
     path('clan/<str:clan_name>/delete/', views.clan_delete, name='clan_delete'),
 
     # 通知
-    path('<str:username>/notice/apply/', views.user_apply_notice, name='user_apply_notice'),
-    path('<str:username>/notice/apply/<int:pk>/', views.user_apply_notice_detail, name='user_apply_notice_detail'),
-    path('<str:username>/notice/invite/', views.user_invite_notice, name='user_invite_notice'),
-    path('<str:username>/notice/invite/<int:pk>/', views.user_invite_notice_detail, name='user_invite_notice_detail'),
+    path('notification/apply/', views.user_apply_notice, name='user_apply_notice'),
+    path('notification/apply/<int:pk>/', views.user_apply_notice_detail, name='user_apply_notice_detail'),
+    path('notification/invite/', views.user_invite_notice, name='user_invite_notice'),
+    path('notification/invite/<int:pk>/', views.user_invite_notice_detail, name='user_invite_notice_detail'),
 
     # リクエスト送信
     path('<str:clan_name>/clan/request/input/', views.clan_request_input, name='clan_request_input'),
