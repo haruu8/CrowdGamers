@@ -7,6 +7,8 @@ from django.template.loader import render_to_string
 
 
 
+""" 正しい View が呼び出されているかテスト """
+
 class ClanUrlRoutingTests(TestCase):
 
     # テストユーザー作成方法
@@ -35,6 +37,8 @@ class ClanUrlRoutingTests(TestCase):
         self.assertEqual(found.func, views.clan_detail)
 
 
+
+""" 正しい HTML が返されているかテスト """
 
 class ClanHtmlTests(TestCase):
 
