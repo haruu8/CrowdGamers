@@ -28,7 +28,7 @@ class CustomUserManager(UserManager):
         user.save(using=self._db)
         return user
 
-    def create_user(self, username, password=None, **extra_fields):
+    def create_user(self, username, password=None, email=None, **extra_fields):
         extra_fields.setdefault('is_staff', False)
         extra_fields.setdefault('is_superuser', False)
         return self._create_user(username, password, **extra_fields)
@@ -73,6 +73,7 @@ class User(AbstractBaseUser, PermissionsMixin):
             'Unselect this instead of deleting accounts.'
         ),
     )
+    email = models.EmailField(null=True, blank=True, editable=False)
     user_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     username_regex = RegexValidator(regex=r'[a-xA-Z0-9_]')
     username = models.CharField(
@@ -92,6 +93,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         ])
     age = models.IntegerField(
             verbose_name='年齢',
+            default=20,
             validators=[MinValueValidator(1), MaxValueValidator(100)],
     )
     date_joined = models.DateTimeField(_('date joined'), default=timezone.now)
@@ -123,4 +125,5 @@ class User(AbstractBaseUser, PermissionsMixin):
 def create_user_clan(sender, **kwargs):
     # 新規ユーザー作成時に UserClan モデルの空インスタンスを生成
     if kwargs['created']:
-        user_clan = clans.models.UserClan.objects.get_or_create(user=kwargs['instance'])
+        from clans.models import UserClan
+        user_clan = UserClan.objects.get_or_create(user=kwargs['instance'])
