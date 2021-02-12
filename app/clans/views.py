@@ -24,7 +24,7 @@ home = HomeView.as_view()
 
 
 
-class UserInviteNoticeView(LoginRequiredMixin, TemplateView):
+class UserInviteNoticeView(LoginRequiredMixin, OnlyYouMixin, TemplateView):
     template_name = 'clans/user_invite_notice.html'
 
     def get_context_data(self, **kwargs):
@@ -41,7 +41,15 @@ user_invite_notice = UserInviteNoticeView.as_view()
 
 
 
-class UserApplyNoticeView(LoginRequiredMixin, TemplateView):
+class UserInviteNoticeDetailView(LoginRequiredMixin, OnlyYouMixin, DetailView):
+    template_name = 'clans/user_invite_notice_detail.html'
+    model = Invite
+
+user_invite_notice_detail = UserInviteNoticeDetailView.as_view()
+
+
+
+class UserApplyNoticeView(LoginRequiredMixin, OnlyYouMixin, TemplateView):
     template_name = 'clans/user_apply_notice.html'
 
     def get_context_data(self, **kwargs):
@@ -54,6 +62,14 @@ class UserApplyNoticeView(LoginRequiredMixin, TemplateView):
         return context
 
 user_apply_notice = UserApplyNoticeView.as_view()
+
+
+
+class UserApplyNoticeDetailView(LoginRequiredMixin, OnlyYouMixin, DetailView):
+    template_name = 'clans/user_apply_notice_detail.html'
+    model = Apply
+
+user_apply_notice_detail = UserApplyNoticeDetailView.as_view()
 
 
 

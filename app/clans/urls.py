@@ -15,6 +15,12 @@ urlpatterns = [
     path('clan/update/<int:pk>/', views.clan_update, name='clan_update'),
     path('clan/delete/<int:pk>/', views.clan_delete, name='clan_delete'),
 
+    # 通知
+    path('notice/apply/', views.user_apply_notice, name='user_apply_notice'),
+    path('notice/apply/<int:pk>/', views.user_apply_notice_detail, name='user_apply_notice_detail'),
+    path('notice/invite/', views.user_invite_notice, name='user_invite_notice'),
+    path('notice/invite/<int:pk>/', views.user_invite_notice_detail, name='user_invite_notice_detail'),
+
     # リクエスト送信
     path('clan/request/input/', views.clan_request_input, name='clan_request_input'),
     path('clan/request/confirm/', views.clan_request_confirm, name='clan_request_confirm'),

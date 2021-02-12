@@ -77,12 +77,11 @@ class User(AbstractBaseUser, PermissionsMixin):
         verbose_name='ユーザーネーム',
         null=False,
         blank=False,
-        max_length=15,
         unique=True,
         db_index=True,
+        max_length=15,
         validators=[MinLengthValidator(4), username_regex])
     name = models.CharField(verbose_name='ニックネーム', max_length=100)
-    email = models.EmailField(_('email address'), unique=True)
     icon = models.ImageField(
         upload_to=user_directory_path,
         blank=True,
