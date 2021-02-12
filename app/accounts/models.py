@@ -20,6 +20,8 @@ class CustomUserManager(UserManager):
     def _create_user(self, username, password, **extra_fields):
         if not username:
             raise ValueError('The given username must be set')
+
+        # normalize_email は大文字と小文字を等しく扱ってくれるメソッド
         username = self.normalize_email(username)
         user = self.model(username=username, **extra_fields)
         user.set_password(password)
@@ -96,10 +98,11 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     objects = CustomUserManager()
 
-    USERNAME_FIELD = 'username'
 
     # superuser を作るときの必須フィールド
-    REQUIRED_FIELDS = ['username', 'age']
+    REQUIRED_FIELDS = ['age']
+    USERNAME_FIELD = 'username'
+    SOCIAL_AUTH_ADMIN_USER_SEARCH_FIELDS = ['username', 'name']
 
     class Meta:
         verbose_name = _('user')
@@ -107,19 +110,12 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 
 
-    # def email_user(self, subject, message, from_email=None, **kwargs):
-
-    #     # このユーザーにメールを送信する
-    #     send_mail(subject, message, from_email, [self.email], **kwargs)
-
-
-
     @property
-    def username(self):
-        """username属性のゲッター
-
-        他アプリケーションが、username属性にアクセスした場合に備えて定義
-        username を返す
+    def get_username(self):
+        """
+            username属性のゲッター
+            他アプリケーションが、username属性にアクセスした場合に備えて定義
+            username を返す
         """
         return self.username
 

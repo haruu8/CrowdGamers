@@ -1,9 +1,8 @@
 from django.db import models
 from django.core.validators import FileExtensionValidator, MinLengthValidator, RegexValidator
 from django.core.exceptions import ValidationError
-from accounts.models import User
+from django.contrib.auth import get_user_model
 import uuid
-from config import settings
 
 
 
@@ -105,7 +104,7 @@ class UserClan(models.Model):
             raise ValidationError("ファイルのサイズを%sMBより小さくしてください" % str(megabyte_limit))
 
     id = models.AutoField(editable=False, primary_key=True)
-    user = models.OneToOneField(settings.SOCIAL_AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user_clan')
+    user = models.OneToOneField(get_user_model(), on_delete=models.CASCADE, related_name='user_clan')
     is_owner = models.BooleanField(default=False)
     clan = models.ForeignKey(Clan, on_delete=models.CASCADE, related_name='clan')
     game_title = models.ManyToManyField(Game, related_name='user_game_title')

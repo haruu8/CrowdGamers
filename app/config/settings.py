@@ -120,6 +120,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
+
 STATIC_URL = '/static/'
 STATIC_ROOT = Path(BASE_DIR, 'deploy')
 STATICFILES_DIRS = (
@@ -143,11 +144,6 @@ LOGIN_REDIRECT_URL = 'clans:home'
 ACCOUNT_LOGOUT_REDIRECT_URL = 'accounts:account_login'
 LOGIN_URL = 'accounts:account_login'
 
-ACCOUNT_AUTHENTICATION_METHOD = 'username'
-ACCOUNT_USERNAME_REQUIRED = True
-ACCOUNT_USER_MODEL_USERNAME_FIELD = 'username'
-ACCOUNT_EMAIL_REQUIRED = False
-
 SOCIAL_AUTH_URL_NAMESPACE = 'social'
 AUTHENTICATION_BACKENDS = [
     'social_core.backends.twitter.TwitterOAuth',
@@ -157,4 +153,6 @@ AUTHENTICATION_BACKENDS = [
 SOCIAL_AUTH_TWITTER_KEY = os.environ.get('SOCIAL_AUTH_TWITTER_KEY')
 SOCIAL_AUTH_TWITTER_SECRET = os.environ.get('SOCIAL_AUTH_TWITTER_SECRET')
 
-SOCIAL_AUTH_USER_MODEL = 'accounts.User'
+AUTH_USER_MODEL = 'accounts.User'
+
+ACCOUNT_USER_USERNAME_REQUIRED = True
