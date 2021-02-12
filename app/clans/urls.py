@@ -9,9 +9,9 @@ urlpatterns = [
     path('', views.home, name='home'),
     path('clan/create/', views.clan_create, name='clan_create'),
     path('clan/list/', views.clan_list, name='clan_list'),
-    path('clan/detail/<int:pk>/', views.clan_detail, name='clan_detail'),
-    path('clan/update/<int:pk>/', views.clan_update, name='clan_update'),
-    path('clan/delete/<int:pk>/', views.clan_delete, name='clan_delete'),
+    path('<str:clan_name>/clan/detail/', views.clan_detail, name='clan_detail'),
+    path('<str:clan_name>/clan/update/', views.clan_update, name='clan_update'),
+    path('<str:clan_name>/clan/delete/', views.clan_delete, name='clan_delete'),
 
     # 通知
     path('<str:username>/notice/apply/', views.user_apply_notice, name='user_apply_notice'),
