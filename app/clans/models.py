@@ -1,5 +1,5 @@
 from django.db import models
-from django.core.validators import FileExtensionValidator
+from django.core.validators import FileExtensionValidator, MinLengthValidator, RegexValidator
 from django.core.exceptions import ValidationError
 from accounts.models import User
 import uuid
@@ -59,6 +59,15 @@ class Clan(models.Model):
             raise ValidationError("ファイルのサイズを%sMBより小さくしてください" % str(megabyte_limit))
 
     id = models.AutoField(editable=False, primary_key=True)
+    clan_name_regex = RegexValidator(regex=r'[a-xA-Z0-9_]')
+    clan_name = models.CharField(
+        verbose_name='クランネーム',
+        null=False,
+        blank=False,
+        unique=True,
+        db_index=True,
+        max_length=15,
+        validators=[MinLengthValidator(4), clan_name_regex])
     name = models.CharField(max_length=100, null=False, blank=False)
     icon = models.ImageField(
         upload_to=user_directory_path,

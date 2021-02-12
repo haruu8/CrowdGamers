@@ -8,3 +8,5 @@ createsuperuser:
 	docker-compose exec django python3 manage.py createsuperuser
 showmigrations:
 	docker-compose exec django python3 manage.py showmigrations
+test:
+	docker-compose exec django python3 manage.py test
