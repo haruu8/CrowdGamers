@@ -34,4 +34,5 @@ urlpatterns = [
             name='terms-of-service'),
     path('privacy-policy/', views.TemplateView.as_view(template_name='clans/support/privacy-policy.html'),
             name='privacy-policy'),
+    path('contact/', views.TemplateView.as_view(template_name='clans/support/contact.html')),
 ]
