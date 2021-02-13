@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Clan, Invite, UserClan, Apply, Feature, Game
+from .models import Clan, Invite, UserClan, Apply, Feature, Game, Question
 
 admin.site.register(Clan)
 admin.site.register(Invite)
@@ -7,3 +7,4 @@ admin.site.register(Apply)
 admin.site.register(UserClan)
 admin.site.register(Feature)
 admin.site.register(Game)
+admin.site.register(Question)

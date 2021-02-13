@@ -1,9 +1,9 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView, CreateView, DetailView, ListView, UpdateView, DeleteView, FormView
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from .models import Clan, Invite, Apply
+from .models import Clan, Invite, Apply, Question
 from .forms import ClanCreateForm, UserInviteCreateForm, ClanRequestCreateForm
 
 
@@ -212,3 +212,14 @@ class UserInviteCreateView(LoginRequiredMixin, CreateView):
         return render(self.request, self.template_name, {'form': form})
 
 user_invite_create = UserInviteCreateView.as_view()
+
+
+
+class FreqentlyQuestionAskedView(generic.TemplateView):
+    template_name = 'clans/support/faq.html'
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['faqs'] = Question.objects.all()
+        return context
+
+faq = FreqentlyQuestionAskedView.as_view()

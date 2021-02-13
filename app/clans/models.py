@@ -131,7 +131,7 @@ class Invite(models.Model):
         verbose_name = '招待'
         verbose_name = verbose_name_plural = '招待'
 
-    id = models.AutoField(editable=False, primary_key=True)
+    id = models.UUIDField(default=uuid.uuid4, primary_key=True, editable=False)
     from_user = models.ForeignKey(UserClan, on_delete=models.CASCADE, related_name='send_invitations')
     to_user = models.ForeignKey(UserClan, on_delete=models.CASCADE, related_name='receive_invitations')
     clan = models.ForeignKey(Clan, on_delete=models.CASCADE)
@@ -159,7 +159,7 @@ class Apply(models.Model):
         verbose_name = 'リクエスト'
         verbose_name = verbose_name_plural = 'リクエスト'
 
-    apply_id = models.UUIDField(default=uuid.uuid4, primary_key=True)
+    id = models.UUIDField(default=uuid.uuid4, primary_key=True, editable=False)
     from_user = models.ForeignKey(UserClan, on_delete=models.CASCADE, related_name='send_apply')
     to_user = models.ForeignKey(UserClan, on_delete=models.CASCADE, related_name='receive_apply')
     clan = models.ForeignKey(Clan, on_delete=models.CASCADE)
@@ -169,3 +169,22 @@ class Apply(models.Model):
 
     def __str__(self):
         return self.message
+
+
+
+""" よくある質問モデル """
+
+class Question(models.Model):
+    class Meta():
+        db_table = 't_question'
+        verbose_name = 'よくある質問'
+        verbose_name_plural = 'よくある質問'
+
+    id = models.UUIDField(primary_key=True, editable=False)
+    question = models.CharField(max_length=255, null=False, blank=False)
+    awnser = models.CharField(max_length=1000, null=False, blank=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.question

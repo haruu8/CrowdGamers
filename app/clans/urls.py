@@ -29,10 +29,11 @@ urlpatterns = [
     path('<str:username>/invite/confirm/', views.user_invite_confirm, name='user_invite_confirm'),
     path('<str:username>/invite/create/', views.user_invite_create, name='user_invite_create'),
 
-    # 利用規約・プライバシーポリシー
+    # サポートページ
     path('terms-of-service/', views.TemplateView.as_view(template_name='clans/support/terms-of-service.html'),
             name='terms-of-service'),
     path('privacy-policy/', views.TemplateView.as_view(template_name='clans/support/privacy-policy.html'),
             name='privacy-policy'),
     path('contact/', views.TemplateView.as_view(template_name='clans/support/contact.html')),
+    path('faq/', views.faq, name='faq'),
 ]
