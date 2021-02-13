@@ -28,4 +28,10 @@ urlpatterns = [
     path('<str:username>/invite/input/', views.user_invite_input, name='user_invite_input'),
     path('<str:username>/invite/confirm/', views.user_invite_confirm, name='user_invite_confirm'),
     path('<str:username>/invite/create/', views.user_invite_create, name='user_invite_create'),
+
+    # 利用規約・プライバシーポリシー
+    path('terms-of-service/', views.TemplateView.as_view(template_name='support/terms-of-service.html'),
+            name='terms-of-service'),
+    path('privacy-policy/', views.TemplateView.as_view(template_name='support/privacy-policy.html'),
+            name='privacy-policy'),
 ]

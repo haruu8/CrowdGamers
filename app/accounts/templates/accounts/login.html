@@ -3,7 +3,22 @@
 {% block content %}
 
   <div>
-    <button type="button" onclick="location.href='{% url 'social:begin' 'twitter' %}'">Twitterログイン</button>
+    <input id="check" type="checkbox" /><p><a href='{% url "clans:terms-of-service" %}'>利用規約</a>・<a href='{% url "clans:privacy-policy" %}'>プライバシーポリシー</a>を読んだ上、同意する</p>
+    <button type="submit" id='button' disabled='disabled' onclick="location.href='{% url 'social:begin' 'twitter' %}'">Twitterログイン &raquo;</button>
   </div>
+
+{% endblock %}
+
+{% block script %}
+
+  <script type='text/javascript'>
+    $('#check').change(function() {
+      if ( $(this).is(':checked') ){
+          $('#button').prop('disabled', false);
+      } else {
+          $('#button').prop('disabled', true);
+      }
+    });
+  </script>
 
 {% endblock %}
