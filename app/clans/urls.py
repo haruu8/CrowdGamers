@@ -30,8 +30,8 @@ urlpatterns = [
     path('<str:username>/invite/create/', views.user_invite_create, name='user_invite_create'),
 
     # 利用規約・プライバシーポリシー
-    path('terms-of-service/', views.TemplateView.as_view(template_name='support/terms-of-service.html'),
+    path('terms-of-service/', views.TemplateView.as_view(template_name='clans/support/terms-of-service.html'),
             name='terms-of-service'),
-    path('privacy-policy/', views.TemplateView.as_view(template_name='support/privacy-policy.html'),
+    path('privacy-policy/', views.TemplateView.as_view(template_name='clans/support/privacy-policy.html'),
             name='privacy-policy'),
 ]
