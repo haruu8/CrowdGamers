@@ -18,3 +18,5 @@ insert-data-feature:
 	docker-compose exec django python3 manage.py loaddata feature_initial.json
 insert-data-game:
 	docker-compose exec django python3 manage.py loaddata game_initial.json
+insert-data-question:
+	docker-compose exec django python3 manage.py loaddata question_initial.json

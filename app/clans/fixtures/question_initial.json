@@ -1,0 +1,18 @@
+[
+  {
+    "model": "clans.question",
+    "pk": 1,
+    "fields": {
+      "question": "使用方法はどこから確認することができますか？",
+      "awnser": "<a href='#'>こちらのリンク</a>から確認することができます。"
+    }
+  },
+  {
+    "model": "clans.question",
+    "pk": 2,
+    "fields": {
+      "question": "クランに所属したことがないのですが大丈夫ですか？",
+      "awnser": "クランに所属したことがなくても大丈夫です。"
+    }
+  }
+]
