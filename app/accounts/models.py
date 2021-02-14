@@ -122,8 +122,8 @@ class User(AbstractBaseUser, PermissionsMixin):
         return self.username
 
 @receiver(post_save, sender=User)
-def create_user_clan(sender, **kwargs):
-    # 新規ユーザー作成時に UserClan モデルの空インスタンスを生成
+def create_user_profile(sender, **kwargs):
+    # 新規ユーザー作成時に UserProfile モデルの空インスタンスを生成
     if kwargs['created']:
-        from clans.models import UserClan
-        user_clan = UserClan.objects.get_or_create(user=kwargs['instance'])
+        from clans.models import UserProfile
+        profile = UserProfile.objects.get_or_create(user=kwargs['instance'])
