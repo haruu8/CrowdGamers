@@ -90,7 +90,7 @@ class Clan(models.Model):
 
 
 
-""" クランに関するモデル """
+""" ユーザープロフィールモデル """
 
 class UserProfile(models.Model):
     class Meta():
@@ -110,6 +110,12 @@ class UserProfile(models.Model):
         if image_size > megabyte_limit*1024*1024:
             raise ValidationError("ファイルのサイズを%sMBより小さくしてください" % str(megabyte_limit))
 
+    def validate_header_image(fieldfile_obj):
+        image_size = fieldfile_obj.file.size
+        megabyte_limit = 5.0
+        if image_size > megabyte_limit*1024*1024:
+            raise ValidationError("ファイルのサイズを%sMBより小さくしてください" % str(megabyte_limit))
+
     id = models.AutoField(editable=False, primary_key=True)
     user = models.OneToOneField(get_user_model(), on_delete=models.CASCADE, related_name='user_profile')
     name = models.CharField(verbose_name='ニックネーム', max_length=100)
@@ -119,11 +125,16 @@ class UserProfile(models.Model):
         validators=[
             validate_icon_image,
         ])
+    header = models.ImageField(
+        upload_to=user_directory_path,
+        blank=True,
+        validators=[
+            validate_header_image,
+        ])
     age = models.IntegerField(
             verbose_name='年齢',
             default=20,
-            validators=[MinValueValidator(1), MaxValueValidator(100)],
-    )
+            validators=[MinValueValidator(1), MaxValueValidator(100)])
     is_owner = models.BooleanField(default=False)
     clan = models.ForeignKey(Clan, on_delete=models.CASCADE, related_name='clan', null=True, blank=True)
     game_title = models.ManyToManyField(Game, related_name='user_game_title')
@@ -134,9 +145,7 @@ class UserProfile(models.Model):
         upload_to=user_directory_path,
         validators=[
             validate_clip_file,
-            FileExtensionValidator(['mp4']),
-        ]
-    )
+            FileExtensionValidator(['mp4'])])
     desired_condition = models.CharField(verbose_name='希望条件', max_length=255)
     disclosed = models.BooleanField(default=True)
 
