@@ -1,6 +1,7 @@
 from django.db import models
 from django.core.validators import FileExtensionValidator, MinLengthValidator, RegexValidator
 from django.core.exceptions import ValidationError
+from django.core.validators import MaxValueValidator, MinValueValidator
 from django.contrib.auth import get_user_model
 import uuid
 
@@ -103,8 +104,26 @@ class UserProfile(models.Model):
         if file_size > megabyte_limit*1024*1024:
             raise ValidationError("ファイルのサイズを%sMBより小さくしてください" % str(megabyte_limit))
 
+    def validate_icon_image(fieldfile_obj):
+        image_size = fieldfile_obj.file.size
+        megabyte_limit = 5.0
+        if image_size > megabyte_limit*1024*1024:
+            raise ValidationError("ファイルのサイズを%sMBより小さくしてください" % str(megabyte_limit))
+
     id = models.AutoField(editable=False, primary_key=True)
     user = models.OneToOneField(get_user_model(), on_delete=models.CASCADE, related_name='user_profile')
+    name = models.CharField(verbose_name='ニックネーム', max_length=100)
+    icon = models.ImageField(
+        upload_to=user_directory_path,
+        blank=True,
+        validators=[
+            validate_icon_image,
+        ])
+    age = models.IntegerField(
+            verbose_name='年齢',
+            default=20,
+            validators=[MinValueValidator(1), MaxValueValidator(100)],
+    )
     is_owner = models.BooleanField(default=False)
     clan = models.ForeignKey(Clan, on_delete=models.CASCADE, related_name='clan', null=True, blank=True)
     game_title = models.ManyToManyField(Game, related_name='user_game_title')

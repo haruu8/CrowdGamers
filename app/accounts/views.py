@@ -21,6 +21,7 @@ class OnlyYouMixin(UserPassesTestMixin):
 # ユーザーのプロフィール
 class UserDetailView(DetailView):
     template_name = 'accounts/account_detail.html'
+    model = User
 
 account_detail = UserDetailView.as_view()
 

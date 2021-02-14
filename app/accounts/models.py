@@ -4,7 +4,6 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.contrib.auth.models import PermissionsMixin, UserManager
 from django.contrib.auth.base_user import AbstractBaseUser
-from django.core.validators import MaxValueValidator, MinValueValidator
 from django.utils.translation import ugettext_lazy as _
 from django.utils import timezone
 from django.core.validators import FileExtensionValidator, MinLengthValidator, RegexValidator
@@ -84,22 +83,9 @@ class User(AbstractBaseUser, PermissionsMixin):
         db_index=True,
         max_length=15,
         validators=[MinLengthValidator(4), username_regex])
-    name = models.CharField(verbose_name='ニックネーム', max_length=100)
-    icon = models.ImageField(
-        upload_to=user_directory_path,
-        blank=True,
-        validators=[
-            validate_icon_image,
-        ])
-    age = models.IntegerField(
-            verbose_name='年齢',
-            default=20,
-            validators=[MinValueValidator(1), MaxValueValidator(100)],
-    )
     date_joined = models.DateTimeField(_('date joined'), default=timezone.now)
 
     objects = CustomUserManager()
-
 
     # superuser を作るときの必須フィールド
     REQUIRED_FIELDS = ['age']
@@ -114,11 +100,6 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     @property
     def get_username(self):
-        """
-            username属性のゲッター
-            他アプリケーションが、username属性にアクセスした場合に備えて定義
-            username を返す
-        """
         return self.username
 
 @receiver(post_save, sender=User)
