@@ -88,7 +88,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     objects = CustomUserManager()
 
     # superuser を作るときの必須フィールド
-    REQUIRED_FIELDS = ['age']
+    REQUIRED_FIELDS = []
     USERNAME_FIELD = 'username'
     SOCIAL_AUTH_ADMIN_USER_SEARCH_FIELDS = ['username', 'name']
 

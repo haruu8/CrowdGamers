@@ -6,19 +6,21 @@ from .models import Clan, Invite, Apply, Feature, UserProfile
 class UserProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = UserProfile
-        fields = ('name', 'icon', 'header', 'age', 'introduction', 'clip_url')
+        fields = ('name', 'icon', 'header', 'date_of_birth', 'introduction', 'clip_url')
         labels = {
             'name': '名前',
             'icon': 'アイコン',
             'header': 'ヘッダー画像',
-            'age': '年齢',
+            'date_of_birth': '生年月日',
             'introduction': '自己紹介',
-            'clip_url': 'クリップ'
+            'clip_url': 'クリップ',
         }
     name = forms.CharField(required=True,
                             widget=forms.TextInput(attrs={'placeholder': '名前を入力してください', 'render_value': True}))
     icon = forms.ImageField(required=False)
     header = forms.ImageField(required=False)
+    date_of_birth = forms.DateField(required=True,
+                            widget=forms.SelectDateWidget())
     introduction = forms.CharField(required=False,
                             widget=forms.Textarea(attrs={'placeholder': '自身について入力してください', 'render_value': True}))
     clip_url = forms.URLField(required=False, widget=forms.URLInput())

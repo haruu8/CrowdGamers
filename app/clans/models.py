@@ -1,5 +1,5 @@
 from django.db import models
-from django.core.validators import FileExtensionValidator, MinLengthValidator, RegexValidator, MaxValueValidator, MinValueValidator
+from django.core.validators import FileExtensionValidator, MinLengthValidator, RegexValidator
 from django.core.exceptions import ValidationError
 from django.contrib.auth import get_user_model
 import uuid
@@ -124,10 +124,7 @@ class UserProfile(models.Model):
         validators=[
             validate_header_image,
         ])
-    age = models.IntegerField(
-            verbose_name='年齢',
-            default=20,
-            validators=[MinValueValidator(1), MaxValueValidator(100)])
+    date_of_birth = models.DateField(null=False, blank=False)
     is_owner = models.BooleanField(default=False)
     clan = models.ForeignKey(Clan, on_delete=models.CASCADE, related_name='clan', null=True, blank=True)
     game_title = models.ManyToManyField(Game, related_name='user_game_title')

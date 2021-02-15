@@ -7,12 +7,12 @@ class UserUpdateForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ('username')
+        fields = ('username',)
         labels = {
             'username': 'ユーザーネーム',
         }
 
-    username = forms.CharField(required=True, unique=True,
+    username = forms.CharField(required=True,
                             widget=forms.TextInput(attrs={'placeholder': 'ユーザーネームを入力してください', 'render_value': True}))
 
     def __init__(self, *args, **kwargs):
