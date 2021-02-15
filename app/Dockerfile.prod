@@ -22,4 +22,4 @@ RUN apt-get autoremove -y gcc
 
 COPY . /code/
 
-ENTRYPOINT ["/bin/bash", "/code/entrypoint.sh"]
+ENTRYPOINT ["/bin/bash", "/code/entrypoint.prod.sh"]

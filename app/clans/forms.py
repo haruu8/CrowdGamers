@@ -6,26 +6,22 @@ from .models import Clan, Invite, Apply, Feature, UserProfile
 class UserProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = UserProfile
-        fields = ('name', 'icon', 'header', 'age', 'twitter_url', 'introduction', 'clip')
+        fields = ('name', 'icon', 'header', 'age', 'introduction', 'clip_url')
         labels = {
             'name': '名前',
             'icon': 'アイコン',
             'header': 'ヘッダー画像',
             'age': '年齢',
-            'twitter_url': 'TwitterのURL',
             'introduction': '自己紹介',
-            'clip': 'クリップ'
+            'clip_url': 'クリップ'
         }
     name = forms.CharField(required=True,
                             widget=forms.TextInput(attrs={'placeholder': '名前を入力してください', 'render_value': True}))
     icon = forms.ImageField(required=False)
     header = forms.ImageField(required=False)
-    twitter_url = forms.URLField(required=False,
-                            widget=forms.URLInput(attrs={'placeholder': 'TwitterのURLを入力してください', 'render_value': True}))
     introduction = forms.CharField(required=False,
                             widget=forms.Textarea(attrs={'placeholder': '自身について入力してください', 'render_value': True}))
-    clip = forms.FileField(required=False,
-                            widget=forms.ClearableFileInput())
+    clip_url = forms.URLField(required=False, widget=forms.URLInput())
 
     def __init__(self, *args, **kwargs):
         super(UserProfileUpdateForm, self).__init__(*args, **kwargs)

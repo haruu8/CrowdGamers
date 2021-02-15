@@ -1,7 +1,6 @@
 from django.db import models
-from django.core.validators import FileExtensionValidator, MinLengthValidator, RegexValidator
+from django.core.validators import FileExtensionValidator, MinLengthValidator, RegexValidator, MaxValueValidator, MinValueValidator
 from django.core.exceptions import ValidationError
-from django.core.validators import MaxValueValidator, MinValueValidator
 from django.contrib.auth import get_user_model
 import uuid
 
@@ -98,12 +97,6 @@ class UserProfile(models.Model):
         verbose_name = 'ユーザープロフィール'
         verbose_name_plural = 'ユーザープロフィール'
 
-    def validate_clip_file(fieldfile_obj):
-        file_size = fieldfile_obj.file.size
-        megabyte_limit = 5.0
-        if file_size > megabyte_limit*1024*1024:
-            raise ValidationError("ファイルのサイズを%sMBより小さくしてください" % str(megabyte_limit))
-
     def validate_icon_image(fieldfile_obj):
         image_size = fieldfile_obj.file.size
         megabyte_limit = 5.0
@@ -138,14 +131,8 @@ class UserProfile(models.Model):
     is_owner = models.BooleanField(default=False)
     clan = models.ForeignKey(Clan, on_delete=models.CASCADE, related_name='clan', null=True, blank=True)
     game_title = models.ManyToManyField(Game, related_name='user_game_title')
-    twitter_url = models.URLField(max_length=255, null=True, blank=True)
     introduction = models.CharField(max_length=140)
-    clip = models.FileField(
-        blank=True,
-        upload_to=user_directory_path,
-        validators=[
-            validate_clip_file,
-            FileExtensionValidator(['mp4'])])
+    clip_url = models.URLField(blank=True, null=True)
     desired_condition = models.CharField(verbose_name='希望条件', max_length=255)
     disclosed = models.BooleanField(default=True)
 
