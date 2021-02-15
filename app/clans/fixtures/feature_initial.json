@@ -10,7 +10,28 @@
     "model": "clans.feature",
     "pk": 2,
     "fields": {
-      "feature": "ゆったりと活動します。"
+      "feature": "ゆったりと活動します"
+    }
+  },
+  {
+    "model": "clans.feature",
+    "pk": 3,
+    "fields": {
+      "feature": "一つのタイトルを突き詰めます"
+    }
+  },
+  {
+    "model": "clans.feature",
+    "pk": 4,
+    "fields": {
+      "feature": "幅広いタイトルで活動しています"
+    }
+  },
+  {
+    "model": "clans.feature",
+    "pk": 5,
+    "fields": {
+      "feature": "スポンサーがいます"
     }
   }
 ]

@@ -5,7 +5,7 @@ services:
     build:
       context: ./app
       dockerfile: Dockerfile.prod
-    command: gunicorn config.wsgi:application --bind 0.0.0.0:8000
+    command: ['bash', '-c', 'gunicorn config.wsgi:application -w 1 --bind 0.0.0.0:8000']
     volumes:
         - ./app/:/code/
     expose:

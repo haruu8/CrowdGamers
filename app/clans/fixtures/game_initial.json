@@ -26,5 +26,12 @@
     "fields": {
       "title": "Over Watch"
     }
+  },
+  {
+    "model": "clans.game",
+    "pk": 5,
+    "fields": {
+      "title": "Fortnite"
+    }
   }
 ]
