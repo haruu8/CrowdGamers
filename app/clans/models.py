@@ -109,6 +109,12 @@ class UserProfile(models.Model):
         if image_size > megabyte_limit*1024*1024:
             raise ValidationError("ファイルのサイズを%sMBより小さくしてください" % str(megabyte_limit))
 
+    JOB_TYPE = (
+        ('player', '選手'),
+        ('manger', 'マネージャー'),
+        ('coach', 'コーチ'),
+    )
+
     id = models.AutoField(editable=False, primary_key=True)
     user = models.OneToOneField(get_user_model(), on_delete=models.CASCADE, related_name='user_profile')
     name = models.CharField(verbose_name='ニックネーム', max_length=100)
@@ -130,6 +136,7 @@ class UserProfile(models.Model):
     game_title = models.ManyToManyField(Game, related_name='user_game_title')
     introduction = models.CharField(max_length=140)
     clip_url = models.URLField(blank=True, null=True)
+    desired_job_type = models.CharField(choices=JOB_TYPE, null=False, blank=False, max_length=100)
     desired_condition = models.CharField(verbose_name='希望条件', max_length=255)
     disclosed = models.BooleanField(default=True)
 

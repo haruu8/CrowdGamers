@@ -90,7 +90,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     # superuser を作るときの必須フィールド
     REQUIRED_FIELDS = []
     USERNAME_FIELD = 'username'
-    SOCIAL_AUTH_ADMIN_USER_SEARCH_FIELDS = ['username', 'name']
+    SOCIAL_AUTH_ADMIN_USER_SEARCH_FIELDS = ['username']
 
     class Meta:
         verbose_name = _('user')

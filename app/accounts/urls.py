@@ -9,7 +9,6 @@ urlpatterns = [
             name='account_login'),
     path('logout/', auth_views.LogoutView.as_view(template_name='accounts/logout.html'),
             name='account_logout'),
-    path('<str:username>/', views.account_detail, name='account_detail'),
     path('update/<str:username>/', views.account_update, name='account_update'),
     path('delete/<str:username>/', views.account_delete, name='account_delete'),
     path('list/', views.account_list, name='account_list'),

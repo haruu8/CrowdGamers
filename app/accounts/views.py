@@ -18,15 +18,6 @@ class OnlyYouMixin(UserPassesTestMixin):
 
 
 
-# ユーザーのプロフィール
-class UserDetailView(DetailView):
-    template_name = 'accounts/account_detail.html'
-    model = User
-
-account_detail = UserDetailView.as_view()
-
-
-
 class UserUpdateView(OnlyYouMixin, LoginRequiredMixin, UpdateView):
     template_name = 'accounts/account_update.html'
     model = User

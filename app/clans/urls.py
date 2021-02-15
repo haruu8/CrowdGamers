@@ -13,6 +13,11 @@ urlpatterns = [
     path('clan/<str:clan_name>/update/', views.clan_update, name='clan_update'),
     path('clan/<str:clan_name>/delete/', views.clan_delete, name='clan_delete'),
 
+    # プロフィール
+    path('<str:username>/game/', views.account_detail_game, name='account_detail_game'),
+    path('<str:username>/feature/', views.account_detail_feature, name='account_detail_feature'),
+    path('<str:username>/_desired_job_type/', views.account_detail_desired_job_type, name='account_detail_desired_job_type'),
+
     # 通知
     path('notification/apply/', views.user_apply_notice, name='user_apply_notice'),
     path('notification/apply/<int:pk>/', views.user_apply_notice_detail, name='user_apply_notice_detail'),

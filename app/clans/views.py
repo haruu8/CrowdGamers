@@ -3,7 +3,8 @@ from django.urls import reverse_lazy
 from django.views.generic import TemplateView, CreateView, DetailView, ListView, UpdateView, DeleteView, FormView
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from .models import Clan, Invite, Apply, Question
+from .models import Clan, Invite, Apply, Question, UserProfile
+from accounts.models import User
 from .forms import ClanCreateForm, UserInviteCreateForm, ClanRequestCreateForm
 
 
@@ -21,6 +22,29 @@ class HomeView(generic.TemplateView):
     template_name = 'clans/home.html'
 
 home = HomeView.as_view()
+
+
+
+class UserDetailGameView(DetailView):
+    template_name = 'clans/accounts/account_detail_game.html'
+    model = User
+
+account_detail_game = UserDetailGameView.as_view()
+
+
+
+class UserDetailFeatureView(DetailView):
+    template_name = 'clans/accounts/account_detail_feature.html'
+    model = User
+
+account_detail_feature = UserDetailFeatureView.as_view()
+
+
+
+class UserDetailDesiredJobTypeView(DetailView):
+    template_name = 'clans/accounts/account_detail_desired_job_type.html'
+
+account_detail_desired_job_type = UserDetailDesiredJobTypeView.as_view()
 
 
 
