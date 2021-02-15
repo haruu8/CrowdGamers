@@ -45,11 +45,11 @@ class Game(models.Model):
 
 """ クランモデル """
 
-class Clan(models.Model):
+class Team(models.Model):
     class Meta():
-        db_table = 't_clan'
-        verbose_name = 'クラン'
-        verbose_name_plural = 'クラン'
+        db_table = 't_team'
+        verbose_name = 'チーム'
+        verbose_name_plural = 'チーム'
 
     def validate_icon_image(fieldfile_obj):
         image_size = fieldfile_obj.file.size
@@ -58,15 +58,15 @@ class Clan(models.Model):
             raise ValidationError("ファイルのサイズを%sMBより小さくしてください" % str(megabyte_limit))
 
     id = models.AutoField(editable=False, primary_key=True)
-    clan_name_regex = RegexValidator(regex=r'[a-xA-Z0-9_]')
-    clan_name = models.CharField(
+    team_name_regex = RegexValidator(regex=r'[a-xA-Z0-9_]')
+    team_name = models.CharField(
         verbose_name='クランネーム',
         null=False,
         blank=False,
         unique=True,
         db_index=True,
         max_length=15,
-        validators=[MinLengthValidator(4), clan_name_regex])
+        validators=[MinLengthValidator(4), team_name_regex])
     name = models.CharField(max_length=100, null=False, blank=False)
     icon = models.ImageField(
         upload_to=user_directory_path,
@@ -77,8 +77,8 @@ class Clan(models.Model):
     url = models.URLField(null=True)
     description = models.CharField(max_length=255)
     sponsor = models.CharField(max_length=50)
-    game_title = models.ManyToManyField(Game, related_name='clan_game_title')
-    feature = models.ManyToManyField(Feature, verbose_name='特徴', related_name='clan_feature')
+    game_title = models.ManyToManyField(Game, related_name='team_game_title')
+    feature = models.ManyToManyField(Feature, verbose_name='特徴', related_name='team_feature')
     desired_condition = models.CharField(max_length=200)
     disclosed = models.BooleanField(verbose_name='公開・非公開', default=False)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -132,7 +132,7 @@ class UserProfile(models.Model):
         ])
     date_of_birth = models.DateField(null=False, blank=False)
     is_owner = models.BooleanField(default=False)
-    clan = models.ForeignKey(Clan, on_delete=models.CASCADE, related_name='clan', null=True, blank=True)
+    team = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='team', null=True, blank=True)
     game_title = models.ManyToManyField(Game, related_name='user_game_title')
     introduction = models.CharField(max_length=140)
     clip_url = models.URLField(blank=True, null=True)
@@ -153,7 +153,7 @@ class Invite(models.Model):
     id = models.UUIDField(default=uuid.uuid4, primary_key=True, editable=False)
     from_user = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name='send_invitations')
     to_user = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name='receive_invitations')
-    clan = models.ForeignKey(Clan, on_delete=models.CASCADE)
+    team = models.ForeignKey(Team, on_delete=models.CASCADE)
     message = models.CharField(verbose_name='メッセージ', max_length=255, null=True, blank=False)
     invite_url = models.URLField(verbose_name='招待URL', null=False)
 
@@ -181,7 +181,7 @@ class Apply(models.Model):
     id = models.UUIDField(default=uuid.uuid4, primary_key=True, editable=False)
     from_user = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name='send_apply')
     to_user = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name='receive_apply')
-    clan = models.ForeignKey(Clan, on_delete=models.CASCADE)
+    team = models.ForeignKey(Team, on_delete=models.CASCADE)
     message = models.CharField(verbose_name='志望理由', max_length=255, null=True, blank=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

@@ -3,23 +3,23 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>クランお探しアプリ</title>
+  <title>CrowdGamers</title>
   <title>{% block head_title %}{% endblock %}</title>
   <link rel='stylesheet' type='text/css' href=''>
   <link rel='stylesheet' type='text/css' href={% block stylesheet %}{% endblock %}>
 </head>
 <body>
   <p><a href="{% url 'accounts:account_settings' %}">設定</a></p>
-  <p><a href="{% url 'clans:clan_create' %}">クランを作成する</a></p>
-  <p><a href="{% url 'clans:clan_list' %}">クラン一覧</a></p>
+  <p><a href="{% url 'teams:team_create' %}">チームを作成する</a></p>
+  <p><a href="{% url 'teams:team_list' %}">チーム一覧</a></p>
   <p><a href="{% url 'accounts:account_list' %}">ユーザー一覧</a></p>
   <p><a href="{% url 'accounts:account_detail' object.pk %}">プロフィール</a></p>
   {% if user is authenticated %}
-    <p><a href="{% url 'clans:user_notice' pk=object.pk %}">お知らせ</a></p>
+    <p><a href="{% url 'teams:user_notice' pk=object.pk %}">お知らせ</a></p>
   {% endif %}
 
   {% if user is authenticated %}
-    <p><a href="{% url 'accounts:account_detail' pk=object.pk %}">プロフィール</a></p>
+    <p><a href="{% url 'accounts:account_detail_game' pk=object.pk %}">プロフィール</a></p>
   {% else %}
     <p><a href="{% url 'accounts:account_login' %}">ログイン</a></p>
   {% endif %}

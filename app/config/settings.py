@@ -23,7 +23,7 @@ ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
     'accounts.apps.AccountsConfig',
-    'clans.apps.ClansConfig',
+    'teams.apps.TeamsConfig',
     'social_django',
 
     'django.contrib.admin',

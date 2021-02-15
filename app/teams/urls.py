@@ -3,15 +3,15 @@ from . import views
 
 
 
-app_name = 'clans'
+app_name = 'teams'
 
 urlpatterns = [
     path('', views.home, name='home'),
-    path('clan/create/', views.clan_create, name='clan_create'),
-    path('clan/list/', views.clan_list, name='clan_list'),
-    path('clan/<str:clan_name>/', views.clan_detail, name='clan_detail'),
-    path('clan/<str:clan_name>/update/', views.clan_update, name='clan_update'),
-    path('clan/<str:clan_name>/delete/', views.clan_delete, name='clan_delete'),
+    path('team/create/', views.team_create, name='team_create'),
+    path('team/list/', views.team_list, name='team_list'),
+    path('team/<str:team_name>/', views.team_detail, name='team_detail'),
+    path('team/<str:team_name>/update/', views.team_update, name='team_update'),
+    path('team/<str:team_name>/delete/', views.team_delete, name='team_delete'),
 
     # プロフィール
     path('<str:username>/game/', views.account_detail_game, name='account_detail_game'),
@@ -25,9 +25,9 @@ urlpatterns = [
     path('notification/invite/<int:pk>/', views.user_invite_notification_detail, name='user_invite_notification_detail'),
 
     # リクエスト送信
-    path('<str:clan_name>/clan/request/input/', views.clan_request_input, name='clan_request_input'),
-    path('<str:clan_name>/clan/request/confirm/', views.clan_request_confirm, name='clan_request_confirm'),
-    path('<str:clan_name>/clan/request/create/', views.clan_request_create, name='clan_request_create'),
+    path('<str:team_name>/team/request/input/', views.team_request_input, name='team_request_input'),
+    path('<str:team_name>/team/request/confirm/', views.team_request_confirm, name='team_request_confirm'),
+    path('<str:team_name>/team/request/create/', views.team_request_create, name='team_request_create'),
 
     # 招待送信
     path('<str:username>/invite/input/', views.user_invite_input, name='user_invite_input'),
@@ -35,10 +35,10 @@ urlpatterns = [
     path('<str:username>/invite/create/', views.user_invite_create, name='user_invite_create'),
 
     # サポートページ
-    path('terms-of-service/', views.TemplateView.as_view(template_name='clans/support/terms-of-service.html'),
+    path('terms-of-service/', views.TemplateView.as_view(template_name='teams/support/terms-of-service.html'),
             name='terms-of-service'),
-    path('privacy-policy/', views.TemplateView.as_view(template_name='clans/support/privacy-policy.html'),
+    path('privacy-policy/', views.TemplateView.as_view(template_name='teams/support/privacy-policy.html'),
             name='privacy-policy'),
-    path('contact/', views.TemplateView.as_view(template_name='clans/support/contact.html')),
+    path('contact/', views.TemplateView.as_view(template_name='teams/support/contact.html')),
     path('faq/', views.faq, name='faq'),
 ]

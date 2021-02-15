@@ -3,7 +3,7 @@
 {% block content %}
   {% for object in objects %}
   <hr>
-    <p><a href="{% url 'clans:user_apply_notice_detail' object.pk %}">詳細</a></p>
+    <p><a href="{% url 'teams:user_apply_notice_detail' object.pk %}">詳細</a></p>
   {% endfor %}
 
 {% endblock %}

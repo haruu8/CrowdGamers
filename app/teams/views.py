@@ -3,9 +3,9 @@ from django.urls import reverse_lazy
 from django.views.generic import TemplateView, CreateView, DetailView, ListView, UpdateView, DeleteView, FormView
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from .models import Clan, Invite, Apply, Question, UserProfile
+from .models import Team, Invite, Apply, Question, UserProfile
 from accounts.models import User
-from .forms import ClanCreateForm, UserInviteCreateForm, ClanRequestCreateForm
+from .forms import TeamCreateForm, UserInviteCreateForm, TeamRequestCreateForm
 
 
 
@@ -19,7 +19,7 @@ class OnlyYouMixin(UserPassesTestMixin):
 
 
 class HomeView(generic.TemplateView):
-    template_name = 'clans/home.html'
+    template_name = 'teams/home.html'
 
 home = HomeView.as_view()
 
@@ -28,7 +28,7 @@ home = HomeView.as_view()
 """ UserProfileに関するview """
 
 class UserDetailGameView(DetailView):
-    template_name = 'clans/accounts/account_detail_game.html'
+    template_name = 'teams/accounts/account_detail_game.html'
     model = User
 
 account_detail_game = UserDetailGameView.as_view()
@@ -36,7 +36,7 @@ account_detail_game = UserDetailGameView.as_view()
 
 
 class UserDetailFeatureView(DetailView):
-    template_name = 'clans/accounts/account_detail_feature.html'
+    template_name = 'teams/accounts/account_detail_feature.html'
     model = User
 
 account_detail_feature = UserDetailFeatureView.as_view()
@@ -44,14 +44,14 @@ account_detail_feature = UserDetailFeatureView.as_view()
 
 
 class UserDetailDesiredJobTypeView(DetailView):
-    template_name = 'clans/accounts/account_detail_desired_job_type.html'
+    template_name = 'teams/accounts/account_detail_desired_job_type.html'
 
 account_detail_desired_job_type = UserDetailDesiredJobTypeView.as_view()
 
 
 
 class UserInviteNotificationView(LoginRequiredMixin, OnlyYouMixin, TemplateView):
-    template_name = 'clans/notification/user_invite_notification.html'
+    template_name = 'teams/notification/user_invite_notification.html'
 
     def get_context_data(self, **kwargs):
 
@@ -68,7 +68,7 @@ user_invite_notification = UserInviteNotificationView.as_view()
 
 
 class UserInviteNotificationDetailView(LoginRequiredMixin, OnlyYouMixin, DetailView):
-    template_name = 'clans/notification/user_invite_notification_detail.html'
+    template_name = 'teams/notification/user_invite_notification_detail.html'
     model = Invite
 
 user_invite_notification_detail = UserInviteNotificationDetailView.as_view()
@@ -76,7 +76,7 @@ user_invite_notification_detail = UserInviteNotificationDetailView.as_view()
 
 
 class UserApplyNotificationView(LoginRequiredMixin, OnlyYouMixin, TemplateView):
-    template_name = 'clans/notification/user_apply_notification.html'
+    template_name = 'teams/notification/user_apply_notification.html'
 
     def get_context_data(self, **kwargs):
 
@@ -92,18 +92,18 @@ user_apply_notification = UserApplyNotificationView.as_view()
 
 
 class UserApplyNotificationDetailView(LoginRequiredMixin, OnlyYouMixin, DetailView):
-    template_name = 'clans/notification/user_apply_notification_detail.html'
+    template_name = 'teams/notification/user_apply_notification_detail.html'
     model = Apply
 
 user_apply_notification_detail = UserApplyNotificationDetailView.as_view()
 
 
 
-class ClanCreateView(LoginRequiredMixin, CreateView):
-    template_name = 'clans/clan_create.html'
-    model = Clan
-    form_class = ClanCreateForm
-    success_url = reverse_lazy('clans:home')
+class TeamCreateView(LoginRequiredMixin, CreateView):
+    template_name = 'teams/team_create.html'
+    model = Team
+    form_class = TeamCreateForm
+    success_url = reverse_lazy('teams:home')
 
     def form_valid(self, form):
         user = form.save(commit=True)
@@ -111,79 +111,79 @@ class ClanCreateView(LoginRequiredMixin, CreateView):
         form.instance.user = self.request.user
         return super().form_valid(form)
 
-clan_create = ClanCreateView.as_view()
+team_create = TeamCreateView.as_view()
 
 
 
-class ClanListView(ListView):
-    template_name = 'clans/clan_list.html'
-    model = Clan
+class TeamListView(ListView):
+    template_name = 'teams/team_list.html'
+    model = Team
 
-clan_list = ClanListView.as_view()
-
-
-
-class ClanDetailView(DetailView):
-    template_name = 'clans/clan_detail.html'
-    model = Clan
-
-clan_detail = ClanDetailView.as_view()
+team_list = TeamListView.as_view()
 
 
 
-class ClanUpdateView(LoginRequiredMixin, OnlyYouMixin, UpdateView):
-    template_name = 'clans/clan_update.html'
-    model = Clan
-    form_class = ClanCreateForm
-    success_url = reverse_lazy('clans:home')
+class TeamDetailView(DetailView):
+    template_name = 'teams/team_detail.html'
+    model = Team
+
+team_detail = TeamDetailView.as_view()
+
+
+
+class TeamUpdateView(LoginRequiredMixin, OnlyYouMixin, UpdateView):
+    template_name = 'teams/team_update.html'
+    model = Team
+    form_class = TeamCreateForm
+    success_url = reverse_lazy('teams:home')
 
     def form_valid(self, form):
         return redirect(self.get_success_url())
 
-clan_update = ClanUpdateView.as_view()
+team_update = TeamUpdateView.as_view()
 
 
 
-class ClanDeleteView(LoginRequiredMixin, OnlyYouMixin, DeleteView):
-    template_name = 'clans/clan_delete.html'
-    model = Clan
-    success_url = reverse_lazy('clan:home')
+class TeamDeleteView(LoginRequiredMixin, OnlyYouMixin, DeleteView):
+    template_name = 'teams/team_delete.html'
+    model = Team
+    success_url = reverse_lazy('team:home')
 
-clan_delete = ClanDeleteView.as_view()
+team_delete = TeamDeleteView.as_view()
 
 
 
 """ クランリクエストに関する view """
 
-class ClanRequestInputView(LoginRequiredMixin, generic.FormView):
-    template_name = 'clans/request/clan_request_input.html'
-    form_class = ClanRequestCreateForm
+class TeamRequestInputView(LoginRequiredMixin, generic.FormView):
+    template_name = 'teams/request/team_request_input.html'
+    form_class = TeamRequestCreateForm
 
     def form_valid(self, form):
         return render(self.request, self.template_name, {'form': form})
 
-clan_request_input = ClanRequestInputView.as_view()
+team_request_input = TeamRequestInputView.as_view()
 
 
 
-class ClanRequestConfirmView(LoginRequiredMixin, FormView):
-    template_name = 'clans/request/clan_request_confirm.html'
-    form_class = ClanRequestCreateForm
+class TeamRequestConfirmView(LoginRequiredMixin, FormView):
+    template_name = 'teams/request/team_request_confirm.html'
+    form_class = TeamRequestCreateForm
 
     def form_valid(self, form):
         return render(self.request, self.template_name, {'form': form})
 
     def form_invalid(self, form):
-        return render(self.request, 'clans/clan_request_input.html', {'form': form})
+        return render(self.request, 'teams/team_request_input.html', {'form': form})
 
-clan_request_confirm = ClanRequestConfirmView.as_view()
+team_request_confirm = TeamRequestConfirmView.as_view()
 
 
 
-class ClanRequestCreateView(LoginRequiredMixin, CreateView):
-    template_name = 'clans/request/clan_request_input.html'
-    form_class = ClanRequestCreateForm
-    success_url = reverse_lazy('clans:home')
+class TeamRequestCreateView(LoginRequiredMixin, CreateView):
+    template_name = 'teams/request/team_request_input.html'
+    form_class = TeamRequestCreateForm
+    success_url = reverse_lazy('teams:home')
 
     def form_valid(self, form):
         form.instance.user = self.request.user
@@ -193,14 +193,14 @@ class ClanRequestCreateView(LoginRequiredMixin, CreateView):
     def form_invalid(self, form):
         return render(self.request, self.template_name, {'form': form})
 
-clan_request_create = ClanRequestCreateView.as_view()
+team_request_create = TeamRequestCreateView.as_view()
 
 
 
 """ ユーザー招待に関する view """
 
 class UserInviteInputView(LoginRequiredMixin, generic.FormView):
-    template_name = 'clans/invite/user_invite_input.html'
+    template_name = 'teams/invite/user_invite_input.html'
     form_class = UserInviteCreateForm
 
     def form_valid(self, form):
@@ -211,23 +211,23 @@ user_invite_input = UserInviteInputView.as_view()
 
 
 class UserInviteConfirmView(LoginRequiredMixin, FormView):
-    template_name = 'clans/invite/user_invite_confirm.html'
+    template_name = 'teams/invite/user_invite_confirm.html'
     form_class = UserInviteCreateForm
 
     def form_valid(self, form):
         return render(self.request, self.template_name, {'form': form})
 
     def form_invalid(self, form):
-        return render(self.request, 'clans/user_invite_input.html', {'form': form})
+        return render(self.request, 'teams/user_invite_input.html', {'form': form})
 
 user_invite_confirm = UserInviteConfirmView.as_view()
 
 
 
 class UserInviteCreateView(LoginRequiredMixin, CreateView):
-    template_name = 'clans/invite/user_invite_input.html'
+    template_name = 'teams/invite/user_invite_input.html'
     form_class = UserInviteCreateForm
-    success_url = reverse_lazy('clans:home')
+    success_url = reverse_lazy('teams:home')
 
     def form_valid(self, form):
         form.instance.user = self.request.user
@@ -242,7 +242,7 @@ user_invite_create = UserInviteCreateView.as_view()
 
 
 class FreqentlyQuestionAskedView(generic.TemplateView):
-    template_name = 'clans/support/faq.html'
+    template_name = 'teams/support/faq.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

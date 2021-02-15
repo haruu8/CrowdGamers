@@ -12,7 +12,7 @@ admin.site.index_title = 'システム管理'
 
 
 urlpatterns = [
-    path('', include('clans.urls')),
+    path('', include('teams.urls')),
     path('accounts/', include('accounts.urls')),
     path('accounts/', include('social_django.urls', namespace='social')),
     path('admin/', admin.site.urls),

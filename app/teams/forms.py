@@ -1,5 +1,5 @@
 from django import forms
-from .models import Clan, Invite, Apply, Feature, UserProfile
+from .models import Team, Invite, Apply, Feature, UserProfile
 
 
 
@@ -33,10 +33,10 @@ class UserProfileUpdateForm(forms.ModelForm):
 
 
 
-class ClanCreateForm(forms.ModelForm):
+class TeamCreateForm(forms.ModelForm):
 
     class Meta:
-        model = Clan
+        model = Team
         fields = ('name', 'icon', 'url', 'description',
                     'sponsor', 'feature', 'desired_condition', 'disclosed')
         labels = {
@@ -67,7 +67,7 @@ class ClanCreateForm(forms.ModelForm):
 
 
     def __init__(self, *args, **kwargs):
-        super(ClanCreateForm, self).__init__(*args, **kwargs)
+        super(TeamCreateForm, self).__init__(*args, **kwargs)
         for field in self.fields.values():
             field.error_messages = {'required':'{fieldname} は必須です。'.format(fieldname=field.label)}
             field.widget.attrs['class'] = 'form-control'
@@ -96,7 +96,7 @@ class UserInviteCreateForm(forms.ModelForm):
 
 
 
-class ClanRequestCreateForm(forms.ModelForm):
+class TeamRequestCreateForm(forms.ModelForm):
     class Meta:
         model = Apply
         fields = ('message',)
@@ -108,7 +108,7 @@ class ClanRequestCreateForm(forms.ModelForm):
                                 widget=forms.Textarea(attrs={'placeholder': '志望理由を入力してください', 'render_value': True}))
 
     def __init__(self, *args, **kwargs):
-        super(ClanRequestCreateForm, self).__init__(*args, **kwargs)
+        super(TeamRequestCreateForm, self).__init__(*args, **kwargs)
         for field in self.fields.values():
             field.error_messages = {'required':'{fieldname} は必須です。'.format(fieldname=field.label)}
             field.widget.attrs['class'] = 'form-control'
