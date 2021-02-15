@@ -25,6 +25,8 @@ home = HomeView.as_view()
 
 
 
+""" UserProfileに関するview """
+
 class UserDetailGameView(DetailView):
     template_name = 'clans/accounts/account_detail_game.html'
     model = User
@@ -48,8 +50,8 @@ account_detail_desired_job_type = UserDetailDesiredJobTypeView.as_view()
 
 
 
-class UserInviteNoticeView(LoginRequiredMixin, OnlyYouMixin, TemplateView):
-    template_name = 'clans/user_invite_notice.html'
+class UserInviteNotificationView(LoginRequiredMixin, OnlyYouMixin, TemplateView):
+    template_name = 'clans/notification/user_invite_notification.html'
 
     def get_context_data(self, **kwargs):
 
@@ -61,20 +63,20 @@ class UserInviteNoticeView(LoginRequiredMixin, OnlyYouMixin, TemplateView):
             context['invite'] = Invite.objects.get(user=self.request.user)
             return context
 
-user_invite_notice = UserInviteNoticeView.as_view()
+user_invite_notification = UserInviteNotificationView.as_view()
 
 
 
-class UserInviteNoticeDetailView(LoginRequiredMixin, OnlyYouMixin, DetailView):
-    template_name = 'clans/user_invite_notice_detail.html'
+class UserInviteNotificationDetailView(LoginRequiredMixin, OnlyYouMixin, DetailView):
+    template_name = 'clans/notification/user_invite_notification_detail.html'
     model = Invite
 
-user_invite_notice_detail = UserInviteNoticeDetailView.as_view()
+user_invite_notification_detail = UserInviteNotificationDetailView.as_view()
 
 
 
-class UserApplyNoticeView(LoginRequiredMixin, OnlyYouMixin, TemplateView):
-    template_name = 'clans/user_apply_notice.html'
+class UserApplyNotificationView(LoginRequiredMixin, OnlyYouMixin, TemplateView):
+    template_name = 'clans/notification/user_apply_notification.html'
 
     def get_context_data(self, **kwargs):
 
@@ -85,15 +87,15 @@ class UserApplyNoticeView(LoginRequiredMixin, OnlyYouMixin, TemplateView):
         context['apply'] = Apply.objects.get(user=self.request.user)
         return context
 
-user_apply_notice = UserApplyNoticeView.as_view()
+user_apply_notification = UserApplyNotificationView.as_view()
 
 
 
-class UserApplyNoticeDetailView(LoginRequiredMixin, OnlyYouMixin, DetailView):
-    template_name = 'clans/user_apply_notice_detail.html'
+class UserApplyNotificationDetailView(LoginRequiredMixin, OnlyYouMixin, DetailView):
+    template_name = 'clans/notification/user_apply_notification_detail.html'
     model = Apply
 
-user_apply_notice_detail = UserApplyNoticeDetailView.as_view()
+user_apply_notification_detail = UserApplyNotificationDetailView.as_view()
 
 
 
@@ -154,7 +156,7 @@ clan_delete = ClanDeleteView.as_view()
 """ クランリクエストに関する view """
 
 class ClanRequestInputView(LoginRequiredMixin, generic.FormView):
-    template_name = 'clans/clan_request_input.html'
+    template_name = 'clans/request/clan_request_input.html'
     form_class = ClanRequestCreateForm
 
     def form_valid(self, form):
@@ -165,7 +167,7 @@ clan_request_input = ClanRequestInputView.as_view()
 
 
 class ClanRequestConfirmView(LoginRequiredMixin, FormView):
-    template_name = 'clans/clan_request_confirm.html'
+    template_name = 'clans/request/clan_request_confirm.html'
     form_class = ClanRequestCreateForm
 
     def form_valid(self, form):
@@ -179,7 +181,7 @@ clan_request_confirm = ClanRequestConfirmView.as_view()
 
 
 class ClanRequestCreateView(LoginRequiredMixin, CreateView):
-    template_name = 'clans/clan_request_input.html'
+    template_name = 'clans/request/clan_request_input.html'
     form_class = ClanRequestCreateForm
     success_url = reverse_lazy('clans:home')
 
@@ -198,7 +200,7 @@ clan_request_create = ClanRequestCreateView.as_view()
 """ ユーザー招待に関する view """
 
 class UserInviteInputView(LoginRequiredMixin, generic.FormView):
-    template_name = 'clans/user_invite_input.html'
+    template_name = 'clans/invite/user_invite_input.html'
     form_class = UserInviteCreateForm
 
     def form_valid(self, form):
@@ -209,7 +211,7 @@ user_invite_input = UserInviteInputView.as_view()
 
 
 class UserInviteConfirmView(LoginRequiredMixin, FormView):
-    template_name = 'clans/user_invite_confirm.html'
+    template_name = 'clans/invite/user_invite_confirm.html'
     form_class = UserInviteCreateForm
 
     def form_valid(self, form):
@@ -223,7 +225,7 @@ user_invite_confirm = UserInviteConfirmView.as_view()
 
 
 class UserInviteCreateView(LoginRequiredMixin, CreateView):
-    template_name = 'clans/user_invite_input.html'
+    template_name = 'clans/invite/user_invite_input.html'
     form_class = UserInviteCreateForm
     success_url = reverse_lazy('clans:home')
 
