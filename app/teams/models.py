@@ -130,7 +130,7 @@ class UserProfile(models.Model):
         validators=[
             validate_header_image,
         ])
-    date_of_birth = models.DateField(null=False, blank=False)
+    date_of_birth = models.DateField(null=True, blank=True)
     is_owner = models.BooleanField(default=False)
     team = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='team', null=True, blank=True)
     game_title = models.ManyToManyField(Game, related_name='user_game_title')

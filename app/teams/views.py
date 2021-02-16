@@ -29,7 +29,11 @@ home = HomeView.as_view()
 
 class UserDetailGameView(DetailView):
     template_name = 'teams/accounts/account_detail_game.html'
-    model = User
+    model = UserProfile
+
+    def get_object(self):
+        username= self.kwargs.get("username")
+        return get_object_or_404(User, username=username)
 
 account_detail_game = UserDetailGameView.as_view()
 
@@ -37,7 +41,7 @@ account_detail_game = UserDetailGameView.as_view()
 
 class UserDetailFeatureView(DetailView):
     template_name = 'teams/accounts/account_detail_feature.html'
-    model = User
+    model = UserProfile
 
 account_detail_feature = UserDetailFeatureView.as_view()
 
@@ -45,6 +49,7 @@ account_detail_feature = UserDetailFeatureView.as_view()
 
 class UserDetailDesiredJobTypeView(DetailView):
     template_name = 'teams/accounts/account_detail_desired_job_type.html'
+    model = UserProfile
 
 account_detail_desired_job_type = UserDetailDesiredJobTypeView.as_view()
 

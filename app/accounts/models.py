@@ -73,7 +73,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         ),
     )
     email = models.EmailField(null=True, blank=True, editable=False)
-    user_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    user_id = models.AutoField(primary_key=True, editable=False)
     username_regex = RegexValidator(regex=r'[a-xA-Z0-9_]')
     username = models.CharField(
         verbose_name='ユーザーネーム',
@@ -106,5 +106,5 @@ class User(AbstractBaseUser, PermissionsMixin):
 def create_user_profile(sender, **kwargs):
     # 新規ユーザー作成時に UserProfile モデルの空インスタンスを生成
     if kwargs['created']:
-        from clans.models import UserProfile
+        from teams.models import UserProfile
         profile = UserProfile.objects.get_or_create(user=kwargs['instance'])
