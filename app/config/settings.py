@@ -140,7 +140,7 @@ SITE_ID = 1
 '''
 
 # ログイン・ログアウト時のリダイレクト先
-LOGIN_REDIRECT_URL = 'clans:home'
+LOGIN_REDIRECT_URL = 'teams:home'
 ACCOUNT_LOGOUT_REDIRECT_URL = 'accounts:account_login'
 LOGIN_URL = 'accounts:account_login'
 

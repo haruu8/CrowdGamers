@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+  <div>
+    <input id="check" type="checkbox" /><p><a href='{% url "teams:terms-of-service" %}'>利用規約</a>・<a href='{% url "teams:privacy-policy" %}'>プライバシーポリシー</a>を読んだ上、同意する</p>
+    <button type="submit" id='button' disabled='disabled' onclick="location.href='{% url 'social:begin' 'twitter' %}'">Twitter登録 &raquo;</button>
+  </div>
+  <p><a href="{% url 'accounts:account_login' %}">ログイン</a></p>
+
+{% endblock %}
+
+{% block script %}
+
+  <script type='text/javascript'>
+    $('#check').change(function() {
+      if ( $(this).is(':checked') ){
+          $('#button').prop('disabled', false);
+      } else {
+          $('#button').prop('disabled', true);
+      }
+    });
+  </script>
+
+{% endblock %}

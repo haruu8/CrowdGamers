@@ -1,1 +1,10 @@
 {% extends 'base.html' %}
+
+{% block content %}
+
+  {{ object.name }}
+  {{ object.username }}
+
+  {% block profile_content %}{% endblock %}
+
+{% endblock %}
