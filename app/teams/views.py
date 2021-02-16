@@ -43,6 +43,10 @@ class UserDetailFeatureView(DetailView):
     template_name = 'teams/accounts/account_detail_feature.html'
     model = UserProfile
 
+    def get_object(self):
+        username= self.kwargs.get("username")
+        return get_object_or_404(User, username=username)
+
 account_detail_feature = UserDetailFeatureView.as_view()
 
 
@@ -50,6 +54,10 @@ account_detail_feature = UserDetailFeatureView.as_view()
 class UserDetailDesiredJobTypeView(DetailView):
     template_name = 'teams/accounts/account_detail_desired_job_type.html'
     model = UserProfile
+
+    def get_object(self):
+        username= self.kwargs.get("username")
+        return get_object_or_404(User, username=username)
 
 account_detail_desired_job_type = UserDetailDesiredJobTypeView.as_view()
 
@@ -179,7 +187,7 @@ class TeamApplyConfirmView(LoginRequiredMixin, FormView):
         return render(self.request, self.template_name, {'form': form})
 
     def form_invalid(self, form):
-        return render(self.request, 'teams/team_apply_input.html', {'form': form})
+        return render(self.request, 'teams/apply/team_apply_input.html', {'form': form})
 
 team_apply_confirm = TeamApplyConfirmView.as_view()
 
@@ -194,9 +202,8 @@ class TeamApplyCreateView(LoginRequiredMixin, CreateView):
         form.instance.user = self.request.user
         return redirect(self.success_url)
 
-    # エラーページに遷移するのがいいのか
     def form_invalid(self, form):
-        return render(self.request, self.template_name, {'form': form})
+        return render(self.request, '400.html', {'form': form})
 
 team_apply_create = TeamApplyCreateView.as_view()
 
@@ -238,9 +245,8 @@ class UserInviteCreateView(LoginRequiredMixin, CreateView):
         form.instance.user = self.request.user
         return redirect(self.success_url)
 
-    # エラーページに遷移するのがいいのか
     def form_invalid(self, form):
-        return render(self.request, self.template_name, {'form': form})
+        return render(self.request, '400.html', {'form': form})
 
 user_invite_create = UserInviteCreateView.as_view()
 
