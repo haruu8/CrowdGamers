@@ -9,6 +9,6 @@
   {% if object.disclosed is True %}
     <p>希望条件：{{ object.desired_condition }}</p>
   {% endif %}
-  <p><a href="{% url 'teams:team_request_input' %}">リクエストを送る</a></p>
+  <p><a href="{% url 'teams:team_apply_input' %}">リクエストを送る</a></p>
 
 {% endblock %}

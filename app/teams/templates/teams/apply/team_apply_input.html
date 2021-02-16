@@ -2,8 +2,8 @@
 
 {% block content %}
 
-  <p>team_request_input画面</p>
-  <form action="{% url 'teams:team_request_confirm' %}" method="POST">
+  <p>team_apply_input画面</p>
+  <form action="{% url 'teams:team_apply_confirm' %}" method="POST">
     {{ form.non_field_errors }}
     {% for field in form %}
     <div class="form-group">

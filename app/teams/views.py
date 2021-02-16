@@ -5,7 +5,7 @@ from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from .models import Team, Invite, Apply, Question, UserProfile
 from accounts.models import User
-from .forms import TeamCreateForm, UserInviteCreateForm, TeamRequestCreateForm
+from .forms import TeamCreateForm, UserInviteCreateForm, TeamApplyCreateForm
 
 
 
@@ -155,34 +155,34 @@ team_delete = TeamDeleteView.as_view()
 
 """ クランリクエストに関する view """
 
-class TeamRequestInputView(LoginRequiredMixin, generic.FormView):
-    template_name = 'teams/request/team_request_input.html'
-    form_class = TeamRequestCreateForm
+class TeamApplyInputView(LoginRequiredMixin, generic.FormView):
+    template_name = 'teams/apply/team_apply_input.html'
+    form_class = TeamApplyCreateForm
 
     def form_valid(self, form):
         return render(self.request, self.template_name, {'form': form})
 
-team_request_input = TeamRequestInputView.as_view()
+team_apply_input = TeamApplyInputView.as_view()
 
 
 
-class TeamRequestConfirmView(LoginRequiredMixin, FormView):
-    template_name = 'teams/request/team_request_confirm.html'
-    form_class = TeamRequestCreateForm
+class TeamApplyConfirmView(LoginRequiredMixin, FormView):
+    template_name = 'teams/apply/team_apply_confirm.html'
+    form_class = TeamApplyCreateForm
 
     def form_valid(self, form):
         return render(self.request, self.template_name, {'form': form})
 
     def form_invalid(self, form):
-        return render(self.request, 'teams/team_request_input.html', {'form': form})
+        return render(self.request, 'teams/team_apply_input.html', {'form': form})
 
-team_request_confirm = TeamRequestConfirmView.as_view()
+team_apply_confirm = TeamApplyConfirmView.as_view()
 
 
 
-class TeamRequestCreateView(LoginRequiredMixin, CreateView):
-    template_name = 'teams/request/team_request_input.html'
-    form_class = TeamRequestCreateForm
+class TeamApplyCreateView(LoginRequiredMixin, CreateView):
+    template_name = 'teams/apply/team_apply_input.html'
+    form_class = TeamApplyCreateForm
     success_url = reverse_lazy('teams:home')
 
     def form_valid(self, form):
@@ -193,7 +193,7 @@ class TeamRequestCreateView(LoginRequiredMixin, CreateView):
     def form_invalid(self, form):
         return render(self.request, self.template_name, {'form': form})
 
-team_request_create = TeamRequestCreateView.as_view()
+team_apply_create = TeamApplyCreateView.as_view()
 
 
 
