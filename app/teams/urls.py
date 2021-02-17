@@ -27,12 +27,12 @@ urlpatterns = [
     # リクエスト送信
     path('team/apply/input/', views.team_apply_input, name='team_apply_input'),
     path('team/apply/confirm/', views.team_apply_confirm, name='team_apply_confirm'),
-    path('<str:teamname>/team/apply/create/', views.team_apply_create, name='team_apply_create'),
+    path('team/apply/create/', views.team_apply_create, name='team_apply_create'),
 
     # 招待送信
     path('invite/input/', views.user_invite_input, name='user_invite_input'),
     path('invite/confirm/', views.user_invite_confirm, name='user_invite_confirm'),
-    path('<str:username>/invite/create/', views.user_invite_create, name='user_invite_create'),
+    path('invite/create/', views.user_invite_create, name='user_invite_create'),
 
     # サポートページ
     path('terms-of-service/', views.TemplateView.as_view(template_name='teams/support/terms-of-service.html'),
