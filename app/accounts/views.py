@@ -4,8 +4,13 @@ from django.views import generic
 from django.views.generic import TemplateView, DetailView, UpdateView, DeleteView, ListView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import get_user_model
 from .models import User
 from .forms import UserUpdateForm
+
+
+
+user = get_user_model()
 
 
 

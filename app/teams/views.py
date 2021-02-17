@@ -3,9 +3,14 @@ from django.urls import reverse_lazy
 from django.views.generic import TemplateView, CreateView, DetailView, ListView, UpdateView, DeleteView, FormView
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.auth import get_user_model
 from .models import Team, Invite, Apply, Question, UserProfile
 from accounts.models import User
 from .forms import TeamCreateForm, UserInviteCreateForm, TeamApplyCreateForm
+
+
+
+user = get_user_model()
 
 
 
@@ -14,7 +19,7 @@ class OnlyYouMixin(UserPassesTestMixin):
 
     def test_func(self):
         user = self.request.user
-        return user.pk == self.kwargs['pk'] or user.is_superuse
+        return user.id == self.kwargs['id'] or user.is_superuse
 
 
 
