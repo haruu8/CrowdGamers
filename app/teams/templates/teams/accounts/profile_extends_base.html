@@ -2,8 +2,8 @@
 
 {% block content %}
 
-  {{ object.name }}
-  {{ object.username }}
+  <p>ユーザーネーム：{{ object.username }}</p>
+  <p>{{ object.date_joined }}</p>
 
   {% block profile_content %}{% endblock %}
 

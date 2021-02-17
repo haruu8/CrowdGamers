@@ -37,9 +37,10 @@ class TeamCreateForm(forms.ModelForm):
 
     class Meta:
         model = Team
-        fields = ('name', 'icon', 'url', 'description',
+        fields = ('teamname', 'name', 'icon', 'url', 'description',
                     'sponsor', 'feature', 'desired_condition', 'disclosed')
         labels = {
+            'teamname': 'チームネーム',
             'name': '名前',
             'icon': 'アイコン',
             'url': '公式のURL',
@@ -50,6 +51,8 @@ class TeamCreateForm(forms.ModelForm):
             'disclosed': '公開・非公開',
         }
 
+    teamname = forms.CharField(required=True,
+                            widget=forms.TextInput(attrs={'placeholder': 'チームのユーザーネームを入力してください', 'render_value': True}))
     name = forms.CharField(required=True,
                             widget=forms.TextInput(attrs={'placeholder': 'クランの名前を入力してください', 'render_value': True}))
     icon = forms.ImageField(required=False)
