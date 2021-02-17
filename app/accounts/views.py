@@ -53,7 +53,7 @@ account_list = UserListView.as_view()
 
 
 
-class UserSettingsView(OnlyYouMixin, LoginRequiredMixin, generic.TemplateView):
+class UserSettingsView(LoginRequiredMixin, generic.TemplateView):
     template_name = 'accounts/account_settings.html'
 
     def get_object(self):

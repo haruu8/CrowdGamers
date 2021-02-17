@@ -2,7 +2,7 @@
 
 {% block content %}
 
-  <a href="{% url 'accounts:account_delete' object.username %}">退会</a>
-  <a href="{% url 'accounts:account_detail' object.username %}">プロフィール</a>
+  <a href="{% url 'accounts:account_delete' user.username %}">退会</a>
+  <p><a href="{% url 'teams:account_detail_game' user.username %}">プロフィール</a></p>
 
 {% endblock %}

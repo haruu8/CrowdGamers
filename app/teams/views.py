@@ -19,7 +19,7 @@ class OnlyYouMixin(UserPassesTestMixin):
 
     def test_func(self):
         user = self.request.user
-        return user.id == self.kwargs['id'] or user.is_superuse
+        return user.pk == self.kwargs['pk'] or user.is_superuse
 
 
 
