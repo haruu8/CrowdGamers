@@ -2,24 +2,16 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views import generic
 from django.views.generic import TemplateView, UpdateView, DeleteView, ListView
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
 from .models import User
 from .forms import UserUpdateForm
+from teams.views import OnlyYouMixin
 
 
 
 user = get_user_model()
-
-
-
-class OnlyYouMixin(UserPassesTestMixin):
-    raise_exception = True
-
-    def test_func(self):
-        user = self.request.user
-        return user.username == self.kwargs['username'] or user.is_superuser
 
 
 
