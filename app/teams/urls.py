@@ -30,8 +30,8 @@ urlpatterns = [
     path('<str:teamname>/team/apply/create/', views.team_apply_create, name='team_apply_create'),
 
     # 招待送信
-    path('<str:username>/invite/input/', views.user_invite_input, name='user_invite_input'),
-    path('<str:username>/invite/confirm/', views.user_invite_confirm, name='user_invite_confirm'),
+    path('invite/input/', views.user_invite_input, name='user_invite_input'),
+    path('invite/confirm/', views.user_invite_confirm, name='user_invite_confirm'),
     path('<str:username>/invite/create/', views.user_invite_create, name='user_invite_create'),
 
     # サポートページ
