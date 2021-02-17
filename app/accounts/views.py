@@ -14,7 +14,7 @@ class OnlyYouMixin(UserPassesTestMixin):
 
     def test_func(self):
         user = self.request.user
-        return user.pk == self.kwargs['pk'] or user.is_superuse
+        return user.pk == self.kwargs['pk'] or user.is_superuser
 
 
 
@@ -34,7 +34,7 @@ account_update = UserUpdateView.as_view()
 class UserDeleteView(OnlyYouMixin, LoginRequiredMixin, DeleteView):
     template_name = 'accounts/account_delete.html'
     model = User
-    success_url = reverse_lazy('clans:home')
+    success_url = reverse_lazy('teams:home')
 
 account_delete = UserDeleteView.as_view()
 

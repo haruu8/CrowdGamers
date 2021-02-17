@@ -73,7 +73,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         ),
     )
     email = models.EmailField(null=True, blank=True, editable=False)
-    user_id = models.AutoField(primary_key=True, editable=False)
+    id = models.AutoField(primary_key=True, editable=False)
     username_regex = RegexValidator(regex=r'[a-xA-Z0-9_]')
     username = models.CharField(
         verbose_name='ユーザーネーム',

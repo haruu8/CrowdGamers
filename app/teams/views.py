@@ -32,7 +32,7 @@ class UserDetailGameView(DetailView):
     model = UserProfile
 
     def get_object(self):
-        username= self.kwargs.get("username")
+        username = self.kwargs.get("username")
         return get_object_or_404(User, username=username)
 
 account_detail_game = UserDetailGameView.as_view()
