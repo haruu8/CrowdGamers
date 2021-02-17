@@ -61,7 +61,7 @@ class UserDetailDesiredJobTypeView(DetailView):
     model = UserProfile
 
     def get_object(self):
-        username= self.kwargs.get("username")
+        username = self.kwargs.get("username")
         return get_object_or_404(User, username=username)
 
 account_detail_desired_job_type = UserDetailDesiredJobTypeView.as_view()
@@ -77,9 +77,9 @@ class UserInviteNotificationView(LoginRequiredMixin, OnlyYouMixin, TemplateView)
             ユーザーに送った招待が承認・拒否された場合に通知
         """
         if self.request.user.is_owner == True:
-            context = super().get_context_data(**kwargs)
-            context['invite'] = Invite.objects.get(user=self.request.user)
-            return context
+            ctx = super().get_context_data(**kwargs)
+            ctx['invite'] = Invite.objects.get(user=self.request.user)
+            return ctx
 
 user_invite_notification = UserInviteNotificationView.as_view()
 
@@ -101,9 +101,9 @@ class UserApplyNotificationView(LoginRequiredMixin, OnlyYouMixin, TemplateView):
         """
             クランに送ったリクエストの承認可否
         """
-        context = super().get_context_data(**kwargs)
-        context['apply'] = Apply.objects.get(user=self.request.user)
-        return context
+        ctx = super().get_context_data(**kwargs)
+        ctx['apply'] = Apply.objects.get(user=self.request.user)
+        return ctx
 
 user_apply_notification = UserApplyNotificationView.as_view()
 
