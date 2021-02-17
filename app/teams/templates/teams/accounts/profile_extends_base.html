@@ -2,8 +2,12 @@
 
 {% block content %}
 
-  <p>ユーザーネーム：{{ object.username }}</p>
-  <p>{{ object.date_joined }}</p>
+  <p>ユーザーネーム：@{{ object.username }}</p>
+  <img src="{{ object.icon.url }}">
+  <p>ニックネーム：{{ user_profile.name }}</p>
+  <p><a href="https://twitter.com/{{ object.username }}/">twitter</a></p>
+  <p>作成日時：{{ object.date_joined }}</p>
+  <hr>
 
   {% block profile_content %}{% endblock %}
 
