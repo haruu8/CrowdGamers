@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views import generic
 from django.views.generic import TemplateView, DetailView, UpdateView, DeleteView, ListView
@@ -48,7 +48,11 @@ account_list = UserListView.as_view()
 
 
 
-class UserSettingsView(LoginRequiredMixin, generic.TemplateView):
+class UserSettingsView(OnlyYouMixin, LoginRequiredMixin, generic.TemplateView):
     template_name = 'accounts/account_settings.html'
+
+    def get_object(self):
+        username = self.kwargs.get("username")
+        return get_object_or_404(User, username=username)
 
 account_settings = UserSettingsView.as_view()

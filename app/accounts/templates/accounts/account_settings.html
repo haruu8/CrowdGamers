@@ -2,8 +2,7 @@
 
 {% block content %}
 
-  <!-- pk=object.pk っていう書き方 -->
-  <a href="{% url 'accounts:account_delete' item.username %}">退会</a>
-  <a href="{% url 'accounts:account_detail' item.username %}">プロフィール</a>
+  <a href="{% url 'accounts:account_delete' object.username %}">退会</a>
+  <a href="{% url 'accounts:account_detail' object.username %}">プロフィール</a>
 
 {% endblock %}
