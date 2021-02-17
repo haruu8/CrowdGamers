@@ -3,9 +3,9 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView, DetailView, ListView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import get_user_model
-from .models import Team
 from accounts.models import User
-from .forms import TeamCreateForm
+from teams.models import Team
+from teams.forms import TeamCreateForm
 from teams.views import OnlyYouMixin
 
 
@@ -66,4 +66,3 @@ class TeamDeleteView(LoginRequiredMixin, OnlyYouMixin, DeleteView):
     success_url = reverse_lazy('team:home')
 
 team_delete = TeamDeleteView.as_view()
- 

@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404
 from django.views.generic import DetailView
 from django.contrib.auth import get_user_model
-from .models import Apply, UserProfile
+from teams.models import Apply, UserProfile
 from accounts.models import User
 
 
@@ -18,7 +18,7 @@ class UserProfileBaseView(DetailView):
 
 
 
-class UserDetailGameView(UserProfileBaseView):
+class UserProfileDetailGameView(UserProfileBaseView):
     template_name = 'teams/accounts/account_detail_game.html'
     model = UserProfile
 
@@ -28,11 +28,11 @@ class UserDetailGameView(UserProfileBaseView):
         ctx['game_title'] = UserProfile.objects.get(user=self.request.user)
         return ctx
 
-account_detail_game = UserDetailGameView.as_view()
+account_detail_game = UserProfileDetailGameView.as_view()
 
 
 
-class UserDetailFeatureView(UserProfileBaseView):
+class UserProfileDetailFeatureView(UserProfileBaseView):
     template_name = 'teams/accounts/account_detail_feature.html'
     model = UserProfile
 
@@ -42,11 +42,11 @@ class UserDetailFeatureView(UserProfileBaseView):
         ctx['feature'] = UserProfile.objects.get(user=self.request.user)
         return ctx
 
-account_detail_feature = UserDetailFeatureView.as_view()
+account_detail_feature = UserProfileDetailFeatureView.as_view()
 
 
 
-class UserDetailDesiredJobTypeView(UserProfileBaseView):
+class UserProfileDetailDesiredJobTypeView(UserProfileBaseView):
     template_name = 'teams/accounts/account_detail_desired_job_type.html'
     model = UserProfile
 
@@ -56,4 +56,4 @@ class UserDetailDesiredJobTypeView(UserProfileBaseView):
         ctx['desired'] = UserProfile.objects.get(user=self.request.user)
         return ctx
 
-account_detail_desired_job_type = UserDetailDesiredJobTypeView.as_view()
+account_detail_desired_job_type = UserProfileDetailDesiredJobTypeView.as_view()

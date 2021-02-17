@@ -3,8 +3,8 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView, FormView
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .models import Invite
-from .forms import UserInviteCreateForm
+from teams.models import Invite
+from teams.forms import UserInviteCreateForm
 
 
 

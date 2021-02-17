@@ -3,7 +3,7 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView, FormView
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .models import Apply
+from teams.models import Apply
 from teams.forms import TeamApplyCreateForm
 
 

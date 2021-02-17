@@ -2,9 +2,9 @@ from django.views.generic import TemplateView, CreateView, DetailView, FormView
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import get_user_model
-from .models import Team, Invite, Apply
 from accounts.models import User
-from .forms import UserInviteCreateForm, TeamApplyCreateForm
+from teams.models import Team, Invite, Apply
+from teams.forms import UserInviteCreateForm, TeamApplyCreateForm
 from .access import OnlyYouMixin
 
 

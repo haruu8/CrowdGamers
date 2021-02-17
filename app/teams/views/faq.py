@@ -1,6 +1,6 @@
 from django.views.generic import TemplateView
 from django.views import generic
-from .models import Question
+from teams.models import Question
 
 
 
