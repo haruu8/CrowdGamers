@@ -5,7 +5,7 @@
   <h2>ユーザー一覧</h2>
   {% for object in object_list %}
     <p>名前：{{ object.name }}</p>
-    <a href="{% url 'teams:account_detail_game' item.username %}">詳細</a>
+    <a href="{% url 'teams:account_detail_game' object.username %}">詳細</a>
   {% endfor %}
 
 {% endblock %}

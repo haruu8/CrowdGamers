@@ -19,10 +19,10 @@ urlpatterns = [
     path('<str:username>/_desired_job_type/', views.account_detail_desired_job_type, name='account_detail_desired_job_type'),
 
     # 通知
-    path('notification/apply/', views.user_apply_notification, name='user_apply_notification'),
-    path('notification/apply/<int:pk>/', views.user_apply_notification_detail, name='user_apply_notification_detail'),
-    path('notification/invite/', views.user_invite_notification, name='user_invite_notification'),
-    path('notification/invite/<int:pk>/', views.user_invite_notification_detail, name='user_invite_notification_detail'),
+    path('<str:username>/notification/apply/', views.user_apply_notification, name='user_apply_notification'),
+    path('<str:username>/notification/apply/<int:pk>/', views.user_apply_notification_detail, name='user_apply_notification_detail'),
+    path('<str:username>/notification/invite/', views.user_invite_notification, name='user_invite_notification'),
+    path('<str:username>/notification/invite/<int:pk>/', views.user_invite_notification_detail, name='user_invite_notification_detail'),
 
     # リクエスト送信
     path('<str:teamname>/team/apply/input/', views.team_apply_input, name='team_apply_input'),

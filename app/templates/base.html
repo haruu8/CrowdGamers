@@ -13,12 +13,9 @@
   <p><a href="{% url 'teams:team_create' %}">チームを作成する</a></p>
   <p><a href="{% url 'teams:team_list' %}">チーム一覧</a></p>
   <p><a href="{% url 'accounts:account_list' %}">ユーザー一覧</a></p>
-  {% if user is authenticated %}
-    <p><a href="{% url 'teams:user_notice' pk=object.pk %}">お知らせ</a></p>
-  {% endif %}
-
-  {% if user is authenticated %}
-    <p><a href="{% url 'accounts:account_detail_game' pk=object.pk %}">プロフィール</a></p>
+  {% if user.is_authenticated %}
+    <p><a href="{% url 'teams:user_apply_notification' user.username %}">お知らせ</a></p>
+    <p><a href="{% url 'teams:account_detail_game' user.username %}">プロフィール</a></p>
   {% else %}
     <p><a href="{% url 'accounts:account_login' %}">ログイン</a></p>
   {% endif %}
