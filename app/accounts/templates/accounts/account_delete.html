@@ -5,6 +5,7 @@
   <form method="post">
     {% csrf_token %}
     <p>あなたのアカウント「{{ user.username }}」を、本当に削除してもよろしいですか？</p>
+    <p>※アカウントを削除したら元に戻すことはできません</p>
     <input type="submit" class="btn btn-danger" value="削除">
     <a href="javascript:void(0);" onclick="window.history.back();">キャンセル</a>
   </form>
