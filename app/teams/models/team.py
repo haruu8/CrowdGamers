@@ -3,6 +3,8 @@ from django.core.validators import FileExtensionValidator, MinLengthValidator, R
 from django.core.exceptions import ValidationError
 from django.contrib.auth import get_user_model
 from . import *
+from .game import Game
+from .feature import Feature
 
 
 

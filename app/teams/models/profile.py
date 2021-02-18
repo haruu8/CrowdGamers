@@ -2,11 +2,14 @@ from django.db import models
 from django.core.validators import FileExtensionValidator, MinLengthValidator, RegexValidator
 from django.core.exceptions import ValidationError
 from django.contrib.auth import get_user_model
-from .team import user_directory_path
+from .team import Team
+from .game import Game
 
 
 
-user_directory_path = user_directory_path(instance, filename)
+# user ごとに directory を分ける
+def user_directory_path(instance, filename):
+    return 'user_{0}/{1}'.format(instance.user.id, filename)
 
 
 
