@@ -4,9 +4,13 @@
 
   <p>ユーザーネーム：@{{ object.username }}</p>
   <img src="{{ user_profile.icon.url }}" alt='アイコン画像'>
-  <p>ニックネーム：{{ object.name }}</p>
+  <p>ニックネーム：{{ user_profile.name }}</p>
   <p><a href="https://twitter.com/{{ object.username }}/">twitter</a></p>
   <p>作成日時：{{ object.date_joined }}</p>
+  <hr>
+  <p><a href="{% url 'teams:account_detail_game' object.username %}">ゲーム</a></p>
+  <p><a href="{% url 'teams:account_detail_feature' object.username %}">特徴</a></p>
+  <p><a href="{% url 'teams:account_detail_desired_job_type' object.username %}">希望条件</a></p>
   <hr>
 
   {% block profile_content %}{% endblock %}

@@ -1,34 +1,34 @@
 [
   {
-    "model": "clans.game",
+    "model": "teams.game",
     "pk": 1,
     "fields": {
       "title": "Rainbow Six Siege"
     }
   },
   {
-    "model": "clans.game",
+    "model": "teams.game",
     "pk": 2,
     "fields": {
       "title": "Apex Legends"
     }
   },
   {
-    "model": "clans.game",
+    "model": "teams.game",
     "pk": 3,
     "fields": {
       "title": "League of Legends"
     }
   },
   {
-    "model": "clans.game",
+    "model": "teams.game",
     "pk": 4,
     "fields": {
       "title": "Over Watch"
     }
   },
   {
-    "model": "clans.game",
+    "model": "teams.game",
     "pk": 5,
     "fields": {
       "title": "Fortnite"

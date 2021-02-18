@@ -1,34 +1,34 @@
 [
   {
-    "model": "clans.feature",
+    "model": "teams.feature",
     "pk": 1,
     "fields": {
       "feature": "毎日活動します"
     }
   },
   {
-    "model": "clans.feature",
+    "model": "teams.feature",
     "pk": 2,
     "fields": {
       "feature": "ゆったりと活動します"
     }
   },
   {
-    "model": "clans.feature",
+    "model": "teams.feature",
     "pk": 3,
     "fields": {
       "feature": "一つのタイトルを突き詰めます"
     }
   },
   {
-    "model": "clans.feature",
+    "model": "teams.feature",
     "pk": 4,
     "fields": {
       "feature": "幅広いタイトルで活動しています"
     }
   },
   {
-    "model": "clans.feature",
+    "model": "teams.feature",
     "pk": 5,
     "fields": {
       "feature": "スポンサーがいます"

@@ -1,6 +1,6 @@
 [
   {
-    "model": "clans.question",
+    "model": "teams.question",
     "pk": 1,
     "fields": {
       "question": "使用方法はどこから確認することができますか？",
@@ -8,7 +8,7 @@
     }
   },
   {
-    "model": "clans.question",
+    "model": "teams.question",
     "pk": 2,
     "fields": {
       "question": "クランに所属したことがないのですが大丈夫ですか？",
