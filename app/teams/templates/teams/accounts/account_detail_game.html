@@ -2,6 +2,11 @@
 
 {% block profile_content %}
 
-  <p>game</p>
+  <h1>Game</h1>
+  {% if user_profile.game_title is None %}
+    <p>{{ user_profile.game_title }}</p>
+  {% else %}
+    <p>ゲームタイトルを設定していません</p>
+  {% endif %}
 
-{% endblock %}
+  {% endblock %}

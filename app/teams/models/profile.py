@@ -45,6 +45,7 @@ class UserProfile(models.Model):
     icon = models.ImageField(
         upload_to=user_directory_path,
         blank=True,
+        default='img/default_profile_icon.png',
         validators=[
             validate_icon_image,
         ])

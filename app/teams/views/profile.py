@@ -10,23 +10,33 @@ from accounts.models import User
 
 class UserProfileBaseView(DetailView):
     template_name = 'teams/accounts/profile_extends_base.html'
-    model = UserProfile
+    model = User
 
-    def get_object(self):
-        username = self.kwargs.get('username')
-        return get_object_or_404(User, username=username)
+    # def get_object(self):
+    #     username = self.kwargs.get('username')
+    #     return get_object_or_404(User, username=username)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['user_profile'] = UserProfile.objects.get(username=self.request.user)
+        return context
 
 
+# class UserProfileDetailGameView(UserProfileBaseView):
+#     template_name = 'teams/accounts/account_detail_game.html'
+#     model = UserProfile
 
-class UserProfileDetailGameView(UserProfileBaseView):
+class UserProfileDetailGameView(DetailView):
     template_name = 'teams/accounts/account_detail_game.html'
     model = UserProfile
 
-    # のちに修正
     def get_context_data(self, **kwargs):
-        ctx = super().get_context_data(**kwargs)
-        ctx['game_title'] = UserProfile.objects.get(user=self.request.user)
-        return ctx
+        context = super().get_context_data(**kwargs)
+        context['user_profile'] = UserProfile.objects.get(user=self.request.user)
+        return context
+
+    def get_object(self):
+        return get_object_or_404(User, username=self.kwargs.get('username'))
 
 account_detail_game = UserProfileDetailGameView.as_view()
 
@@ -34,13 +44,6 @@ account_detail_game = UserProfileDetailGameView.as_view()
 
 class UserProfileDetailFeatureView(UserProfileBaseView):
     template_name = 'teams/accounts/account_detail_feature.html'
-    model = UserProfile
-
-    # のちに修正
-    def get_context_data(self, **kwargs):
-        ctx = super().get_context_data(**kwargs)
-        ctx['feature'] = UserProfile.objects.get(user=self.request.user)
-        return ctx
 
 account_detail_feature = UserProfileDetailFeatureView.as_view()
 
@@ -48,12 +51,5 @@ account_detail_feature = UserProfileDetailFeatureView.as_view()
 
 class UserProfileDetailDesiredJobTypeView(UserProfileBaseView):
     template_name = 'teams/accounts/account_detail_desired_job_type.html'
-    model = UserProfile
-
-    # のちに修正
-    def get_context_data(self, **kwargs):
-        ctx = super().get_context_data(**kwargs)
-        ctx['desired'] = UserProfile.objects.get(user=self.request.user)
-        return ctx
 
 account_detail_desired_job_type = UserProfileDetailDesiredJobTypeView.as_view()

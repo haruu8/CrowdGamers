@@ -3,8 +3,8 @@
 {% block content %}
 
   <p>ユーザーネーム：@{{ object.username }}</p>
-  <img src="{{ object.icon.url }}">
-  <p>ニックネーム：{{ user_profile.name }}</p>
+  <img src="{{ user_profile.icon.url }}" alt='アイコン画像'>
+  <p>ニックネーム：{{ object.name }}</p>
   <p><a href="https://twitter.com/{{ object.username }}/">twitter</a></p>
   <p>作成日時：{{ object.date_joined }}</p>
   <hr>

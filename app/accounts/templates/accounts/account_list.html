@@ -6,6 +6,7 @@
   {% for object in object_list %}
     <p>ユーザーネーム：{{ object.username }}</p>
     <a href="{% url 'teams:account_detail_game' object.username %}">詳細</a>
+    <hr>
   {% endfor %}
 
 {% endblock %}
