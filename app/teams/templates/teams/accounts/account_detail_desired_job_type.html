@@ -1,6 +1,7 @@
 {% extends 'teams/accounts/profile_extends_base.html' %}
 
 {% block profile_content %}
+  <h1>希望条件</h1>
   {% if user_profile.disclosed is True %}
     条件：{{ user_profile.desired_condition }}
   {% else %}

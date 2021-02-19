@@ -10,7 +10,6 @@ from accounts.models import User
 
 class UserProfileBaseView(DetailView):
     template_name = 'teams/accounts/profile_extends_base.html'
-    model = UserProfile
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
