@@ -6,9 +6,14 @@
   <img src="{{ user_profile.icon.url }}" alt='アイコン画像'>
   <img src="{{ user_profile.header.url }}" alt='ヘッダー画像'>
   <p>ニックネーム：{{ user_profile.name }}</p>
+  <p>あああ：{{ user_profile.user.user_profile }}</p>
   <p><a href="https://twitter.com/{{ object.username }}/">twitter</a></p>
   <p>作成日時：{{ object.date_joined }}</p>
+  <p><a href="{% url 'accounts:account_update' object.username %}">ユーザーネームを変更する</a></p>
+  <p><a href="{% url 'teams:account_profile_update' object.username %}">編集する</a></p>
   <hr>
+  {% if request.user == object.username %}
+  {% endif %}
   <p><a href="{% url 'teams:account_detail_game' object.username %}">ゲーム</a></p>
   <p><a href="{% url 'teams:account_detail_feature' object.username %}">特徴</a></p>
   <p><a href="{% url 'teams:account_detail_desired_job_type' object.username %}">希望条件</a></p>

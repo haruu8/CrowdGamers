@@ -98,10 +98,6 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 
 
-    @property
-    def get_username(self):
-        return self.username
-
 @receiver(post_save, sender=User)
 def create_user_profile(sender, **kwargs):
     # 新規ユーザー作成時に UserProfile モデルの空インスタンスを生成

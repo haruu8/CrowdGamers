@@ -21,6 +21,9 @@ class UserUpdateView(OnlyYouMixin, LoginRequiredMixin, UpdateView):
     form_class = UserUpdateForm
     success_url = reverse_lazy('accounts:account_detail')
 
+    def get_object(self):
+        return get_object_or_404(User, username=self.kwargs.get('username'))
+
     def form_valid(self, form):
         return redirect(self.get_success_url())
 

@@ -52,6 +52,7 @@ class UserProfile(models.Model):
     header = models.ImageField(
         upload_to=user_directory_path,
         blank=True,
+        default='default_profile_header.jpg',
         validators=[
             validate_header_image,
         ])
@@ -64,4 +65,3 @@ class UserProfile(models.Model):
     desired_job_type = models.CharField(choices=JOB_TYPE, null=False, blank=False, max_length=100)
     desired_condition = models.CharField(verbose_name='希望条件', max_length=255)
     disclosed = models.BooleanField(default=True)
-

@@ -27,6 +27,7 @@ urlpatterns = [
     path('<str:username>/game/', views.account_detail_game, name='account_detail_game'),
     path('<str:username>/feature/', views.account_detail_feature, name='account_detail_feature'),
     path('<str:username>/desired_job_type/', views.account_detail_desired_job_type, name='account_detail_desired_job_type'),
+    path('<str:username>/update/', views.account_profile_update, name='account_profile_update'),
 
     # 通知
     path('<str:username>/notification/apply/', views.user_apply_notification, name='user_apply_notification'),
