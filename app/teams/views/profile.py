@@ -1,5 +1,4 @@
-from django.shortcuts import get_object_or_404, resolve_url
-from django.urls import reverse
+from django.shortcuts import get_object_or_404, resolve_url, redirect
 from django.views.generic import DetailView, UpdateView
 from django.contrib.auth import get_user_model
 from teams.models import Apply, UserProfile
@@ -52,17 +51,15 @@ class UserProfileUpdateView(UpdateView):
     form_class =UserProfileUpdateForm
     success_url = 'teams:account_detail_game'
 
-    # def form_valid(self, form):
-    #     form.instance.user = self.request.user
-    #     res = super().form_valid(form)
-    #     return res
-        # self.object = post = form.save()
-
-    # def get_success_url(self):
-    #     return resolve_url(self.success_url, username=self.kwargs.get['username'])
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        p_form = UserProfileUpdateForm(self.request.POST,self.request.FILES,instance=self.request.user.user_profile)
+        p_form.save()
+        # return get_object_or_404(User, username=self.kwargs.get('username'))
+        return redirect('teams:home')
 
     def get_success_url(self):
-        return reverse(self.success_url, username=self.kwargs.get['username'])
+        return resolve_url(self.success_url, username=self.kwargs.get('username'))
 
     def get_object(self):
         return get_object_or_404(User, username=self.kwargs.get('username'))
