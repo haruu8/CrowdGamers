@@ -20,9 +20,13 @@
     <a href="{% url 'accounts:account_login' %}">ログイン</a>
   </header>
   {% endif %}
+
+
   <hr>
   {% block content %}{% endblock %}
   <hr>
+
+
   <footer>
     <h3>CrowdGamers</h3>
     <div>
@@ -37,7 +41,7 @@
       <p><a href="{% url 'teams:privacy-policy' %}">プライバシーポリシー</a></p>
       <p><a href="https://twitter.com/haruu_iq">開発者情報</a></p>
     </div>
-
+    <p>Copyright &copy; 2021 CrowdGamers</p>
   </footer>
 
   <!-- Optional JavaScript -->
