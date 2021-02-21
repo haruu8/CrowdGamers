@@ -101,6 +101,6 @@ team_detail_feature = TeamDetailFeatureView.as_view()
 
 
 class TeamDetailDesiredConditionView(TeamDetailBaseView):
-    template_name = 'teams/team_profile/team_detail_condition.html'
+    template_name = 'teams/team_profile/team_detail_desired_condition.html'
 
 team_detail_desired_condition = TeamDetailDesiredConditionView.as_view()

@@ -15,10 +15,10 @@
   {% endif %}
 
   <hr>
-  <p><a href="{% url 'teams:team_detail_game' object.username %}">ゲーム</a></p>
-  <p><a href="{% url 'teams:team_detail_member' object.username %}">メンバー</a></p>
-  <p><a href="{% url 'teams:team_detail_feature' object.username %}">特徴</a></p>
-  <p><a href="{% url 'teams:team_detail_desired_condition' object.username %}">希望条件</a></p>
+  <p><a href="{% url 'teams:team_detail_game' object.teamname %}">ゲーム</a></p>
+  <p><a href="{% url 'teams:team_detail_member' object.teamname %}">メンバー</a></p>
+  <p><a href="{% url 'teams:team_detail_feature' object.teamname %}">特徴</a></p>
+  <p><a href="{% url 'teams:team_detail_desired_condition' object.teamname %}">希望条件</a></p>
   <hr>
 
   {% block profile_content %}{% endblock %}
