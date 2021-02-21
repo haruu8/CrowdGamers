@@ -45,18 +45,17 @@ class UserProfile(models.Model):
     icon = models.ImageField(
         upload_to=user_directory_path,
         blank=True,
-        default='default_profile_icon.png',
+        default='default/profile_icon.png',
         validators=[
             validate_icon_image,
         ])
     header = models.ImageField(
         upload_to=user_directory_path,
         blank=True,
-        default='default_profile_header.jpg',
+        default='default/profile_header.jpg',
         validators=[
             validate_header_image,
         ])
-    date_of_birth = models.DateField(null=True, blank=True)
     is_owner = models.BooleanField(default=False)
     team = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='team', null=True, blank=True)
     game_title = models.ManyToManyField(Game, related_name='user_game_title')

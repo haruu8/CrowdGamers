@@ -1,19 +1,33 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
 
-  <p>ユーザーネーム：@{{ object.username }}</p>
   <img src="{{ user_profile.icon.url }}" alt='アイコン画像'>
   <img src="{{ user_profile.header.url }}" alt='ヘッダー画像'>
+  <p>ユーザーネーム：@{{ object.username }}</p>
   <p>ニックネーム：{{ user_profile.name }}</p>
-  <p>あああ：{{ user_profile.user.user_profile }}</p>
+  {% if user_profile.team %}
+    <p>@{{ user_profile.team.teamname }}</p>
+  {% else %}
+    <p>無所属</p>
+  {% endif %}
+  <hr>
+  <p>{{ user_profile.introduction }}</p>
+  <p><a href="{{ user_profile.clip_url }}?rel=0"></a></p>
+  {% if user_profile.clip_url %}
+    <div>
+      <iframe width="560" height=315 src="{{ user_profile.clip_url }}" frameborder="0" allowfullscreen></iframe>
+    </div>
+  {% else %}
+    <img src="{% static 'img/clip_none.jpg' %}" alt="クリップ未設定の画像">
+  {% endif %}
   <p><a href="https://twitter.com/{{ object.username }}/">twitter</a></p>
   <p>作成日時：{{ object.date_joined }}</p>
-  <p><a href="{% url 'accounts:account_update' object.username %}">ユーザーネームを変更する</a></p>
-  <p><a href="{% url 'teams:account_profile_update' object.username %}">編集する</a></p>
-  <hr>
-  {% if request.user == object.username %}
+  {% if request.user %}
+    <p><a href="{% url 'teams:account_profile_update' object.username %}">編集する</a></p>
   {% endif %}
+  <hr>
   <p><a href="{% url 'teams:account_detail_game' object.username %}">ゲーム</a></p>
   <p><a href="{% url 'teams:account_detail_feature' object.username %}">特徴</a></p>
   <p><a href="{% url 'teams:account_detail_desired_job_type' object.username %}">希望条件</a></p>
