@@ -61,7 +61,7 @@ class TeamCreateForm(forms.ModelForm):
                             widget=forms.Textarea(attrs={'placeholder': 'スポンサー名を入力してください', 'render_value': True}))
     feature = forms.MultipleChoiceField(required=False,
                             widget=forms.CheckboxSelectMultiple(attrs={'class': 'form-control'}))
-    desired_condition = forms.CharField(required=True,
+    desired_condition = forms.CharField(required=False,
                             widget=forms.Textarea(attrs={'placeholder': '募集する選手の希望条件を入力してください', 'render_value': True}))
     disclosed = forms.BooleanField(required=True)
 
