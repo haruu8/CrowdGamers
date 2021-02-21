@@ -69,7 +69,7 @@ team_delete = TeamDeleteView.as_view()
 
 
 
-class TeamDetailView(DetailView):
+class TeamDetailBaseView(DetailView):
     template_name = 'teams/team_detail.html'
     model = Team
 
@@ -77,4 +77,30 @@ class TeamDetailView(DetailView):
         teamname = self.kwargs.get("teamname")
         return get_object_or_404(Team, teamname=teamname)
 
-team_detail = TeamDetailView.as_view()
+
+
+class TeamDetailGameView(TeamDetailBaseView):
+    template_name = 'teams/team_profile/team_detail_game.html'
+
+team_detail_game = TeamDetailGameView.as_view()
+
+
+
+class TeamDetailMemberView(TeamDetailBaseView):
+    template_name = 'teams/team_profile/team_detail_member.html'
+
+team_detail_member = TeamDetailMemberView.as_view()
+
+
+
+class TeamDetailFeatureView(TeamDetailBaseView):
+    template_name = 'teams/team_profile/team_detail_feature.html'
+
+team_detail_feature = TeamDetailFeatureView.as_view()
+
+
+
+class TeamDetailDesiredConditionView(TeamDetailBaseView):
+    template_name = 'teams/team_profile/team_detail_condition.html'
+
+team_detail_desired_condition = TeamDetailDesiredConditionView.as_view()

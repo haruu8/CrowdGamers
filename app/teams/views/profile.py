@@ -37,11 +37,11 @@ account_detail_feature = UserProfileDetailFeatureView.as_view()
 
 
 
-class UserProfileDetailDesiredJobTypeView(UserProfileBaseView):
-    template_name = 'teams/accounts/account_detail_desired_job_type.html'
+class UserProfileDetailDesiredConditionView(UserProfileBaseView):
+    template_name = 'teams/accounts/account_detail_desired_condition.html'
     model = UserProfile
 
-account_detail_desired_job_type = UserProfileDetailDesiredJobTypeView.as_view()
+account_detail_desired_condition = UserProfileDetailDesiredConditionView.as_view()
 
 
 
