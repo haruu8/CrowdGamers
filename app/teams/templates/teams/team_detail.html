@@ -3,12 +3,15 @@
 {% block content %}
 
   <p>名前：{{ object.name }}</p>
+  <p>チームネーム：@{{ object.teamname }}</p>
   <p>クランのHP：<a href="{{ object.url }}">{{ object.url }}</a></p>
   <p>説明：{{ object.description }}</p>
-  <p>スポンサー：{{ object.sponsor }}</p>
+  {% if object.sponsor %}
+    <p>スポンサー：{{ object.sponsor }}</p>
+  {% endif %}
   {% if object.disclosed is True %}
     <p>希望条件：{{ object.desired_condition }}</p>
+    <p><a href="{% url 'teams:team_apply_input' %}">リクエストを送る</a></p>
   {% endif %}
-  <p><a href="{% url 'teams:team_apply_input' %}">リクエストを送る</a></p>
 
 {% endblock %}

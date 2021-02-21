@@ -19,9 +19,9 @@ urlpatterns = [
     # チーム
     path('team/create/', views.team_create, name='team_create'),
     path('team/list/', views.team_list, name='team_list'),
-    path('team/<str:teamname>/', views.team_detail, name='team_detail'),
     path('team/<str:teamname>/update/', views.team_update, name='team_update'),
     path('team/<str:teamname>/delete/', views.team_delete, name='team_delete'),
+    path('team/<str:teamname>/game/', views.team_detail, name='team_detail'),
 
     # プロフィール
     path('<str:username>/game/', views.account_detail_game, name='account_detail_game'),
