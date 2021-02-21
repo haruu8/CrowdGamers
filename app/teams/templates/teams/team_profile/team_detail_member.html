@@ -2,6 +2,9 @@
 
 {% block profile_content %}
 
-  member
+  <h3>メンバー</h3>
+  {% for member in members %}
+    <p>メンバー:{{ member.name | truncatechars:15 }}</p>
+  {% endfor %}
 
 {% endblock %}

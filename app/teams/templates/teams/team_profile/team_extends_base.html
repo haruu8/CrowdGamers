@@ -14,6 +14,12 @@
     <p><a href="{% url 'teams:team_apply_input' %}">リクエストを送る</a></p>
   {% endif %}
 
+  {% for member in members %}
+    {% if member.is_owner is True %}
+      オーナー：{{ member }}
+    {% endif %}
+  {% endfor %}
+
   <hr>
   <p><a href="{% url 'teams:team_detail_game' object.teamname %}">ゲーム</a></p>
   <p><a href="{% url 'teams:team_detail_member' object.teamname %}">メンバー</a></p>

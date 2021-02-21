@@ -3,8 +3,7 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView, DetailView, ListView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import get_user_model
-from accounts.models import User
-from teams.models import Team
+from teams.models import Team, UserProfile
 from teams.forms import TeamCreateForm
 from teams.views import OnlyYouMixin
 
@@ -72,6 +71,12 @@ team_delete = TeamDeleteView.as_view()
 class TeamDetailBaseView(DetailView):
     template_name = 'teams/team_detail.html'
     model = Team
+    form_class = TeamCreateForm
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['members'] = Team.objects.filter(teamname=self.teamname).values('name')
+        return context
 
     def get_object(self):
         teamname = self.kwargs.get("teamname")
@@ -81,6 +86,7 @@ class TeamDetailBaseView(DetailView):
 
 class TeamDetailGameView(TeamDetailBaseView):
     template_name = 'teams/team_profile/team_detail_game.html'
+    model = Team
 
 team_detail_game = TeamDetailGameView.as_view()
 
@@ -88,6 +94,7 @@ team_detail_game = TeamDetailGameView.as_view()
 
 class TeamDetailMemberView(TeamDetailBaseView):
     template_name = 'teams/team_profile/team_detail_member.html'
+    model = Team
 
 team_detail_member = TeamDetailMemberView.as_view()
 
@@ -95,6 +102,7 @@ team_detail_member = TeamDetailMemberView.as_view()
 
 class TeamDetailFeatureView(TeamDetailBaseView):
     template_name = 'teams/team_profile/team_detail_feature.html'
+    model = Team
 
 team_detail_feature = TeamDetailFeatureView.as_view()
 
@@ -102,5 +110,6 @@ team_detail_feature = TeamDetailFeatureView.as_view()
 
 class TeamDetailDesiredConditionView(TeamDetailBaseView):
     template_name = 'teams/team_profile/team_detail_desired_condition.html'
+    model = Team
 
 team_detail_desired_condition = TeamDetailDesiredConditionView.as_view()
