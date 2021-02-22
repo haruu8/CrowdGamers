@@ -141,7 +141,7 @@ SITE_ID = 1
 
 # ログイン・ログアウト時のリダイレクト先
 LOGIN_REDIRECT_URL = 'teams:home'
-ACCOUNT_LOGOUT_REDIRECT_URL = 'accounts:account_login'
+LOGOUT_REDIRECT_URL = 'teams:home'
 LOGIN_URL = 'accounts:account_login'
 
 SOCIAL_AUTH_URL_NAMESPACE = 'social'

@@ -14,7 +14,6 @@
   {% endif %}
   <hr>
   <p>{{ user_profile.introduction }}</p>
-  <p><a href="{{ user_profile.clip_url }}?rel=0"></a></p>
   {% if user_profile.clip_url %}
     <div>
       <iframe width="560" height=315 src="{{ user_profile.clip_url }}" frameborder="0" allowfullscreen></iframe>

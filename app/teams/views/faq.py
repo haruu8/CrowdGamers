@@ -14,7 +14,7 @@ class HomeView(TemplateView):
             pass
         else:
             context = super().get_context_data(**kwargs)
-            context['user'] = UserProfile.objects.get(user=self.request.user)
+            context['user_profile'] = UserProfile.objects.get(user=self.request.user)
             return context
 
     def get_object(self):
