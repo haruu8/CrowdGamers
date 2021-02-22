@@ -20,27 +20,37 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
+        {% if user.is_authenticated %}
         <li class='nav-item'>
           <a class="nav-link" href="{% url 'teams:team_create' %}">チームを作成する</a>
         </li>
         <li class='nav-item'>
-          <a class="nav-link" href="{% url 'teams:user_apply_notification' user.username %}">お知らせ</a>
+          <a class="nav-link" href="{% url 'teams:user_apply_notification' user.username %}">
+            <img src="{% static 'img/bell-icon.svg' %}" alt="通知アイコン">
+          </a>
         </li>
+        {% endif %}
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            アイコン
-          </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            {% if user.is_authenticated %}
-              <a class="dropdown-item" href="{% url 'teams:account_detail_game' user.username %}">プロフィールを閲覧する</a>
-              <a class="dropdown-item" href="{% url 'accounts:account_settings' %}">設定</a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="{% url 'accounts:account_logout' %}">ログアウト</a>
+            {% if not user.is_authenticated %}
+              <img src="{{ user.icon.url }}" alt="アイコン">
             {% else %}
+              <img src="{% static 'img/default-icon.svg' %}" alt="デフォルトアイコン">
+            {% endif %}
+          </a>
+          {% if user.is_authenticated %}
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="{% url 'teams:account_detail_game' user.username %}">プロフィールを閲覧する</a>
+                <a class="dropdown-item" href="{% url 'accounts:account_settings' %}">設定</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="{% url 'accounts:account_logout' %}">ログアウト</a>
+            </div>
+          {% else %}
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <a class="dropdown-item" href="{% url 'accounts:account_login' %}">ログイン</a>
               <a class="dropdown-item" href="{% url 'accounts:account_signup' %}">登録</a>
-            {% endif %}
-          </div>
+            </div>
+          {% endif %}
         </li>
       </ul>
       <form class="form-inline my-2 my-lg-0">

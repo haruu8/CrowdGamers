@@ -1,6 +1,6 @@
 from .access import OnlyYouMixin
 from .apply import team_apply_input, team_apply_confirm, team_apply_create
-from .faq import faq
+from .faq import home, faq
 from .invite import user_invite_input, user_invite_confirm, user_invite_create
 from .notification import (
     user_apply_notification, user_apply_notification_detail,
