@@ -10,3 +10,34 @@ $blue-9-color: #061D33;
 $blue-10-color: #030E1A;
 $twitter-color: #1DA1F2;
 
+$font-family: YuGothic;
+
+body {
+  background: $blue-8-color;
+  color: white;
+  font-family: $font-family;
+}
+
+a {
+  color: white;
+}
+
+footer {
+  h3 {
+    padding: 2rem 0 2rem 1.5rem;
+    margin: 0;
+  }
+  background-color: $blue-10-color;
+  .content {
+    display: flex;
+    padding-left: 1.5rem;
+    padding-bottom: 2rem;
+    .support {
+      margin-left: 3rem;
+    }
+  }
+  .copyright {
+    text-align: center;
+    margin: 0;
+  }
+}

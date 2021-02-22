@@ -3,48 +3,81 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0 shrink-to-fit=no">
   <title>CrowdGamers</title>
   <title>{% block head_title %}{% endblock %}</title>
-  <link rel='stylesheet' type='text/css' href='{% static "css/base.scss" %}'>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel='stylesheet' type='text/css' href='{% static "scss/dist/base.css" %}'>
   <link rel='stylesheet' type='text/css' href={% block stylesheet %}{% endblock %}>
 </head>
 <body>
-  <header>
-    <p><a href="{% url 'teams:home' %}">CrowdGamers</a></p>
-    {% if user.is_authenticated %}
-      <a href="{% url 'teams:account_detail_game' user.username %}">プロフ</a>
-      <a href="{% url 'teams:team_create' %}">チームを作成する</a>
-      <a href="{% url 'accounts:account_settings' %}">設定</a>
-      <a href="{% url 'teams:user_apply_notification' user.username %}">お知らせ</a>
-    {% else %}
-    <a href="{% url 'accounts:account_login' %}">ログイン</a>
-  </header>
-  {% endif %}
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="{% url 'teams:home' %}">CrowdGamers</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class='nav-item'>
+          <a class="nav-link" href="{% url 'teams:team_create' %}">チームを作成する</a>
+        </li>
+        <li class='nav-item'>
+          <a class="nav-link" href="{% url 'teams:user_apply_notification' user.username %}">お知らせ</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            アイコン
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            {% if user.is_authenticated %}
+              <a class="dropdown-item" href="{% url 'teams:account_detail_game' user.username %}">プロフィールを閲覧する</a>
+              <a class="dropdown-item" href="{% url 'accounts:account_settings' %}">設定</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="{% url 'accounts:account_logout' %}">ログアウト</a>
+            {% else %}
+              <a class="dropdown-item" href="{% url 'accounts:account_login' %}">ログイン</a>
+              <a class="dropdown-item" href="{% url 'accounts:account_signup' %}">登録</a>
+            {% endif %}
+          </div>
+        </li>
+      </ul>
+      <form class="form-inline my-2 my-lg-0">
+        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      </form>
+    </div>
+  </nav>
 
 
-  <hr>
-  {% block content %}{% endblock %}
-  <hr>
+
+
+
+  <div class='container'>
+    <hr>
+    {% block content %}{% endblock %}
+    <hr>
+  </div>
 
 
   <footer>
     <h3>CrowdGamers</h3>
-    <div>
+    <div class='content'>
       <div>
         <p><a href="{% url 'teams:home' %}">トップページ</a></p>
         <p><a href="{% url 'accounts:account_login' %}">ログイン・登録</a></p>
         <p><a href="{% url 'teams:team_list' %}">チームを探す</a></p>
         <p><a href="{% url 'accounts:account_list' %}">プレイヤーを探す</a></p>
       </div>
-      <div>
+      <div class='support'>
         <p><a href="{% url 'teams:faq' %}">よくある質問</a></p>
         <p><a href="{% url 'teams:terms-of-service' %}">利用規約</a></p>
         <p><a href="{% url 'teams:privacy-policy' %}">プライバシーポリシー</a></p>
         <p><a href="https://twitter.com/haruu_iq/">開発者情報</a></p>
       </div>
     </div>
-    <p>Copyright &copy; 2021 CrowdGamers</p>
+    <p class='copyright'>Copyright &copy; 2021 CrowdGamers</p>
   </footer>
 
   <!-- Optional JavaScript -->

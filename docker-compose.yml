@@ -7,7 +7,7 @@ services:
       - ./app/:/code
     ports:
       - 8000:8000
-    command: "python manage.py runserver 0.0.0.0:8000"
+    command: "python manage.py runserver 0.0.0.0:8000 --insecure"
     env_file: environment_variable/settings.env
     depends_on:
       - postgres
