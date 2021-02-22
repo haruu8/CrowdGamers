@@ -12,24 +12,24 @@
   <link rel='stylesheet' type='text/css' href={% block stylesheet %}{% endblock %}>
 </head>
 <body>
-  <nav class="navbar navbar-expand-lg nav-color">
+  <nav class="navbar navbar-expand-lg">
     <a class="navbar-brand" href="{% url 'teams:home' %}">CrowdGamers</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto">
+      <ul class="navbar-nav ml-auto">
+
+        <form class="form-inline my-2 my-lg-0">
+          <input class="form-control mr-sm-2" type="search" placeholder="検索ワードを入力" aria-label="検索">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">検索</button>
+        </form>
 
         {% if user.is_authenticated %}
         <li class='nav-item'>
-          <a class="nav-link" href="{% url 'teams:team_create' %}">
-            <img src="{% static 'img/create-button.svg' %}" alt="作成ボタン">
-          </a>
-        </li>
-        <li class='nav-item'>
           <a class="nav-link" href="{% url 'teams:user_apply_notification' user.username %}">
-            <img src="{% static 'img/bell-icon.svg' %}" alt="通知アイコン">
+            <img src="{% static 'img/bell-icon.svg' %}" alt="通知アイコン" class='bell-icon'>
           </a>
         </li>
         {% endif %}
@@ -38,11 +38,11 @@
         <li class="nav-item dropdown">
           {% if user.is_authenticated %}
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <img src="{{ user_profile.icon.url }}" alt="アイコン">
+                <img src="{{ user_profile.icon.url }}" alt="アイコン" class='profile-icon'>
             </a>
           {% else %}
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <img src="{% static 'img/default-icon.svg' %}" alt="デフォルトアイコン">
+              <img src="{% static 'img/default-icon.svg' %}" alt="デフォルトアイコン" class='profile-icon'>
             </a>
           {% endif %}
 
@@ -60,12 +60,18 @@
             </div>
           {% endif %}
         </li>
+        {% if user.is_authenticated %}
+          <li class='nav-item'>
+            <a class="nav-link" href="{% url 'teams:team_create' %}">
+              <div class='img_wrap'>
+                <img src="{% static 'img/create-button.svg' %}" alt="作成ボタン">
+              </div>
+            </a>
+          </li>
+        {% endif %}
       </ul>
 
-      <form class="form-inline my-2 my-lg-0">
-        <input class="form-control mr-sm-2" type="search" placeholder="検索ワードを入力" aria-label="検索">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">検索</button>
-      </form>
+
     </div>
   </nav>
 
