@@ -9,16 +9,11 @@
   {% if object.sponsor %}
     <p>スポンサー：{{ object.sponsor }}</p>
   {% endif %}
+  <p>オーナー：{{ object.owner }}</p>
   {% if object.disclosed is True %}
     <p>希望条件：{{ object.desired_condition }}</p>
     <p><a href="{% url 'teams:team_apply_input' %}">リクエストを送る</a></p>
   {% endif %}
-
-  {% for member in members %}
-    {% if member.is_owner is True %}
-      オーナー：{{ member }}
-    {% endif %}
-  {% endfor %}
 
   <hr>
   <p><a href="{% url 'teams:team_detail_game' object.teamname %}">ゲーム</a></p>

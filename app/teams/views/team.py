@@ -75,7 +75,9 @@ class TeamDetailBaseView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['members'] = Team.objects.filter(teamname=self.teamname).values('name')
+        # team = get_object_or_404(Team, id=self.request.teamname)
+        team = Team.objects.get(teamname=self.kwargs.get('teamname'))
+        context['owner'] = team.team.filter(is_owner=True)[0]
         return context
 
     def get_object(self):

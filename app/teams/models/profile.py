@@ -57,7 +57,7 @@ class UserProfile(models.Model):
             validate_header_image,
         ])
     is_owner = models.BooleanField(default=False)
-    team = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='team', null=True, blank=True)
+    team = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='belonging_user_profiles', null=True, blank=True)
     game_title = models.ManyToManyField(Game, related_name='user_game_title')
     introduction = models.CharField(max_length=140)
     clip_url = models.URLField(blank=True, null=True)
