@@ -48,7 +48,7 @@
 
           {% if user.is_authenticated %}
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="{% url 'teams:account_detail_game' user.username %}">プロフィールを閲覧する</a>
+                <a class="dropdown-item" href="{% url 'teams:account_detail_game' user.username %}">プロフィール</a>
                 <a class="dropdown-item" href="{% url 'accounts:account_settings' %}">設定</a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="{% url 'accounts:account_logout' %}">ログアウト</a>

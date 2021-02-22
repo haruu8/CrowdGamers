@@ -17,8 +17,11 @@ class TeamCreateView(LoginRequiredMixin, CreateView):
 
     # プロフィールの is_owner を変更するように変更
     def form_valid(self, form):
-        user = form.save(commit=True)
+
+        # オーナー設定
+        user = form.save(commit=False)
         user.is_owner = True
+        user.save()
         form.instance.user = self.request.user
         return super().form_valid(form)
 
@@ -75,9 +78,8 @@ class TeamDetailBaseView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        # team = get_object_or_404(Team, id=self.request.teamname)
-        team = Team.objects.get(teamname=self.kwargs.get('teamname'))
-        context['owner'] = team.team.filter(is_owner=True)[0]
+        team = self.get_object()
+        context['owner_profile'] = UserProfile.objects.filter(team=team, is_owner=True)
         return context
 
     def get_object(self):

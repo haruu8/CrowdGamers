@@ -9,7 +9,7 @@
   {% if object.sponsor %}
     <p>スポンサー：{{ object.sponsor }}</p>
   {% endif %}
-  <p>オーナー：{{ object.owner }}</p>
+  <p>オーナー：{{ owner_profile.name }}</p>
   {% if object.disclosed is True %}
     <p>希望条件：{{ object.desired_condition }}</p>
     <p><a href="{% url 'teams:team_apply_input' %}">リクエストを送る</a></p>

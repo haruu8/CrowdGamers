@@ -22,6 +22,34 @@ a {
   color: white;
 }
 
+nav {
+    background-color: $blue-10-color;
+  .profile-icon {
+    width: 32px;
+    height: 32px;
+  }
+  .bell-icon {
+    width: 24px;
+    height: 24px;
+    margin: auto 0;
+  }
+  .img_wrap{
+    width: 76px;
+    height: 32px;
+    margin: 3px auto 0;
+    transition-duration: 0.5s;
+  }
+  .img_wrap img{
+    width: 100%;
+    cursor: pointer;
+  }
+  .img_wrap:hover{
+    box-shadow: 5px 5px 5px rgba(0,0,0,0.5);
+    transform: translateY(-5px);
+    transition-duration: 0.5s;
+  }
+}
+
 footer {
   h3 {
     padding: 2rem 0 2rem 1.5rem;
