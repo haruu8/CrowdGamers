@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -5,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CrowdGamers</title>
   <title>{% block head_title %}{% endblock %}</title>
-  <link rel='stylesheet' type='text/css' href=''>
+  <link rel='stylesheet' type='text/css' href='{% static "css/base.scss" %}'>
   <link rel='stylesheet' type='text/css' href={% block stylesheet %}{% endblock %}>
 </head>
 <body>
@@ -30,16 +31,18 @@
   <footer>
     <h3>CrowdGamers</h3>
     <div>
-      <p><a href="{% url 'teams:home' %}">トップページ</a></p>
-      <p><a href="{% url 'accounts:account_login' %}">ログイン・登録</a></p>
-      <p><a href="{% url 'teams:team_list' %}">チームを探す</a></p>
-      <p><a href="{% url 'accounts:account_list' %}">プレイヤーを探す</a></p>
-    </div>
-    <div>
-      <p><a href="{% url 'teams:faq' %}">よくある質問</a></p>
-      <p><a href="{% url 'teams:terms-of-service' %}">利用規約</a></p>
-      <p><a href="{% url 'teams:privacy-policy' %}">プライバシーポリシー</a></p>
-      <p><a href="https://twitter.com/haruu_iq/">開発者情報</a></p>
+      <div>
+        <p><a href="{% url 'teams:home' %}">トップページ</a></p>
+        <p><a href="{% url 'accounts:account_login' %}">ログイン・登録</a></p>
+        <p><a href="{% url 'teams:team_list' %}">チームを探す</a></p>
+        <p><a href="{% url 'accounts:account_list' %}">プレイヤーを探す</a></p>
+      </div>
+      <div>
+        <p><a href="{% url 'teams:faq' %}">よくある質問</a></p>
+        <p><a href="{% url 'teams:terms-of-service' %}">利用規約</a></p>
+        <p><a href="{% url 'teams:privacy-policy' %}">プライバシーポリシー</a></p>
+        <p><a href="https://twitter.com/haruu_iq/">開発者情報</a></p>
+      </div>
     </div>
     <p>Copyright &copy; 2021 CrowdGamers</p>
   </footer>

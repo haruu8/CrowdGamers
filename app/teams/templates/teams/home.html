@@ -1,7 +1,11 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{% block stylesheet %}'{% static "css/home.scss" %}'{% endblock %}
 
 {% block content %}
 
+  <img src="{% static 'img/lp.png' %}" alt="ヘッダー画像">
   <h2>熱くなれるフレンドを見つけよう</h2>
   <p>CrowdGamersで気軽にチームやメンバーを探してみませんか？</p>
   <p><a href="{% url 'accounts:account_signup' %}">Twitterで登録</a></p>
