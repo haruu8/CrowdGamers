@@ -5,7 +5,7 @@ from django.contrib.auth import get_user_model
 from accounts.models import User
 from teams.models import Team, Invite, Apply
 from teams.forms import UserInviteCreateForm, TeamApplyCreateForm
-from .access import OnlyYouMixin
+from .utils import OnlyYouMixin
 
 
 

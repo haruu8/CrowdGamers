@@ -8,7 +8,7 @@ app_name = 'teams'
 
 urlpatterns = [
     # サポートページ
-    path('', views.home, name='home'),
+    path('', views.GetProfileView.as_view(template_name='teams/home.html'), name='home'),
     path('terms-of-service/', TemplateView.as_view(template_name='teams/support/terms-of-service.html'),
             name='terms-of-service'),
     path('privacy-policy/', TemplateView.as_view(template_name='teams/support/privacy-policy.html'),
