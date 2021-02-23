@@ -8,12 +8,14 @@ migrations-clans:
 	docker-compose exec django python3 manage.py makemigrations clans
 migrations-accounts:
 	docker-compose exec django python3 manage.py makemigrations accounts
-createsuperuser:
+user:
 	docker-compose exec django python3 manage.py createsuperuser
 showmigrations:
 	docker-compose exec django python3 manage.py showmigrations
 test:
 	docker-compose exec django python3 manage.py test
+insert:
+	docker-compose exec django python3 manage.py loaddata feature_initial.json && docker-compose exec django python3 manage.py loaddata game_initial.json && docker-compose exec django python3 manage.py loaddata question_initial.json
 insert-data-feature:
 	docker-compose exec django python3 manage.py loaddata feature_initial.json
 insert-data-game:

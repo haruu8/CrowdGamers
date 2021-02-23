@@ -28,6 +28,8 @@ div.catch-section {
     transform: translate(-50%,-50%);
     margin:0;
     padding:0;
+    font-size: 250%;
+    font-weight: bold;
   }
   .header {
     width: 100% !important;
@@ -38,9 +40,16 @@ div.catch-section {
 div.signup-prompt {
   background-color: $blue-9-color;
   text-align: center;
-  padding: 3rem 0;
+  padding: 3.5rem 0;
+  h3 {
+    margin: 0;
+    font-weight: bold;
+  }
 }
 
+.twitter-btn {
+  padding-top: 3.5rem;
+}
 
 /* ここから下がボタンのCSS　*/
 .btn-push {
@@ -55,9 +64,15 @@ div.signup-prompt {
   padding: 10px 24px;
   border-radius: 4px;
   border-bottom: 4px solid $twitter-color;
+  text-decoration: none;
 }
 
 .btn-push:active {
     transform: translateY(4px);
     border-bottom: none;
+}
+
+.btn-push:hover {
+  text-decoration: none;
+  color: white;
 }
