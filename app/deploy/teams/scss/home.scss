@@ -9,11 +9,55 @@ $blue-8-color: #092B4D;
 $blue-9-color: #061D33;
 $blue-10-color: #030E1A;
 $twitter-color: #1DA1F2;
+$color: black;
 
-$font-family: YuGothic;
 
-body {
-  background: $blue-8-color;
-  color: white;
-  font-family: $font-family;
+div.catch-section {
+
+  position: relative;
+  .catch-copy {
+    text-shadow:2px 2px 0 $color, -2px -2px 0 $color,
+    -2px 2px 0 $color, 2px -2px 0 $color,
+    0px 2px 0 $color,  0-2px 0 $color,
+    -2px 0 0 $color, 2px 0 0 $color;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%,-50%);
+    -webkit-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);
+    margin:0;
+    padding:0;
+  }
+  .header {
+    width: 100% !important;
+    height: auto;
+  }
+}
+
+div.signup-prompt {
+  background-color: $blue-9-color;
+  text-align: center;
+  padding: 3rem 0;
+}
+
+
+/* ここから下がボタンのCSS　*/
+.btn-push {
+  display: inline-block;
+  max-width: 180px;
+  text-align: left;
+  background-color: $twitter-color;
+  font-size: 16px;
+  color: #FFF;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 10px 24px;
+  border-radius: 4px;
+  border-bottom: 4px solid $twitter-color;
+}
+
+.btn-push:active {
+    transform: translateY(4px);
+    border-bottom: none;
 }

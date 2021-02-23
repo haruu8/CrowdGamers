@@ -22,6 +22,13 @@ a {
   color: white;
 }
 
+.img_wrap{
+  width: 76px;
+  height: 32px;
+  margin: 3px auto 0;
+  transition-duration: 0.5s;
+}
+
 nav {
     background-color: $blue-10-color;
   .profile-icon {
@@ -32,12 +39,6 @@ nav {
     width: 24px;
     height: 24px;
     margin: auto 0;
-  }
-  .img_wrap{
-    width: 76px;
-    height: 32px;
-    margin: 3px auto 0;
-    transition-duration: 0.5s;
   }
   .img_wrap img{
     width: 100%;

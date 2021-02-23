@@ -4,12 +4,33 @@
 {% block stylesheet %}'{% static "teams/scss/dist/home.css" %}'{% endblock %}
 
 {% block content %}
-
-  <img src="{% static 'teams/img/lp.png' %}" alt="ヘッダー画像" class='header'>
-  <h2>熱くなれるフレンドを見つけよう</h2>
-  <p>CrowdGamersで気軽にチームやメンバーを探してみませんか？</p>
-  <p><a href="{% url 'accounts:account_signup' %}">Twitterで登録</a></p>
-  <p>CrowdGamersで熱くなれるフレンドを見つけよう</p>
-  <p><a href="{% url 'accounts:account_signup' %}">Twitterで登録</a></p>
+  <div class='catch-section'>
+    <img src="{% static 'teams/img/lp.png' %}" alt="ヘッダー画像" class='header'>
+    <h3 class='catch-copy'>熱くなれるフレンドを見つけよう</h3>
+  </div>
+  <div class='signup-prompt'>
+    <h3>CrowdGamersで気軽にチームやメンバーを探してみませんか？</h3>
+    <div class='twitter-btn'>
+      <a href="{% url 'accounts:account_signup' %}" class="btn-push">Twitterで登録</a>
+    </div>
+  </div>
+  <div>
+    <h3>チーム・メンバーを探すのに便利！</h3>
+    <div>
+      <p>希望する条件を選択して検索。<br>気になるチーム・選手を選択！</p>
+    </div>
+    <div>
+      <p>自分の希望条件とマッチしたら<br>メッセージを入力し送信完了！</p>
+    </div>
+    <div>
+      <p>相手からメッセージが<br>帰ってくるのを待つだけ！</p>
+    </div>
+  </div>
+  <div class='signup-prompt'>
+    <h3>CrowdGamersで熱くなれるフレンドを見つけよう</h3>
+    <div class='twitter-btn'>
+      <a href="{% url 'accounts:account_signup' %}" class="btn-push">Twitterで登録</a>
+    </div>
+  </div>
 
 {% endblock %}
