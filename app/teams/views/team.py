@@ -65,18 +65,6 @@ team_list = TeamListView.as_view()
 
 
 
-class TeamDetailView(DetailView):
-    template_name = 'teams/team_detail.html'
-    model = Team
-
-    def get_object(self):
-        teamname = self.kwargs.get("teamname")
-        return get_object_or_404(Team, teamname=teamname)
-
-team_detail = TeamDetailView.as_view()
-
-
-
 class TeamUpdateView(LoginRequiredMixin, OnlyYouMixin, UpdateView):
     template_name = 'teams/team_update.html'
     model = Team
@@ -106,9 +94,12 @@ class TeamDetailBaseView(DetailView):
 
     # def get_context_data(self, **kwargs):
     #     context = super().get_context_data(**kwargs)
-    #     team = self.get_object()
-    #     context['owner_profile'] = UserProfile.objects.filter(team=team, is_owner=True)
-    #     return context
+    #     team = get_object_or_404(Team, teamname=self.kwargs.get("teamname"))
+    #     owner_profile = team.belonging_user_profiles.filter(is_owner=True)[0]
+        # context['owner_profile_user_username'] = owner_profile.user.username
+        # context['owner_profile_icon_url'] = owner_profile.icon.url
+        # context['owner_profile_name'] = owner_profile.name
+        # return context
 
     def get_object(self):
         teamname = self.kwargs.get("teamname")
@@ -127,6 +118,15 @@ team_detail_game = TeamDetailGameView.as_view()
 class TeamDetailMemberView(TeamDetailBaseView):
     template_name = 'teams/team_profile/team_detail_member.html'
     model = Team
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        team = get_object_or_404(Team, teamname=self.kwargs.get("teamname"))
+        owner_profile = team.belonging_user_profiles.filter(is_owner=True)[0]
+        context['owner_profile_user_username'] = owner_profile.user.username
+        context['owner_profile_icon_url'] = owner_profile.icon.url
+        context['owner_profile_name'] = owner_profile.name
+        return context
 
 team_detail_member = TeamDetailMemberView.as_view()
 
