@@ -27,15 +27,20 @@ class TeamCreateView(LoginRequiredMixin, CreateView):
             form.instance.user = self.request.user
             user = User.objects.get(username=self.request.user)
 
+            result = super().form_valid(form)
+
             # チームのオブジェクトを取得（idが欲しい）
-            print('\n\n\n\n\n\n\n\n{}\n\n\n\n\n\n\n\n'.format(self.object))
-            self.object.id = self.object.id
             print('\n\n\n\n\n\n\n\n{}\n\n\n\n\n\n\n\n'.format(self.object.id))
-            self.object.save()
+            # self.object.save()
 
             # related name で参照・is_owner を True
             profile = user.user_profile
             profile.is_owner = True
+            print('\n\n\n\n\n\n\n\n{}\n\n\n\n\n\n\n\n'.format(profile.team))
+            form.instance.team = self.object
+            print('\n\n\n\n\n\n\n\nself.object:{}\n\n\n\n\n\n\n\nform.instance.team:{}\n\n\n\n\n\n\n\n'.format(self.object, form.instance.team))
+            profile.team = form.instance.team
+            print('\n\n\n\n\n\n\n\n{}\n\n\n\n\n\n\n\n'.format(profile.team))
             profile.save()
 
             print('\n\n\n\n\n処理完了\n\n\n\n\n')
