@@ -1,11 +1,26 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{% block head_title %}ログイン{% endblock %}
+
+{% block stylesheet %}'{% static "accounts/scss/dist/login.css" %}'{% endblock %}
 
 {% block content %}
 
-  <div>
-    <button type="submit" id='button' onclick="location.href='{% url 'social:begin' 'twitter' %}'">Twitterログイン &raquo;</button>
+  <div class='container'>
+    <div class='main-section'>
+      <h3>ログイン</h3>
+      <div class='img'>
+        <img src="{% static 'accounts/img/default-icon.svg' %}" alt="デフォルトアイコン">
+      </div>
+      <div class='twitter-btn'>
+        <a onclick="location.href='{% url 'social:begin' 'twitter' %}'" class="btn-push">Twitterログイン</a>
+      </div>
+    </div>
+    <div class='description'>
+      <p>ログインすることにより、<a href="{% url 'teams:terms-of-service' %}" target="_blank">利用規約</a>と<a href="{% url 'teams:privacy-policy' %}" target="_blank">プライバシーポリシー</a>に同意することになります。</p>
+      <p><a href="{% url 'accounts:account_signup' %}">アカウントをお持ちでない場合、作成することができます。</a></p>
+    </div>
   </div>
-  <p>ログインすることにより、利用規約とプライバシーポリシーに同意することになります。</p>
-  <p><a href="{% url 'accounts:account_signup' %}">サインアップ</a></p>
 
 {% endblock %}

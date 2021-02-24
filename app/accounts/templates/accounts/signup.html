@@ -1,12 +1,20 @@
 {% extends 'base.html' %}
+{% load static %}
+
+
+
+{% block head_title %}ユーザー登録{% endblock %}
+{% block stylesheet %}'{% static "accounts/scss/dist/login.css" %}'{% endblock %}
 
 {% block content %}
 
   <div>
-    <input id="check" type="checkbox" /><p><a href='{% url "teams:terms-of-service" %}'>利用規約</a>・<a href='{% url "teams:privacy-policy" %}'>プライバシーポリシー</a>を読んだ上、同意する</p>
+    <h3>ユーザー登録</h3>
+    <img src="{% static 'accounts/img/default-icon.svg' %}" alt="デフォルトアイコン">
+    <input id="check" type="checkbox" /><p><a href='{% url "teams:terms-of-service" %}' target="_blank">利用規約</a>・<a href='{% url "teams:privacy-policy" %} target="_blank"'>プライバシーポリシー</a>を読んだ上、同意する</p>
     <button type="submit" id='button' disabled='disabled' onclick="location.href='{% url 'social:begin' 'twitter' %}'">Twitter登録 &raquo;</button>
   </div>
-  <p><a href="{% url 'accounts:account_login' %}">ログイン</a></p>
+  <p><a href="{% url 'accounts:account_login' %}">アカウントをお持ちの場合、こちらからログインすることができます。</a></p>
 
 {% endblock %}
 
