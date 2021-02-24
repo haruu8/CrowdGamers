@@ -47,14 +47,14 @@
           {% endif %}
 
           {% if user.is_authenticated %}
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                 <a class="dropdown-item" href="{% url 'teams:account_detail_game' user.username %}">プロフィール</a>
                 <a class="dropdown-item" href="{% url 'accounts:account_settings' %}">設定</a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="{% url 'accounts:account_logout' %}">ログアウト</a>
             </div>
           {% else %}
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
               <a class="dropdown-item" href="{% url 'accounts:account_login' %}">ログイン</a>
               <a class="dropdown-item" href="{% url 'accounts:account_signup' %}">登録</a>
             </div>
