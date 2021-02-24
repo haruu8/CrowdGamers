@@ -65,3 +65,13 @@ $color: black;
   text-decoration: none;
   color: white;
 }
+
+#signup-btn {
+  pointer-events: none;
+  background-color: #c9c9c9;
+  border-bottom: #c9c9c9;
+}
+
+label {
+  padding-left: 0.5rem;
+}

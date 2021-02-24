@@ -8,24 +8,34 @@
 
 {% block content %}
 
-  <div>
-    <h3>ユーザー登録</h3>
-    <img src="{% static 'accounts/img/default-icon.svg' %}" alt="デフォルトアイコン">
-    <input id="check" type="checkbox" /><p><a href='{% url "teams:terms-of-service" %}' target="_blank">利用規約</a>・<a href='{% url "teams:privacy-policy" %} target="_blank"'>プライバシーポリシー</a>を読んだ上、同意する</p>
-    <button type="submit" id='button' disabled='disabled' onclick="location.href='{% url 'social:begin' 'twitter' %}'">Twitter登録 &raquo;</button>
+  <div class='container'>
+    <div class="main-section">
+      <h3>ユーザー登録</h3>
+      <div class='img'>
+        <img src="{% static 'accounts/img/default-icon.svg' %}" alt="デフォルトアイコン">
+      </div>
+      <div class='twitter-btn' aria-disabled="true">
+        <a id='signup-btn' onclick="location.href='{% url 'social:begin' 'twitter' %}'" class="btn-push">Twitterで登録</a>
+      </div>
+    </div>
+    <div class='description'>
+      <input id="check" type="checkbox" /><label><a href='{% url "teams:terms-of-service" %}' target="_blank">利用規約</a>・<a href='{% url "teams:privacy-policy" %} target="_blank"'>プライバシーポリシー</a>を読んだ上、同意する</label>
+      <p><a href="{% url 'accounts:account_login' %}">アカウントをお持ちの場合、こちらからログインすることができます。</a></p>
+    </div>
   </div>
-  <p><a href="{% url 'accounts:account_login' %}">アカウントをお持ちの場合、こちらからログインすることができます。</a></p>
 
 {% endblock %}
 
 {% block script %}
 
+.css('pointer-events', 'none');
+
   <script type='text/javascript'>
     $('#check').change(function() {
       if ( $(this).is(':checked') ){
-          $('#button').prop('disabled', false);
+        $('#signup-btn').css({'pointer-events':'auto', 'background-color':'#1DA1F2', 'border-bottom':'#1DA1F2'});
       } else {
-          $('#button').prop('disabled', true);
+          $('#signup-btn').css({'pointer-events':'none', 'background-color':'#c9c9c9', 'border-bottom':'#c9c9c9'});
       }
     });
   </script>
