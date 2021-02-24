@@ -1,5 +1,5 @@
-from django.shortcuts import redirect, get_object_or_404
-from django.urls import reverse_lazy
+from django.shortcuts import render, redirect, get_object_or_404
+from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, DetailView, ListView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import get_user_model
@@ -16,31 +16,43 @@ class TeamCreateView(LoginRequiredMixin, CreateView):
     form_class = TeamCreateForm
     success_url = reverse_lazy('teams:home')
 
-    # プロフィールの is_owner を変更するように変更
-    # userprofile の team field も結びつける
+    # プロフィールの is_owner を変更
     def form_valid(self, form):
-        team = form.save(commit=False)
+        self.object = form.save(commit=False)
         is_owner = self.request.user.user_profile.is_owner
-        if is_owner is not True:
+        belonging_user_profiles = self.request.user.user_profile.team
+
+        # owner or team が空なら作成できる
+        if is_owner is False or belonging_user_profiles is None:
             form.instance.user = self.request.user
             user = User.objects.get(username=self.request.user)
 
-            # related name で参照
+            # チームのオブジェクトを取得（idが欲しい）
+            print('\n\n\n\n\n\n\n\n{}\n\n\n\n\n\n\n\n'.format(self.object))
+            self.object.id = self.object.id
+            print('\n\n\n\n\n\n\n\n{}\n\n\n\n\n\n\n\n'.format(self.object.id))
+            self.object.save()
+
+            # related name で参照・is_owner を True
             profile = user.user_profile
             profile.is_owner = True
-            team.save()
             profile.save()
+
             print('\n\n\n\n\n処理完了\n\n\n\n\n')
+
             return super().form_valid(form)
         else:
-            # エラ〜メッセージを追加する
-            return redirect('teams:home')
+            form.add_error(None, 'チームは1つまでしか所属できません。')
+            return render(self.request, self.template_name, {'form': form})
+
+    def get_success_url(self):
+        return reverse('teams:team_detail_game', kwargs={'teamname': self.object.teamname})
 
 team_create = TeamCreateView.as_view()
 
 
 
-class TeamListView(ListView, GetProfileView):
+class TeamListView(ListView):
     template_name = 'teams/team_list.html'
     model = Team
 
@@ -48,7 +60,7 @@ team_list = TeamListView.as_view()
 
 
 
-class TeamDetailView(DetailView, GetProfileView):
+class TeamDetailView(DetailView):
     template_name = 'teams/team_detail.html'
     model = Team
 
@@ -60,7 +72,7 @@ team_detail = TeamDetailView.as_view()
 
 
 
-class TeamUpdateView(LoginRequiredMixin, OnlyYouMixin, UpdateView, GetProfileView):
+class TeamUpdateView(LoginRequiredMixin, OnlyYouMixin, UpdateView):
     template_name = 'teams/team_update.html'
     model = Team
     form_class = TeamCreateForm
@@ -73,7 +85,7 @@ team_update = TeamUpdateView.as_view()
 
 
 
-class TeamDeleteView(LoginRequiredMixin, OnlyYouMixin, DeleteView, GetProfileView):
+class TeamDeleteView(LoginRequiredMixin, OnlyYouMixin, DeleteView):
     template_name = 'teams/team_delete.html'
     model = Team
     success_url = reverse_lazy('team:home')
@@ -82,16 +94,16 @@ team_delete = TeamDeleteView.as_view()
 
 
 
-class TeamDetailBaseView(DetailView, GetProfileView):
+class TeamDetailBaseView(DetailView):
     template_name = 'teams/team_detail.html'
     model = Team
     form_class = TeamCreateForm
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        team = self.get_object()
-        context['owner_profile'] = UserProfile.objects.filter(team=team, is_owner=True)
-        return context
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     team = self.get_object()
+    #     context['owner_profile'] = UserProfile.objects.filter(team=team, is_owner=True)
+    #     return context
 
     def get_object(self):
         teamname = self.kwargs.get("teamname")

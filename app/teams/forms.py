@@ -51,19 +51,19 @@ class TeamCreateForm(forms.ModelForm):
     teamname = forms.CharField(required=True,
                             widget=forms.TextInput(attrs={'placeholder': 'チームのユーザーネームを入力してください', 'render_value': True}))
     name = forms.CharField(required=True,
-                            widget=forms.TextInput(attrs={'placeholder': 'クランの名前を入力してください', 'render_value': True}))
+                            widget=forms.TextInput(attrs={'placeholder': 'チームの名前を入力してください', 'render_value': True}))
     icon = forms.ImageField(required=False)
     url = forms.URLField(required=False,
-                            widget=forms.URLInput(attrs={'placeholder': 'クランの公式HPのURLを入力してください', 'render_value': True}))
+                            widget=forms.URLInput(attrs={'placeholder': 'チームの公式HPのURLを入力してください', 'render_value': True}))
     description = forms.CharField(required=True,
-                            widget=forms.Textarea(attrs={'placeholder': 'クランについて入力してください', 'render_value': True}))
+                            widget=forms.Textarea(attrs={'placeholder': 'チームについて入力してください', 'render_value': True}))
     sponsor = forms.CharField(required=False,
                             widget=forms.Textarea(attrs={'placeholder': 'スポンサー名を入力してください', 'render_value': True}))
     feature = forms.MultipleChoiceField(required=False,
                             widget=forms.CheckboxSelectMultiple(attrs={'class': 'form-control'}))
     desired_condition = forms.CharField(required=False,
                             widget=forms.Textarea(attrs={'placeholder': '募集する選手の希望条件を入力してください', 'render_value': True}))
-    disclosed = forms.BooleanField(required=True)
+    disclosed = forms.BooleanField(required=False)
 
 
     def __init__(self, *args, **kwargs):
