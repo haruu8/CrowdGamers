@@ -8,7 +8,7 @@
   <p>ユーザーネーム：@{{ object.username }}</p>
   <p>ニックネーム：{{ user_profile.name }}</p>
   {% if user_profile.team %}
-    <p>@{{ user_profile.team.teamname }}</p>
+    <p>チームネーム<a href="{% url 'teams:team_detail_game' user_profile.team.teamname %}">@{{ user_profile.team.teamname }}</a></p>
   {% else %}
     <p>無所属</p>
   {% endif %}
