@@ -33,5 +33,75 @@
     "fields": {
       "title": "Fortnite"
     }
+  },
+  {
+    "model": "teams.game",
+    "pk": 6,
+    "fields": {
+      "title": "Dota2"
+    }
+  },
+  {
+    "model": "teams.game",
+    "pk": 7,
+    "fields": {
+      "title": "Counter-Strike: Global Offensive"
+    }
+  },
+  {
+    "model": "teams.game",
+    "pk": 8,
+    "fields": {
+      "title": "Call of Duty : Modern Warfare"
+    }
+  },
+  {
+    "model": "teams.game",
+    "pk": 8,
+    "fields": {
+      "title": "PLAYERUNKNOWN’S BATTLEGROUNDS (PUBG)"
+    }
+  },
+  {
+    "model": "teams.game",
+    "pk": 8,
+    "fields": {
+      "title": "スプラトゥーン2"
+    }
+  },
+  {
+    "model": "teams.game",
+    "pk": 8,
+    "fields": {
+      "title": "ストリートファイターV"
+    }
+  },
+  {
+    "model": "teams.game",
+    "pk": 8,
+    "fields": {
+      "title": "鉄拳7"
+    }
+  },
+  {
+    "model": "teams.game",
+    "pk": 8,
+    "fields": {
+      "title": "大乱闘スマッシュブラザーズ"
+    }
+  },
+  {
+    "model": "teams.game",
+    "pk": 8,
+    "fields": {
+      "title": "Brawl Stars"
+    }
+  },
+  {
+    "model": "teams.game",
+    "pk": 8,
+    "fields": {
+      "title": "Clash Royale"
+    }
   }
 ]

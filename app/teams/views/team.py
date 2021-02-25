@@ -92,15 +92,6 @@ class TeamDetailBaseView(DetailView):
     model = Team
     form_class = TeamCreateForm
 
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     team = get_object_or_404(Team, teamname=self.kwargs.get("teamname"))
-    #     owner_profile = team.belonging_user_profiles.filter(is_owner=True)[0]
-        # context['owner_profile_user_username'] = owner_profile.user.username
-        # context['owner_profile_icon_url'] = owner_profile.icon.url
-        # context['owner_profile_name'] = owner_profile.name
-        # return context
-
     def get_object(self):
         teamname = self.kwargs.get("teamname")
         return get_object_or_404(Team, teamname=teamname)
