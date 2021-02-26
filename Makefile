@@ -16,9 +16,9 @@ test:
 	docker-compose exec django python3 manage.py test
 insert:
 	docker-compose exec django python3 manage.py loaddata feature_initial.json && docker-compose exec django python3 manage.py loaddata game_initial.json && docker-compose exec django python3 manage.py loaddata question_initial.json
-insert-data-feature:
+insert-feature:
 	docker-compose exec django python3 manage.py loaddata feature_initial.json
-insert-data-game:
+insert-game:
 	docker-compose exec django python3 manage.py loaddata game_initial.json
 insert-faq:
 	docker-compose exec django python3 manage.py loaddata question_initial.json

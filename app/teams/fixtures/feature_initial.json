@@ -10,7 +10,7 @@
     "model": "teams.feature",
     "pk": 2,
     "fields": {
-      "feature": "ゆったりと活動します"
+      "feature": "ゆったり活動します"
     }
   },
   {
@@ -32,6 +32,20 @@
     "pk": 5,
     "fields": {
       "feature": "スポンサーがいます"
+    }
+  },
+  {
+    "model": "teams.feature",
+    "pk": 6,
+    "fields": {
+      "feature": "楽しくやっています"
+    }
+  },
+  {
+    "model": "teams.feature",
+    "pk": 7,
+    "fields": {
+      "feature": "実績があります"
     }
   }
 ]
