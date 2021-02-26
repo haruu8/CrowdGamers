@@ -1,8 +1,10 @@
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.views.generic import TemplateView
+from django.shortcuts import get_object_or_404, resolve_url, redirect
+from django.conf import settings
+from django.core.exceptions import ImproperlyConfigured
 from teams.models import UserProfile
 from accounts.models import User
-from django.shortcuts import get_object_or_404
 
 
 
@@ -11,8 +13,12 @@ class OnlyYouMixin(UserPassesTestMixin):
 
     def test_func(self):
         user = self.request.user
-        return user.username == self.kwargs['username'] or user.is_superuse
+        return user.username == self.kwargs['username'] or user.is_superuser
 
+
+
+class AnonymousRequiredMixin(UserPassesTestMixin):
+    pass
 
 
 class GetProfileView(TemplateView):

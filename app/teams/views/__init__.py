@@ -13,4 +13,4 @@ from .team import (
     team_create, team_list, team_delete, team_update,
     team_detail_game, team_detail_member, team_detail_feature, team_detail_desired_condition
 )
-from .utils import OnlyYouMixin, GetProfileView
+from .utils import OnlyYouMixin, AnonymousRequiredMixin, GetProfileView

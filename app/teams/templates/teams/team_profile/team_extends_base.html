@@ -13,6 +13,9 @@
     <p>希望条件：{{ object.desired_condition }}</p>
     <p><a href="{% url 'teams:team_apply_input' %}">リクエストを送る</a></p>
   {% endif %}
+  {% if request.user.is_owner is True %}
+  {% endif %}
+  <a href="{% url 'teams:team_update' object.teamname %}">編集する</a>
 
   <hr>
   <p><a href="{% url 'teams:team_detail_game' object.teamname %}">ゲーム</a></p>

@@ -16,39 +16,21 @@ class TeamCreateView(LoginRequiredMixin, CreateView):
     form_class = TeamCreateForm
     success_url = reverse_lazy('teams:home')
 
-    # プロフィールの is_owner を変更
     def form_valid(self, form):
-        self.object = form.save(commit=False)
-        is_owner = self.request.user.user_profile.is_owner
-        belonging_user_profiles = self.request.user.user_profile.team
+        profile = self.request.user.user_profile
 
-        # owner or team が空なら作成できる
-        if is_owner is False or belonging_user_profiles is None:
-            form.instance.user = self.request.user
-            user = User.objects.get(username=self.request.user)
-
-            result = super().form_valid(form)
-
-            # チームのオブジェクトを取得（idが欲しい）
-            print('\n\n\n\n\n\n\n\n{}\n\n\n\n\n\n\n\n'.format(self.object.id))
-            # self.object.save()
-
-            # related name で参照・is_owner を True
-            profile = user.user_profile
-            profile.is_owner = True
-            print('\n\n\n\n\n\n\n\n{}\n\n\n\n\n\n\n\n'.format(profile.team))
-            form.instance.team = self.object
-            print('\n\n\n\n\n\n\n\nself.object:{}\n\n\n\n\n\n\n\nform.instance.team:{}\n\n\n\n\n\n\n\n'.format(self.object, form.instance.team))
-            profile.team = form.instance.team
-            print('\n\n\n\n\n\n\n\n{}\n\n\n\n\n\n\n\n'.format(profile.team))
-            profile.save()
-
-            print('\n\n\n\n\n処理完了\n\n\n\n\n')
-
-            return super().form_valid(form)
-        else:
+        # is_owner True, profile.team があれば作成できない
+        if profile.is_owner is True or profile.team:
             form.add_error(None, 'チームは1つまでしか所属できません。')
             return render(self.request, self.template_name, {'form': form})
+
+        result = super().form_valid(form)
+        profile.is_owner = True
+        profile.team = self.object
+        profile.save()
+        print('\n\n\n\n\n{}\n\n\n\n\n{}\n\n\n\n\n'.format(profile.is_owner, profile.team))
+        print('\n\n\n\n\n処理完了\n\n\n\n\n')
+        return result
 
     def get_success_url(self):
         return reverse('teams:team_detail_game', kwargs={'teamname': self.object.teamname})
@@ -65,7 +47,7 @@ team_list = TeamListView.as_view()
 
 
 
-class TeamUpdateView(LoginRequiredMixin, OnlyYouMixin, UpdateView):
+class TeamUpdateView(LoginRequiredMixin, UpdateView):
     template_name = 'teams/team_update.html'
     model = Team
     form_class = TeamCreateForm
