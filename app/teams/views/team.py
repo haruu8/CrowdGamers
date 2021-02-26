@@ -5,7 +5,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import get_user_model
 from teams.models import Team, UserProfile
 from teams.forms import TeamCreateForm
-from .utils import OnlyYouMixin, OnlyOwnerMixin, GetProfileView
+from .access import OnlyYouMixin, OnlyOwnerMixin
+from .utils import GetProfileView
 from accounts.models import User
 
 
