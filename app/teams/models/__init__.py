@@ -4,4 +4,4 @@ from .feature import Feature
 from .game import Game
 from .invite import Invite
 from .profile import UserProfile
-from .team import Team
+from .team import Team, Job

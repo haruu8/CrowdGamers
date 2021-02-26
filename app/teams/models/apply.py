@@ -4,7 +4,7 @@ from django.core.exceptions import ValidationError
 from django.contrib.auth import get_user_model
 import uuid
 from .profile import UserProfile
-from .team import Team
+from .team import Team, Job
 
 
 
@@ -20,6 +20,7 @@ class Apply(models.Model):
     from_user = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name='send_apply')
     to_user = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name='receive_apply')
     team = models.ForeignKey(Team, on_delete=models.CASCADE)
+    desired_job = models.ManyToManyField(Job, related_name='apply_desired_job')
     message = models.CharField(verbose_name='志望理由', max_length=255, null=True, blank=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

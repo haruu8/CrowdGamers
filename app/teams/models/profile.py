@@ -2,7 +2,7 @@ from django.db import models
 from django.core.validators import FileExtensionValidator, MinLengthValidator, RegexValidator
 from django.core.exceptions import ValidationError
 from django.contrib.auth import get_user_model
-from .team import Team
+from .team import Team, Job
 from .game import Game
 from .feature import Feature
 
@@ -34,12 +34,6 @@ class UserProfile(models.Model):
         if image_size > megabyte_limit*1024*1024:
             raise ValidationError("ファイルのサイズを%sMBより小さくしてください" % str(megabyte_limit))
 
-    JOB_TYPE = (
-        (1, '選手'),
-        (2, 'マネージャー'),
-        (3, 'コーチ'),
-    )
-
     id = models.AutoField(editable=False, primary_key=True)
     user = models.OneToOneField(get_user_model(), on_delete=models.CASCADE, related_name='user_profile')
     name = models.CharField(verbose_name='ニックネーム', max_length=100)
@@ -63,6 +57,6 @@ class UserProfile(models.Model):
     feature = models.ManyToManyField(Feature, related_name='profile_feature')
     introduction = models.CharField(null=True, blank=True, max_length=140)
     clip_url = models.URLField(blank=True, null=True)
-    desired_job_type = models.CharField(choices=JOB_TYPE, null=False, blank=False, max_length=10)
+    desired_job = models.ManyToManyField(Job, related_name='profile_desired_job')
     desired_condition = models.CharField(verbose_name='希望条件', max_length=255)
     disclosed = models.BooleanField(default=True)

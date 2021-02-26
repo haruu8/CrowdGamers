@@ -14,6 +14,17 @@ def user_directory_path(instance, filename):
 
 
 
+""" ジョブモデル """
+
+class Job(models.Model):
+    id = models.AutoField(primary_key=True, editable=False)
+    job = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.job
+
+
+
 """ クランモデル """
 
 class Team(models.Model):
@@ -58,6 +69,7 @@ class Team(models.Model):
     sponsor = models.CharField(max_length=50)
     game_title = models.ManyToManyField(Game, related_name='team_game_title')
     feature = models.ManyToManyField(Feature, verbose_name='特徴', related_name='team_feature')
+    desired_job = models.ManyToManyField(Job, related_name='team_desired_job')
     desired_condition = models.CharField(max_length=200)
     disclosed = models.BooleanField(verbose_name='公開・非公開')
     created_at = models.DateTimeField(auto_now_add=True)
