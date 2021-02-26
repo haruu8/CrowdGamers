@@ -6,21 +6,33 @@ from .models import Team, Invite, Apply, Feature, UserProfile
 class UserProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = UserProfile
-        fields = ('name', 'icon', 'header', 'introduction', 'clip_url')
+        fields = ('name', 'icon', 'header', 'game_title','introduction', 'clip_url')
         labels = {
             'name': '名前',
             'icon': 'アイコン',
             'header': 'ヘッダー画像',
+            'game_title': 'ゲームタイトル',
             'introduction': '自己紹介',
             'clip_url': 'クリップ',
         }
+
+    JOB_TYPE = (
+        (1, '選手'),
+        (2, 'マネージャー'),
+        (3, 'コーチ'),
+    )
+
     name = forms.CharField(required=True,
                             widget=forms.TextInput(attrs={'placeholder': '名前を入力してください', 'render_value': True}))
     icon = forms.ImageField(required=False)
     header = forms.ImageField(required=False)
+    game_title = forms.MultipleChoiceField(required=False,
+                            widget=forms.SelectMultiple(attrs={'class': 'form-control'}))
     introduction = forms.CharField(required=False,
                             widget=forms.Textarea(attrs={'placeholder': '自身について入力してください', 'render_value': True}))
     clip_url = forms.URLField(required=False, widget=forms.URLInput())
+    desired_job_type = forms.CharField(required=True,
+                            widget=forms.Select(enpty_label='選択してください', choices=JOB_TYPE, attrs={'class': 'form-control'}))
 
     def __init__(self, *args, **kwargs):
         super(UserProfileUpdateForm, self).__init__(*args, **kwargs)

@@ -34,9 +34,9 @@ class UserProfile(models.Model):
             raise ValidationError("ファイルのサイズを%sMBより小さくしてください" % str(megabyte_limit))
 
     JOB_TYPE = (
-        ('player', '選手'),
-        ('manger', 'マネージャー'),
-        ('coach', 'コーチ'),
+        (1, '選手'),
+        (2, 'マネージャー'),
+        (3, 'コーチ'),
     )
 
     id = models.AutoField(editable=False, primary_key=True)
@@ -59,8 +59,8 @@ class UserProfile(models.Model):
     is_owner = models.BooleanField(default=False)
     team = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='belonging_user_profiles', null=True, blank=True)
     game_title = models.ManyToManyField(Game, related_name='user_game_title')
-    introduction = models.CharField(max_length=140)
+    introduction = models.CharField(null=True, blank=True, max_length=140)
     clip_url = models.URLField(blank=True, null=True)
-    desired_job_type = models.CharField(choices=JOB_TYPE, null=False, blank=False, max_length=100)
+    desired_job_type = models.CharField(choices=JOB_TYPE, null=False, blank=False, max_length=10)
     desired_condition = models.CharField(verbose_name='希望条件', max_length=255)
     disclosed = models.BooleanField(default=True)

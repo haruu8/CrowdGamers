@@ -56,8 +56,8 @@ class UserProfileUpdateView(UpdateView):
         form.instance.user = self.request.user
         p_form = UserProfileUpdateForm(self.request.POST,self.request.FILES,instance=self.request.user.user_profile)
         p_form.save()
-        # return get_object_or_404(User, username=self.kwargs.get('username'))
-        return redirect('teams:home')
+        result = super().form_valid(form)
+        return result
 
     def get_success_url(self):
         return resolve_url(self.success_url, username=self.kwargs.get('username'))

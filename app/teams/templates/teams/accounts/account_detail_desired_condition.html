@@ -1,9 +1,14 @@
 {% extends 'teams/accounts/profile_extends_base.html' %}
 
 {% block profile_content %}
+
+  {% if user_profile.desired_job_type %}
+    <p>希望職：{{ user_profile.desired_job_type }}</p>
+  {% endif %}
+
   <h1>希望条件</h1>
   {% if user_profile.disclosed is True %}
-    条件：{{ user_profile.desired_condition }}
+  <p>条件：{{ user_profile.desired_condition }}</p>
   {% else %}
     <p>条件は現在公開されていません</p>
   {% endif %}
