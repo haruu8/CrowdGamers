@@ -45,7 +45,7 @@ team_list = TeamListView.as_view()
 
 
 
-class TeamUpdateView(LoginRequiredMixin, OnlyOwnerMixin, UpdateView):
+class TeamUpdateView(LoginRequiredMixin, UpdateView):
     template_name = 'teams/team_update.html'
     model = Team
     form_class = TeamCreateForm

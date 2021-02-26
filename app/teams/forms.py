@@ -34,12 +34,13 @@ class TeamCreateForm(forms.ModelForm):
 
     class Meta:
         model = Team
-        fields = ('teamname', 'name', 'icon', 'url', 'description',
+        fields = ('teamname', 'name', 'icon', 'header', 'url', 'description',
                     'sponsor', 'feature', 'desired_condition', 'disclosed')
         labels = {
             'teamname': 'チームネーム',
             'name': '名前',
             'icon': 'アイコン',
+            'header': 'ヘッダー',
             'url': '公式のURL',
             'description': '説明',
             'sponsor': 'スポンサー',
@@ -53,6 +54,7 @@ class TeamCreateForm(forms.ModelForm):
     name = forms.CharField(required=True,
                             widget=forms.TextInput(attrs={'placeholder': 'チームの名前を入力してください', 'render_value': True}))
     icon = forms.ImageField(required=False)
+    header = forms.ImageField(required=False)
     url = forms.URLField(required=False,
                             widget=forms.URLInput(attrs={'placeholder': 'チームの公式HPのURLを入力してください', 'render_value': True}))
     description = forms.CharField(required=True,
@@ -60,7 +62,7 @@ class TeamCreateForm(forms.ModelForm):
     sponsor = forms.CharField(required=False,
                             widget=forms.Textarea(attrs={'placeholder': 'スポンサー名を入力してください', 'render_value': True}))
     feature = forms.MultipleChoiceField(required=False,
-                            widget=forms.CheckboxSelectMultiple(attrs={'class': 'form-control'}))
+                            widget=forms.SelectMultiple(attrs={'class': 'form-control', 'id': 'feature'}))
     desired_condition = forms.CharField(required=False,
                             widget=forms.Textarea(attrs={'placeholder': '募集する選手の希望条件を入力してください', 'render_value': True}))
     disclosed = forms.BooleanField(required=False)

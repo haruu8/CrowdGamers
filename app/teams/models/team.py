@@ -39,7 +39,15 @@ class Team(models.Model):
         max_length=15,
         validators=[MinLengthValidator(4), teamname_regex])
     name = models.CharField(max_length=100, null=False, blank=False)
+    header = models.ImageField(
+        default='default/profile_header.jpg',
+        upload_to=user_directory_path,
+        blank=True,
+        validators=[
+            validate_icon_image,
+        ])
     icon = models.ImageField(
+        default='default/profile_icon.png',
         upload_to=user_directory_path,
         blank=True,
         validators=[

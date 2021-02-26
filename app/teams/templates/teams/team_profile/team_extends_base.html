@@ -3,8 +3,14 @@
 {% block content %}
 
   <p>名前：{{ object.name }}</p>
+  <img src="{{ object.icon.url }}" alt="アイコン">
+  <img src="{{ object.header.url }}" alt="ヘッダー">
   <p>チームネーム：@{{ object.teamname }}</p>
-  <p><a href="{{ object.url }}">クランHP</a></p>
+
+  {% if object.url %}
+    <p><a href="{{ object.url }}">HP</a></p>
+  {% endif %}
+
   <p>説明：{{ object.description }}</p>
   {% if object.sponsor %}
     <p>スポンサー：{{ object.sponsor }}</p>
