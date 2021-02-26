@@ -1,10 +1,14 @@
 {% extends 'base.html' %}
+{% load static %}
 
-{% block head_title %}お問い合わせ{% endblock %}
+{% block stylesheet %}'{% static "teams/scss/dist/contact.css" %}'{% endblock %}
 
 {% block content %}
 
-  <h1>お問い合わせ</h1>
-  <p>お問い合わせはこちらのTwitterアカウント(<a href="https://twitter.com/haruu_iq/">@haruu_iq</a>)のDMによろしくお願いします。</p>
+  <div class='container'>
+    <h1>お問い合わせ</h1>
+    <p>お問い合わせはこちらのTwitterアカウント(<a href="https://twitter.com/haruu_iq/">@haruu_iq</a>)のDMによろしくお願いします。</p>
+  </div>
+  <div class='push'></div>
 
 {% endblock %}
