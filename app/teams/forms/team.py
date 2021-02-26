@@ -49,3 +49,17 @@ class TeamCreateForm(forms.ModelForm):
         for field in self.fields.values():
             field.error_messages = {'required':'{fieldname} は必須です。'.format(fieldname=field.label)}
             field.widget.attrs['class'] = 'form-control'
+
+    # 特徴を三つまでしか選択できないようにする validation
+    def clean_feature(self):
+        feature = self.cleaned_data['feature']
+        if len(feature) >= 4:
+            raise forms.ValidationError('特徴は3つまでしか選択することができません')
+        return feature
+
+    # ゲームタイトルを五つまでしか選択できないようにする validation
+    def clean_game_title(self):
+        game_title = self.cleaned_data['game_title']
+        if len(game_title) >= 6:
+            raise forms.ValidationError('ゲームタイトルは5つまでしか選択することができません')
+        return game_title
