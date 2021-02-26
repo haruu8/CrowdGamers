@@ -13,7 +13,7 @@ urlpatterns = [
             name='terms-of-service'),
     path('privacy-policy/', TemplateView.as_view(template_name='teams/support/privacy-policy.html'),
             name='privacy-policy'),
-    path('contact/', TemplateView.as_view(template_name='teams/support/contact.html')),
+    path('contact/', TemplateView.as_view(template_name='teams/support/contact.html'), name='contact'),
     path('faq/', views.faq, name='faq'),
 
     # チーム

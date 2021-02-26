@@ -6,7 +6,6 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
 from .models import User
-from .forms import UserUpdateForm
 from teams.views import OnlyYouMixin, AnonymousRequiredMixin
 from django.contrib.auth import views as auth_views
 

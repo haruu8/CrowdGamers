@@ -1,4 +1,4 @@
-{% extends 'teams/support/base.html' %}
+{% extends 'base.html' %}
 
 {% block head_title %}よくある質問{% endblock %}
 
@@ -6,7 +6,7 @@
 
   <h1>よくある質問</h1>
   {% for faq in faqs %}
-    <p>Q. {{ faq.quesiton }}</p>
+    <p>Q. {{ faq.question }}</p>
     <p>A. {{ faq.awnser }}</p>
   {% endfor %}
 
