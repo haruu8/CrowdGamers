@@ -21,6 +21,16 @@ class AnonymousRequiredMixin(UserPassesTestMixin):
     pass
 
 
+
+class OnlyOwnerMixin(UserPassesTestMixin):
+    pass
+    # raise_exception = True
+
+    # def test_func(self):
+    #     return self.request.user.profile.is_owner == self.kwargs['username'] or self.request.user.is_superuser
+
+
+
 class GetProfileView(TemplateView):
 
     def get_context_data(self, **kwargs):

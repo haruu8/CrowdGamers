@@ -5,7 +5,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import get_user_model
 from teams.models import Team, UserProfile
 from teams.forms import TeamCreateForm
-from .utils import OnlyYouMixin, GetProfileView
+from .utils import OnlyYouMixin, OnlyOwnerMixin, GetProfileView
 from accounts.models import User
 
 
@@ -47,7 +47,7 @@ team_list = TeamListView.as_view()
 
 
 
-class TeamUpdateView(LoginRequiredMixin, UpdateView):
+class TeamUpdateView(LoginRequiredMixin, OnlyOwnerMixin, UpdateView):
     template_name = 'teams/team_update.html'
     model = Team
     form_class = TeamCreateForm
@@ -55,6 +55,10 @@ class TeamUpdateView(LoginRequiredMixin, UpdateView):
 
     def form_valid(self, form):
         return redirect(self.get_success_url())
+
+    def get_object(self):
+        teamname = self.kwargs.get("teamname")
+        return get_object_or_404(Team, teamname=teamname)
 
 team_update = TeamUpdateView.as_view()
 
