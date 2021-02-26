@@ -14,5 +14,13 @@
       "question": "クランに所属したことがないのですが大丈夫ですか？",
       "awnser": "クランに所属したことがなくても大丈夫です。"
     }
+  },
+  {
+    "model": "teams.question",
+    "pk": 3,
+    "fields": {
+      "question": "プロフィールのクリップURLはどのようにすればいいですか？",
+      "awnser": "通常のURLとは異なったURLが必要になります。お手数ですが、詳しくは<a href='https://support.google.com/youtube/answer/171780?hl=ja'>こちら</a>をご確認ください。"
+    }
   }
 ]
