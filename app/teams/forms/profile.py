@@ -1,12 +1,13 @@
 from django import forms
-from teams.models import UserProfile, Game, Feature
+from teams.models import UserProfile, Game, Feature, Job
 
 
 
 class UserProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = UserProfile
-        fields = ('name', 'icon', 'header', 'game_title', 'feature', 'introduction', 'clip_url')
+        fields = ('name', 'icon', 'header', 'game_title', 'feature',
+                    'introduction', 'clip_url', 'desired_job', 'desired_condition', 'disclosed')
         labels = {
             'name': '名前',
             'icon': 'アイコン',
@@ -15,13 +16,10 @@ class UserProfileUpdateForm(forms.ModelForm):
             'feature': '特徴',
             'introduction': '自己紹介',
             'clip_url': 'クリップ',
+            'desired_job': '希望職',
+            'desired_condition': '希望条件',
+            'disclosed': '公開・非公開',
         }
-
-    JOB_TYPE = (
-        (1, '選手'),
-        (2, 'マネージャー'),
-        (3, 'コーチ'),
-    )
 
     name = forms.CharField(required=True,
                             widget=forms.TextInput(attrs={'placeholder': '名前を入力してください', 'render_value': True}))
@@ -34,8 +32,11 @@ class UserProfileUpdateForm(forms.ModelForm):
     introduction = forms.CharField(required=False,
                             widget=forms.Textarea(attrs={'placeholder': '自身について入力してください', 'render_value': True}))
     clip_url = forms.URLField(required=False, widget=forms.URLInput())
-    desired_job_type = forms.CharField(required=True,
-                            widget=forms.Select(choices=JOB_TYPE, attrs={'class': 'form-control'}))
+    desired_job = forms.ModelChoiceField(queryset=Job.objects.all(), empty_label='希望するタイプを選択してください',
+                            widget=forms.Select(attrs={'class': 'form-control'}), to_field_name="job")
+    desired_condition = forms.CharField(required=False,
+                            widget=forms.Textarea(attrs={'placeholder': '募集する選手の希望条件を入力してください', 'render_value': True}))
+    disclosed = forms.BooleanField(required=False)
 
     def __init__(self, *args, **kwargs):
         super(UserProfileUpdateForm, self).__init__(*args, **kwargs)

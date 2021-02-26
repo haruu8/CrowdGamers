@@ -1,5 +1,5 @@
 from django import forms
-from teams.models import Team, Game, Feature
+from teams.models import Team, Game, Feature, Job
 
 
 
@@ -8,7 +8,7 @@ class TeamCreateForm(forms.ModelForm):
     class Meta:
         model = Team
         fields = ('teamname', 'name', 'icon', 'header', 'url', 'description',
-                    'sponsor', 'game_title','feature', 'desired_condition', 'disclosed')
+                    'sponsor', 'game_title','feature', 'desired_job','desired_condition', 'disclosed')
         labels = {
             'teamname': 'チームネーム',
             'name': '名前',
@@ -17,8 +17,9 @@ class TeamCreateForm(forms.ModelForm):
             'url': '公式のURL',
             'description': '説明',
             'sponsor': 'スポンサー',
-            'game': 'ゲームタイトル',
+            'game_title': 'ゲームタイトル',
             'feature': '特徴',
+            'desired_job': '希望職',
             'desired_condition': '希望条件',
             'disclosed': '公開・非公開',
         }
@@ -39,10 +40,11 @@ class TeamCreateForm(forms.ModelForm):
                             widget=forms.SelectMultiple(attrs={'class': 'form-control'}))
     feature = forms.ModelMultipleChoiceField(queryset=Feature.objects.all(),
                             widget=forms.SelectMultiple(attrs={'class': 'form-control'}))
+    desired_job = forms.ModelChoiceField(queryset=Job.objects.all(), empty_label='募集する人のタイプを選択してください',
+                            widget=forms.Select(attrs={'class': 'form-control'}), to_field_name="job")
     desired_condition = forms.CharField(required=False,
                             widget=forms.Textarea(attrs={'placeholder': '募集する選手の希望条件を入力してください', 'render_value': True}))
     disclosed = forms.BooleanField(required=False)
-
 
     def __init__(self, *args, **kwargs):
         super(TeamCreateForm, self).__init__(*args, **kwargs)
