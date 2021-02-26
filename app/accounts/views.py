@@ -17,22 +17,6 @@ class LoginView(auth_views.LoginView, AnonymousRequiredMixin):
 
 
 
-class UserUpdateView(OnlyYouMixin, LoginRequiredMixin, UpdateView):
-    template_name = 'accounts/account_update.html'
-    model = User
-    form_class = UserUpdateForm
-    success_url = reverse_lazy('accounts:account_detail')
-
-    def get_object(self):
-        return get_object_or_404(User, username=self.kwargs.get('username'))
-
-    def form_valid(self, form):
-        return redirect(self.get_success_url())
-
-account_update = UserUpdateView.as_view()
-
-
-
 class UserDeleteView(OnlyYouMixin, LoginRequiredMixin, DeleteView):
     template_name = 'accounts/account_delete.html'
     model = User

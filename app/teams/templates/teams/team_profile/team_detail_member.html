@@ -4,7 +4,7 @@
 
   <h3>メンバー</h3>
 
-  <p>オーナー：@<a href="{% url 'teams:account_detail_game' owner_profile_user_username %}">{{ owner_profile_user_username }} </a></p>
+  <p>オーナー：<a href="{% url 'teams:account_detail_game' owner_profile_user_username %}">@{{ owner_profile_user_username }} </a></p>
   <p>オーナー：{{ owner_profile_name }}</p>
   <img src="{{ owner_profile_icon_url }}" alt="プロフィールアイコン">
 

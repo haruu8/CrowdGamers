@@ -28,8 +28,6 @@ class TeamCreateView(LoginRequiredMixin, CreateView):
         profile.is_owner = True
         profile.team = self.object
         profile.save()
-        print('\n\n\n\n\n{}\n\n\n\n\n{}\n\n\n\n\n'.format(profile.is_owner, profile.team))
-        print('\n\n\n\n\n処理完了\n\n\n\n\n')
         return result
 
     def get_success_url(self):

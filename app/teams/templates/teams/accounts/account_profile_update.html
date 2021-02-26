@@ -1,11 +1,16 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{% block stylesheet %}'{% static "teams/scss/dist/account_profile_update.css" %}'{% endblock %}
 
 {% block content %}
 
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="編集する">
-  </form>
+  <div class='container'>
+    <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <input type="submit" value="編集する">
+    </form>
+  </div>
 
 {% endblock %}
