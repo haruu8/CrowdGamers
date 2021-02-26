@@ -4,6 +4,7 @@ from django.core.exceptions import ValidationError
 from django.contrib.auth import get_user_model
 from .team import Team
 from .game import Game
+from .feature import Feature
 
 
 
@@ -59,6 +60,7 @@ class UserProfile(models.Model):
     is_owner = models.BooleanField(default=False)
     team = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='belonging_user_profiles', null=True, blank=True)
     game_title = models.ManyToManyField(Game, related_name='user_game_title')
+    feature = models.ManyToManyField(Feature, related_name='profile_feature')
     introduction = models.CharField(null=True, blank=True, max_length=140)
     clip_url = models.URLField(blank=True, null=True)
     desired_job_type = models.CharField(choices=JOB_TYPE, null=False, blank=False, max_length=10)

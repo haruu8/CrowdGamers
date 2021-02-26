@@ -1,17 +1,18 @@
 from django import forms
-from .models import Team, Invite, Apply, Feature, UserProfile
+from teams.models import Team, Invite, Apply, Feature, UserProfile, Game
 
 
 
 class UserProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = UserProfile
-        fields = ('name', 'icon', 'header', 'game_title','introduction', 'clip_url')
+        fields = ('name', 'icon', 'header', 'game_title', 'feature', 'introduction', 'clip_url')
         labels = {
             'name': '名前',
             'icon': 'アイコン',
             'header': 'ヘッダー画像',
             'game_title': 'ゲームタイトル',
+            'feature': '特徴',
             'introduction': '自己紹介',
             'clip_url': 'クリップ',
         }
@@ -26,13 +27,15 @@ class UserProfileUpdateForm(forms.ModelForm):
                             widget=forms.TextInput(attrs={'placeholder': '名前を入力してください', 'render_value': True}))
     icon = forms.ImageField(required=False)
     header = forms.ImageField(required=False)
-    game_title = forms.MultipleChoiceField(required=False,
-                            widget=forms.SelectMultiple(attrs={'class': 'form-control'}))
+    game_title = forms.ModelChoiceField(queryset=Game.objects.all(), required=False, empty_label='選択してください',
+                            widget=forms.Select(attrs={'class': 'form-control'}))
+    feature = forms.ModelChoiceField(queryset=Feature.objects.all(), empty_label='選択してください',
+                            widget=forms.Select(attrs={'class': 'form-control'}))
     introduction = forms.CharField(required=False,
                             widget=forms.Textarea(attrs={'placeholder': '自身について入力してください', 'render_value': True}))
     clip_url = forms.URLField(required=False, widget=forms.URLInput())
     desired_job_type = forms.CharField(required=True,
-                            widget=forms.Select(enpty_label='選択してください', choices=JOB_TYPE, attrs={'class': 'form-control'}))
+                            widget=forms.Select(choices=JOB_TYPE, attrs={'class': 'form-control'}))
 
     def __init__(self, *args, **kwargs):
         super(UserProfileUpdateForm, self).__init__(*args, **kwargs)
@@ -47,7 +50,7 @@ class TeamCreateForm(forms.ModelForm):
     class Meta:
         model = Team
         fields = ('teamname', 'name', 'icon', 'header', 'url', 'description',
-                    'sponsor', 'feature', 'desired_condition', 'disclosed')
+                    'sponsor', 'game_title','feature', 'desired_condition', 'disclosed')
         labels = {
             'teamname': 'チームネーム',
             'name': '名前',
@@ -56,6 +59,7 @@ class TeamCreateForm(forms.ModelForm):
             'url': '公式のURL',
             'description': '説明',
             'sponsor': 'スポンサー',
+            'game': 'ゲームタイトル',
             'feature': '特徴',
             'desired_condition': '希望条件',
             'disclosed': '公開・非公開',
@@ -73,8 +77,10 @@ class TeamCreateForm(forms.ModelForm):
                             widget=forms.Textarea(attrs={'placeholder': 'チームについて入力してください', 'render_value': True}))
     sponsor = forms.CharField(required=False,
                             widget=forms.Textarea(attrs={'placeholder': 'スポンサー名を入力してください', 'render_value': True}))
-    feature = forms.MultipleChoiceField(required=False,
-                            widget=forms.SelectMultiple(attrs={'class': 'form-control', 'id': 'feature'}))
+    game_title = forms.ModelMultipleChoiceField(queryset=Game.objects.all(), required=False,
+                            widget=forms.SelectMultiple(attrs={'class': 'form-control'}))
+    feature = forms.ModelMultipleChoiceField(queryset=Feature.objects.all(),
+                            widget=forms.SelectMultiple(attrs={'class': 'form-control'}))
     desired_condition = forms.CharField(required=False,
                             widget=forms.Textarea(attrs={'placeholder': '募集する選手の希望条件を入力してください', 'render_value': True}))
     disclosed = forms.BooleanField(required=False)
