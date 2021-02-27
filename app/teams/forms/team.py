@@ -66,7 +66,7 @@ class TeamCreateForm(forms.ModelForm):
             raise forms.ValidationError('ゲームタイトルは5つまでしか選択することができません')
         return game_title
 
-    # ゲームタイトルを五つまでしか選択できないようにする validation
+    # 希望職を五つまでしか選択できないようにする validation
     def clean_desired_job(self):
         desired_job = self.cleaned_data['desired_job']
         if len(desired_job) >= 4:

@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404, resolve_url
 from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, DetailView, ListView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -50,10 +50,18 @@ class TeamUpdateView(LoginRequiredMixin, UpdateView):
     template_name = 'teams/team_update.html'
     model = Team
     form_class = TeamCreateForm
+
+    # teamname 変更したら not found になるので home
     success_url = reverse_lazy('teams:home')
 
     def form_valid(self, form):
-        return redirect(self.get_success_url())
+        result = super().form_valid(form)
+        p_form = TeamCreateForm(self.request.POST,self.request.FILES,instance=self.request.user.user_profile)
+        p_form.save()
+        return result
+
+    # def get_success_url(self):
+    #     return resolve_url(self.success_url, username=self.kwargs.get('username'))
 
     def get_object(self):
         teamname = self.kwargs.get("teamname")

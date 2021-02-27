@@ -25,14 +25,14 @@ class UserProfileUpdateForm(forms.ModelForm):
                             widget=forms.TextInput(attrs={'placeholder': '名前を入力してください', 'render_value': True}))
     icon = forms.ImageField(required=False)
     header = forms.ImageField(required=False)
-    game_title = forms.ModelChoiceField(queryset=Game.objects.all(), required=False, empty_label='選択してください',
-                            widget=forms.Select(attrs={'class': 'form-control'}))
-    feature = forms.ModelChoiceField(queryset=Feature.objects.all(), empty_label='選択してください',
-                            widget=forms.Select(attrs={'class': 'form-control'}))
     introduction = forms.CharField(required=False,
                             widget=forms.Textarea(attrs={'placeholder': '自身について入力してください', 'render_value': True}))
     clip_url = forms.URLField(required=False, help_text='埋め込みURLは普通のリンクとは違います！設定方法は<a href="https://support.google.com/youtube/answer/171780?hl=ja" target="_blank">こちら</a>からご確認ください。(リンクのみを貼り付けください)',
                             widget=forms.URLInput())
+    game_title = forms.ModelMultipleChoiceField(queryset=Game.objects.all(), required=False,
+                            widget=forms.SelectMultiple(attrs={'class': 'form-control'}))
+    feature = forms.ModelMultipleChoiceField(queryset=Feature.objects.all(),
+                            widget=forms.SelectMultiple(attrs={'class': 'form-control'}))
     desired_job = forms.ModelChoiceField(queryset=Job.objects.all(), empty_label='希望するタイプを選択してください',
                             widget=forms.Select(attrs={'class': 'form-control'}), to_field_name="job")
     desired_condition = forms.CharField(required=False,
