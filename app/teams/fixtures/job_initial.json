@@ -1,0 +1,30 @@
+[
+  {
+    "model": "teams.job",
+    "pk": 1,
+    "fields": {
+      "job": "選手"
+    }
+  },
+  {
+    "model": "teams.job",
+    "pk": 2,
+    "fields": {
+      "job": "マネージャー"
+    }
+  },
+  {
+    "model": "teams.job",
+    "pk": 3,
+    "fields": {
+      "job": "コーチ"
+    }
+  },
+  {
+    "model": "teams.job",
+    "pk": 4,
+    "fields": {
+      "job": "アナリスト"
+    }
+  }
+]

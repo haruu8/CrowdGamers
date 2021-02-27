@@ -57,49 +57,49 @@
   },
   {
     "model": "teams.game",
-    "pk": 8,
+    "pk": 9,
     "fields": {
       "title": "PLAYERUNKNOWN’S BATTLEGROUNDS (PUBG)"
     }
   },
   {
     "model": "teams.game",
-    "pk": 8,
+    "pk": 10,
     "fields": {
       "title": "スプラトゥーン2"
     }
   },
   {
     "model": "teams.game",
-    "pk": 8,
+    "pk": 11,
     "fields": {
       "title": "ストリートファイターV"
     }
   },
   {
     "model": "teams.game",
-    "pk": 8,
+    "pk": 12,
     "fields": {
       "title": "鉄拳7"
     }
   },
   {
     "model": "teams.game",
-    "pk": 8,
+    "pk": 13,
     "fields": {
       "title": "大乱闘スマッシュブラザーズ"
     }
   },
   {
     "model": "teams.game",
-    "pk": 8,
+    "pk": 14,
     "fields": {
       "title": "Brawl Stars"
     }
   },
   {
     "model": "teams.game",
-    "pk": 8,
+    "pk": 15,
     "fields": {
       "title": "Clash Royale"
     }

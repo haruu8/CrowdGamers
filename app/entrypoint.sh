@@ -17,5 +17,6 @@ python3 manage.py collectstatic --no-input --clear
 python3 manage.py loaddata feature_initial.json
 python3 manage.py loaddata game_initial.json
 python3 manage.py loaddata question_initial.json
+python3 manage.py loaddata job_initial.json
 
 exec "$@"
