@@ -17,6 +17,11 @@ def user_directory_path(instance, filename):
 """ ジョブモデル """
 
 class Job(models.Model):
+    class Meta():
+        db_table = 't_job'
+        verbose_name = 'ジョブ'
+        verbose_name_plural = 'ジョブ'
+
     id = models.AutoField(primary_key=True, editable=False)
     job = models.CharField(max_length=50)
 
