@@ -31,7 +31,8 @@ class UserProfileUpdateForm(forms.ModelForm):
                             widget=forms.Select(attrs={'class': 'form-control'}))
     introduction = forms.CharField(required=False,
                             widget=forms.Textarea(attrs={'placeholder': '自身について入力してください', 'render_value': True}))
-    clip_url = forms.URLField(required=False, widget=forms.URLInput())
+    clip_url = forms.URLField(required=False, help_text='埋め込みURLは普通のリンクとは違います！設定方法は<a href="https://support.google.com/youtube/answer/171780?hl=ja" target="_blank">こちら</a>からご確認ください。(リンクのみを貼り付けください)',
+                            widget=forms.URLInput())
     desired_job = forms.ModelChoiceField(queryset=Job.objects.all(), empty_label='希望するタイプを選択してください',
                             widget=forms.Select(attrs={'class': 'form-control'}), to_field_name="job")
     desired_condition = forms.CharField(required=False,
