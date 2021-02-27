@@ -2,34 +2,32 @@
 
 {% block content %}
 
-  <p>名前：{{ object.name }}</p>
-  <img src="{{ object.icon.url }}" alt="アイコン">
-  <img src="{{ object.header.url }}" alt="ヘッダー">
-  <p>チームネーム：@{{ object.teamname }}</p>
+  <div class='container'>
 
-  {% if object.url %}
-    <p><a href="{{ object.url }}">HP</a></p>
-  {% endif %}
+    <p>名前：{{ object.name }}</p>
+    <img src="{{ object.icon.url }}" alt="アイコン">
+    <img src="{{ object.header.url }}" alt="ヘッダー">
+    <p>チームネーム：@{{ object.teamname }}</p>
 
-  <p>説明：{{ object.description }}</p>
-  {% if object.sponsor %}
-    <p>スポンサー：{{ object.sponsor }}</p>
-  {% endif %}
-  {% if object.disclosed is True %}
-    <p>希望条件：{{ object.desired_condition }}</p>
-    <p><a href="{% url 'teams:team_apply_input' %}">リクエストを送る</a></p>
-  {% endif %}
-  {% if request.user.is_owner is True %}
-  {% endif %}
-  <a href="{% url 'teams:team_update' object.teamname %}">編集する</a>
+    {% if object.url %}
+      <p><a href="{{ object.url }}">HP</a></p>
+    {% endif %}
 
-  <hr>
-  <p><a href="{% url 'teams:team_detail_game' object.teamname %}">ゲーム</a></p>
-  <p><a href="{% url 'teams:team_detail_member' object.teamname %}">メンバー</a></p>
-  <p><a href="{% url 'teams:team_detail_feature' object.teamname %}">特徴</a></p>
-  <p><a href="{% url 'teams:team_detail_desired_condition' object.teamname %}">希望条件</a></p>
-  <hr>
+    <p>説明：{{ object.description }}</p>
+    {% if object.sponsor %}
+      <p>スポンサー：{{ object.sponsor }}</p>
+    {% endif %}
+    <a href="{% url 'teams:team_update' object.teamname %}">編集する</a>
 
-  {% block profile_content %}{% endblock %}
+    <hr>
+    <p><a href="{% url 'teams:team_detail_game' object.teamname %}">ゲーム</a></p>
+    <p><a href="{% url 'teams:team_detail_member' object.teamname %}">メンバー</a></p>
+    <p><a href="{% url 'teams:team_detail_feature' object.teamname %}">特徴</a></p>
+    <p><a href="{% url 'teams:team_detail_desired_condition' object.teamname %}">希望条件</a></p>
+    <hr>
+
+    {% block profile_content %}{% endblock %}
+
+  </div>
 
 {% endblock %}

@@ -3,5 +3,11 @@
 {% block profile_content %}
 
   <h3>希望条件</h3>
+  {% if object.disclosed is True %}
+    <p>希望条件：{{ object.desired_condition }}</p>
+    <p><a href="{% url 'teams:team_apply_input' %}">リクエストを送る</a></p>
+  {% else %}
+    <p>条件は現在公開されていません。</p>
+  {% endif %}
 
 {% endblock %}

@@ -3,5 +3,12 @@
 {% block profile_content %}
 
   <h3>game</h3>
+  {% if object.game_title.all %}
+    {% for game in object.game_title.all %}
+      {{ game }}
+    {% endfor %}
+  {% else %}
+    <p>ゲームタイトルを現在選択していません。</p>
+  {% endif %}
 
 {% endblock %}
