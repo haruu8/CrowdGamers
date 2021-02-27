@@ -40,8 +40,8 @@ class TeamCreateForm(forms.ModelForm):
                             widget=forms.SelectMultiple(attrs={'class': 'form-control'}))
     feature = forms.ModelMultipleChoiceField(queryset=Feature.objects.all(),
                             widget=forms.SelectMultiple(attrs={'class': 'form-control'}))
-    desired_job = forms.ModelChoiceField(queryset=Job.objects.all(), empty_label='募集する人のタイプを選択してください',
-                            widget=forms.Select(attrs={'class': 'form-control'}), to_field_name="job")
+    desired_job = forms.ModelMultipleChoiceField(queryset=Job.objects.all(),
+                            widget=forms.SelectMultiple(attrs={'class': 'form-control'}))
     desired_condition = forms.CharField(required=False,
                             widget=forms.Textarea(attrs={'placeholder': '募集する選手の希望条件を入力してください', 'render_value': True}))
     disclosed = forms.BooleanField(required=False)
@@ -65,3 +65,10 @@ class TeamCreateForm(forms.ModelForm):
         if len(game_title) >= 6:
             raise forms.ValidationError('ゲームタイトルは5つまでしか選択することができません')
         return game_title
+
+    # ゲームタイトルを五つまでしか選択できないようにする validation
+    def clean_desired_job(self):
+        desired_job = self.cleaned_data['desired_job']
+        if len(desired_job) >= 4:
+            raise forms.ValidationError('一度に募集可能なのは3つまでです')
+        return desired_job

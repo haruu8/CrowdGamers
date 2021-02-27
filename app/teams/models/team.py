@@ -23,7 +23,7 @@ class Job(models.Model):
         verbose_name_plural = 'ジョブ'
 
     id = models.AutoField(primary_key=True, editable=False)
-    job = models.CharField(max_length=50)
+    job = models.CharField(max_length=50, null=False, blank=False)
 
     def __str__(self):
         return self.job
