@@ -43,6 +43,20 @@ class TeamApplyCreateView(LoginRequiredMixin, CreateView):
     # from と to を設定
     def form_valid(self, form):
         form.instance.user = self.request.user
+
+        """
+            * from_user に request user を保存
+            self.object.from_user = self.request.user
+
+            *** to_user にチームのオーナーを保存 ***
+              * 送ろうとしているチームのオブジェクトを取得する
+              * チームのメンバーを一覧取得し、そのあとに owner True でフィルター
+              * object の to_user に is_owner のユーザーを登録する
+
+            team = Team.objects.get(teamname=???)
+        """
+
+
         result = super().form_valid(form)
         return result
 
