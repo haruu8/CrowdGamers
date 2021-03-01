@@ -56,8 +56,8 @@ class TeamUpdateView(LoginRequiredMixin, UpdateView):
 
     def form_valid(self, form):
         result = super().form_valid(form)
-        p_form = TeamCreateForm(self.request.POST,self.request.FILES,instance=self.request.user.user_profile)
-        p_form.save()
+        self.object = TeamCreateForm(self.request.POST, self.request.FILES, instance=self.request.user.user_profile)
+        self.object.save()
         return result
 
     # def get_success_url(self):
@@ -83,7 +83,6 @@ team_delete = TeamDeleteView.as_view()
 class TeamDetailBaseView(DetailView):
     template_name = 'teams/team_detail.html'
     model = Team
-    form_class = TeamCreateForm
 
     def get_object(self):
         teamname = self.kwargs.get("teamname")

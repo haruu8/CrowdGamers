@@ -29,12 +29,12 @@ class UserProfileUpdateForm(forms.ModelForm):
                             widget=forms.Textarea(attrs={'placeholder': '自身について入力してください', 'render_value': True}))
     clip_url = forms.URLField(required=False, help_text='埋め込みURLは普通のリンクとは違います！設定方法は<a href="https://support.google.com/youtube/answer/171780?hl=ja" target="_blank">こちら</a>からご確認ください。(リンクのみを貼り付けください)',
                             widget=forms.URLInput())
-    game_title = forms.ModelMultipleChoiceField(queryset=Game.objects.all(), required=False,
+    game_title = forms.ModelMultipleChoiceField(queryset=Game.objects.all(), required=True, help_text='5つまで選択することができます。複数選択したいときは command + クリック、もしくは control + クリックにて可能です。',
                             widget=forms.SelectMultiple(attrs={'class': 'form-control'}))
-    feature = forms.ModelMultipleChoiceField(queryset=Feature.objects.all(),
+    feature = forms.ModelMultipleChoiceField(queryset=Feature.objects.all(), required=True, help_text='3つまで選択することができます。複数選択したいときは command + クリック、もしくは control + クリックにて可能です。',
                             widget=forms.SelectMultiple(attrs={'class': 'form-control'}))
-    desired_job = forms.ModelChoiceField(queryset=Job.objects.all(), empty_label='希望するタイプを選択してください',
-                            widget=forms.Select(attrs={'class': 'form-control'}), to_field_name="job")
+    desired_job = forms.ModelMultipleChoiceField(queryset=Job.objects.all(), required=True, help_text='1つまで選択することができます',
+                            widget=forms.SelectMultiple(attrs={'class': 'form-control'}))
     desired_condition = forms.CharField(required=False,
                             widget=forms.Textarea(attrs={'placeholder': '募集する選手の希望条件を入力してください', 'render_value': True}))
     disclosed = forms.BooleanField(required=False)
@@ -58,3 +58,10 @@ class UserProfileUpdateForm(forms.ModelForm):
         if len(game_title) >= 6:
             raise forms.ValidationError('ゲームタイトルは5つまでしか選択することができません')
         return game_title
+
+    # 希望職を1つまでしか選択できないようにする validation
+    def clean_desired_job(self):
+        desired_job = self.cleaned_data['desired_job']
+        if len(desired_job) >= 2:
+            raise forms.ValidationError('希望職は1つまでしか選択することができません')
+        return desired_job
