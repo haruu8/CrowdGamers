@@ -2,13 +2,13 @@
 
 {% block profile_content %}
 
-<h3>特徴</h3>
-{% if user_profile.feature.all %}
-  {% for feature in user_profile.feature.all %}
-    {{ feature }}
-  {% endfor %}
-{% else %}
-  <p>特徴を現在選択していません。</p>
-{% endif %}
+  <h3>特徴</h3>
+  {% if user_profile.feature.all %}
+    {% for feature in user_profile.feature.all %}
+      {{ feature }}
+    {% endfor %}
+  {% else %}
+    <p>特徴を現在選択していません。</p>
+  {% endif %}
 
 {% endblock %}

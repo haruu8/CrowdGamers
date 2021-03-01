@@ -1,16 +1,15 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, FormView
-from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
-from teams.models import Apply
+from teams.models import Apply, Team
 from teams.forms import TeamApplyCreateForm
 
 
 
 """ クランリクエストに関する view """
 
-class TeamApplyInputView(LoginRequiredMixin, generic.FormView):
+class TeamApplyInputView(LoginRequiredMixin, FormView):
     template_name = 'teams/apply/team_apply_input.html'
     form_class = TeamApplyCreateForm
 
@@ -66,5 +65,7 @@ class TeamApplyCreateView(LoginRequiredMixin, CreateView):
     def get_success_url(self):
         return reverse('teams:team_detail_game', kwargs={'teamname': self.object.teamname})
 
-team_apply_create = TeamApplyCreateView.as_view()
+    def get_object(self):
+        return get_object_or_404(Team, teamname=self.kwargs.get('teamname'))
 
+team_apply_create = TeamApplyCreateView.as_view()

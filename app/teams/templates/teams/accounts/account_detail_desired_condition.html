@@ -8,7 +8,7 @@
 
   <h1>希望条件</h1>
   {% if user_profile.disclosed is True %}
-  <p>条件：{{ user_profile.desired_condition }}</p>
+    <p>条件：{{ user_profile.desired_condition }}</p>
   {% else %}
     <p>条件は現在公開されていません</p>
   {% endif %}
