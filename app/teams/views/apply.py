@@ -17,7 +17,7 @@ class TeamApplyInputView(LoginRequiredMixin, FormView, TeamDetailBaseView):
     def form_valid(self, form):
         return render(self.request, self.template_name, {'form': form})
 
-team_apply_input = TeamApplyInputView.as_view()
+apply_input = TeamApplyInputView.as_view()
 
 
 
@@ -31,7 +31,7 @@ class TeamApplyConfirmView(LoginRequiredMixin, FormView, TeamDetailBaseView):
     def form_invalid(self, form):
         return render(self.request, 'teams/apply/team_apply_input.html', {'form': form})
 
-team_apply_confirm = TeamApplyConfirmView.as_view()
+apply_confirm = TeamApplyConfirmView.as_view()
 
 
 
@@ -70,4 +70,4 @@ class TeamApplyCreateView(LoginRequiredMixin, CreateView, TeamDetailBaseView):
     def get_success_url(self):
         return reverse(self.success_url, kwargs={'teamname': self.object.teamname})
 
-team_apply_create = TeamApplyCreateView.as_view()
+apply_create = TeamApplyCreateView.as_view()

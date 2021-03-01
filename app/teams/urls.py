@@ -41,9 +41,9 @@ urlpatterns = [
     path('<str:username>/notification/invite/<int:pk>/', views.user_invite_notification_detail, name='user_invite_notification_detail'),
 
     # リクエスト送信
-    path('team/<str:teamname>/apply/input/', views.team_apply_input, name='team_apply_input'),
-    path('team/<str:teamname>/apply/confirm/', views.team_apply_confirm, name='team_apply_confirm'),
-    path('team/<str:teamname>/apply/create/', views.team_apply_create, name='team_apply_create'),
+    path('team/<str:teamname>/apply/input/', views.apply_input, name='apply_input'),
+    path('team/<str:teamname>/apply/confirm/', views.apply_confirm, name='apply_confirm'),
+    path('team/<str:teamname>/apply/create/', views.apply_create, name='apply_create'),
 
     # 招待送信
     path('<str:username>/invite/input/', views.user_invite_input, name='user_invite_input'),

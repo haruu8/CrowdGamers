@@ -1,5 +1,5 @@
 from .access import OnlyYouMixin, OnlyOwnerMixin
-from .apply import team_apply_input, team_apply_confirm, team_apply_create
+from .apply import apply_input, apply_confirm, apply_create
 from .faq import faq
 from .invite import user_invite_input, user_invite_confirm, user_invite_create
 from .notification import (
