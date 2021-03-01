@@ -29,9 +29,9 @@ class UserProfileUpdateForm(forms.ModelForm):
                             widget=forms.Textarea(attrs={'placeholder': '自身について入力してください', 'render_value': True}))
     clip_url = forms.URLField(required=False, help_text='埋め込みURLは普通のリンクとは違います！設定方法は<a href="https://support.google.com/youtube/answer/171780?hl=ja" target="_blank">こちら</a>からご確認ください。(リンクのみを貼り付けください)',
                             widget=forms.URLInput())
-    game_title = forms.ModelMultipleChoiceField(queryset=Game.objects.all(), required=True, help_text='5つまで選択することができます。複数選択したいときは command + クリック、もしくは control + クリックにて可能です。',
+    game_title = forms.ModelMultipleChoiceField(queryset=Game.objects.all(), required=True, help_text='5つまで選択することができます。複数選択するときには Control キーを押したまま選択してください。Mac は Command キーを使ってください。',
                             widget=forms.SelectMultiple(attrs={'class': 'form-control'}))
-    feature = forms.ModelMultipleChoiceField(queryset=Feature.objects.all(), required=True, help_text='3つまで選択することができます。複数選択したいときは command + クリック、もしくは control + クリックにて可能です。',
+    feature = forms.ModelMultipleChoiceField(queryset=Feature.objects.all(), required=True, help_text='3つまで選択することができます。複数選択するときには Control キーを押したまま選択してください。Mac は Command キーを使ってください。',
                             widget=forms.SelectMultiple(attrs={'class': 'form-control'}))
     desired_job = forms.ModelMultipleChoiceField(queryset=Job.objects.all(), required=True, help_text='1つまで選択することができます',
                             widget=forms.SelectMultiple(attrs={'class': 'form-control'}))

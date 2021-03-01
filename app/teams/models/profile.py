@@ -60,3 +60,6 @@ class UserProfile(models.Model):
     desired_job = models.ManyToManyField(Job, related_name='profile_desired_job')
     desired_condition = models.CharField(verbose_name='希望条件', max_length=255)
     disclosed = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.user.username
