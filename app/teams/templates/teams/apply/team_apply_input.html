@@ -1,12 +1,12 @@
-{% extends 'base.html' %}
+{% extends 'teams/team_profile/team_extends_base.html' %}
 
-{% block content %}
+{% block profile_content %}
 
   <div class="container">
-    <form action="{% url 'teams:team_apply_confirm' %}" method="POST">
+    <form action="{% url 'teams:team_apply_confirm' object.teamname %}" method="POST">
       {{ form.non_field_errors }}
       {% for field in form %}
-      <div class="form-group">
+      <div>
           <label for="{{ field.id_for_label }}">{{ field.label_tag }}</label>
           {{ field }}
           {{ field.errors }}

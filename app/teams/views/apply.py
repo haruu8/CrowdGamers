@@ -4,12 +4,13 @@ from django.views.generic import CreateView, FormView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from teams.models import Apply, Team
 from teams.forms import TeamApplyCreateForm
+from .team import TeamDetailBaseView
 
 
 
 """ クランリクエストに関する view """
 
-class TeamApplyInputView(LoginRequiredMixin, FormView):
+class TeamApplyInputView(LoginRequiredMixin, FormView, TeamDetailBaseView):
     template_name = 'teams/apply/team_apply_input.html'
     form_class = TeamApplyCreateForm
 
@@ -20,7 +21,7 @@ team_apply_input = TeamApplyInputView.as_view()
 
 
 
-class TeamApplyConfirmView(LoginRequiredMixin, FormView):
+class TeamApplyConfirmView(LoginRequiredMixin, FormView, TeamDetailBaseView):
     template_name = 'teams/apply/team_apply_confirm.html'
     form_class = TeamApplyCreateForm
 
@@ -34,10 +35,10 @@ team_apply_confirm = TeamApplyConfirmView.as_view()
 
 
 
-class TeamApplyCreateView(LoginRequiredMixin, CreateView):
+class TeamApplyCreateView(LoginRequiredMixin, CreateView, TeamDetailBaseView):
     template_name = 'teams/apply/team_apply_input.html'
     form_class = TeamApplyCreateForm
-    success_url = reverse_lazy('teams:home')
+    success_url = reverse_lazy('teams:team_detail_game')
 
     # from と to を設定
     def form_valid(self, form):
@@ -67,9 +68,6 @@ class TeamApplyCreateView(LoginRequiredMixin, CreateView):
         return render(self.request, '400.html', {'form': form})
 
     def get_success_url(self):
-        return reverse('teams:team_detail_game', kwargs={'teamname': self.object.teamname})
-
-    def get_object(self):
-        return get_object_or_404(Team, teamname=self.kwargs.get('teamname'))
+        return reverse(self.success_url, kwargs={'teamname': self.object.teamname})
 
 team_apply_create = TeamApplyCreateView.as_view()
