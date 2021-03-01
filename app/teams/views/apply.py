@@ -13,6 +13,7 @@ from .team import TeamDetailBaseView
 class TeamApplyInputView(LoginRequiredMixin, FormView, TeamDetailBaseView):
     template_name = 'teams/apply/team_apply_input.html'
     form_class = TeamApplyCreateForm
+    model = Team
 
     def form_valid(self, form):
         return render(self.request, self.template_name, {'form': form})
@@ -24,6 +25,7 @@ apply_input = TeamApplyInputView.as_view()
 class TeamApplyConfirmView(LoginRequiredMixin, FormView, TeamDetailBaseView):
     template_name = 'teams/apply/team_apply_confirm.html'
     form_class = TeamApplyCreateForm
+    model = Team
 
     def form_valid(self, form):
         return render(self.request, self.template_name, {'form': form})

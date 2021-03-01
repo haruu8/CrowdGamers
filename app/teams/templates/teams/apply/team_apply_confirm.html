@@ -10,13 +10,13 @@
     </div>
     {% endfor %}
 
-    <form action="{% url 'teams:team_apply_input' object.teamname %}" method="POST">
+    <form action="{% url 'teams:apply_input' object.teamname %}" method="POST">
         <button type="submit">戻る</button>
         {% for field in form %}{{ field.as_hidden }}{% endfor %}
         {% csrf_token %}
     </form>
     <hr>
-    <form action="{% url 'teams:team_apply_create' object.teamname %}" method="POST">
+    <form action="{% url 'teams:apply_create' object.teamname %}" method="POST">
         <button type="submit">送信</button>
         {% for field in form %}{{ field.as_hidden }}{% endfor %}
         {% csrf_token %}
