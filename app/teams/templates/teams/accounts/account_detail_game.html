@@ -2,11 +2,13 @@
 
 {% block profile_content %}
 
-  <h1>Game</h1>
-  {% if user_profile.game_title %}
-    <p>{{ user_profile.game_title }}</p>
+  <h3>game</h3>
+  {% if user_profile.game_title.all %}
+    {% for game in user_profile.game_title.all %}
+      {{ game }}
+    {% endfor %}
   {% else %}
     <p>ゲームタイトルを現在選択していません。</p>
   {% endif %}
 
-  {% endblock %}
+{% endblock %}
