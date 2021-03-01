@@ -17,8 +17,8 @@ class Apply(models.Model):
         verbose_name = verbose_name_plural = 'リクエスト'
 
     id = models.UUIDField(default=uuid.uuid4, primary_key=True, editable=False)
-    from_user = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name='send_apply')
-    to_user = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name='receive_apply')
+    from_user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, related_name='send_apply')
+    to_user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, related_name='receive_apply')
     team = models.ForeignKey(Team, on_delete=models.CASCADE)
     desired_job = models.ManyToManyField(Job, related_name='apply_desired_job')
     message = models.CharField(verbose_name='志望理由', max_length=255, null=True, blank=False)

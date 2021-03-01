@@ -3,7 +3,6 @@ from django.core.validators import FileExtensionValidator, MinLengthValidator, R
 from django.core.exceptions import ValidationError
 from django.contrib.auth import get_user_model
 import uuid
-from .profile import UserProfile
 from .team import Team, Job
 
 
@@ -17,8 +16,8 @@ class Invite(models.Model):
         verbose_name = verbose_name_plural = '招待'
 
     id = models.UUIDField(default=uuid.uuid4, primary_key=True, editable=False)
-    from_user = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name='send_invitations')
-    to_user = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name='receive_invitations')
+    from_user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, related_name='send_invitations')
+    to_user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, related_name='receive_invitations')
     team = models.ForeignKey(Team, on_delete=models.CASCADE)
     desired_job = models.ManyToManyField(Job, related_name='invite_desired_job')
     message = models.CharField(verbose_name='メッセージ', max_length=255, null=True, blank=False)

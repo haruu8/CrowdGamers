@@ -41,21 +41,25 @@ class TeamApplyCreateView(LoginRequiredMixin, CreateView):
 
     # from と to を設定
     def form_valid(self, form):
-        form.instance.user = self.request.user
-
-        """
-            * from_user に request user を保存
-            self.object.from_user = self.request.user
-
-            *** to_user にチームのオーナーを保存 ***
-              * 送ろうとしているチームのオブジェクトを取得する
-              * チームのメンバーを一覧取得し、そのあとに owner True でフィルター
-              * object の to_user に is_owner のユーザーを登録する
-
-            team = Team.objects.get(teamname=???)
-        """
+        self.object = form.save(commit=False)
+        # form.instance.user = self.request.user
 
 
+        # from_user に request user を保存
+        self.object.from_user = self.request.user
+
+        self.object.team = get_object_or_404(Team, teamname=self.kwargs.get('teamname'))
+
+        # to_user にチームのオーナーを保存
+
+        # todo: ユーザーネーム取得の処理を書く
+        team = Team.objects.get(teamname=self.object.team.teamname)
+        member = team.belonging_user_profiles
+        owner_profile = member.objects.filter(is_owner=True)[0]
+        owner = owner_profile.user
+        self.object.to_user = owner
+
+        self.object.save()
         result = super().form_valid(form)
         return result
 
