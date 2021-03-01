@@ -53,17 +53,15 @@ class UserProfileUpdateView(UpdateView):
     success_url = 'teams:account_detail_game'
 
     def form_valid(self, form):
-
-        """
-        保存処理ができていないので修正する
-        """
-
-        return super(UserProfileUpdateView, self).form_valid(form)
+        result = super().form_valid(form)
+        self.object = UserProfileUpdateForm(self.request.POST, self.request.FILES, instance=self.request.user.user_profile)
+        self.object.save()
+        return result
 
     def get_success_url(self):
         return resolve_url(self.success_url, username=self.kwargs.get('username'))
 
     def get_object(self):
-        return get_object_or_404(User, username=self.kwargs.get('username'))
+        return get_object_or_404(UserProfile, user=self.request.user)
 
 account_profile_update = UserProfileUpdateView.as_view()

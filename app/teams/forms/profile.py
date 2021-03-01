@@ -4,6 +4,7 @@ from teams.models import UserProfile, Game, Feature, Job
 
 
 class UserProfileUpdateForm(forms.ModelForm):
+
     class Meta:
         model = UserProfile
         fields = ('name', 'icon', 'header', 'game_title', 'feature',
