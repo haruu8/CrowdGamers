@@ -11,7 +11,7 @@ from .team import TeamDetailBaseView
 """ クランリクエストに関する view """
 
 class TeamApplyInputView(LoginRequiredMixin, FormView, TeamDetailBaseView):
-    template_name = 'teams/apply/team_apply_input.html'
+    template_name = 'teams/apply/apply_input.html'
     form_class = TeamApplyCreateForm
     model = Team
 
@@ -23,7 +23,7 @@ apply_input = TeamApplyInputView.as_view()
 
 
 class TeamApplyConfirmView(LoginRequiredMixin, FormView, TeamDetailBaseView):
-    template_name = 'teams/apply/team_apply_confirm.html'
+    template_name = 'teams/apply/apply_confirm.html'
     form_class = TeamApplyCreateForm
     model = Team
 
@@ -31,7 +31,7 @@ class TeamApplyConfirmView(LoginRequiredMixin, FormView, TeamDetailBaseView):
         return render(self.request, self.template_name, {'form': form})
 
     def form_invalid(self, form):
-        return render(self.request, 'teams/apply/team_apply_input.html', {'form': form})
+        return render(self.request, 'teams/apply/apply_input.html', {'form': form})
 
 apply_confirm = TeamApplyConfirmView.as_view()
 
