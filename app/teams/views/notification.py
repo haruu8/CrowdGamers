@@ -17,11 +17,14 @@ class InviteNotificationView(LoginRequiredMixin, OnlyYouMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
-        ctx['invite'] = Invite.objects.filter(
+        ctx['invitation'] = Invite.objects.filter(
             Q(from_user=self.request.user) |
             Q(to_user=self.request.user)
         ).order_by('-created_at')
         return ctx
+
+    def get_object(self):
+        return get_object_or_404(User, username=self.kwargs.get('username'))
 
 invite_notification = InviteNotificationView.as_view()
 
@@ -43,11 +46,14 @@ class ApplyNotificationView(LoginRequiredMixin, OnlyYouMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
-        ctx['apply'] = Apply.objects.filter(
+        ctx['application'] = Apply.objects.filter(
             Q(from_user=self.request.user) |
             Q(to_user=self.request.user)
         ).order_by('-created_at')
         return ctx
+
+    def get_object(self):
+        return get_object_or_404(User, username=self.kwargs.get('username'))
 
 apply_notification = ApplyNotificationView.as_view()
 

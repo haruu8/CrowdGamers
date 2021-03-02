@@ -27,7 +27,7 @@
 
         {% if user.is_authenticated %}
         <li class='nav-item'>
-          <a class="nav-link" href="{% url 'teams:user_apply_notification' user.username %}">
+          <a class="nav-link" href="{% url 'teams:apply_notification' user.username %}">
             <img src="{% static 'img/bell-icon.svg' %}" alt="通知アイコン" class='bell-icon'>
           </a>
         </li>

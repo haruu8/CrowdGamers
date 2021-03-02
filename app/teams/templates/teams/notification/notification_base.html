@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class='container'>
+
+    <h1>通知一覧</h1>
+    <p><a href="{% url 'teams:invite_notification' user.username %}">招待</a></p>
+    <p><a href="{% url 'teams:apply_notification' user.username %}">申請</a></p>
+    <hr>
+
+    {% block notification_content %}{% endblock %}
+
+  </div>
+
+{% endblock %}

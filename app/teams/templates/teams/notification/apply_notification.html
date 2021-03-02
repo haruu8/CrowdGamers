@@ -1,9 +1,15 @@
-{% extens 'base.html' %}
+{% extends 'teams/notification/notification_base.html' %}
 
-{% block content %}
-  {% for object in objects %}
-  <hr>
-    <p><a href="{% url 'teams:user_apply_notice_detail' object.pk %}">詳細</a></p>
+{% block notification_content %}
+
+  <h3>apply_notification</h3>
+  {% for apply in application %}
+    {{ apply }}
   {% endfor %}
+
+  {% if application %}
+  {% else %}
+    <p>通知は届いていません。</p>
+  {% endif %}
 
 {% endblock %}
