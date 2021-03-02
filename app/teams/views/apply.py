@@ -3,28 +3,28 @@ from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, FormView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from teams.models import Apply, Team
-from teams.forms import TeamApplyCreateForm
+from teams.forms import ApplyCreateForm
 from .team import TeamDetailBaseView
 
 
 
 """ クランリクエストに関する view """
 
-class TeamApplyInputView(LoginRequiredMixin, FormView, TeamDetailBaseView):
+class ApplyInputView(LoginRequiredMixin, FormView, TeamDetailBaseView):
     template_name = 'teams/apply/apply_input.html'
-    form_class = TeamApplyCreateForm
+    form_class = ApplyCreateForm
     model = Team
 
     def form_valid(self, form):
         return render(self.request, self.template_name, {'form': form})
 
-apply_input = TeamApplyInputView.as_view()
+apply_input = ApplyInputView.as_view()
 
 
 
-class TeamApplyConfirmView(LoginRequiredMixin, FormView, TeamDetailBaseView):
+class ApplyConfirmView(LoginRequiredMixin, FormView, TeamDetailBaseView):
     template_name = 'teams/apply/apply_confirm.html'
-    form_class = TeamApplyCreateForm
+    form_class = ApplyCreateForm
     model = Team
 
     def form_valid(self, form):
@@ -33,13 +33,13 @@ class TeamApplyConfirmView(LoginRequiredMixin, FormView, TeamDetailBaseView):
     def form_invalid(self, form):
         return render(self.request, 'teams/apply/apply_input.html', {'form': form})
 
-apply_confirm = TeamApplyConfirmView.as_view()
+apply_confirm = ApplyConfirmView.as_view()
 
 
 
-class TeamApplyCreateView(LoginRequiredMixin, CreateView, TeamDetailBaseView):
+class ApplyCreateView(LoginRequiredMixin, CreateView, TeamDetailBaseView):
     template_name = 'teams/apply/team_apply_input.html'
-    form_class = TeamApplyCreateForm
+    form_class = ApplyCreateForm
     success_url = reverse_lazy('teams:team_detail_game')
 
     # from と to を設定
@@ -72,4 +72,4 @@ class TeamApplyCreateView(LoginRequiredMixin, CreateView, TeamDetailBaseView):
     def get_success_url(self):
         return reverse(self.success_url, kwargs={'teamname': self.object.teamname})
 
-apply_create = TeamApplyCreateView.as_view()
+apply_create = ApplyCreateView.as_view()

@@ -1,4 +1,4 @@
-from .apply import TeamApplyCreateForm
-from .invite import UserInviteCreateForm
+from .apply import ApplyCreateForm
+from .invite import InviteCreateForm
 from .profile import UserProfileUpdateForm
 from .team import TeamCreateForm

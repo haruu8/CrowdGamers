@@ -4,14 +4,14 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import get_user_model
 from accounts.models import User
 from teams.models import Team, Invite, Apply
-from teams.forms import UserInviteCreateForm, TeamApplyCreateForm
+from teams.forms import InviteCreateForm, ApplyCreateForm
 from teams.views import OnlyYouMixin
 
 
 
 """ 通知関連 view """
 
-class UserInviteNotificationView(LoginRequiredMixin, OnlyYouMixin, TemplateView):
+class InviteNotificationView(LoginRequiredMixin, OnlyYouMixin, TemplateView):
     template_name = 'teams/notification/user_invite_notification.html'
 
     def get_context_data(self, **kwargs):
@@ -24,19 +24,19 @@ class UserInviteNotificationView(LoginRequiredMixin, OnlyYouMixin, TemplateView)
             ctx['invite'] = Invite.objects.get(user=self.request.user)
             return ctx
 
-user_invite_notification = UserInviteNotificationView.as_view()
+user_invite_notification = InviteNotificationView.as_view()
 
 
 
-class UserInviteNotificationDetailView(LoginRequiredMixin, OnlyYouMixin, DetailView):
+class InviteNotificationDetailView(LoginRequiredMixin, OnlyYouMixin, DetailView):
     template_name = 'teams/notification/user_invite_notification_detail.html'
     model = Invite
 
-user_invite_notification_detail = UserInviteNotificationDetailView.as_view()
+user_invite_notification_detail = InviteNotificationDetailView.as_view()
 
 
 
-class UserApplyNotificationView(LoginRequiredMixin, OnlyYouMixin, TemplateView):
+class ApplyNotificationView(LoginRequiredMixin, OnlyYouMixin, TemplateView):
     template_name = 'teams/notification/user_apply_notification.html'
 
     def get_context_data(self, **kwargs):
@@ -48,12 +48,12 @@ class UserApplyNotificationView(LoginRequiredMixin, OnlyYouMixin, TemplateView):
         ctx['apply'] = Apply.objects.get(user=self.request.user)
         return ctx
 
-user_apply_notification = UserApplyNotificationView.as_view()
+user_apply_notification = ApplyNotificationView.as_view()
 
 
 
-class UserApplyNotificationDetailView(LoginRequiredMixin, OnlyYouMixin, DetailView):
+class ApplyNotificationDetailView(LoginRequiredMixin, OnlyYouMixin, DetailView):
     template_name = 'teams/notification/user_apply_notification_detail.html'
     model = Apply
 
-user_apply_notification_detail = UserApplyNotificationDetailView.as_view()
+user_apply_notification_detail = ApplyNotificationDetailView.as_view()

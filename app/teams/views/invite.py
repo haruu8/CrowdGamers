@@ -4,26 +4,26 @@ from django.views.generic import CreateView, FormView
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
 from teams.models import Invite
-from teams.forms import UserInviteCreateForm
+from teams.forms import InviteCreateForm
 
 
 
 """ ユーザー招待に関する view """
 
-class UserInviteInputView(LoginRequiredMixin, generic.FormView):
+class InviteInputView(LoginRequiredMixin, generic.FormView):
     template_name = 'teams/invite/invite_input.html'
-    form_class = UserInviteCreateForm
+    form_class = InviteCreateForm
 
     def form_valid(self, form):
         return render(self.request, self.template_name, {'form': form})
 
-invite_input = UserInviteInputView.as_view()
+invite_input = InviteInputView.as_view()
 
 
 
-class UserInviteConfirmView(LoginRequiredMixin, FormView):
+class InviteConfirmView(LoginRequiredMixin, FormView):
     template_name = 'teams/invite/invite_confirm.html'
-    form_class = UserInviteCreateForm
+    form_class = InviteCreateForm
 
     def form_valid(self, form):
         return render(self.request, self.template_name, {'form': form})
@@ -31,13 +31,13 @@ class UserInviteConfirmView(LoginRequiredMixin, FormView):
     def form_invalid(self, form):
         return render(self.request, 'teams/invite_input.html', {'form': form})
 
-invite_confirm = UserInviteConfirmView.as_view()
+invite_confirm = InviteConfirmView.as_view()
 
 
 
-class UserInviteCreateView(LoginRequiredMixin, CreateView):
+class InviteCreateView(LoginRequiredMixin, CreateView):
     template_name = 'teams/invite/invite_input.html'
-    form_class = UserInviteCreateForm
+    form_class = InviteCreateForm
     success_url = reverse_lazy('teams:account_detail_game')
 
     # from と to を設定
@@ -66,4 +66,4 @@ class UserInviteCreateView(LoginRequiredMixin, CreateView):
     def get_success_url(self):
         return reverse(self.success_url, kwargs={'username': self.object.username})
 
-invite_create = UserInviteCreateView.as_view()
+invite_create = InviteCreateView.as_view()
