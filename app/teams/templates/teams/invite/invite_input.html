@@ -2,8 +2,8 @@
 
 {% block content %}
 
-  <p>user_invite_input画面</p>
-  <form action="{% url 'teams:user_invite_confirm' %}" method="POST">
+  <p>invite_input画面</p>
+  <form action="{% url 'teams:invite_confirm' %}" method="POST">
     {{ form.non_field_errors }}
     {% for field in form %}
     <div class="form-group">

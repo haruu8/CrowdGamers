@@ -46,7 +46,7 @@ urlpatterns = [
     path('team/<str:teamname>/apply/create/', views.apply_create, name='apply_create'),
 
     # 招待送信
-    path('<str:username>/invite/input/', views.user_invite_input, name='user_invite_input'),
-    path('<str:username>/invite/confirm/', views.user_invite_confirm, name='user_invite_confirm'),
-    path('<str:username>/invite/create/', views.user_invite_create, name='user_invite_create'),
+    path('<str:username>/invite/input/', views.invite_input, name='invite_input'),
+    path('<str:username>/invite/confirm/', views.invite_confirm, name='invite_confirm'),
+    path('<str:username>/invite/create/', views.invite_create, name='invite_create'),
 ]

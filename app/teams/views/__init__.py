@@ -1,7 +1,7 @@
 from .access import OnlyYouMixin, OnlyOwnerMixin
 from .apply import apply_input, apply_confirm, apply_create
 from .faq import faq
-from .invite import user_invite_input, user_invite_confirm, user_invite_create
+from .invite import invite_input, invite_confirm, invite_create
 from .notification import (
     user_apply_notification, user_apply_notification_detail,
     user_invite_notification, user_invite_notification_detail

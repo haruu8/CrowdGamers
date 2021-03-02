@@ -11,34 +11,34 @@ from teams.forms import UserInviteCreateForm
 """ ユーザー招待に関する view """
 
 class UserInviteInputView(LoginRequiredMixin, generic.FormView):
-    template_name = 'teams/invite/user_invite_input.html'
+    template_name = 'teams/invite/invite_input.html'
     form_class = UserInviteCreateForm
 
     def form_valid(self, form):
         return render(self.request, self.template_name, {'form': form})
 
-user_invite_input = UserInviteInputView.as_view()
+invite_input = UserInviteInputView.as_view()
 
 
 
 class UserInviteConfirmView(LoginRequiredMixin, FormView):
-    template_name = 'teams/invite/user_invite_confirm.html'
+    template_name = 'teams/invite/invite_confirm.html'
     form_class = UserInviteCreateForm
 
     def form_valid(self, form):
         return render(self.request, self.template_name, {'form': form})
 
     def form_invalid(self, form):
-        return render(self.request, 'teams/user_invite_input.html', {'form': form})
+        return render(self.request, 'teams/invite_input.html', {'form': form})
 
-user_invite_confirm = UserInviteConfirmView.as_view()
+invite_confirm = UserInviteConfirmView.as_view()
 
 
 
 class UserInviteCreateView(LoginRequiredMixin, CreateView):
-    template_name = 'teams/invite/user_invite_input.html'
+    template_name = 'teams/invite/invite_input.html'
     form_class = UserInviteCreateForm
-    success_url = reverse_lazy('teams:home')
+    success_url = reverse_lazy('teams:account_detail_game')
 
     # from と to を設定
     # オーナーしか送信できないようにする
@@ -64,6 +64,6 @@ class UserInviteCreateView(LoginRequiredMixin, CreateView):
         return render(self.request, '400.html', {'form': form})
 
     def get_success_url(self):
-        return reverse('teams:account_detail_game', kwargs={'username': self.object.username})
+        return reverse(self.success_url, kwargs={'username': self.object.username})
 
-user_invite_create = UserInviteCreateView.as_view()
+invite_create = UserInviteCreateView.as_view()
