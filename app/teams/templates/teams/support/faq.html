@@ -4,10 +4,15 @@
 
 {% block content %}
 
-  <h1>よくある質問</h1>
-  {% for faq in faqs %}
-    <p>Q. {{ faq.question }}</p>
-    <p>A. {{ faq.awnser }}</p>
-  {% endfor %}
+  <div class='container'>
+    <h1>よくある質問</h1>
+    {% for faq in faqs %}
+      <p>Q. {{ faq.question }}</p>
+      {% autoescape off%}
+        <p>A. {{ faq.awnser }}</p>
+      {% endautoescape %}
+      <hr>
+    {% endfor %}
+  </div>
 
 {% endblock %}
