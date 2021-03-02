@@ -35,10 +35,10 @@ urlpatterns = [
     path('<str:username>/update/', views.account_profile_update, name='account_profile_update'),
 
     # 通知
-    path('<str:username>/notification/apply/', views.user_apply_notification, name='user_apply_notification'),
-    path('<str:username>/notification/apply/<int:pk>/', views.user_apply_notification_detail, name='user_apply_notification_detail'),
-    path('<str:username>/notification/invite/', views.user_invite_notification, name='user_invite_notification'),
-    path('<str:username>/notification/invite/<int:pk>/', views.user_invite_notification_detail, name='user_invite_notification_detail'),
+    path('<str:username>/notification/apply/', views.apply_notification, name='apply_notification'),
+    path('<str:username>/notification/apply/<uuid:apply_id>/', views.apply_notification_detail, name='apply_notification_detail'),
+    path('<str:username>/notification/invite/', views.invite_notification, name='invite_notification'),
+    path('<str:username>/notification/invite/<uuid:invite_id>/', views.invite_notification_detail, name='invite_notification_detail'),
 
     # リクエスト送信
     path('team/<str:teamname>/apply/input/', views.apply_input, name='apply_input'),

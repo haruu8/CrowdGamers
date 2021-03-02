@@ -3,8 +3,8 @@ from .apply import apply_input, apply_confirm, apply_create
 from .faq import faq
 from .invite import invite_input, invite_confirm, invite_create
 from .notification import (
-    user_apply_notification, user_apply_notification_detail,
-    user_invite_notification, user_invite_notification_detail
+    apply_notification, apply_notification_detail,
+    invite_notification, invite_notification_detail
 )
 from .profile import (
     account_detail_game, account_detail_feature,
