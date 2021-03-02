@@ -1,9 +1,9 @@
-{% extends 'base.html' %}
+{% extends 'teams/accounts/profile_extends_base.html' %}
 
-{% block content %}
+{% block profile_content %}
 
   <p>invite_input画面</p>
-  <form action="{% url 'teams:invite_confirm' %}" method="POST">
+  <form action="{% url 'teams:invite_confirm' object.username %}" method="POST">
     {{ form.non_field_errors }}
     {% for field in form %}
     <div class="form-group">

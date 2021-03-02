@@ -2,13 +2,14 @@
 
 {% block profile_content %}
 
-  {% if user_profile.desired_job_type %}
-    <p>希望職：{{ user_profile.desired_job_type }}</p>
-  {% endif %}
+    <p>希望職：{{ user_profile.desired_job }}</p>
 
   <h1>希望条件</h1>
   {% if user_profile.disclosed is True %}
     <p>条件：{{ user_profile.desired_condition }}</p>
+    {% if request.user.user_profile.is_owner is True %}
+      <p><a href="{% url 'teams:invite_input' object.username %}">招待を送る</a></p>
+    {% endif %}
   {% else %}
     <p>条件は現在公開されていません</p>
   {% endif %}

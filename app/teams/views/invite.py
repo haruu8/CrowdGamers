@@ -1,16 +1,16 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, FormView
-from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
 from teams.models import Invite
 from teams.forms import InviteCreateForm
+from .profile import UserProfileBaseView
 
 
 
 """ ユーザー招待に関する view """
 
-class InviteInputView(LoginRequiredMixin, generic.FormView):
+class InviteInputView(LoginRequiredMixin, FormView, UserProfileBaseView):
     template_name = 'teams/invite/invite_input.html'
     form_class = InviteCreateForm
 
@@ -21,7 +21,7 @@ invite_input = InviteInputView.as_view()
 
 
 
-class InviteConfirmView(LoginRequiredMixin, FormView):
+class InviteConfirmView(LoginRequiredMixin, FormView, UserProfileBaseView):
     template_name = 'teams/invite/invite_confirm.html'
     form_class = InviteCreateForm
 
@@ -35,7 +35,7 @@ invite_confirm = InviteConfirmView.as_view()
 
 
 
-class InviteCreateView(LoginRequiredMixin, CreateView):
+class InviteCreateView(LoginRequiredMixin, CreateView, UserProfileBaseView):
     template_name = 'teams/invite/invite_input.html'
     form_class = InviteCreateForm
     success_url = reverse_lazy('teams:account_detail_game')
