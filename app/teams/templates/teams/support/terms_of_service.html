@@ -1,9 +1,10 @@
 {% extends 'base.html' %}
+{% load myfilter %}
 
 {% block content %}
 
   <div class="container">
-    {{ template }}
+    {{ terms_of_service.md | markdown2html | safe }}
   </div>
 
 {% endblock %}

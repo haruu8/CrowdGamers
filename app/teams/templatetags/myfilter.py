@@ -1,10 +1,10 @@
 from django import template
 from django.template.defaultfilters import stringfilter
-from markdown as md
+import markdown
 
 register = template.Library()
 
 @register.filter
 @stringfilter
-def markdown_html(value):
-    return md.markdown(value)
+def markdown2html(value):
+    return markdown.markdown(value)

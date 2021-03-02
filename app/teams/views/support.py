@@ -14,6 +14,8 @@ class FreqentlyQuestionAskedView(GetProfileView):
 
 faq = FreqentlyQuestionAskedView.as_view()
 
+
+
 class TermsOfServiceView(GetProfileView):
     template_name = 'teams/support/terms_of_service.html'
 

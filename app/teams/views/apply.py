@@ -16,7 +16,9 @@ class ApplyInputView(LoginRequiredMixin, FormView, TeamDetailBaseView):
     model = Team
 
     def form_valid(self, form):
-        return render(self.request, self.template_name, {'form': form})
+        return render(self.request, 'teams/apply/apply_confirm.html', {'form': form})
+        # self.request.session['form_data'] = self.request.POST
+        # return redirect('teams:apply_confirm')
 
 apply_input = ApplyInputView.as_view()
 
