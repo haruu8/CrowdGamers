@@ -19,7 +19,11 @@ body {
 }
 
 a {
-  color: white;
+  color: $twitter-color;
+}
+
+a:hover {
+  color: $twitter-color;
 }
 
 .img_wrap{
@@ -30,7 +34,13 @@ a {
 }
 
 nav {
-    background-color: $blue-10-color;
+  a {
+    color: white;
+  }
+  a:hover {
+    color: white;
+  }
+  background-color: $blue-10-color;
   .profile-icon {
     width: 32px;
     height: 32px;
@@ -52,6 +62,13 @@ nav {
 }
 
 footer {
+  a {
+    color: white;
+  }
+  a:hover {
+    color: white;
+    text-decoration: none;
+  }
   margin-bottom: -2.5rem;
   h3 {
     padding: 2rem 0 2rem 1.5rem;

@@ -9,12 +9,10 @@ app_name = 'teams'
 urlpatterns = [
     # サポートページ
     path('', views.GetProfileView.as_view(template_name='teams/home.html'), name='home'),
-    path('terms-of-service/', TemplateView.as_view(template_name='teams/support/terms-of-service.html'),
-            name='terms-of-service'),
-    path('privacy-policy/', TemplateView.as_view(template_name='teams/support/privacy-policy.html'),
-            name='privacy-policy'),
     path('contact/', TemplateView.as_view(template_name='teams/support/contact.html'), name='contact'),
     path('faq/', views.faq, name='faq'),
+    path('terms_of_service/', views.terms_of_service, name='terms_of_service'),
+    path('privacy_policy/', views.privacy_policy, name='privacy_policy'),
 
     # チーム
     path('team/create/', views.team_create, name='team_create'),
