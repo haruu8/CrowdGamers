@@ -21,13 +21,13 @@ urlpatterns = [
     path('team/<str:teamname>/delete/', views.team_delete, name='team_delete'),
 
     # チームプロフィール
-    path('team/<str:teamname>/game/', views.team_detail_game, name='team_detail_game'),
+    path('team/<str:teamname>/', views.team_detail_game, name='team_detail_game'),
     path('team/<str:teamname>/member/', views.team_detail_member, name='team_detail_member'),
     path('team/<str:teamname>/feature/', views.team_detail_feature, name='team_detail_feature'),
     path('team/<str:teamname>/desired_condition/', views.team_detail_desired_condition, name='team_detail_desired_condition'),
 
     # プロフィール
-    path('<str:username>/game/', views.account_detail_game, name='account_detail_game'),
+    path('<str:username>/', views.account_detail_game, name='account_detail_game'),
     path('<str:username>/feature/', views.account_detail_feature, name='account_detail_feature'),
     path('<str:username>/desired_condition/', views.account_detail_desired_condition, name='account_detail_desired_condition'),
     path('<str:username>/update/', views.account_profile_update, name='account_profile_update'),
@@ -39,8 +39,6 @@ urlpatterns = [
     path('<str:username>/notification/invite/<uuid:invite_id>/', views.invite_notification_detail, name='invite_notification_detail'),
 
     # リクエスト送信
-    path('team/<str:teamname>/apply/input/', views.apply_input, name='apply_input'),
-    path('team/<str:teamname>/apply/confirm/', views.apply_confirm, name='apply_confirm'),
     path('team/<str:teamname>/apply/create/', views.apply_create, name='apply_create'),
 
     # 招待送信

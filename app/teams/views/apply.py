@@ -10,37 +10,8 @@ from .team import TeamDetailBaseView
 
 """ クランリクエストに関する view """
 
-class ApplyInputView(LoginRequiredMixin, FormView, TeamDetailBaseView):
-    template_name = 'teams/apply/apply_input.html'
-    form_class = ApplyCreateForm
-    model = Team
-
-    def form_valid(self, form):
-        return render(self.request, 'teams/apply/apply_confirm.html', {'form': form})
-        # self.request.session['form_data'] = self.request.POST
-        # return redirect('teams:apply_confirm')
-
-apply_input = ApplyInputView.as_view()
-
-
-
-class ApplyConfirmView(LoginRequiredMixin, FormView, TeamDetailBaseView):
-    template_name = 'teams/apply/apply_confirm.html'
-    form_class = ApplyCreateForm
-    model = Team
-
-    def form_valid(self, form):
-        return render(self.request, self.template_name, {'form': form})
-
-    def form_invalid(self, form):
-        return render(self.request, 'teams/apply/apply_input.html', {'form': form})
-
-apply_confirm = ApplyConfirmView.as_view()
-
-
-
 class ApplyCreateView(LoginRequiredMixin, CreateView, TeamDetailBaseView):
-    template_name = 'teams/apply/team_apply_input.html'
+    template_name = 'teams/apply/apply_create.html'
     form_class = ApplyCreateForm
     success_url = reverse_lazy('teams:team_detail_game')
 
@@ -60,7 +31,8 @@ class ApplyCreateView(LoginRequiredMixin, CreateView, TeamDetailBaseView):
         # todo: ユーザーネーム取得の処理を書く
         team = Team.objects.get(teamname=self.object.team.teamname)
         member = team.belonging_user_profiles
-        owner_profile = member.objects.filter(is_owner=True)[0]
+        print('\n\n\n\n\n\n\n{}\n\n\n\n\n\n\n'.format(member))
+        owner_profile = member.objects.filter(is_owner=True)
         owner = owner_profile.user
         self.object.to_user = owner
 

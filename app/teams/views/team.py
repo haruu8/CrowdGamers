@@ -83,6 +83,7 @@ team_delete = TeamDeleteView.as_view()
 class TeamDetailBaseView(DetailView):
     template_name = 'teams/team_detail.html'
     model = Team
+    context_object_name = 'team'
 
     def get_object(self):
         teamname = self.kwargs.get("teamname")

@@ -3,7 +3,7 @@
 {% block profile_content %}
 
   <div class="container">
-    <form action="{% url 'teams:apply_confirm' object.teamname %}" method="POST">
+    <form action='{% url "teams:apply_create" team.teamname %}' method="POST">
       {{ form.non_field_errors }}
       {% for field in form %}
       <div>
@@ -13,7 +13,7 @@
       </div>
       {% endfor %}
       {% csrf_token %}
-      <button type="submit">確認画面に進む</button>
+      <button type="submit">送信する</button>
     </form>
   </div>
 

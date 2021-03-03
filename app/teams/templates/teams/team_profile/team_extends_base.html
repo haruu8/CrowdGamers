@@ -4,26 +4,26 @@
 
   <div class='container'>
 
-    <p>名前：{{ object.name }}</p>
-    <img src="{{ object.icon.url }}" alt="アイコン">
-    <img src="{{ object.header.url }}" alt="ヘッダー">
-    <p>チームネーム：@{{ object.teamname }}</p>
+    <p>名前：{{ team.name }}</p>
+    <img src="{{ team.icon.url }}" alt="アイコン">
+    <img src="{{ team.header.url }}" alt="ヘッダー">
+    <p>チームネーム：@{{ team.teamname }}</p>
 
-    {% if object.url %}
-      <p><a href="{{ object.url }}">HP</a></p>
+    {% if team.url %}
+      <p><a href="{{ team.url }}">HP</a></p>
     {% endif %}
 
-    <p>説明：{{ object.description }}</p>
-    {% if object.sponsor %}
-      <p>スポンサー：{{ object.sponsor }}</p>
+    <p>説明：{{ team.description }}</p>
+    {% if team.sponsor %}
+      <p>スポンサー：{{ team.sponsor }}</p>
     {% endif %}
-    <a href="{% url 'teams:team_update' object.teamname %}">編集する</a>
+    <a href="{% url 'teams:team_update' team.teamname %}">編集する</a>
 
     <hr>
-    <p><a href="{% url 'teams:team_detail_game' object.teamname %}">ゲーム</a></p>
-    <p><a href="{% url 'teams:team_detail_member' object.teamname %}">メンバー</a></p>
-    <p><a href="{% url 'teams:team_detail_feature' object.teamname %}">特徴</a></p>
-    <p><a href="{% url 'teams:team_detail_desired_condition' object.teamname %}">希望条件</a></p>
+    <p><a href="{% url 'teams:team_detail_game' team.teamname %}">ゲーム</a></p>
+    <p><a href="{% url 'teams:team_detail_member' team.teamname %}">メンバー</a></p>
+    <p><a href="{% url 'teams:team_detail_feature' team.teamname %}">特徴</a></p>
+    <p><a href="{% url 'teams:team_detail_desired_condition' team.teamname %}">希望条件</a></p>
     <hr>
 
     {% block profile_content %}{% endblock %}
