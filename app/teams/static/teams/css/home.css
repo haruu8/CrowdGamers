@@ -1,0 +1,65 @@
+@charset "UTF-8";
+div.catch-section {
+  position: relative;
+}
+
+div.catch-section .catch-copy {
+  text-shadow: 2px 2px 0 black, -2px -2px 0 black, -2px 2px 0 black, 2px -2px 0 black, 0px 2px 0 black, -2px 0 black, -2px 0 0 black, 2px 0 0 black;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  margin: 0;
+  padding: 0;
+  font-size: 250%;
+  font-weight: bold;
+}
+
+div.catch-section .header {
+  width: 100% !important;
+  height: auto;
+}
+
+div.signup-prompt {
+  background-color: #061D33;
+  text-align: center;
+  padding: 3.5rem 0;
+}
+
+div.signup-prompt h3 {
+  margin: 0;
+  font-weight: bold;
+}
+
+.twitter-btn {
+  padding-top: 3.5rem;
+}
+
+/* ここから下がボタンのCSS　*/
+.btn-push {
+  display: inline-block;
+  max-width: 180px;
+  text-align: left;
+  background-color: #1DA1F2;
+  font-size: 16px;
+  color: #FFF;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 10px 24px;
+  border-radius: 4px;
+  border-bottom: 4px solid #1DA1F2;
+  text-decoration: none;
+}
+
+.btn-push:active {
+  -webkit-transform: translateY(4px);
+          transform: translateY(4px);
+  border-bottom: none;
+}
+
+.btn-push:hover {
+  text-decoration: none;
+  color: white;
+}
+/*# sourceMappingURL=home.css.map */

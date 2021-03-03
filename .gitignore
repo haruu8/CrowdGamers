@@ -3,5 +3,3 @@ environment_variable
 .vscode
 
 app/deploy/admin/
-
-dist
