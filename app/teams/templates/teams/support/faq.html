@@ -8,21 +8,24 @@
 
   <div class='container'>
     <h1>よくある質問</h1>
-
-    {% for faq in faqs %}
-      <div class='faq'>
-        <hr>
-        <div onclick="obj=document.getElementById('open-{{ faq.id }}').style; obj.display=(obj.display=='none')?'block':'none';">
-          <p><a style="cursor:pointer;">▼ Q. {{ faq.question }}</a></p>
+    {% if faqs %}
+      {% for faq in faqs %}
+        <div class='faq'>
+          <hr>
+          <div onclick="obj=document.getElementById('open-{{ faq.id }}').style; obj.display=(obj.display=='none')?'block':'none';">
+            <p><a style="cursor:pointer;">▼ Q. {{ faq.question }}</a></p>
+          </div>
+          <div id="open-{{ faq.id }}" style="display:none;clear:both;">
+              {% autoescape off%}
+            <p class='awnser'>A. {{ faq.awnser }}</p>
+            {% endautoescape %}
+          </div>
         </div>
-        <div id="open-{{ faq.id }}" style="display:none;clear:both;">
-            {% autoescape off%}
-          <p class='awnser'>A. {{ faq.awnser }}</p>
-          {% endautoescape %}
-        </div>
-      </div>
-    {% endfor %}
-    <hr>
+      {% endfor %}
+      <hr>
+    {% else %}
+      <p>良くある質問は現在公開されていません。</p>
+    {% endif %}
 
   </div>
 
