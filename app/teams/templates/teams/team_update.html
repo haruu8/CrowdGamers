@@ -12,6 +12,7 @@
       {{ form.as_p }}
       <input type="submit" name="submit" value="Submit" />
     </form>
+    <p><a href="{% url 'teams:team_delete' team.teamname %}">削除</a></p>
   </div>
 
 {% endblock %}

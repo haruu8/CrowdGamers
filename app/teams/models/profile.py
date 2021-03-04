@@ -2,7 +2,8 @@ from django.db import models
 from django.core.validators import FileExtensionValidator, MinLengthValidator, RegexValidator
 from django.core.exceptions import ValidationError
 from django.contrib.auth import get_user_model
-from .team import Team, Job
+from .team import Team
+from .job import Job
 from .game import Game
 from .feature import Feature
 

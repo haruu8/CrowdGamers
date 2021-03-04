@@ -5,28 +5,13 @@ from django.contrib.auth import get_user_model
 from . import *
 from .game import Game
 from .feature import Feature
+from .job import Job
 
 
 
 # user ごとに directory を分ける
 def user_directory_path(instance, filename):
     return 'user_{0}/{1}'.format(instance.user.id, filename)
-
-
-
-""" ジョブモデル """
-
-class Job(models.Model):
-    class Meta():
-        db_table = 't_job'
-        verbose_name = 'ジョブ'
-        verbose_name_plural = 'ジョブ'
-
-    id = models.AutoField(primary_key=True, editable=False)
-    job = models.CharField(max_length=50, null=False, blank=False)
-
-    def __str__(self):
-        return self.job
 
 
 

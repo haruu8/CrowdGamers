@@ -23,26 +23,10 @@ class ApplyCreateView(LoginRequiredMixin, CreateView, TeamDetailBaseView):
         self.object.from_user = self.request.user
 
         # to_user にチームのオーナーを保存
-        # todo: ユーザーネーム取得の処理を書く
-        """
-        チームを取得
-        チームが結びついている profile を取得
-        プロフィールの is_owner True を取得
-        """
-
         team = Team.objects.get(teamname=self.kwargs.get('teamname'))
-
-        print('\n\n\n\n\n\n{}\n\n\n\n\n\n'.format(team.belonging_user_profiles))
-        print('\n\n\n\n\n\n{}\n\n\n\n\n\n'.format(team.no_field))
-
-        # member は object をもっていない
-        member = team.belonging_user_profiles
-        print('\n\n\n\n\n\n{}\n\n\n\n\n\n'.format(member))
-
-        owner_profile = member.objects.filter(is_owner=True)[0]
-
-        owner = owner_profile.user
-        self.object.to_user = owner
+        member = team.belonging_user_profiles.all()
+        owner_profile = member.filter(is_owner=True)[0]
+        self.object.to_user = owner_profile.user
 
         self.object.save()
         result = super().form_valid(form)
