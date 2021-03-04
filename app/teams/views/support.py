@@ -1,7 +1,6 @@
 from django.views.generic import TemplateView
 from teams.models import Question
 from .utils import GetProfileView
-import markdown as md
 
 
 
