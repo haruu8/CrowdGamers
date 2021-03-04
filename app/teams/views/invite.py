@@ -2,7 +2,8 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, FormView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from teams.models import Invite
+from accounts.models import User
+from teams.models import Invite, UserProfile
 from teams.forms import InviteCreateForm
 from .profile import UserProfileBaseView
 
@@ -10,60 +11,31 @@ from .profile import UserProfileBaseView
 
 """ ユーザー招待に関する view """
 
-class InviteInputView(LoginRequiredMixin, FormView, UserProfileBaseView):
-    template_name = 'teams/invite/invite_input.html'
-    form_class = InviteCreateForm
-
-    def form_valid(self, form):
-        return render(self.request, self.template_name, {'form': form})
-
-invite_input = InviteInputView.as_view()
-
-
-
-class InviteConfirmView(LoginRequiredMixin, FormView, UserProfileBaseView):
-    template_name = 'teams/invite/invite_confirm.html'
-    form_class = InviteCreateForm
-
-    def form_valid(self, form):
-        return render(self.request, self.template_name, {'form': form})
-
-    def form_invalid(self, form):
-        return render(self.request, 'teams/invite_input.html', {'form': form})
-
-invite_confirm = InviteConfirmView.as_view()
-
-
-
 class InviteCreateView(LoginRequiredMixin, CreateView, UserProfileBaseView):
-    template_name = 'teams/invite/invite_input.html'
+    template_name = 'teams/invite/invite_create.html'
     form_class = InviteCreateForm
-    success_url = reverse_lazy('teams:account_detail_game')
+    success_url = 'teams:account_detail'
 
     # from と to を設定
-    # オーナーしか送信できないようにする
     def form_valid(self, form):
-        form.instance.user = self.request.user
+        self.object = form.save(commit=False)
 
-        """
-            * from user に自分を登録 (owner前提)
-            self.object.from_user = self.request.user
+        # オーナーでなければ、プロフィールページに返す
+        if self.request.user.user_profile.is_owner == False:
+            return reverse(self.success_url, kwargs={'username': self.object.username})
 
-            *** to_user にユーザーを保存 ***
-              * 送ろうとしているユーザーのオブジェクトを取得する
-              * object の to_user に 招待を送るユーザーを登録
+        # from_user を登録
+        self.object.from_user = self.request.user
 
-            invitation_user = User.objects.get(username=username)
-            self.object.to_user = invitation_user
-        """
+        # to_user を登録
+        self.object.invitation_user = User.objects.get(username=self.kwargs.get('username'))
+        self.object.to_user = self.object.invitation_user
+        self.object.save()
 
         result = super().form_valid(form)
         return result
 
-    def form_invalid(self, form):
-        return render(self.request, '400.html', {'form': form})
-
     def get_success_url(self):
-        return reverse(self.success_url, kwargs={'username': self.object.username})
+        return reverse(self.success_url, kwargs={'username': self.object.invitation_user})
 
 invite_create = InviteCreateView.as_view()

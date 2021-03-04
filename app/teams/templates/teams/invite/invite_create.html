@@ -1,9 +1,9 @@
-{% extends 'teams/team_profile/team_extends_base.html' %}
+{% extends 'teams/accounts/profile_extends_base.html' %}
 
 {% block profile_content %}
 
   <div class="container">
-    <form action='{% url "teams:apply_create" team.teamname %}' method="POST">
+    <form action='{% url "teams:invite_create" user.username %}' method="POST">
       {{ form.as_p }}
       {% csrf_token %}
       <button type="submit">送信する</button>
