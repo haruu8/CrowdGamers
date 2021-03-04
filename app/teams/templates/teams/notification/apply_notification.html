@@ -3,11 +3,14 @@
 {% block notification_content %}
 
   <h3>apply_notification</h3>
-  {% for apply in application %}
-    {{ apply }}
-  {% endfor %}
 
-  {% if application %}
+  {% if applications %}
+    {% for apply in applications %}
+      <div>
+        <p>依頼が届きました。</p>
+        <p>{{ apply }}</p>
+      </div>
+    {% endfor %}
   {% else %}
     <p>通知は届いていません。</p>
   {% endif %}

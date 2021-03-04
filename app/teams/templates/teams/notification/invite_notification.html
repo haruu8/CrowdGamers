@@ -3,11 +3,13 @@
 {% block notification_content %}
 
   <h3>invite_notification</h3>
-  {% for invite in invitation %}
-    {{ invite }}
-  {% endfor %}
-
-  {% if invitation %}
+  {% if invitations %}
+    {% for invite in invitations %}
+      <div>
+        <p>招待が届きました。</p>
+        <p>{{ invite }}</p>
+      </div>
+    {% endfor %}
   {% else %}
     <p>通知は届いていません。</p>
   {% endif %}

@@ -17,7 +17,7 @@ class InviteNotificationView(LoginRequiredMixin, OnlyYouMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
-        ctx['invitation'] = Invite.objects.filter(
+        ctx['invitations'] = Invite.objects.filter(
             Q(from_user=self.request.user) |
             Q(to_user=self.request.user)
         ).order_by('-created_at')
@@ -46,10 +46,11 @@ class ApplyNotificationView(LoginRequiredMixin, OnlyYouMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
-        ctx['application'] = Apply.objects.filter(
+        ctx['applications'] = Apply.objects.filter(
             Q(from_user=self.request.user) |
             Q(to_user=self.request.user)
         ).order_by('-created_at')
+        print('\n\n\n\n\n\n\n{}\n\n\n\n\n\n'.format(ctx))
         return ctx
 
     def get_object(self):
