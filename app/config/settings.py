@@ -25,7 +25,6 @@ INSTALLED_APPS = [
     'accounts.apps.AccountsConfig',
     'teams.apps.TeamsConfig',
     'social_django',
-    'django_markwhat',
 
     'django.contrib.admin',
     'django.contrib.auth',

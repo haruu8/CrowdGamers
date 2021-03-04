@@ -18,21 +18,29 @@ class ApplyCreateView(LoginRequiredMixin, CreateView, TeamDetailBaseView):
     # from と to を設定
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        # form.instance.user = self.request.user
-
 
         # from_user に request user を保存
         self.object.from_user = self.request.user
 
-        self.object.team = get_object_or_404(Team, teamname=self.kwargs.get('teamname'))
-
         # to_user にチームのオーナーを保存
-
         # todo: ユーザーネーム取得の処理を書く
-        team = Team.objects.get(teamname=self.object.team.teamname)
+        """
+        チームを取得
+        チームが結びついている profile を取得
+        プロフィールの is_owner True を取得
+        """
+
+        team = Team.objects.get(teamname=self.kwargs.get('teamname'))
+
+        print('\n\n\n\n\n\n{}\n\n\n\n\n\n'.format(team.belonging_user_profiles))
+        print('\n\n\n\n\n\n{}\n\n\n\n\n\n'.format(team.no_field))
+
+        # member は object をもっていない
         member = team.belonging_user_profiles
-        print('\n\n\n\n\n\n\n{}\n\n\n\n\n\n\n'.format(member))
-        owner_profile = member.objects.filter(is_owner=True)
+        print('\n\n\n\n\n\n{}\n\n\n\n\n\n'.format(member))
+
+        owner_profile = member.objects.filter(is_owner=True)[0]
+
         owner = owner_profile.user
         self.object.to_user = owner
 
