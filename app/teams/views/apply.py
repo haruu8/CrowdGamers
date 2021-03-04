@@ -31,9 +31,6 @@ class ApplyCreateView(LoginRequiredMixin, CreateView, TeamDetailBaseView):
         result = super().form_valid(form)
         return result
 
-    def form_invalid(self, form):
-        return render(self.request, '400.html', {'form': form})
-
     def get_success_url(self):
         return reverse(self.success_url, kwargs={'teamname': self.object.team.teamname})
 
