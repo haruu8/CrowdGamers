@@ -10,7 +10,7 @@ from teams.views import OnlyYouMixin
 
 
 
-""" 通知関連 view """
+""" 招待関係 view """
 
 class InviteNotificationView(LoginRequiredMixin, OnlyYouMixin, TemplateView):
     template_name = 'teams/notification/invite_notification.html'
@@ -40,6 +40,8 @@ class InviteNotificationDetailView(LoginRequiredMixin, OnlyYouMixin, DetailView)
 invite_notification_detail = InviteNotificationDetailView.as_view()
 
 
+
+""" リクエスト関係 view """
 
 class ApplyNotificationView(LoginRequiredMixin, OnlyYouMixin, TemplateView):
     template_name = 'teams/notification/apply_notification.html'
