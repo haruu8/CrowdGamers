@@ -9,7 +9,7 @@
     <p>ユーザーネーム：@{{ object.username }}</p>
     <p>ニックネーム：{{ user_profile.name }}</p>
     {% if user_profile.team %}
-      <p>チームネーム<a href="{% url 'teams:team_detail_game' user_profile.team.teamname %}">@{{ user_profile.team.teamname }}</a></p>
+      <p>チームネーム<a href="{% url 'teams:team_detail' user_profile.team.teamname %}">@{{ user_profile.team.teamname }}</a></p>
       {% if user_profile.is_owner is True %}
         <p>オーナー</p>
       {% else %}
@@ -34,7 +34,7 @@
       <p><a href="{% url 'teams:account_profile_update' object.username %}">編集する</a></p>
     {% endif %}
     <hr>
-    <p><a href="{% url 'teams:account_detail_game' object.username %}">ゲーム</a></p>
+    <p><a href="{% url 'teams:account_detail' object.username %}">ゲーム</a></p>
     <p><a href="{% url 'teams:account_detail_feature' object.username %}">特徴</a></p>
     <p><a href="{% url 'teams:account_detail_desired_condition' object.username %}">希望条件</a></p>
     <hr>

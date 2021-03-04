@@ -32,7 +32,7 @@ class TeamCreateView(LoginRequiredMixin, CreateView):
         return result
 
     def get_success_url(self):
-        return reverse('teams:team_detail_game', kwargs={'teamname': self.object.teamname})
+        return reverse('teams:team_detail', kwargs={'teamname': self.object.teamname})
 
 team_create = TeamCreateView.as_view()
 
@@ -92,10 +92,10 @@ class TeamDetailBaseView(DetailView):
 
 
 class TeamDetailGameView(TeamDetailBaseView):
-    template_name = 'teams/team_profile/team_detail_game.html'
+    template_name = 'teams/team_profile/team_detail.html'
     model = Team
 
-team_detail_game = TeamDetailGameView.as_view()
+team_detail = TeamDetailGameView.as_view()
 
 
 

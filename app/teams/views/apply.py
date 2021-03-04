@@ -13,7 +13,7 @@ from .team import TeamDetailBaseView
 class ApplyCreateView(LoginRequiredMixin, CreateView, TeamDetailBaseView):
     template_name = 'teams/apply/apply_create.html'
     form_class = ApplyCreateForm
-    success_url = reverse_lazy('teams:team_detail_game')
+    success_url = 'teams:team_detail'
 
     # from と to を設定
     def form_valid(self, form):
@@ -23,11 +23,10 @@ class ApplyCreateView(LoginRequiredMixin, CreateView, TeamDetailBaseView):
         self.object.from_user = self.request.user
 
         # to_user にチームのオーナーを保存
-        team = Team.objects.get(teamname=self.kwargs.get('teamname'))
-        member = team.belonging_user_profiles.all()
+        self.object.team = Team.objects.get(teamname=self.kwargs.get('teamname'))
+        member = self.object.team.belonging_user_profiles.all()
         owner_profile = member.filter(is_owner=True)[0]
         self.object.to_user = owner_profile.user
-
         self.object.save()
         result = super().form_valid(form)
         return result
@@ -36,6 +35,6 @@ class ApplyCreateView(LoginRequiredMixin, CreateView, TeamDetailBaseView):
         return render(self.request, '400.html', {'form': form})
 
     def get_success_url(self):
-        return reverse(self.success_url, kwargs={'teamname': self.object.teamname})
+        return reverse(self.success_url, kwargs={'teamname': self.object.team.teamname})
 
 apply_create = ApplyCreateView.as_view()

@@ -20,7 +20,7 @@
     <a href="{% url 'teams:team_update' team.teamname %}">編集する</a>
 
     <hr>
-    <p><a href="{% url 'teams:team_detail_game' team.teamname %}">ゲーム</a></p>
+    <p><a href="{% url 'teams:team_detail' team.teamname %}">ゲーム</a></p>
     <p><a href="{% url 'teams:team_detail_member' team.teamname %}">メンバー</a></p>
     <p><a href="{% url 'teams:team_detail_feature' team.teamname %}">特徴</a></p>
     <p><a href="{% url 'teams:team_detail_desired_condition' team.teamname %}">希望条件</a></p>
