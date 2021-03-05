@@ -35,7 +35,6 @@ class CustomAccessMixin(AccessMixin):
                 '{0} is missing the home_url attribute. Define {0}.home_url, settings.LOGIN_REDIRECT_URL, or override '
                 '{0}.get_home_url().'.format(self.__class__.__name__)
             )
-        # return str(home_url)
         return redirect(home_url)
 
     def handle_no_permission(self):

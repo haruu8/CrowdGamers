@@ -3,3 +3,5 @@ environment_variable
 .vscode
 
 app/deploy/admin/
+
+app/teams/templates/teams/support/md/
