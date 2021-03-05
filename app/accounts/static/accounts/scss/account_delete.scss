@@ -1,0 +1,27 @@
+$blue-1-color: #1F8FFF;
+$blue-2-color: #1C81E6;
+$blue-3-color: #1872CC;
+$blue-4-color: #1564B3;
+$blue-5-color: #125699;
+$blue-6-color: #0F4780;
+$blue-7-color: #0C3966;
+$blue-8-color: #092B4D;
+$blue-9-color: #061D33;
+$blue-10-color: #030E1A;
+$twitter-color: #1DA1F2;
+$color: black;
+
+.container {
+  text-align: center;
+  margin: 14rem auto;
+
+  .btn-section {
+    display: flex;
+    margin: 3rem 17rem;
+    justify-content: space-around;
+  }
+
+  .cancel-btn {
+    color: $blue-1-color;
+  }
+}

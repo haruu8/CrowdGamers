@@ -1,13 +1,28 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{% block stylesheet %}'{% static "accounts/scss/dist/account_delete.css" %}'{% endblock %}
 
 {% block content %}
 
-  <form method="post">
-    {% csrf_token %}
-    <p>あなたのアカウント「{{ user.username }}」を、本当に削除してもよろしいですか？</p>
-    <p>※アカウントを削除したら元に戻すことはできません</p>
-    <input type="submit" class="btn btn-danger" value="削除">
-    <a href="javascript:void(0);" onclick="window.history.back();">キャンセル</a>
-  </form>
+  <div class='container'>
+    <form method="post">
+      {% csrf_token %}
+      <div class="description">
+        <p>あなたのアカウント [ {{ user.username }} ] を、本当に削除してもよろしいですか？</p>
+        <p>※アカウントを削除したら元に戻すことはできません</p>
+      </div>
+      <div class="btn-section">
+        <div>
+          <a href='{% url "accounts:account_settings" %}'>
+            <button type="button" class="btn btn-primary">キャンセル</button>
+          </a>
+        </div>
+        <div>
+          <input type="submit" class="btn btn-danger" value="削除する">
+        </div>
+      </div>
+    </form>
+  </div>
 
 {% endblock %}
