@@ -5,12 +5,12 @@ from django.views.generic import TemplateView, UpdateView, DeleteView, ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import get_user_model
 from .models import User
-from teams.views import OnlyYouMixin
+from teams.views import OnlyYouMixin, AnonymousRequiredMixin
 from django.contrib.auth import views as auth_views
 
 
 
-class LoginView(auth_views.LoginView):
+class LoginView(AnonymousRequiredMixin, auth_views.LoginView):
     template_name = 'accounts/login.html'
 
 

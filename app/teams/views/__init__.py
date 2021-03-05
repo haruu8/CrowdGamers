@@ -1,4 +1,4 @@
-from .access import OnlyYouMixin, OnlyOwnerMixin
+from .access import OnlyYouMixin, AnonymousRequiredMixin, OnlyOwnerMixin
 from .apply import apply_create
 from .invite import invite_create
 from .notification import (
