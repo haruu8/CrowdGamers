@@ -12,7 +12,7 @@ from .profile import UserProfileBaseView
 """ ユーザー招待に関する view """
 
 class InviteCreateView(LoginRequiredMixin, CreateView, UserProfileBaseView):
-    template_name = 'teams/invite/invite_create.html'
+    template_name = 'teams/invite_create.html'
     form_class = InviteCreateForm
     success_url = 'teams:account_detail'
 

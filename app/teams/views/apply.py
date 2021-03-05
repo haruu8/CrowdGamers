@@ -11,7 +11,7 @@ from .team import TeamDetailBaseView
 """ クランリクエストに関する view """
 
 class ApplyCreateView(LoginRequiredMixin, CreateView, TeamDetailBaseView):
-    template_name = 'teams/apply/apply_create.html'
+    template_name = 'teams/apply_create.html'
     form_class = ApplyCreateForm
     success_url = 'teams:team_detail'
 
