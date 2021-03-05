@@ -71,11 +71,6 @@ class ApplyNotificationDetailView(LoginRequiredMixin, OnlyYouMixin, DetailView):
     template_name = 'teams/notification/apply_notification_detail.html'
     model = Apply
 
-    # def get_context_data(self, **kwargs):
-    #     ctx = super().get_context_data(**kwargs)
-    #     ctx['is_proceeded'] =
-    #     return ctx
-
     def get_object(self):
         return get_object_or_404(get_user_model(), username=self.kwargs.get('username'))
 

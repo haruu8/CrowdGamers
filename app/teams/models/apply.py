@@ -17,7 +17,7 @@ class Apply(models.Model):
         verbose_name = 'リクエスト'
         verbose_name = verbose_name_plural = 'リクエスト'
 
-    id = models.UUIDField(default=uuid.uuid4, primary_key=True, editable=False)
+    id = models.UUIDField(default=uuid.uuid4, primary_key=True, editable=False, db_index=True)
     from_user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, related_name='send_apply')
     to_user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, related_name='receive_apply')
     desired_job = models.ManyToManyField(Job, related_name='apply_desired_job')
