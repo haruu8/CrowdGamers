@@ -1,9 +1,0 @@
-{
-    "version": 3,
-    "mappings": "AAaA,AAAA,UAAU,CAAC;EACT,UAAU,EAAE,MAAM;CAInB;;AALD,AAEE,UAFQ,CAER,EAAE,CAAC;EACD,MAAM,EAAE,SAAS;CAClB;;AAGH,AAAA,SAAS,CAAC;EACR,cAAc,EAAE,IAAI;EACpB,eAAe,EAAE,YAAY;CAI9B;;AAND,AAGE,SAHO,CAGP,CAAC,CAAC;EACA,MAAM,EAAE,SAAS;CAClB;;AAGH,AAAA,KAAK,CAAC;EACJ,MAAM,EAAE,MAAM;CACf",
-    "sources": [
-        "../../../../deploy/accounts/scss/account_settings.scss"
-    ],
-    "names": [],
-    "file": "account_settings.css"
-}
