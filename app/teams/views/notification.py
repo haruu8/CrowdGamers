@@ -18,7 +18,10 @@ class InviteNotificationView(LoginRequiredMixin, OnlyYouMixin, TemplateView):
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
         ctx['invitations'] = Invite.objects.filter(
-            Q(from_user=self.request.user) |
+            # (from_user = 自分 AND (is_procesded =  True OR is_prceeded = False)) OR to_user = 自分
+            Q(from_user=self.request.user),
+            Q(is_proceeded=True) |
+            Q(is_proceeded=False) |
             Q(to_user=self.request.user)
         ).order_by('-created_at')
         return ctx
@@ -35,7 +38,7 @@ class InviteNotificationDetailView(LoginRequiredMixin, OnlyYouMixin, DetailView)
     model = Invite
 
     def get_object(self):
-        return get_object_or_404(UserProfile, user=self.kwargs.get('user'))
+        return get_object_or_404(get_user_model(), username=self.kwargs.get('username'))
 
 invite_notification_detail = InviteNotificationDetailView.as_view()
 
@@ -49,14 +52,16 @@ class ApplyNotificationView(LoginRequiredMixin, OnlyYouMixin, TemplateView):
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
         ctx['applications'] = Apply.objects.filter(
-            Q(from_user=self.request.user) |
+            # (from_user = 自分 AND (is_procesded =  True OR is_prceeded = False)) OR to_user = 自分
+            Q(from_user=self.request.user),
+            Q(is_proceeded=True) |
+            Q(is_proceeded=False) |
             Q(to_user=self.request.user)
         ).order_by('-created_at')
-        print('\n\n\n\n\n\n\n{}\n\n\n\n\n\n'.format(ctx))
         return ctx
 
     def get_object(self):
-        return get_object_or_404(User, username=self.kwargs.get('username'))
+        return get_object_or_404(get_user_model(), username=self.kwargs.get('username'))
 
 apply_notification = ApplyNotificationView.as_view()
 
@@ -66,7 +71,12 @@ class ApplyNotificationDetailView(LoginRequiredMixin, OnlyYouMixin, DetailView):
     template_name = 'teams/notification/apply_notification_detail.html'
     model = Apply
 
+    # def get_context_data(self, **kwargs):
+    #     ctx = super().get_context_data(**kwargs)
+    #     ctx['is_proceeded'] =
+    #     return ctx
+
     def get_object(self):
-        return get_object_or_404(UserProfile, user=self.kwargs.get('user'))
+        return get_object_or_404(get_user_model(), username=self.kwargs.get('username'))
 
 apply_notification_detail = ApplyNotificationDetailView.as_view()

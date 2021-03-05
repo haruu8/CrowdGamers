@@ -71,10 +71,14 @@ team_update = TeamUpdateView.as_view()
 
 
 
-class TeamDeleteView(LoginRequiredMixin, OnlyYouMixin, DeleteView):
+class TeamDeleteView(LoginRequiredMixin, DeleteView):
     template_name = 'teams/team_delete.html'
     model = Team
     success_url = reverse_lazy('team:home')
+
+    def get_object(self):
+        teamname = self.kwargs.get("teamname")
+        return get_object_or_404(Team, teamname=teamname)
 
 team_delete = TeamDeleteView.as_view()
 

@@ -22,6 +22,12 @@ class Apply(models.Model):
     to_user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, related_name='receive_apply')
     desired_job = models.ManyToManyField(Job, related_name='apply_desired_job')
     message = models.CharField(verbose_name='志望理由', max_length=255, null=True, blank=False)
+
+    # 既読管理
+    has_read = models.BooleanField(default=False)
+
+    # 承認・拒否の選択
+    is_proceeded = models.BooleanField(null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
