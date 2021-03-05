@@ -18,7 +18,7 @@ class InviteNotificationView(LoginRequiredMixin, OnlyYouMixin, TemplateView):
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
         ctx['invitations'] = Invite.objects.filter(
-            # (from_user = 自分 AND (is_procesded =  True OR is_prceeded = False)) OR to_user = 自分
+            # (from_user=self.request.user AND (is_procesded=True OR is_prceeded=False)) OR to_user=self.request.user
             Q(from_user=self.request.user),
             Q(is_proceeded=True) |
             Q(is_proceeded=False) |
@@ -52,7 +52,7 @@ class ApplyNotificationView(LoginRequiredMixin, OnlyYouMixin, TemplateView):
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
         ctx['applications'] = Apply.objects.filter(
-            # (from_user = 自分 AND (is_procesded =  True OR is_prceeded = False)) OR to_user = 自分
+            # (from_user=self.request.user AND (is_procesded=True OR is_prceeded=False)) OR to_user=self.request.user
             Q(from_user=self.request.user),
             Q(is_proceeded=True) |
             Q(is_proceeded=False) |
