@@ -32,7 +32,7 @@ class Team(models.Model):
     id = models.AutoField(editable=False, primary_key=True)
     teamname_regex = RegexValidator(regex=r'[a-xA-Z0-9_]')
     teamname = models.CharField(
-        verbose_name='クランネーム',
+        verbose_name='チームネーム',
         null=False,
         blank=False,
         unique=True,
@@ -54,9 +54,9 @@ class Team(models.Model):
         validators=[
             validate_icon_image,
         ])
-    url = models.URLField(null=True)
+    url = models.URLField(null=True, blank=True)
     description = models.CharField(max_length=255)
-    sponsor = models.CharField(max_length=50)
+    sponsor = models.CharField(max_length=100, null=True, blank=True)
     game_title = models.ManyToManyField(Game, related_name='team_game_title')
     feature = models.ManyToManyField(Feature, verbose_name='特徴', related_name='team_feature')
     desired_job = models.ManyToManyField(Job, related_name='team_desired_job')

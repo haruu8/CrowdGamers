@@ -1,0 +1,41 @@
+.container {
+  text-align: center;
+  margin-bottom: 10rem;
+}
+.container .title {
+  margin: 5rem auto;
+}
+
+.team-all {
+  display: flex;
+  flex-wrap: wrap;
+  padding-bottom: 3rem;
+}
+
+.team-section {
+  background-color: #0F4780;
+  padding: 1.55rem 3.5rem;
+  height: auto;
+  border-radius: 25%;
+  margin: auto 1.5rem;
+}
+.team-section a {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+}
+.team-section .name {
+  margin: 0.5rem auto;
+  font-weight: bold;
+}
+.team-section .teamname {
+  color: #c9c9c9;
+  margin-bottom: 0;
+}
+
+.team-icon {
+  width: auto;
+  height: 6rem;
+}

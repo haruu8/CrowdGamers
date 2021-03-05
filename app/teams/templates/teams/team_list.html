@@ -8,14 +8,19 @@
 
 {% block content %}
 
-  <h2>チーム一覧</h2>
-  {% for object in object_list %}
-    <div class='team-section'>
-      <img src="{{ object.icon.url }}" alt="チームアイコン">
-      <p>{{ object.name }}</p>
-      <p>{{ object.teamname }}</p>
-      <a href="{% url 'teams:team_detail' object.teamname %}">詳細</a>
+  <div class="container">
+    <h2 class="title">チーム一覧</h2>
+
+    <div class="team-all">
+      {% for object in object_list %}
+        <div class='team-section'>
+          <img src="{{ object.icon.url }}" alt="チームアイコン" class="team-icon">
+          <p class="name">{{ object.name }}</p>
+          <p class='teamname'>{{ object.teamname }}</p>
+          <a href="{% url 'teams:team_detail' object.teamname %}"></a>
+        </div>
+      {% endfor %}
     </div>
-  {% endfor %}
+  </div>
 
 {% endblock %}
