@@ -50,7 +50,7 @@ class UserProfileUpdateView(UpdateView):
     template_name = 'teams/accounts/account_profile_update.html'
     model = UserProfile
     form_class = UserProfileUpdateForm
-    success_url = 'teams:account_detail_game'
+    success_url = 'teams:account_detail'
 
     def form_valid(self, form):
         result = super().form_valid(form)

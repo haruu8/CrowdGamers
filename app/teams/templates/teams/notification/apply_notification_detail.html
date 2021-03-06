@@ -2,9 +2,18 @@
 
 {% block content %}
 
-  <p>apply_notification_detail.html</p>
-  {{ apply }}
-  <p>メッセージ：{{ apply.message }}</p>
-  created_at:{{ apply.created_at }}
+  <div class="container">
+    <p>apply_notification_detail.html</p>
+    <p>{{ object.user_profile.name }}</p>
+    <p><a href="{% url 'teams:account_detail' object.username %}">@{{ object.username }}</a></p>
+    <p>メッセージ：{{ apply.message }}</p>
+    <p>作成日時：{{ apply.created_at }}</p>
+
+    <form action="" method='POST'>
+      {% csrf_token %}
+      <button type="button" class="btn btn-primary">拒否する</button>
+      <input type="submit" class="btn btn-danger" value="承認する">
+    </form>
+  </div>
 
 {% endblock %}

@@ -37,6 +37,11 @@ class InviteNotificationDetailView(LoginRequiredMixin, OnlyYouMixin, DetailView)
     model = Invite
     context_object_name = 'invite'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['invite'] = Invite.objects.get(id=self.kwargs.get('id'))
+        return context
+
     def get_object(self):
         return get_object_or_404(get_user_model(), username=self.kwargs.get('username'))
 
@@ -71,6 +76,11 @@ class ApplyNotificationDetailView(LoginRequiredMixin, OnlyYouMixin, DetailView):
     template_name = 'teams/notification/apply_notification_detail.html'
     model = Apply
     context_object_name = 'apply'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['apply'] = Apply.objects.get(id=self.kwargs.get('id'))
+        return context
 
     def get_object(self):
         return get_object_or_404(get_user_model(), username=self.kwargs.get('username'))

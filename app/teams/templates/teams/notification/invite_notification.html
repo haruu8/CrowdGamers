@@ -5,13 +5,14 @@
   <h3>invite_notification</h3>
   {% if invitations %}
     {% for invite in invitations %}
+      <hr>
       <div>
         <p>{{ invite.from_user.user_profile.team }}のオーナー「<a href=" url 'teams:team_detail' invite.from_user ">{{ invite.from_user }}</a>」 から招待が届きました。</p>
         <p><a href="{% url 'teams:invite_notification_detail' user.username invite.id %}">{{ invite.message }}</a></p>
       </div>
     {% endfor %}
   {% else %}
-    <p>通知は届いていません。</p>
+    <p>招待は届いていません。</p>
   {% endif %}
 
 {% endblock %}
