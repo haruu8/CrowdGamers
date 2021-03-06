@@ -1,0 +1,11 @@
+{% extends 'teams/notification/base_apply_notification_detail.html' %}
+
+{% block form_content %}
+
+  <form action="" method='POST'>
+    {% csrf_token %}
+    {{ form.invite_url }}
+    <input type="submit" name="submit" value="送信する" />
+  </form>
+
+{% endblock %}

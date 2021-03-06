@@ -1,19 +1,14 @@
-{% extends 'base.html' %}
+{% extends 'teams/notification/base_apply_notification_detail.html' %}
 
-{% block content %}
+{% block form_content %}
 
-  <div class="container">
-    <p>apply_notification_detail.html</p>
-    <p>{{ object.user_profile.name }}</p>
-    <p><a href="{% url 'teams:account_detail' object.username %}">@{{ object.username }}</a></p>
-    <p>メッセージ：{{ apply.message }}</p>
-    <p>作成日時：{{ apply.created_at }}</p>
-
-    <form action="" method='POST'>
-      {% csrf_token %}
-      <button type="button" class="btn btn-primary">拒否する</button>
-      <input type="submit" class="btn btn-danger" value="承認する">
-    </form>
-  </div>
+  <form action="" method='POST'>
+    {% csrf_token %}
+    <p>この申請を許可しますか？<br>（この申請を許可した場合、チームプロフィールに登録されている招待URLが相手に送信されます。）</p>
+      <button class="ui button grey" type="submit" name="approval" value="deny">拒否する</button>
+    <a href="{% url 'teams:apply_reply_create' team.teamname apply.id %}">
+      <button class="ui button btn-primary" type="submit" name="approval" value="approve">承認する</button>
+    </a>
+  </form>
 
 {% endblock %}

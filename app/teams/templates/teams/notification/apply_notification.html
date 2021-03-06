@@ -6,6 +6,7 @@
 
   {% if applications %}
     {% for apply in applications %}
+    <hr>
       <div>
         <p><a href="{% url 'teams:account_detail' apply.from_user %}">{{ apply.from_user }}</a> からメッセージが届きました。</p>
         <p><a href="{% url 'teams:apply_notification_detail' user.username apply.id %}">{{ apply.message | truncatechars:12 }}</a></p>

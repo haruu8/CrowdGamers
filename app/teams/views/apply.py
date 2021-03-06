@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy, reverse
-from django.views.generic import CreateView, FormView
+from django.views.generic import CreateView, FormView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from teams.models import Apply, Team
 from teams.forms import ApplyCreateForm
@@ -35,3 +35,13 @@ class ApplyCreateView(LoginRequiredMixin, CreateView, TeamDetailBaseView):
         return reverse(self.success_url, kwargs={'teamname': self.object.team.teamname})
 
 apply_create = ApplyCreateView.as_view()
+
+
+
+""" きた申請を承認した場合に必要な招待URL """
+
+class ApplyReplyCreateView(UpdateView):
+    template_name = 'teams/apply_reply_create.html'
+    form_class = ApplyCreateForm
+
+apply_reply_create = ApplyReplyCreateView.as_view()
