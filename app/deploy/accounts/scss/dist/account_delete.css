@@ -1,0 +1,12 @@
+.container {
+  text-align: center;
+  margin: 14rem auto;
+}
+.container .btn-section {
+  display: flex;
+  margin: 3rem 17rem;
+  justify-content: space-around;
+}
+.container .cancel-btn {
+  color: #1F8FFF;
+}

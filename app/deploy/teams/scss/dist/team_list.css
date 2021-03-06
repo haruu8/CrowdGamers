@@ -18,14 +18,12 @@
   height: auto;
   border-radius: 25%;
   margin: auto 1.5rem;
-  position: relative;
 }
 .team-section a {
   position: absolute;
   top: 0;
   left: 0;
   height: 100%;
-  text-indent: -999px;
   width: 100%;
 }
 .team-section .name {

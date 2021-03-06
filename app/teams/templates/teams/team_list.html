@@ -12,12 +12,12 @@
     <h2 class="title">チーム一覧</h2>
 
     <div class="team-all">
-      {% for object in object_list %}
+      {% for team in object_list %}
         <div class='team-section'>
-          <img src="{{ object.icon.url }}" alt="チームアイコン" class="team-icon">
-          <p class="name">{{ object.name }}</p>
-          <p class='teamname'>{{ object.teamname }}</p>
-          <a href="{% url 'teams:team_detail' object.teamname %}"></a>
+          <img src="{{ team.icon.url }}" alt="チームアイコン" class="team-icon">
+          <p class="name">{{ team.name | truncatechars:12 }}</p>
+          <p class='teamname'>{{ team.teamname }}</p>
+          <a href="{% url 'teams:team_detail' team.teamname %}"></a>
         </div>
       {% endfor %}
     </div>
