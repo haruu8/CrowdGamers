@@ -7,8 +7,8 @@
   {% if applications %}
     {% for apply in applications %}
       <div>
-        <p>依頼が届きました。</p>
-        <p><a href="{% url 'teams:apply_notification_detail' user.username apply.id %}">{{ apply }}</a></p>
+        <p><a href="{% url 'teams:account_detail' apply.from_user %}">{{ apply.from_user }}</a> からメッセージが届きました。</p>
+        <p><a href="{% url 'teams:apply_notification_detail' user.username apply.id %}">{{ apply.message | truncatechars:12 }}</a></p>
       </div>
     {% endfor %}
   {% else %}

@@ -35,6 +35,7 @@ invite_notification = InviteNotificationView.as_view()
 class InviteNotificationDetailView(LoginRequiredMixin, OnlyYouMixin, DetailView):
     template_name = 'teams/notification/invite_notification_detail.html'
     model = Invite
+    context_object_name = 'invite'
 
     def get_object(self):
         return get_object_or_404(get_user_model(), username=self.kwargs.get('username'))
@@ -69,6 +70,7 @@ apply_notification = ApplyNotificationView.as_view()
 class ApplyNotificationDetailView(LoginRequiredMixin, OnlyYouMixin, DetailView):
     template_name = 'teams/notification/apply_notification_detail.html'
     model = Apply
+    context_object_name = 'apply'
 
     def get_object(self):
         return get_object_or_404(get_user_model(), username=self.kwargs.get('username'))
