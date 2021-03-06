@@ -3,7 +3,6 @@ from django.views.generic import TemplateView, CreateView, DetailView, FormView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import get_user_model
 from django.db.models import Q
-from accounts.models import User
 from teams.models import Team, Invite, Apply, UserProfile
 from teams.forms import InviteCreateForm, ApplyCreateForm
 from teams.views import OnlyYouMixin
@@ -27,7 +26,7 @@ class InviteNotificationView(LoginRequiredMixin, OnlyYouMixin, TemplateView):
         return ctx
 
     def get_object(self):
-        return get_object_or_404(User, username=self.kwargs.get('username'))
+        return get_object_or_404(get_user_model(), username=self.kwargs.get('username'))
 
 invite_notification = InviteNotificationView.as_view()
 
