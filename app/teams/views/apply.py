@@ -3,6 +3,7 @@ from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, FormView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from teams.models import Apply, Team
+from django.contrib.auth import get_user_model
 from teams.forms import ApplyCreateForm
 from .team import TeamDetailBaseView
 
@@ -43,5 +44,17 @@ apply_create = ApplyCreateView.as_view()
 class ApplyReplyCreateView(UpdateView):
     template_name = 'teams/apply_reply_create.html'
     form_class = ApplyCreateForm
+    success_url = 'teams:home'
+
+    def form_valid(self, form):
+        return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['apply'] = Apply.objects.get(id=self.kwargs.get('id'))
+        return context
+
+    def get_object(self):
+        return get_object_or_404(get_user_model(), username=self.kwargs.get('username'))
 
 apply_reply_create = ApplyReplyCreateView.as_view()
