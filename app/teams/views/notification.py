@@ -95,7 +95,6 @@ class ApplyNotificationDetailView(LoginRequiredMixin, OnlyYouMixin, DetailView):
         """
         self.object = Apply.objects.get(id=self.kwargs.get('id'))
 
-        # すでに is_proceeded がセットされている場合処理を見送る
         # if self.object.is_proceeded is True or self.object.is_proceeded is False:
         #     pass
 

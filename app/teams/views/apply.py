@@ -18,12 +18,17 @@ class ApplyCreateView(LoginRequiredMixin, CreateView, TeamDetailBaseView):
 
     # from と to を設定
     def form_valid(self, form):
-        self.object = form.save(commit=False)
+        """
+        apply object に from_user と to_user の設定をする
 
-        # from_user に request user を保存
+        Notes
+        -----
+        from_user に request.user を保存
+        to_user にチームのオーナーを保存
+        """
+        self.object = form.save(commit=False)
         self.object.from_user = self.request.user
 
-        # to_user にチームのオーナーを保存
         self.object.team = Team.objects.get(teamname=self.kwargs.get('teamname'))
         member = self.object.team.belonging_user_profiles.all()
         owner_profile = member.filter(is_owner=True)[0]
