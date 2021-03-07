@@ -29,3 +29,22 @@ class ApplyCreateForm(forms.ModelForm):
         if len(desired_job) >= 2:
             raise forms.ValidationError('希望職は1つまでしか選択することができません')
         return desired_job
+
+
+
+class ApplyUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Apply
+        fields = ('invite_url',)
+        labels = {
+            'invite_url': '招待URL'
+        }
+
+    invite_url = forms.URLField(required=True,
+                                widget=forms.TextInput(attrs={'placeholder': '会話に使用する Discordサーバーの招待URLを入力してください', 'render_value': True}))
+
+    def __init__(self, *args, **kwargs):
+        super(ApplyUpdateForm, self).__init__(*args, **kwargs)
+        for field in self.fields.values():
+            field.error_messages = {'required':'{fieldname} は必須です。'.format(fieldname=field.label)}
+            field.widget.attrs['class'] = 'form-control'

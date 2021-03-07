@@ -40,7 +40,7 @@ urlpatterns = [
 
     # リクエスト送信
     path('team/<str:teamname>/apply/create/', views.apply_create, name='apply_create'),
-    path('team/<str:username>/apply/reply/create/<uuid:id>/', views.apply_reply_create, name='apply_reply_create'),
+    path('<str:username>/apply/reply/create/<uuid:id>/', views.apply_reply_create, name='apply_reply_create'),
 
     # 招待送信
     path('<str:username>/invite/create/', views.invite_create, name='invite_create'),

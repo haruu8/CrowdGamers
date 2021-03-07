@@ -4,7 +4,7 @@ from django.views.generic import CreateView, FormView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from teams.models import Apply, Team
 from django.contrib.auth import get_user_model
-from teams.forms import ApplyCreateForm
+from teams.forms import ApplyCreateForm, ApplyUpdateForm
 from .team import TeamDetailBaseView
 
 
@@ -14,7 +14,7 @@ from .team import TeamDetailBaseView
 class ApplyCreateView(LoginRequiredMixin, CreateView, TeamDetailBaseView):
     template_name = 'teams/apply_create.html'
     form_class = ApplyCreateForm
-    success_url = 'teams:team_detail'
+    success_url = 'teams:home'
 
     # from と to を設定
     def form_valid(self, form):
@@ -30,10 +30,11 @@ class ApplyCreateView(LoginRequiredMixin, CreateView, TeamDetailBaseView):
         self.object.to_user = owner_profile.user
         self.object.save()
         result = super().form_valid(form)
+        print('\n\n\n\n\n\n\n{}\n\n\n\n\n\n\n\n'.format('ここまで'))
         return result
 
     def get_success_url(self):
-        return reverse(self.success_url, kwargs={'teamname': self.object.team.teamname})
+        return reverse(self.success_url, kwargs={'teamname': self.object.to_user.team})
 
 apply_create = ApplyCreateView.as_view()
 
@@ -42,12 +43,13 @@ apply_create = ApplyCreateView.as_view()
 """ きた申請を承認した場合に必要な招待URL """
 
 class ApplyReplyCreateView(UpdateView):
-    template_name = 'teams/apply_reply_create.html'
-    form_class = ApplyCreateForm
-    success_url = 'teams:home'
+    template_name = 'teams/notification/apply_reply_create.html'
+    form_class = ApplyUpdateForm
+    success_url = 'teams:apply_notification'
 
     def form_valid(self, form):
-        return super().form_valid(form)
+        result = super().form_valid(form)
+        return redirect(self.success_url)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -56,5 +58,8 @@ class ApplyReplyCreateView(UpdateView):
 
     def get_object(self):
         return get_object_or_404(get_user_model(), username=self.kwargs.get('username'))
+
+    def get_success_url(self):
+        return reverse(self.success_url, kwargs={'username': self.request.user.username})
 
 apply_reply_create = ApplyReplyCreateView.as_view()

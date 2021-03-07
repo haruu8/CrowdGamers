@@ -22,7 +22,7 @@ class Apply(models.Model):
     to_user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, related_name='receive_apply')
     desired_job = models.ManyToManyField(Job, related_name='apply_desired_job')
     message = models.CharField(verbose_name='志望理由', max_length=255, null=False, blank=False)
-    invite_url = models.URLField(verbose_name='招待URL', null=True, blank=True)
+    invite_url = models.URLField(verbose_name='招待URL', max_length=255, null=True, blank=True)
 
     # 既読管理
     has_read = models.BooleanField(default=False)

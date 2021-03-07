@@ -94,7 +94,7 @@ class ApplyNotificationDetailView(LoginRequiredMixin, OnlyYouMixin, DetailView):
             self.object.is_proceeded = True
             self.object.save()
             # ここでフォームがある別ページにリダイレクトする
-            return reverse_lazy(self.success_url, username=self.request.user.username)
+            return redirect(self.success_url, id=self.object.id)
 
         # 拒否ボタンなら、 False を設定する
         elif self.request.POST.get('approval', '') == 'deny':
