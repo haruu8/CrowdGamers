@@ -14,7 +14,7 @@ from .team import TeamDetailBaseView
 class ApplyCreateView(LoginRequiredMixin, CreateView, TeamDetailBaseView):
     template_name = 'teams/apply_create.html'
     form_class = ApplyCreateForm
-    success_url = 'teams:home'
+    success_url = 'teams:team_detail'
 
     # from と to を設定
     def form_valid(self, form):
@@ -30,11 +30,10 @@ class ApplyCreateView(LoginRequiredMixin, CreateView, TeamDetailBaseView):
         self.object.to_user = owner_profile.user
         self.object.save()
         result = super().form_valid(form)
-        print('\n\n\n\n\n\n\n{}\n\n\n\n\n\n\n\n'.format('ここまで'))
         return result
 
     def get_success_url(self):
-        return reverse(self.success_url, kwargs={'teamname': self.object.to_user.team})
+        return reverse(self.success_url, kwargs={'teamname': self.object.team.teamname})
 
 apply_create = ApplyCreateView.as_view()
 
@@ -48,6 +47,9 @@ class ApplyReplyCreateView(UpdateView):
     success_url = 'teams:apply_notification'
 
     def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.is_proceeded = True
+        self.object.save()
         result = super().form_valid(form)
         return redirect(self.success_url)
 

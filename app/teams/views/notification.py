@@ -18,7 +18,7 @@ class InviteNotificationView(LoginRequiredMixin, OnlyYouMixin, TemplateView):
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
         ctx['invitations'] = Invite.objects.filter(
-            # (from_user=self.request.user AND (is_proceeded=True OR is_prceeded=False)) OR to_user=self.request.user
+            # (from_user=self.request.user AND (is_proceeded=True OR is_proceeded=False)) OR to_user=self.request.user
             Q(from_user=self.request.user),
             Q(is_proceeded=True) |
             Q(is_proceeded=False) |
@@ -58,7 +58,7 @@ class ApplyNotificationView(LoginRequiredMixin, OnlyYouMixin, TemplateView):
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
         ctx['applications'] = Apply.objects.filter(
-            # (from_user=self.request.user AND (is_proceeded=True OR is_prceeded=False)) OR to_user=self.request.user
+            # (from_user=self.request.user AND (is_proceeded=True OR is_proceeded=False)) OR to_user=self.request.user
             # Q(from_user=self.request.user),
             # Q(is_proceeded=True) |
             # Q(is_proceeded=False) |
@@ -80,28 +80,34 @@ class ApplyNotificationDetailView(LoginRequiredMixin, OnlyYouMixin, DetailView):
     context_object_name = 'apply'
     success_url = 'teams:apply_reply_create'
 
-    # 認可の処理
     def post(self, request, *args, **kwargs):
+        """
+        申請の認可の処理
+
+        Notes
+        -----
+        承認なら ApplyReplyCreateView での処理
+        拒否なら apply object の is_proceeded に False をセットする
+
+        TODO
+        -----
+        True, False がセットされている場合はボタン・処理等走らないようにする
+        """
         self.object = Apply.objects.get(id=self.kwargs.get('id'))
 
         # すでに is_proceeded がセットされている場合処理を見送る
         # if self.object.is_proceeded is True or self.object.is_proceeded is False:
         #     pass
 
-        # 承認ボタンなら、 True を設定する
         if self.request.POST.get('approval', '') == 'approve':
         # elif self.request.POST.get('approval', '') == 'approve':
-            self.object.is_proceeded = True
-            self.object.save()
-            # ここでフォームがある別ページにリダイレクトする
-            return redirect(self.success_url, id=self.object.id)
 
-        # 拒否ボタンなら、 False を設定する
+            return redirect(self.success_url, username=self.request.user.username, id=self.object.id)
+
         elif self.request.POST.get('approval', '') == 'deny':
             self.object.is_proceeded = False
             self.object.save()
 
-        # ここのURLのちに変更できたら変更する
         return redirect('teams:home')
 
     def get_context_data(self, **kwargs):
@@ -112,7 +118,7 @@ class ApplyNotificationDetailView(LoginRequiredMixin, OnlyYouMixin, DetailView):
     def get_object(self):
         return get_object_or_404(get_user_model(), username=self.kwargs.get('username'))
 
-    # def get_success_url(self):
-    #     return reverse(self.success_url, kwargs={'username': self.request.user})
+    def get_success_url(self):
+        return reverse(self.success_url, kwargs={'username': self.request.user.username, 'id': self.object.id})
 
 apply_notification_detail = ApplyNotificationDetailView.as_view()

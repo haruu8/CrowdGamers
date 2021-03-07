@@ -7,7 +7,7 @@
     <p>この申請を許可しますか？<br>（この申請を許可した場合、チームプロフィールに登録されている招待URLが相手に送信されます。）</p>
       <button class="ui button grey" type="submit" name="approval" value="deny">拒否する</button>
     <a href="{% url 'teams:apply_reply_create' object.username apply.id %}">
-      <button class="ui button btn-primary" type="submit" name="approval" value="approve">承認する</button>
+      <button class="ui button btn-primary" name="approval" value="approve">承認する</button>
     </a>
   </form>
 
