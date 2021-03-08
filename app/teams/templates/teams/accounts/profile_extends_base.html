@@ -30,7 +30,7 @@
     {% endif %}
     <p><a href="https://twitter.com/{{ object.username }}/">twitter</a></p>
     <p>作成日時：{{ object.date_joined }}</p>
-    {% if request.user %}
+    {% if request.user.username == object.username %}
       <p><a href="{% url 'teams:account_profile_update' object.username %}">編集する</a></p>
     {% endif %}
     <hr>
