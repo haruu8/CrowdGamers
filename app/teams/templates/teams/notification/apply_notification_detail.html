@@ -2,13 +2,19 @@
 
 {% block form_content %}
 
-  <form action="" method='POST'>
-    {% csrf_token %}
-    <p>この申請を許可しますか？<br>（この申請を許可した場合、チームプロフィールに登録されている招待URLが相手に送信されます。）</p>
+  <hr>
+
+  {% if apply.is_proceeded is None %}
+    <form action="" method='POST'>
+      {% csrf_token %}
+      <p>このリクエストを許可しますか？<br>（リクエストを許可した場合、招待URL入力画面に移動します。）</p>
       <button class="ui button grey" type="submit" name="approval" value="deny">拒否する</button>
-    <a href="{% url 'teams:apply_reply_create' object.username apply.id %}">
-      <button class="ui button btn-primary" name="approval" value="approve">承認する</button>
-    </a>
-  </form>
+      <a href="{% url 'teams:apply_reply_create' object.username apply.id %}">
+        <button class="ui button btn-primary" name="approval" value="approve">許可する</button>
+      </a>
+    </form>
+  {% else %}
+    <p>リクエストへの認可はすでに行っています。</p>
+  {% endif %}
 
 {% endblock %}
