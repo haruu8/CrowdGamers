@@ -2,21 +2,21 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, FormView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from teams.models import Apply, Team
 from django.contrib.auth import get_user_model
+from teams.models import Apply, Team
 from teams.forms import ApplyCreateForm, ApplyUpdateForm
 from .team import TeamDetailBaseView
 
 
 
-""" クランリクエストに関する view """
-
 class ApplyCreateView(LoginRequiredMixin, CreateView, TeamDetailBaseView):
+    """
+    チームリクエストを作成する
+    """
     template_name = 'teams/apply_create.html'
     form_class = ApplyCreateForm
     success_url = 'teams:team_detail'
 
-    # from と to を設定
     def form_valid(self, form):
         """
         apply object に from_user と to_user の設定をする
@@ -44,19 +44,24 @@ apply_create = ApplyCreateView.as_view()
 
 
 
-""" きた申請を承認した場合に必要な招待URL """
-
 class ApplyReplyCreateView(UpdateView):
+    """
+    リクエストの承認とその返答に必要なURLを設定するURL
+    """
     template_name = 'teams/notification/apply_reply_create.html'
     form_class = ApplyUpdateForm
     success_url = 'teams:apply_notification'
 
     def form_valid(self, form):
-        self.object = form.save(commit=False)
+        """
+        認可を True にするのとURLをDBに登録するフォーム
+        """
+        self.object = Apply.objects.get(id=self.kwargs.get('id'))
         self.object.is_proceeded = True
+        self.object.invite_url = form.cleaned_data['invite_url']
         self.object.save()
         result = super().form_valid(form)
-        return redirect(self.success_url)
+        return result
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

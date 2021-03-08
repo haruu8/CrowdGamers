@@ -10,18 +10,17 @@ from teams.views import OnlyYouMixin
 
 
 
-""" 招待関係 view """
-
 class InviteNotificationView(LoginRequiredMixin, OnlyYouMixin, TemplateView):
+    """
+    招待を一覧表示する
+    """
     template_name = 'teams/notification/invite_notification.html'
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
         ctx['invitations'] = Invite.objects.filter(
-            # (from_user=self.request.user AND (is_proceeded=True OR is_proceeded=False)) OR to_user=self.request.user
             Q(from_user=self.request.user),
-            Q(is_proceeded=True) |
-            Q(is_proceeded=False) |
+            Q(is_proceeded__isnull=False) |
             Q(to_user=self.request.user)
         ).order_by('-created_at')
         return ctx
@@ -34,6 +33,9 @@ invite_notification = InviteNotificationView.as_view()
 
 
 class InviteNotificationDetailView(LoginRequiredMixin, OnlyYouMixin, DetailView):
+    """
+    招待の詳細を表示する
+    """
     template_name = 'teams/notification/invite_notification_detail.html'
     model = Invite
     context_object_name = 'invite'
@@ -50,21 +52,19 @@ invite_notification_detail = InviteNotificationDetailView.as_view()
 
 
 
-""" リクエスト関係 view """
-
 class ApplyNotificationView(LoginRequiredMixin, OnlyYouMixin, TemplateView):
+    """
+    リクエストを一覧表示する
+    """
     template_name = 'teams/notification/apply_notification.html'
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
         ctx['applications'] = Apply.objects.filter(
-            # (from_user=self.request.user AND (is_proceeded=True OR is_proceeded=False)) OR to_user=self.request.user
-            # Q(from_user=self.request.user),
-            # Q(is_proceeded=True) |
-            # Q(is_proceeded=False) |
+            Q(from_user=self.request.user),
+            Q(is_proceeded__isnull=False) |
             Q(to_user=self.request.user)
         ).order_by('-created_at')
-        print('\n\n\n\n\n\n\n\n{}\n\n\n\n\n\n\n\n'.format(ctx))
         return ctx
 
     def get_object(self):
@@ -75,6 +75,9 @@ apply_notification = ApplyNotificationView.as_view()
 
 
 class ApplyNotificationDetailView(LoginRequiredMixin, OnlyYouMixin, DetailView):
+    """
+    リクエストの詳細を表示する
+    """
     template_name = 'teams/notification/apply_notification_detail.html'
     model = Apply
     context_object_name = 'apply'
@@ -88,25 +91,15 @@ class ApplyNotificationDetailView(LoginRequiredMixin, OnlyYouMixin, DetailView):
         -----
         承認なら ApplyReplyCreateView での処理
         拒否なら apply object の is_proceeded に False をセットする
-
-        TODO
-        -----
-        True, False がセットされている場合はボタン・処理等走らないようにする
         """
         self.object = Apply.objects.get(id=self.kwargs.get('id'))
-
-        # if self.object.is_proceeded is True or self.object.is_proceeded is False:
-        #     pass
-
-        if self.request.POST.get('approval', '') == 'approve':
-        # elif self.request.POST.get('approval', '') == 'approve':
-
+        if self.object.is_proceeded is True or self.object.is_proceeded is False:
+            pass
+        elif self.request.POST.get('approval', '') == 'approve':
             return redirect(self.success_url, username=self.request.user.username, id=self.object.id)
-
         elif self.request.POST.get('approval', '') == 'deny':
             self.object.is_proceeded = False
             self.object.save()
-
         return redirect('teams:home')
 
     def get_context_data(self, **kwargs):
