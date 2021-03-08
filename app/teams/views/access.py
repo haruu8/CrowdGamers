@@ -27,11 +27,11 @@ class OnlyOwnerMixin(UserPassesTestMixin):
     """
     チームのオーナーのみアクセスできる Mixin
     """
-    pass
-    # raise_exception = True
+    raise_exception = True
 
-    # def test_func(self):
-    #     return self.request.user.profile.is_owner == self.kwargs['username'] or self.request.user.is_superuser
+    def test_func(self):
+        user = self.request.user
+        return user.user_profile.is_owner == True and user.user_profile.team == self.kwargs['teamname'] or user.is_superuser
 
 
 

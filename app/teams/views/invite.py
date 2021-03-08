@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, FormView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from accounts.models import User
+from django.contrib.auth import get_user_model
 from teams.models import Invite, UserProfile
 from teams.forms import InviteCreateForm
 from .profile import UserProfileBaseView
@@ -28,7 +28,7 @@ class InviteCreateView(LoginRequiredMixin, CreateView, UserProfileBaseView):
         self.object.from_user = self.request.user
 
         # to_user を登録
-        self.object.invitation_user = User.objects.get(username=self.kwargs.get('username'))
+        self.object.invitation_user = get_user_model().objects.get(username=self.kwargs.get('username'))
         self.object.to_user = self.object.invitation_user
         self.object.save()
 

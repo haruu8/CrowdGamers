@@ -18,13 +18,13 @@ class TeamCreateView(LoginRequiredMixin, CreateView):
     success_url = reverse_lazy('teams:home')
 
     def form_valid(self, form):
+        """
+        チームに所属してなければ作成できる validation つきの保存処理
+        """
         profile = self.request.user.user_profile
-
-        # is_owner True, profile.team があれば作成できない
         if profile.is_owner is True or profile.team:
             form.add_error(None, 'チームは1つまでしか所属できません。')
             return render(self.request, self.template_name, {'form': form})
-
         result = super().form_valid(form)
         profile.is_owner = True
         profile.team = self.object
@@ -46,12 +46,17 @@ team_list = TeamListView.as_view()
 
 
 
-class TeamUpdateView(LoginRequiredMixin, UpdateView):
+class TeamUpdateView(LoginRequiredMixin, OnlyOwnerMixin, UpdateView):
+    """
+    チームプロフィールをアップデートする
+
+    Notes
+    -----
+    teamname を変更したら URL が Not found になるため success_url は teamname の関係ない URL にする
+    """
     template_name = 'teams/team_update.html'
     model = Team
     form_class = TeamCreateForm
-
-    # teamname 変更したら not found になるので home
     success_url = reverse_lazy('teams:home')
 
     def form_valid(self, form):
@@ -59,9 +64,6 @@ class TeamUpdateView(LoginRequiredMixin, UpdateView):
         self.object = TeamCreateForm(self.request.POST, self.request.FILES, instance=self.request.user.user_profile)
         self.object.save()
         return result
-
-    # def get_success_url(self):
-    #     return resolve_url(self.success_url, username=self.kwargs.get('username'))
 
     def get_object(self):
         teamname = self.kwargs.get("teamname")
@@ -71,7 +73,7 @@ team_update = TeamUpdateView.as_view()
 
 
 
-class TeamDeleteView(LoginRequiredMixin, DeleteView):
+class TeamDeleteView(LoginRequiredMixin, OnlyOwnerMixin, DeleteView):
     template_name = 'teams/team_delete.html'
     model = Team
     success_url = reverse_lazy('team:home')
@@ -85,6 +87,9 @@ team_delete = TeamDeleteView.as_view()
 
 
 class TeamDetailBaseView(DetailView):
+    """
+    チームプロフィールの共通部分を表示する
+    """
     template_name = 'teams/team_detail.html'
     model = Team
     context_object_name = 'team'
@@ -108,6 +113,13 @@ class TeamDetailMemberView(TeamDetailBaseView):
     model = Team
 
     def get_context_data(self, **kwargs):
+        """
+        チームに所属しているメンバーを取得する
+
+        Notes
+        -----
+        owner_profile で一括で取得しようとするとできないので必要なオブジェクトのみ取得
+        """
         context = super().get_context_data(**kwargs)
         team = get_object_or_404(Team, teamname=self.kwargs.get("teamname"))
         owner_profile = team.belonging_user_profiles.filter(is_owner=True)[0]

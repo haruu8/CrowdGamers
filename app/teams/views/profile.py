@@ -1,6 +1,7 @@
 from django.shortcuts import get_object_or_404, resolve_url, redirect
 from django.views.generic import DetailView, UpdateView
 from django.contrib.auth import get_user_model
+from .access import OnlyYouMixin
 from teams.models import Apply, UserProfile
 from accounts.models import User
 from teams.forms import UserProfileUpdateForm
@@ -46,7 +47,7 @@ account_detail_desired_condition = UserProfileDetailDesiredConditionView.as_view
 
 
 
-class UserProfileUpdateView(UpdateView):
+class UserProfileUpdateView(OnlyYouMixin, UpdateView):
     template_name = 'teams/accounts/account_profile_update.html'
     model = UserProfile
     form_class = UserProfileUpdateForm

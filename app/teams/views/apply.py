@@ -3,6 +3,7 @@ from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, FormView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import get_user_model
+from .access import OnlyYouMixin
 from teams.models import Apply, Team
 from teams.forms import ApplyCreateForm, ApplyUpdateForm
 from .team import TeamDetailBaseView
@@ -44,7 +45,7 @@ apply_create = ApplyCreateView.as_view()
 
 
 
-class ApplyReplyCreateView(UpdateView):
+class ApplyReplyCreateView(OnlyYouMixin, UpdateView):
     """
     リクエストの承認とその返答に必要なURLを設定するURL
 
