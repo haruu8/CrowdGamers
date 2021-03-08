@@ -47,6 +47,10 @@ apply_create = ApplyCreateView.as_view()
 class ApplyReplyCreateView(UpdateView):
     """
     リクエストの承認とその返答に必要なURLを設定するURL
+
+    TODO
+    -----
+    直接URLを入力するとアクセスすることができるので、修正する
     """
     template_name = 'teams/notification/apply_reply_create.html'
     form_class = ApplyUpdateForm
