@@ -12,6 +12,9 @@ from accounts.models import User
 
 
 class OnlyYouMixin(UserPassesTestMixin):
+    """
+    本人のみアクセスできる Mixin
+    """
     raise_exception = True
 
     def test_func(self):
@@ -20,14 +23,35 @@ class OnlyYouMixin(UserPassesTestMixin):
 
 
 
-class CustomAccessMixin(AccessMixin):
-    """ handle_no_permission で違う処理を流したいため、そこだけ編集 """
+class OnlyOwnerMixin(UserPassesTestMixin):
+    """
+    チームのオーナーのみアクセスできる Mixin
+    """
+    pass
+    # raise_exception = True
 
+    # def test_func(self):
+    #     return self.request.user.profile.is_owner == self.kwargs['username'] or self.request.user.is_superuser
+
+
+
+class CustomAccessMixin(AccessMixin):
+    """
+    AnonymousUser のみのアクセスに対応した Mixin を作成するためのクラス
+
+    Notes
+    -----
+    親クラスと違うのは get_home_url の名前、 handle_no_permission の処理のみ
+    """
     home_url = None
 
     def get_home_url(self):
         """
-        このメソッドをオーバーライドして、 home_url属性をオーバーライドします。
+        AnonymousUser のみのアクセスに対応するために AccessMixin を継承したクラスを作成
+
+        Notes
+        -----
+        このメソッドをオーバーライドして、 home_url属性をオーバーライドする
         """
         home_url = self.home_url or settings.LOGIN_REDIRECT_URL
         if not home_url:
@@ -45,18 +69,11 @@ class CustomAccessMixin(AccessMixin):
 
 
 class AnonymousRequiredMixin(CustomAccessMixin):
-    """ リクエストユーザーがログインしていないことを確認 """
+    """
+    AnonymousUser のみアクセスできる Mixin
+    """
 
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated:
             return self.handle_no_permission()
         return super().dispatch(request, *args, **kwargs)
-
-
-
-class OnlyOwnerMixin(UserPassesTestMixin):
-    pass
-    # raise_exception = True
-
-    # def test_func(self):
-    #     return self.request.user.profile.is_owner == self.kwargs['username'] or self.request.user.is_superuser
