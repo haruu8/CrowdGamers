@@ -186,6 +186,9 @@ class TeamMemberDeleteView(OnlyOwnerMixin, UpdateView):
         プロフィールのチームを削除する処理を書き加える
         """
         result = super().form_valid(form)
+        self.object.user_profile = UserProfile.objects.get(user=self.kwargs.get('user'))
+        self.object.user_profile.team = None
+        self.object.save()
         return result
 
     def get_object(self):

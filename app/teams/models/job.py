@@ -2,9 +2,10 @@ from django.db import models
 
 
 
-""" ジョブモデル """
-
 class Job(models.Model):
+    """
+    希望職の選択肢を追加する
+    """
     class Meta():
         db_table = 't_job'
         verbose_name = 'ジョブ'

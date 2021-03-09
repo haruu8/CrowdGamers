@@ -9,9 +9,15 @@ from .job import Job
 
 
 
-""" リクエストモデル """
-
 class Apply(models.Model):
+    """
+    チームへのリクエストを管理する
+
+    Notes
+    -----
+    has_read は既読管理
+    is_proceeded は承認・拒否の管理
+    """
     class Meta():
         db_table = 't_apply'
         verbose_name = 'リクエスト'
@@ -23,11 +29,7 @@ class Apply(models.Model):
     desired_job = models.ManyToManyField(Job, related_name='apply_desired_job')
     message = models.CharField(verbose_name='志望理由', max_length=255, null=False, blank=False)
     invite_url = models.URLField(verbose_name='招待URL', max_length=255, null=True, blank=True)
-
-    # 既読管理
-    has_read = models.BooleanField(default=False)
-
-    # 承認・拒否の選択
+    has_read = models.BooleanField(verbose_name='既読', default=False)
     is_proceeded = models.BooleanField(null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
