@@ -86,6 +86,43 @@ apply_notification = ApplyNotificationView.as_view()
 
 
 
+class MemberApprovalNotificationDetailView(LoginRequiredMixin, OnlyYouMixin, DetailView):
+    """
+    チームのメンバー追加の詳細を表示する
+    """
+    template_name = 'teams/notification/member_approval_notification_detail.html'
+    model = MemberApproval
+    context_object_name = 'member_approval'
+    success_url = 'teams:notification'
+
+    def post(self, request, *args, **kwargs):
+        """
+        チームのメンバー登録申請の認可
+
+        TODO
+        -----
+        プロフィールにチームを登録する処理を書く
+        """
+        self.object = Apply.objects.get(id=self.kwargs.get('id'))
+        if self.object.is_proceeded is True or self.object.is_proceeded is False:
+            pass
+        elif self.request.POST.get('approval', '') == 'approve':
+            return redirect(self.success_url, username=self.request.user.username, id=self.object.id)
+        elif self.request.POST.get('approval', '') == 'deny':
+            self.object.is_proceeded = False
+            self.object.save()
+        return redirect('teams:home')
+
+    def get_object(self):
+        return get_object_or_404(get_user_model(), username=self.kwargs.get('username'))
+
+    def get_success_url(self):
+        return reverse(self.success_url, kwargs={'username': self.request.user.username, 'id': self.object.id})
+
+member_approval_notification_detail = MemberApprovalNotificationDetailView.as_view()
+
+
+
 class ApplyNotificationDetailView(LoginRequiredMixin, OnlyYouMixin, DetailView):
     """
     リクエストの詳細を表示する

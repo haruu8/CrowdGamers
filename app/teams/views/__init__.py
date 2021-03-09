@@ -3,7 +3,8 @@ from .apply import apply_create, apply_reply_create
 from .invite import invite_create
 from .notification import (
     apply_notification, apply_notification_detail,
-    invite_notification, invite_notification_detail
+    invite_notification, invite_notification_detail,
+    member_approval_notification_detail,
 )
 from .profile import (
     account_detail_game, account_detail_feature,

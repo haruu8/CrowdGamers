@@ -39,6 +39,8 @@ urlpatterns = [
     # 通知
     path('<str:username>/notification/apply/', views.apply_notification, name='apply_notification'),
     path('<str:username>/notification/apply/<uuid:id>/', views.apply_notification_detail, name='apply_notification_detail'),
+    path('<str:username>/notification/member_approval/<uuid:id>/',
+            views.member_approval_notification_detail, name='member_approval_notification_detail'),
     path('<str:username>/notification/invite/', views.invite_notification, name='invite_notification'),
     path('<str:username>/notification/invite/<uuid:id>/', views.invite_notification_detail, name='invite_notification_detail'),
 
