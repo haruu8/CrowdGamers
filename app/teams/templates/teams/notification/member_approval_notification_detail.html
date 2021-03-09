@@ -6,6 +6,24 @@
 
 {% block content %}
 
-  <p>member_approval_detail</p>
+  <div class="container">
+    <p>チーム申請の認可</p>
+    <img src="{{ object.user_profile.icon.url }}" alt="プロフィールアイコン">
+    <p>{{ object.user_profile.name }} からのメッセージ</p>
+    <p><a href="{% url 'teams:account_detail' object.username %}">@{{ object.username }}</a></p>
+    <p>メッセージ：{{ member_approval.message }}</p>
+    <p>作成日時：{{ member_approval.created_at }}</p>
+
+    {% if member_approval.is_proceeded is None %}
+      <form action="" method='POST'>
+        {% csrf_token %}
+        <p>このリクエストを許可しますか？<br>（このリクエストを許可すると、チームプロフィールのメンバー一覧に表示されます。）</p>
+        <button class="ui button grey" type="submit" name="approval" value="deny">拒否する</button>
+        <button class="ui button btn-primary" name="approval" value="approve">許可する</button>
+      </form>
+    {% else %}
+      <p>リクエストへの認可はすでに行っています。</p>
+    {% endif %}
+  </div>
 
 {% endblock %}

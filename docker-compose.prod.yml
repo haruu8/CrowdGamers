@@ -10,7 +10,7 @@ services:
         - ./app/:/code/
     expose:
         - 8000
-    env_file: environment_variable/settings.prod.env
+    env_file: env/settings.prod.env
     depends_on:
       - postgres
 
@@ -18,7 +18,7 @@ services:
     image: postgres:11.4
     volumes:
       - db:/var/lib/postgresql/data
-    env_file: environment_variable/postgres.prod.env
+    env_file: env/postgres.prod.env
 
   nginx:
     build: ./nginx

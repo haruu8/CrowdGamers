@@ -1,5 +1,5 @@
 *.env
-environment_variable
+env
 .vscode
 
 app/deploy/admin/

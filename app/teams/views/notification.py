@@ -92,7 +92,6 @@ class MemberApprovalNotificationDetailView(LoginRequiredMixin, OnlyYouMixin, Det
     """
     template_name = 'teams/notification/member_approval_notification_detail.html'
     model = MemberApproval
-    context_object_name = 'member_approval'
     success_url = 'teams:notification'
 
     def post(self, request, *args, **kwargs):
@@ -103,15 +102,22 @@ class MemberApprovalNotificationDetailView(LoginRequiredMixin, OnlyYouMixin, Det
         -----
         プロフィールにチームを登録する処理を書く
         """
-        self.object = Apply.objects.get(id=self.kwargs.get('id'))
+        self.object = MemberApproval.objects.get(id=self.kwargs.get('id'))
         if self.object.is_proceeded is True or self.object.is_proceeded is False:
             pass
         elif self.request.POST.get('approval', '') == 'approve':
-            return redirect(self.success_url, username=self.request.user.username, id=self.object.id)
+            self.object.is_proceeded = True
+            # ここにチーム登録の処理を書く
+
         elif self.request.POST.get('approval', '') == 'deny':
             self.object.is_proceeded = False
-            self.object.save()
+        self.object.save()
         return redirect('teams:home')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['member_approval'] = MemberApproval.objects.get(id=self.kwargs.get('id'))
+        return context
 
     def get_object(self):
         return get_object_or_404(get_user_model(), username=self.kwargs.get('username'))
@@ -129,7 +135,6 @@ class ApplyNotificationDetailView(LoginRequiredMixin, OnlyYouMixin, DetailView):
     """
     template_name = 'teams/notification/apply_notification_detail.html'
     model = Apply
-    context_object_name = 'apply'
     success_url = 'teams:apply_reply_create'
 
     def post(self, request, *args, **kwargs):

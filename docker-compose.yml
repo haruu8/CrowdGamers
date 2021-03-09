@@ -8,7 +8,7 @@ services:
     ports:
       - 8000:8000
     command: "python manage.py runserver 0.0.0.0:8000 --insecure"
-    env_file: environment_variable/settings.env
+    env_file: env/settings.env
     depends_on:
       - postgres
 
@@ -16,7 +16,7 @@ services:
     image: postgres:11.4
     volumes:
       - db:/var/lib/postgresql/data
-    env_file: environment_variable/postgres.env
+    env_file: env/postgres.env
 
 volumes:
     db:
