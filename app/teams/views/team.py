@@ -1,10 +1,10 @@
 from django.shortcuts import render, redirect, get_object_or_404, resolve_url
 from django.urls import reverse_lazy, reverse
-from django.views.generic import CreateView, DetailView, ListView, UpdateView, DeleteView, FormView
+from django.views.generic import TemplateView, CreateView, DetailView, ListView, UpdateView, DeleteView, FormView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import get_user_model
-from teams.models import Team, UserProfile
-from teams.forms import TeamCreateForm
+from teams.models import Team, UserProfile, MemberApproval
+from teams.forms import TeamCreateForm, MemberApprovalCreateForm
 from .access import OnlyYouMixin, OnlyOwnerMixin
 from .utils import GetProfileView
 from .profile import UserProfileBaseView
@@ -148,7 +148,7 @@ team_detail_desired_condition = TeamDetailDesiredConditionView.as_view()
 
 
 
-class TeamMemberAddView(LoginRequiredMixin, UserProfileBaseView, FormView):
+class TeamMemberAddView(LoginRequiredMixin, TeamDetailBaseView, CreateView):
     """
     チームのメンバーに追加申請する
 
@@ -157,21 +157,36 @@ class TeamMemberAddView(LoginRequiredMixin, UserProfileBaseView, FormView):
     実際の追加処理は他の view で行う
     """
     template_name = 'teams/team_profile/team_member_add.html'
+    model = MemberApproval
+    form_class = MemberApprovalCreateForm
     success_url = 'teams:team_detail'
 
     def form_valid(self, form):
         """
         チームのオーナーに通知を送る
+
+        Notes
+        -----
+        from_user, to_user を設定
         """
-        result = super().form_valid(form)
-        return result
+        self.object = form.save(commit=False)
+        self.object.from_user = self.request.user
+
+        self.object.team = Team.objects.get(teamname=self.kwargs.get('teamname'))
+        member = self.object.team.belonging_user_profiles.all()
+        owner_profile = member.filter(is_owner=True)[0]
+        self.object.to_user = owner_profile.user
+        self.object.save()
+        print('\n\n\n\n\n\n{}\n\n\n\n\n\n'.format(self.object))
+        return super().form_valid(form)
+
 
     def get_object(self):
         teamname = self.kwargs.get("teamname")
         return get_object_or_404(Team, teamname=teamname)
 
     def get_success_url(self):
-        return reverse(self.success_url, username=self.kwargs.get('teamname'))
+        return reverse(self.success_url, kwargs={'teamname': self.object.team.teamname})
 
 team_member_add = TeamMemberAddView.as_view()
 
@@ -193,10 +208,10 @@ class TeamMemberDeleteView(OnlyOwnerMixin, UpdateView):
         -----
         プロフィールのチームを削除する処理を書き加える
         """
-        result = super().form_valid(form)
         self.object.user_profile = UserProfile.objects.get(user=self.kwargs.get('user'))
         self.object.user_profile.team = None
         self.object.save()
+        result = super().form_valid(form)
         return result
 
     def get_object(self):

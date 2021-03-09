@@ -35,8 +35,7 @@ class ApplyCreateView(LoginRequiredMixin, CreateView, TeamDetailBaseView):
         owner_profile = member.filter(is_owner=True)[0]
         self.object.to_user = owner_profile.user
         self.object.save()
-        result = super().form_valid(form)
-        return result
+        return super().form_valid(form)
 
     def get_success_url(self):
         return reverse(self.success_url, kwargs={'teamname': self.object.team.teamname})

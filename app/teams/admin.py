@@ -1,13 +1,16 @@
 from django.contrib import admin
-from .models import Team, Invite, UserProfile, Apply, Feature, Game, Question, Job
+from .models import Team, Invite, UserProfile, Apply, Feature, Game, Question, Job, MemberApproval
 
 
-
-class InviteAdmin(admin.ModelAdmin):
-    list_display = ['id', 'from_user', 'to_user', 'message']
 
 class ApplyAdmin(admin.ModelAdmin):
-    list_display = ['id', 'from_user', 'to_user', 'message']
+    list_display = ['from_user', 'to_user', 'message']
+
+class InviteAdmin(admin.ModelAdmin):
+    list_display = ['from_user', 'to_user', 'message']
+
+class MemberApprovalAdmin(admin.ModelAdmin):
+    list_display = ['from_user', 'to_user', 'message']
 
 class TeamAdmin(admin.ModelAdmin):
     list_display = ['teamname', 'name', 'created_at']
@@ -20,6 +23,7 @@ admin.site.register(Feature)
 admin.site.register(Game)
 admin.site.register(Invite, InviteAdmin)
 admin.site.register(Job)
+admin.site.register(MemberApproval, MemberApprovalAdmin)
 admin.site.register(Team, TeamAdmin)
 admin.site.register(UserProfile, UserProfileAdmin)
 admin.site.register(Question)

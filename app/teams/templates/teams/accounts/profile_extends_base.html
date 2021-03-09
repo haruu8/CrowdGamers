@@ -9,7 +9,7 @@
     <p>ユーザーネーム：@{{ object.username }}</p>
     <p>ニックネーム：{{ user_profile.name }}</p>
     {% if user_profile.team %}
-      <p>チームネーム<a href="{% url 'teams:team_detail' user_profile.team.teamname %}">@{{ user_profile.team.teamname }}</a></p>
+      <p>所属チーム<a href="{% url 'teams:team_detail' user_profile.team.teamname %}">@{{ user_profile.team.teamname }}</a></p>
       {% if user_profile.is_owner is True %}
         <p>オーナー</p>
       {% else %}
