@@ -177,9 +177,7 @@ class TeamMemberAddView(LoginRequiredMixin, TeamDetailBaseView, CreateView):
         owner_profile = member.filter(is_owner=True)[0]
         self.object.to_user = owner_profile.user
         self.object.save()
-        print('\n\n\n\n\n\n{}\n\n\n\n\n\n'.format(self.object))
         return super().form_valid(form)
-
 
     def get_object(self):
         teamname = self.kwargs.get("teamname")

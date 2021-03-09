@@ -4,10 +4,9 @@ from django.views.generic import TemplateView, CreateView, DetailView, FormView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import get_user_model
 from django.db.models import Q
-from teams.models import Team, Invite, Apply, UserProfile
+from teams.models import Team, Invite, Apply, UserProfile, MemberApproval
 from teams.forms import InviteCreateForm, ApplyCreateForm
 from teams.views import OnlyYouMixin
-
 
 
 class InviteNotificationView(LoginRequiredMixin, OnlyYouMixin, TemplateView):
@@ -54,17 +53,30 @@ invite_notification_detail = InviteNotificationDetailView.as_view()
 
 class ApplyNotificationView(LoginRequiredMixin, OnlyYouMixin, TemplateView):
     """
-    リクエストを一覧表示する
+    チームに対するリクエスト・メンバー追加のリクエストの両方を表示する
+
+    Notes
+    -----
+    モデルは違うが、日付順に並べるため ctx を結合している
     """
     template_name = 'teams/notification/apply_notification.html'
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
+        ctx1 = super().get_context_data(**kwargs)
         ctx['applications'] = Apply.objects.filter(
             Q(from_user=self.request.user),
             Q(is_proceeded__isnull=False) |
             Q(to_user=self.request.user)
         ).order_by('-created_at')
+
+        ctx1['applications'] = MemberApproval.objects.filter(
+            Q(from_user=self.request.user),
+            Q(is_proceeded__isnull=False) |
+            Q(to_user=self.request.user)
+        ).order_by('-created_at')
+        print('\n\n\n\n\n\n\n{}\n\n\n\n\n\n\n'.format(ctx))
+        print('\n\n\n\n\n\n\n{}\n\n\n\n\n\n\n'.format(ctx1))
         return ctx
 
     def get_object(self):
