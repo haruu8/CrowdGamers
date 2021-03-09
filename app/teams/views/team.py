@@ -3,7 +3,7 @@ from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, DetailView, ListView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import get_user_model
-from teams.models import Team
+from teams.models import Team, UserProfile
 from teams.forms import TeamCreateForm
 from .access import OnlyYouMixin, OnlyOwnerMixin
 from .utils import GetProfileView
@@ -144,3 +144,55 @@ class TeamDetailDesiredConditionView(TeamDetailBaseView):
     model = Team
 
 team_detail_desired_condition = TeamDetailDesiredConditionView.as_view()
+
+
+
+class TeamMemberAddView(TeamDetailBaseView):
+    """
+    チームのメンバーに追加申請する
+
+    Notes
+    -----
+    実際の追加処理は他の view で処理を行う
+    """
+    template_name = 'teams/team_profile/team_member_add.html'
+    success_url = 'teams:team_detail'
+
+    def get_object(self):
+        teamname = self.kwargs.get("teamname")
+        return get_object_or_404(Team, teamname=teamname)
+
+    def get_success_url(self):
+        return reverse(self.success_url, kwargs={'teamname': self.object.team.teamname})
+
+team_member_add = TeamMemberAddView.as_view()
+
+
+
+class TeamMemberDeleteView(OnlyOwnerMixin, UpdateView):
+    """
+    チームのメンバーから削除する
+    """
+    template_name = 'teams/team_profile/team_member_delete.html'
+    model = UserProfile
+    success_url = 'teams:team_detail'
+
+    def form_valid(self, form):
+        """
+        プロフィールの team から削除
+
+        TODO
+        -----
+        プロフィールのチームを削除する処理を書き加える
+        """
+        result = super().form_valid(form)
+        return result
+
+    def get_object(self):
+        teamname = self.kwargs.get("teamname")
+        return get_object_or_404(Team, teamname=teamname)
+
+    def get_success_url(self):
+        return reverse(self.success_url, kwargs={'teamname': self.object.team.teamname})
+
+team_member_delete = TeamMemberDeleteView.as_view()

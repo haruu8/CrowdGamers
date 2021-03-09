@@ -20,6 +20,10 @@ urlpatterns = [
     path('team/<str:teamname>/update/', views.team_update, name='team_update'),
     path('team/<str:teamname>/delete/', views.team_delete, name='team_delete'),
 
+    # メンバー
+    path('team/<str:teamname>/member/add/', views.team_member_add, name='team_member_add'),
+    path('team/<str:teamname>/member/delete/<str:username>/', views.team_member_delete, name='team_member_delete'),
+
     # チームプロフィール
     path('team/<str:teamname>/', views.team_detail, name='team_detail'),
     path('team/<str:teamname>/member/', views.team_detail_member, name='team_detail_member'),
