@@ -1,9 +1,9 @@
 from django.shortcuts import get_object_or_404, resolve_url, redirect
 from django.views.generic import DetailView, UpdateView
 from django.contrib.auth import get_user_model
+from django.contrib.auth import get_user_model
 from .access import OnlyYouMixin
 from teams.models import Apply, UserProfile
-from accounts.models import User
 from teams.forms import UserProfileUpdateForm
 
 
@@ -20,7 +20,7 @@ class UserProfileBaseView(DetailView):
         return context
 
     def get_object(self):
-        return get_object_or_404(User, username=self.kwargs.get('username'))
+        return get_object_or_404(get_user_model(), username=self.kwargs.get('username'))
 
 
 class UserProfileDetailGameView(UserProfileBaseView):

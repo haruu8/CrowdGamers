@@ -3,8 +3,16 @@
 
 {% block stylesheet %}'{% static "teams/scss/dist/team_member_add.css" %}'{% endblock %}
 
-{% block content %}
+{% block profile_content %}
 
   <p>team_member_add.html</p>
+  <p>メンバー追加を申請しますか？<br>（メンバー追加を申請するとオーナーに通知が届きます。オーナーが許可するとチームのメンバー一覧に表示されるようになります。）</p>
+  <a href="{% url 'teams:team_detail_member' team.teamname %}">
+    <button class="ui button grey" type="submit" value="cancel">戻る</button>
+  </a>
+  <form action="{% url 'teams:team_member_add' team.teamname %}" method='POST'>
+    {% csrf_token %}
+    <button class="ui button btn-primary" type="submit" value="submit">送信する</button>
+  </form>
 
 {% endblock %}

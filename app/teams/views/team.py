@@ -1,12 +1,13 @@
 from django.shortcuts import render, redirect, get_object_or_404, resolve_url
 from django.urls import reverse_lazy, reverse
-from django.views.generic import CreateView, DetailView, ListView, UpdateView, DeleteView
+from django.views.generic import CreateView, DetailView, ListView, UpdateView, DeleteView, FormView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import get_user_model
 from teams.models import Team, UserProfile
 from teams.forms import TeamCreateForm
 from .access import OnlyYouMixin, OnlyOwnerMixin
 from .utils import GetProfileView
+from .profile import UserProfileBaseView
 
 
 
@@ -147,23 +148,30 @@ team_detail_desired_condition = TeamDetailDesiredConditionView.as_view()
 
 
 
-class TeamMemberAddView(TeamDetailBaseView):
+class TeamMemberAddView(LoginRequiredMixin, UserProfileBaseView, FormView):
     """
     チームのメンバーに追加申請する
 
     Notes
     -----
-    実際の追加処理は他の view で処理を行う
+    実際の追加処理は他の view で行う
     """
     template_name = 'teams/team_profile/team_member_add.html'
     success_url = 'teams:team_detail'
+
+    def form_valid(self, form):
+        """
+        チームのオーナーに通知を送る
+        """
+        result = super().form_valid(form)
+        return result
 
     def get_object(self):
         teamname = self.kwargs.get("teamname")
         return get_object_or_404(Team, teamname=teamname)
 
     def get_success_url(self):
-        return reverse(self.success_url, kwargs={'teamname': self.object.team.teamname})
+        return reverse(self.success_url, username=self.kwargs.get('teamname'))
 
 team_member_add = TeamMemberAddView.as_view()
 

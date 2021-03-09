@@ -11,5 +11,6 @@
   {% for member in members %}
     <p>メンバー:{{ member.name | truncatechars:15 }}</p>
   {% endfor %}
+  <p><a href="{% url 'teams:team_member_add' team.teamname %}">メンバー追加申請をする</a></p>
 
 {% endblock %}
