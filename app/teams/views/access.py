@@ -31,7 +31,7 @@ class OnlyOwnerMixin(UserPassesTestMixin):
 
     def test_func(self):
         user = self.request.user
-        return user.user_profile.is_owner == True and user.user_profile.team == self.kwargs['teamname'] or user.is_superuser
+        return user.user_profile.is_owner == True and user.user_profile.team.teamname == self.kwargs.get('teamname') or user.is_superuser
 
 
 

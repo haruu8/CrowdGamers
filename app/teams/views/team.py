@@ -3,11 +3,10 @@ from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, DetailView, ListView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import get_user_model
-from teams.models import Team, UserProfile
+from teams.models import Team
 from teams.forms import TeamCreateForm
 from .access import OnlyYouMixin, OnlyOwnerMixin
 from .utils import GetProfileView
-from accounts.models import User
 
 
 
