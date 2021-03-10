@@ -1,0 +1,9 @@
+*.css.map
+.git/
+dist
+docs
+env
+media
+static/CACHE
+Dockerfile
+Dockerfile.prod
