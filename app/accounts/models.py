@@ -110,6 +110,10 @@ class User(AbstractBaseUser, PermissionsMixin):
 def create_user_profile(sender, **kwargs):
     """
     新規ユーザー作成時に UserProfle モデルの空インスタンスを生成
+
+    Notes
+    -----
+    循環インポートが起きるため、作成の段階でインポート
     """
     if kwargs['created']:
         from teams.models import UserProfile
@@ -122,9 +126,13 @@ def create_notification(sender, **kwargs):
     """
     新規ユーザー作成時にプロフィールの編集を促す通知を作成
 
+    SeeAlso
+    -----
+    from_user は公式アカウント
+
     Notes
     -----
-    from_user は公式アカウントを入れる
+    循環インポートが起きるため、作成の段階でインポート
     """
     if kwargs['created']:
         from teams.models import Notification
