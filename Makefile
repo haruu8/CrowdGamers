@@ -4,8 +4,8 @@ migrate:
 	docker-compose exec django python3 manage.py migrate --run-syncdb
 migrations:
 	docker-compose exec django python3 manage.py makemigrations
-migrations-clans:
-	docker-compose exec django python3 manage.py makemigrations clans
+migrations-teams:
+	docker-compose exec django python3 manage.py makemigrations teams
 migrations-accounts:
 	docker-compose exec django python3 manage.py makemigrations accounts
 user:
