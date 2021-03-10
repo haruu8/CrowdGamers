@@ -9,7 +9,7 @@ from .profile import (
     account_detail_game, account_detail_feature,
     account_detail_desired_condition, account_profile_update
 )
-from .support import faq, terms_of_service, privacy_policy
+from .support import faq
 from .team import (
     team_create, team_list, team_delete, team_update,
     team_detail, team_detail_member, team_detail_feature, team_detail_desired_condition,

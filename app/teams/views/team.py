@@ -20,6 +20,10 @@ class TeamCreateView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         """
         チームに所属してなければ作成できる validation つきの保存処理
+
+        Notes
+        -----
+        作成時はデフォルトでオーナー
         """
         profile = self.request.user.user_profile
         if profile.is_owner is True or profile.team:
@@ -89,6 +93,10 @@ team_delete = TeamDeleteView.as_view()
 class TeamDetailBaseView(DetailView):
     """
     チームプロフィールの共通部分を表示する
+
+    Notes
+    -----
+    member 以外の情報はここで全て取得している
     """
     template_name = 'teams/team_detail.html'
     model = Team
@@ -101,6 +109,9 @@ class TeamDetailBaseView(DetailView):
 
 
 class TeamDetailGameView(TeamDetailBaseView):
+    """
+    プロフィール下段のゲームを表示する
+    """
     template_name = 'teams/team_profile/team_detail.html'
     model = Team
 
@@ -109,6 +120,9 @@ team_detail = TeamDetailGameView.as_view()
 
 
 class TeamDetailMemberView(TeamDetailBaseView):
+    """
+    プロフィール下段のメンバーを表示する
+    """
     template_name = 'teams/team_profile/team_detail_member.html'
     model = Team
 
@@ -139,6 +153,9 @@ team_detail_member = TeamDetailMemberView.as_view()
 
 
 class TeamDetailFeatureView(TeamDetailBaseView):
+    """
+    プロフィール下段の特徴を表示する
+    """
     template_name = 'teams/team_profile/team_detail_feature.html'
     model = Team
 
@@ -147,6 +164,9 @@ team_detail_feature = TeamDetailFeatureView.as_view()
 
 
 class TeamDetailDesiredConditionView(TeamDetailBaseView):
+    """
+    プロフィール下段の希望条件を表示する
+    """
     template_name = 'teams/team_profile/team_detail_desired_condition.html'
     model = Team
 
@@ -160,7 +180,8 @@ class TeamMemberAddView(LoginRequiredMixin, TeamDetailBaseView, CreateView):
 
     Notes
     -----
-    実際の追加処理は他の view で行う
+    実際の追加処理は申請認可の部分で行う
+    -> views/notification.py : MemberApprovalNotificationDetailView
     """
     template_name = 'teams/team_profile/team_member_add.html'
     model = Notification
@@ -176,6 +197,7 @@ class TeamMemberAddView(LoginRequiredMixin, TeamDetailBaseView, CreateView):
         from_user, to_user を設定
         """
         self.object = form.save(commit=False)
+        self.object.mode = 'member_approval'
         self.object.from_user = self.request.user
 
         self.object.team = Team.objects.get(teamname=self.kwargs.get('teamname'))
@@ -199,6 +221,10 @@ team_member_add = TeamMemberAddView.as_view()
 class TeamMemberDeleteView(OnlyOwnerMixin, UpdateView):
     """
     チームのメンバーから削除する
+
+    Notes
+    -----
+    オーナーは削除できない
     """
     template_name = 'teams/team_profile/team_member_delete.html'
     model = UserProfile
@@ -213,6 +239,8 @@ class TeamMemberDeleteView(OnlyOwnerMixin, UpdateView):
         プロフィールのチームを削除する処理を書き加える
         """
         self.object.user_profile = UserProfile.objects.get(user=self.kwargs.get('user'))
+        if self.object.user_profile.is_owner == True:
+            form.add_error(None, 'チームのオーナーは削除することができません。')
         self.object.user_profile.team = None
         self.object.save()
         result = super().form_valid(form)

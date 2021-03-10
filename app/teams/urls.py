@@ -11,8 +11,10 @@ urlpatterns = [
     path('', views.GetProfileView.as_view(template_name='teams/home.html'), name='home'),
     path('contact/', views.GetProfileView.as_view(template_name='teams/support/contact.html'), name='contact'),
     path('faq/', views.faq, name='faq'),
-    path('terms_of_service/', views.terms_of_service, name='terms_of_service'),
-    path('privacy_policy/', views.privacy_policy, name='privacy_policy'),
+    path('terms_of_service/',
+            TemplateView.as_view(template_name='teams/support/terms_of_service.html'), name='terms_of_service'),
+    path('privacy_policy/',
+            TemplateView.as_view(template_name='teams/support/privacy_policy.html'), name='privacy_policy'),
 
     # チーム
     path('team/create/', views.team_create, name='team_create'),
