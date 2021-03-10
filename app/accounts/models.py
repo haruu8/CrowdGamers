@@ -124,11 +124,7 @@ def create_notification(sender, **kwargs):
 
     Notes
     -----
-    from_user は運営アカウントを入れる
-
-    TODO
-    -----
-    必要な処理を書き加える
+    from_user は公式アカウントを入れる
     """
     if kwargs['created']:
         from teams.models import Apply
