@@ -19,16 +19,14 @@ urlpatterns = [
     path('team/list/', views.team_list, name='team_list'),
     path('team/<str:teamname>/update/', views.team_update, name='team_update'),
     path('team/<str:teamname>/delete/', views.team_delete, name='team_delete'),
-
-    # メンバー
-    path('team/<str:teamname>/member/add/', views.team_member_add, name='team_member_add'),
-    path('team/<str:teamname>/member/delete/<str:username>/', views.team_member_delete, name='team_member_delete'),
-
-    # チームプロフィール
     path('team/<str:teamname>/', views.team_detail, name='team_detail'),
     path('team/<str:teamname>/member/', views.team_detail_member, name='team_detail_member'),
     path('team/<str:teamname>/feature/', views.team_detail_feature, name='team_detail_feature'),
     path('team/<str:teamname>/desired_condition/', views.team_detail_desired_condition, name='team_detail_desired_condition'),
+
+    # メンバー
+    path('team/<str:teamname>/member/add/', views.team_member_add, name='team_member_add'),
+    path('team/<str:teamname>/member/delete/<str:username>/', views.team_member_delete, name='team_member_delete'),
 
     # プロフィール
     path('<str:username>/', views.account_detail_game, name='account_detail'),
@@ -37,14 +35,10 @@ urlpatterns = [
     path('<str:username>/update/', views.account_profile_update, name='account_profile_update'),
 
     # 通知
-    path('<str:username>/notification/',
-                views.application_notification, name='application_notification'),
-    path('<str:username>/notification/application/<uuid:id>/',
-                views.application_notification_detail, name='application_notification_detail'),
-    path('<str:username>/notification/member_approval/<uuid:id>/',
-                views.member_approval_notification_detail, name='member_approval_notification_detail'),
-    path('<str:username>/notification/invitation/<uuid:id>/',
-                views.invitation_notification_detail, name='invitation_notification_detail'),
+    path('<str:username>/notification/', views.notification, name='notification'),
+    path('<str:username>/notification/application/<uuid:id>/', views.application_detail, name='application_detail'),
+    path('<str:username>/notification/member_approval/<uuid:id>/', views.member_approval_detail, name='member_approval_detail'),
+    path('<str:username>/notification/invitation/<uuid:id>/', views.invitation_detail, name='invitation_detail'),
 
     # リクエスト送信
     path('team/<str:teamname>/application/create/', views.application_create, name='application_create'),

@@ -10,6 +10,20 @@ from teams.views import OnlyYouMixin
 
 
 
+class NotificationView(LoginRequiredMixin, OnlyYouMixin,TemplateView):
+    """
+    通知を一覧表示する
+
+    TODO
+    -----
+    全ての通知を取得する処理を書く
+    """
+    pass
+
+notification = NotificationView.as_view()
+
+
+
 class InvitationNotificationDetailView(LoginRequiredMixin, OnlyYouMixin, DetailView):
     """
     招待の詳細を表示する
@@ -26,7 +40,7 @@ class InvitationNotificationDetailView(LoginRequiredMixin, OnlyYouMixin, DetailV
     def get_object(self):
         return get_object_or_404(get_user_model(), username=self.kwargs.get('username'))
 
-invitation_notification_detail = InvitationNotificationDetailView.as_view()
+invitation_detail = InvitationNotificationDetailView.as_view()
 
 
 
@@ -72,7 +86,7 @@ class MemberApprovalNotificationDetailView(LoginRequiredMixin, OnlyYouMixin, Det
     def get_success_url(self):
         return reverse(self.success_url, kwargs={'username': self.request.user.username, 'id': self.object.id})
 
-member_approval_notification_detail = MemberApprovalNotificationDetailView.as_view()
+member_approval_detail = MemberApprovalNotificationDetailView.as_view()
 
 
 
@@ -114,4 +128,4 @@ class ApplicationNotificationDetailView(LoginRequiredMixin, OnlyYouMixin, Detail
     def get_success_url(self):
         return reverse(self.success_url, kwargs={'username': self.request.user.username, 'id': self.object.id})
 
-application_notification_detail = ApplicationNotificationDetailView.as_view()
+application_detail = ApplicationNotificationDetailView.as_view()

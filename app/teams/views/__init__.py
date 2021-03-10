@@ -2,9 +2,8 @@ from .access import OnlyYouMixin, AnonymousRequiredMixin, OnlyOwnerMixin
 from .application import application_create, application_reply_create
 from .invitation import invitation_create
 from .notification import (
-    application_notification_detail,
-    invitation_notification_detail,
-    member_approval_notification_detail,
+    notification, application_detail,
+    invitation_detail, member_approval_detail,
 )
 from .profile import (
     account_detail_game, account_detail_feature,
