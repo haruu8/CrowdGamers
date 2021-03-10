@@ -10,7 +10,7 @@ class InviteAdmin(admin.ModelAdmin):
     list_display = ['from_user', 'to_user', 'message']
 
 class MemberApprovalAdmin(admin.ModelAdmin):
-    list_display = ['from_user', 'to_user', 'message']
+    list_display = ['id', 'from_user', 'to_user', 'message']
 
 class TeamAdmin(admin.ModelAdmin):
     list_display = ['teamname', 'name', 'created_at']

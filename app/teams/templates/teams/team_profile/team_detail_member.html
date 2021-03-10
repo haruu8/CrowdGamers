@@ -4,12 +4,19 @@
 
   <h3>メンバー</h3>
 
-  <p>オーナー：<a href="{% url 'teams:account_detail' owner_profile_user_username %}">@{{ owner_profile_user_username }} </a></p>
-  <p>オーナー：{{ owner_profile_name }}</p>
-  <img src="{{ owner_profile_icon_url }}" alt="プロフィールアイコン">
+  <div>
+    <img src="{{ owner_profile_icon_url }}" alt="プロフィールアイコン">
+    <p><a href="{% url 'teams:account_detail' owner_profile_user_username %}">@{{ owner_profile_user_username }} </a></p>
+    <p>オーナー：{{ owner_profile_name }}</p>
+  </div>
 
-  {% for member in members %}
-    <p>メンバー:{{ member.name | truncatechars:15 }}</p>
+  {% for member in member_profile %}
+  <hr>
+    <div>
+      <img src="{{ member.icon.url }}" alt="アイコン">
+      <p><a href="{% url 'teams:account_detail' member.user.username %}">@{{ member.user.username }}</a></p>
+      <p>メンバー:{{ member.name | truncatechars:12 }}</p>
+    </div>
   {% endfor %}
   <p><a href="{% url 'teams:team_member_add' team.teamname %}">メンバー追加申請をする</a></p>
 

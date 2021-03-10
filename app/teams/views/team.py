@@ -126,6 +126,12 @@ class TeamDetailMemberView(TeamDetailBaseView):
         context['owner_profile_user_username'] = owner_profile.user.username
         context['owner_profile_icon_url'] = owner_profile.icon.url
         context['owner_profile_name'] = owner_profile.name
+
+        member_profile = UserProfile.objects.filter(
+            team=team,
+            is_owner=False,
+        )
+        context['member_profile'] = member_profile
         return context
 
 team_detail_member = TeamDetailMemberView.as_view()

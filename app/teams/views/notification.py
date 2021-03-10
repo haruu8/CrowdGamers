@@ -107,8 +107,8 @@ class MemberApprovalNotificationDetailView(LoginRequiredMixin, OnlyYouMixin, Det
             pass
         elif self.request.POST.get('approval', '') == 'approve':
             self.object.is_proceeded = True
-            # ここにチーム登録の処理を書く
-
+            self.object.team = self.object.to_user.user_profile.team
+            self.object.from_user.user_profile.team = self.object.team
         elif self.request.POST.get('approval', '') == 'deny':
             self.object.is_proceeded = False
         self.object.save()
