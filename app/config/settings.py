@@ -1,10 +1,6 @@
 from pathlib import Path
 import os
 import environ
-import mimetypes
-
-
-mimetypes.add_type("text/css", ".css", True)
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -18,7 +14,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = int(os.environ.get('DEBUG', default=0))
+DEBUG = int(os.environ.get('DEBUG', default=1))
 
 ALLOWED_HOSTS = ['*']
 
@@ -126,10 +122,10 @@ USE_TZ = True
 
 
 STATIC_URL = '/static/'
-STATIC_ROOT = Path(BASE_DIR, '/static/')
+STATIC_ROOT = Path(BASE_DIR, 'deploy')
 STATICFILES_DIRS = (
     [
-        os.path.join(BASE_DIR, '/staticfiles/'),
+        os.path.join(BASE_DIR, 'static'),
     ]
 )
 

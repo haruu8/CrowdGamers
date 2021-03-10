@@ -12,6 +12,8 @@ user:
 	docker-compose exec django python3 manage.py createsuperuser
 showmigrations:
 	docker-compose exec django python3 manage.py showmigrations
+static:
+	docker-compose exec django python3 manage.py collectstatic
 test:
 	docker-compose exec django python3 manage.py test
 insert:
