@@ -1,11 +1,11 @@
 from django import forms
-from teams.models import Invite, Job
+from teams.models import Job, Notification
 
 
 
 class InviteCreateForm(forms.ModelForm):
     class Meta:
-        model = Invite
+        model = Notification
         fields = ('desired_job', 'message', 'invite_url')
         labels = {
             'desired_job': '希望職',

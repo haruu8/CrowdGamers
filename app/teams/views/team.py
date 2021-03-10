@@ -3,7 +3,7 @@ from django.urls import reverse_lazy, reverse
 from django.views.generic import TemplateView, CreateView, DetailView, ListView, UpdateView, DeleteView, FormView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import get_user_model
-from teams.models import Team, UserProfile, MemberApproval
+from teams.models import Team, UserProfile, Notification
 from teams.forms import TeamCreateForm, MemberApprovalCreateForm
 from .access import OnlyYouMixin, OnlyOwnerMixin
 from .utils import GetProfileView
@@ -163,7 +163,7 @@ class TeamMemberAddView(LoginRequiredMixin, TeamDetailBaseView, CreateView):
     実際の追加処理は他の view で行う
     """
     template_name = 'teams/team_profile/team_member_add.html'
-    model = MemberApproval
+    model = Notification
     form_class = MemberApprovalCreateForm
     success_url = 'teams:team_detail'
 

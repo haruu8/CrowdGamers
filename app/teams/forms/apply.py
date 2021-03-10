@@ -1,11 +1,11 @@
 from django import forms
-from teams.models import Apply, Job
+from teams.models import Job, Notification
 
 
 
 class ApplyCreateForm(forms.ModelForm):
     class Meta:
-        model = Apply
+        model = Notification
         fields = ('desired_job', 'message')
         labels = {
             'desired_job': '希望職',
@@ -34,7 +34,7 @@ class ApplyCreateForm(forms.ModelForm):
 
 class ApplyUpdateForm(forms.ModelForm):
     class Meta:
-        model = Apply
+        model = Notification
         fields = ('invite_url',)
         labels = {
             'invite_url': '招待URL'

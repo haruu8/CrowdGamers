@@ -4,7 +4,7 @@ from django.views.generic import TemplateView, CreateView, DetailView, FormView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import get_user_model
 from django.db.models import Q
-from teams.models import Team, Invite, Apply, UserProfile, MemberApproval
+from teams.models import Team, UserProfile, Notification
 from teams.forms import InviteCreateForm, ApplyCreateForm
 from teams.views import OnlyYouMixin
 
@@ -17,7 +17,7 @@ class InviteNotificationView(LoginRequiredMixin, OnlyYouMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
-        ctx['invitations'] = Invite.objects.filter(
+        ctx['invitations'] = Notification.objects.filter(
             Q(from_user=self.request.user),
             Q(is_proceeded__isnull=False) |
             Q(to_user=self.request.user)
@@ -36,12 +36,12 @@ class InviteNotificationDetailView(LoginRequiredMixin, OnlyYouMixin, DetailView)
     招待の詳細を表示する
     """
     template_name = 'teams/notification/invite_notification_detail.html'
-    model = Invite
+    model = Notification
     context_object_name = 'invite'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['invite'] = Invite.objects.get(id=self.kwargs.get('id'))
+        context['invite'] = Notification.objects.get(id=self.kwargs.get('id'))
         return context
 
     def get_object(self):
@@ -64,13 +64,13 @@ class ApplyNotificationView(LoginRequiredMixin, OnlyYouMixin, TemplateView):
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
         ctx1 = super().get_context_data(**kwargs)
-        ctx['applications'] = Apply.objects.filter(
+        ctx['applications'] = Notification.objects.filter(
             Q(from_user=self.request.user),
             Q(is_proceeded__isnull=False) |
             Q(to_user=self.request.user)
         ).order_by('-created_at')
 
-        ctx1['applications'] = MemberApproval.objects.filter(
+        ctx1['applications'] = Notification.objects.filter(
             Q(from_user=self.request.user),
             Q(is_proceeded__isnull=False) |
             Q(to_user=self.request.user)
@@ -91,7 +91,7 @@ class MemberApprovalNotificationDetailView(LoginRequiredMixin, OnlyYouMixin, Det
     チームのメンバー追加の詳細を表示する
     """
     template_name = 'teams/notification/member_approval_notification_detail.html'
-    model = MemberApproval
+    model = Notification
     success_url = 'teams:notification'
 
     def post(self, request, *args, **kwargs):
@@ -103,7 +103,7 @@ class MemberApprovalNotificationDetailView(LoginRequiredMixin, OnlyYouMixin, Det
         self.object は memberApproval オブジェクトを管理
         チーム登録は new_* と命名している
         """
-        self.object = MemberApproval.objects.get(id=self.kwargs.get('id'))
+        self.object = Notification.objects.get(id=self.kwargs.get('id'))
         if self.object.is_proceeded is True or self.object.is_proceeded is False:
             pass
         elif self.request.POST.get('approval', '') == 'approve':
@@ -119,7 +119,7 @@ class MemberApprovalNotificationDetailView(LoginRequiredMixin, OnlyYouMixin, Det
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['member_approval'] = MemberApproval.objects.get(id=self.kwargs.get('id'))
+        context['member_approval'] = Notification.objects.get(id=self.kwargs.get('id'))
         return context
 
     def get_object(self):
@@ -137,7 +137,7 @@ class ApplyNotificationDetailView(LoginRequiredMixin, OnlyYouMixin, DetailView):
     リクエストの詳細を表示する
     """
     template_name = 'teams/notification/apply_notification_detail.html'
-    model = Apply
+    model = Notification
     success_url = 'teams:apply_reply_create'
 
     def post(self, request, *args, **kwargs):
@@ -149,7 +149,7 @@ class ApplyNotificationDetailView(LoginRequiredMixin, OnlyYouMixin, DetailView):
         承認なら ApplyReplyCreateView での処理
         拒否なら apply object の is_proceeded に False をセットする
         """
-        self.object = Apply.objects.get(id=self.kwargs.get('id'))
+        self.object = Notification.objects.get(id=self.kwargs.get('id'))
         if self.object.is_proceeded is True or self.object.is_proceeded is False:
             pass
         elif self.request.POST.get('approval', '') == 'approve':
@@ -161,7 +161,7 @@ class ApplyNotificationDetailView(LoginRequiredMixin, OnlyYouMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['apply'] = Apply.objects.get(id=self.kwargs.get('id'))
+        context['apply'] = Notification.objects.get(id=self.kwargs.get('id'))
         return context
 
     def get_object(self):

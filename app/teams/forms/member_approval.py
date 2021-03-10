@@ -1,5 +1,5 @@
 from django import forms
-from teams.models import MemberApproval
+from teams.models import Notification
 
 
 
@@ -8,7 +8,7 @@ class MemberApprovalCreateForm(forms.ModelForm):
     メンバー追加申請のフォーム
     """
     class Meta:
-        model = MemberApproval
+        model = Notification
         fields = ('message',)
         labels = {
             'message': 'メッセージ',

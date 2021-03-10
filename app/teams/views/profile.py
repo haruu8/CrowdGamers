@@ -1,9 +1,8 @@
 from django.shortcuts import get_object_or_404, resolve_url, redirect
 from django.views.generic import DetailView, UpdateView
 from django.contrib.auth import get_user_model
-from django.contrib.auth import get_user_model
 from .access import OnlyYouMixin
-from teams.models import Apply, UserProfile
+from teams.models import Notification, UserProfile
 from teams.forms import UserProfileUpdateForm
 
 
