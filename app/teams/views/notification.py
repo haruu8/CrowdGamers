@@ -98,9 +98,10 @@ class MemberApprovalNotificationDetailView(LoginRequiredMixin, OnlyYouMixin, Det
         """
         チームのメンバー登録申請の認可
 
-        TODO
+        Notes
         -----
-        プロフィールにチームを登録する処理を書く
+        self.object は memberApproval オブジェクトを管理
+        チーム登録は new_* と命名している
         """
         self.object = MemberApproval.objects.get(id=self.kwargs.get('id'))
         if self.object.is_proceeded is True or self.object.is_proceeded is False:
