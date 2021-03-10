@@ -6,7 +6,9 @@ from accounts.models import User
 
 
 class GetProfileView(TemplateView):
-
+    """
+    ヘッダー部分に表示するプロフィール情報を取得する
+    """
     def get_context_data(self, **kwargs):
         if self.request.user.is_anonymous:
             pass
