@@ -46,22 +46,32 @@ class UserProfileUpdateForm(forms.ModelForm):
             field.error_messages = {'required':'{fieldname} は必須です。'.format(fieldname=field.label)}
             field.widget.attrs['class'] = 'form-control'
 
-    # 特徴を三つまでしか選択できないようにする validation
     def clean_feature(self):
+        """
+        特徴の選択上限を3つに設定する validation
+        """
         feature = self.cleaned_data['feature']
         if len(feature) >= 4:
             raise forms.ValidationError('特徴は3つまでしか選択することができません')
         return feature
 
-    # ゲームタイトルを五つまでしか選択できないようにする validation
     def clean_game_title(self):
+        """
+        ゲームタイトルの選択上限を5つに設定する validation
+        """
         game_title = self.cleaned_data['game_title']
         if len(game_title) >= 6:
             raise forms.ValidationError('ゲームタイトルは5つまでしか選択することができません')
         return game_title
 
-    # 希望職を1つまでしか選択できないようにする validation
     def clean_desired_job(self):
+        """
+        希望職の選択上限を1つに設定する validation
+
+        TODO
+        -----
+        他で使用している関数とまとめる
+        """
         desired_job = self.cleaned_data['desired_job']
         if len(desired_job) >= 2:
             raise forms.ValidationError('希望職は1つまでしか選択することができません')
