@@ -20,7 +20,15 @@
     "pk": 3,
     "fields": {
       "question": "プロフィールのクリップURLはどのようにすればいいですか？",
-      "awnser": "通常のURLとは異なったURLが必要になります。お手数ですが、詳しくは<a href='https://support.google.com/youtube/answer/171780?hl=ja'>こちら</a>をご確認ください。"
+      "awnser": "通常のURLとは異なったURLが必要になります。お手数ですが、詳しくは<a href='https://support.google.com/youtube/answer/171780?hl=ja' target='_blank'>こちら</a>をご確認ください。"
+    }
+  },
+  {
+    "model": "teams.question",
+    "pk": 4,
+    "fields": {
+      "question": "チームのメンバー追加リクエストと普通のリクエストの違いは何ですか？",
+      "awnser": "チームのメンバー追加リクエストは、すでにチームメンバーとして活動されている方に登録してもらいます。普通のリクエストは仮入隊など話がしたい時に使用してください。"
     }
   }
 ]
