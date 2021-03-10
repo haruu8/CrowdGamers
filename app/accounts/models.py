@@ -17,10 +17,15 @@ class CustomUserManager(UserManager):
     use_in_migrations = True
 
     def _create_user(self, username, password, **extra_fields):
+        """
+        ユーザーを作成する関数
+
+        See Also
+        ----
+        normalize_email : 大文字・小文字を等しく扱うメソッド
+        """
         if not username:
             raise ValueError('The given username must be set')
-
-        # normalize_email は大文字と小文字を等しく扱ってくれるメソッド
         username = self.normalize_email(username)
         user = self.model(username=username, **extra_fields)
         user.set_password(password)
@@ -44,19 +49,32 @@ class CustomUserManager(UserManager):
 
 
 def user_directory_path(instance, filename):
-    # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
     return 'user_{0}/{1}'.format(instance.user.id, filename)
 
 
 
 class User(AbstractBaseUser, PermissionsMixin):
-    """ カスタムユーザー """
+    """
+    AbstractBaseUser を継承したカスタムユーザー
+
+    SeeAlso
+    -----
+    REQUIRED_FIELDS : スーパーユーザーを作るときの必須フィールド
+
+    Notes
+    -----
+    email field を用意しないと superuser を作れないため、フィールドを用意している
+    """
+    class Meta:
+        db_table = 't_custom_user'
+        verbose_name = 'カスタムユーザー'
+        verbose_name_plural = 'カスタムユーザー'
 
     def validate_icon_image(fieldfile_obj):
         image_size = fieldfile_obj.file.size
         megabyte_limit = 5.0
         if image_size > megabyte_limit*1024*1024:
-            raise ValidationError("ファイルのサイズを%sMBより小さくしてください" % str(megabyte_limit))
+            raise ValidationError("アイコンのサイズを%sMBより小さくしてください" % str(megabyte_limit))
 
     is_staff = models.BooleanField(
         _('staff status'),
@@ -87,20 +105,17 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     objects = CustomUserManager()
 
-    # superuser を作るときの必須フィールド
     REQUIRED_FIELDS = []
     USERNAME_FIELD = 'username'
     SOCIAL_AUTH_ADMIN_USER_SEARCH_FIELDS = ['username']
-
-    class Meta:
-        verbose_name = _('user')
-        verbose_name_plural = _('users')
 
 
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, **kwargs):
-    # 新規ユーザー作成時に UserProfile モデルの空インスタンスを生成
+    """
+    新規ユーザー作成時に UserProfle モデルの空インスタンスをs生成
+    """
     if kwargs['created']:
         from teams.models import UserProfile
-        profile = UserProfile.objects.get_or_create(user=kwargs['instance'])
+        UserProfile.objects.get_or_create(user=kwargs['instance'])
