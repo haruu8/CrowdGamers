@@ -25,7 +25,12 @@ class UserProfile(models.Model):
 
     id = models.AutoField(editable=False, primary_key=True)
     user = models.OneToOneField(get_user_model(), on_delete=models.CASCADE, related_name='user_profile')
-    name = models.CharField(verbose_name='ニックネーム', max_length=100)
+    name = models.CharField(
+        verbose_name='ニックネーム',
+        max_length=100,
+        null=False,
+        blank=False,
+    )
     icon = models.ImageField(
         upload_to=user_directory_path,
         blank=True,

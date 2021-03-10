@@ -1,10 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 
-
-
 {% block stylesheet %}'{% static "teams/scss/dist/team_list.css" %}'{% endblock %}
-
 
 {% block content %}
 
@@ -14,7 +11,7 @@
     <div class="team-all">
       {% for team in object_list %}
         <div class='team-section'>
-          <img src="{{ team.icon.url }}" alt="チームアイコン" class="team-icon">
+          <img src="{{ team.icon.url }}" alt="アイコン" class="team-icon">
           <p class="name">{{ team.name | truncatechars:12 }}</p>
           <p class='teamname'>{{ team.teamname }}</p>
           <a href="{% url 'teams:team_detail' team.teamname %}"></a>

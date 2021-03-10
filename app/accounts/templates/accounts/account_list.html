@@ -1,20 +1,19 @@
 {% extends 'base.html' %}
 {% load static %}
 
-
 {% block stylesheet %}'{% static "teams/scss/dist/team_list.css" %}'{% endblock %}
-
 
 {% block content %}
 
   <div class="container">
     <h2 class="title">ユーザー一覧</h2>
+
     <div class="team-all">
       {% for object in object_list %}
         <div class="team-section">
           <img src="{{ object.user_profile.icon.url }}" alt="アイコン" class='team-icon'>
-          <p>{{ object.user_profile.name | truncatechars:12 }}</p>
-          <p>{{ object.username }}</p>
+          <p class='name'>{{ object.user_profile.name | truncatechars:12 }}</p>
+          <p class="teamname">{{ object.username }}</p>
           <a href="{% url 'teams:account_detail' object.username %}"></a>
         </div>
       {% endfor %}
