@@ -1,33 +1,22 @@
 from django.db import models
 from django.core.validators import FileExtensionValidator, MinLengthValidator, RegexValidator
-from django.core.exceptions import ValidationError
 from django.contrib.auth import get_user_model
 from . import *
 from .game import Game
 from .feature import Feature
 from .job import Job
+from teams.utils import user_directory_path, validate_icon_image
 
 
-
-# user ごとに directory を分ける
-def user_directory_path(instance, filename):
-    return 'user_{0}/{1}'.format(instance.user.id, filename)
-
-
-
-""" クランモデル """
 
 class Team(models.Model):
+    """
+    チームモデル
+    """
     class Meta():
         db_table = 't_team'
         verbose_name = 'チーム'
         verbose_name_plural = 'チーム'
-
-    def validate_icon_image(fieldfile_obj):
-        image_size = fieldfile_obj.file.size
-        megabyte_limit = 5.0
-        if image_size > megabyte_limit*1024*1024:
-            raise ValidationError("ファイルのサイズを%sMBより小さくしてください" % str(megabyte_limit))
 
     id = models.AutoField(editable=False, primary_key=True)
     teamname_regex = RegexValidator(regex=r'[a-xA-Z0-9_]')

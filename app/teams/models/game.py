@@ -2,9 +2,10 @@ from django.db import models
 
 
 
-""" Game モデル """
-
 class Game(models.Model):
+    """
+    ゲームの選択肢を追加する
+    """
     class Meta():
         db_table = 't_game'
         verbose_name = 'ゲーム'

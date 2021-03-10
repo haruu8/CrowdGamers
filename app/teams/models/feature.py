@@ -2,9 +2,10 @@ from django.db import models
 
 
 
-""" タグモデル """
-
 class Feature(models.Model):
+    """
+    特徴タグを追加できる
+    """
     class Meta():
         db_table = 't_feature'
         verbose_name = '特徴'

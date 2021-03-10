@@ -2,9 +2,10 @@ from django.db import models
 
 
 
-""" よくある質問モデル """
-
 class Question(models.Model):
+    """
+    よくある質問を追加できる
+    """
     class Meta():
         db_table = 't_question'
         verbose_name = 'よくある質問'

@@ -9,7 +9,7 @@ from django.utils import timezone
 from django.core.validators import FileExtensionValidator, MinLengthValidator, RegexValidator
 from django.core.exceptions import ValidationError
 import uuid
-
+from teams.utils import user_directory_path
 
 
 class CustomUserManager(UserManager):
@@ -45,11 +45,6 @@ class CustomUserManager(UserManager):
         if extra_fields.get('is_superuser') is not True:
             raise ValueError('Superuser must have is_superuser=True.')
         return self._create_user(username, password, **extra_fields)
-
-
-
-def user_directory_path(instance, filename):
-    return 'user_{0}/{1}'.format(instance.user.id, filename)
 
 
 
