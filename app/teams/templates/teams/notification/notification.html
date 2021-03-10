@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+  <h3>リクエスト一覧</h3>
+  {% if applications %}
+    {% for application in applications %}
+    <hr>
+      <div>
+        <p><a href="{% url 'teams:account_detail' application.from_user %}">{{ application.from_user }}</a> からメッセージが届きました。</p>
+        <p><a href="{% url 'teams:application_notification_detail' user.username application.id %}">{{ application.message | truncatechars:12 }}</a></p>
+      </div>
+    {% endfor %}
+  {% else %}
+    <p>通知は届いていません。</p>
+  {% endif %}
+
+{% endblock %}

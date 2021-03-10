@@ -9,80 +9,24 @@ from teams.forms import InvitationCreateForm, ApplicationCreateForm
 from teams.views import OnlyYouMixin
 
 
-class InvitationNotificationView(LoginRequiredMixin, OnlyYouMixin, TemplateView):
-    """
-    招待を一覧表示する
-    """
-    template_name = 'teams/notification/invite_notification.html'
-
-    def get_context_data(self, **kwargs):
-        ctx = super().get_context_data(**kwargs)
-        ctx['invitations'] = Notification.objects.filter(
-            Q(from_user=self.request.user),
-            Q(is_proceeded__isnull=False) |
-            Q(to_user=self.request.user)
-        ).order_by('-created_at')
-        return ctx
-
-    def get_object(self):
-        return get_object_or_404(get_user_model(), username=self.kwargs.get('username'))
-
-invite_notification = InvitationNotificationView.as_view()
-
-
 
 class InvitationNotificationDetailView(LoginRequiredMixin, OnlyYouMixin, DetailView):
     """
     招待の詳細を表示する
     """
-    template_name = 'teams/notification/invite_notification_detail.html'
+    template_name = 'teams/notification/invitation_notification_detail.html'
     model = Notification
-    context_object_name = 'invite'
+    context_object_name = 'invitation'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['invite'] = Notification.objects.get(id=self.kwargs.get('id'))
+        context['invitation'] = Notification.objects.get(id=self.kwargs.get('id'))
         return context
 
     def get_object(self):
         return get_object_or_404(get_user_model(), username=self.kwargs.get('username'))
 
-invite_notification_detail = InvitationNotificationDetailView.as_view()
-
-
-
-class ApplicationNotificationView(LoginRequiredMixin, OnlyYouMixin, TemplateView):
-    """
-    チームに対するリクエスト・メンバー追加のリクエストの両方を表示する
-
-    Notes
-    -----
-    モデルは違うが、日付順に並べるため ctx を結合している
-    """
-    template_name = 'teams/notification/apply_notification.html'
-
-    def get_context_data(self, **kwargs):
-        ctx = super().get_context_data(**kwargs)
-        ctx1 = super().get_context_data(**kwargs)
-        ctx['applications'] = Notification.objects.filter(
-            Q(from_user=self.request.user),
-            Q(is_proceeded__isnull=False) |
-            Q(to_user=self.request.user)
-        ).order_by('-created_at')
-
-        ctx1['applications'] = Notification.objects.filter(
-            Q(from_user=self.request.user),
-            Q(is_proceeded__isnull=False) |
-            Q(to_user=self.request.user)
-        ).order_by('-created_at')
-        print('\n\n\n\n\n\n\n{}\n\n\n\n\n\n\n'.format(ctx))
-        print('\n\n\n\n\n\n\n{}\n\n\n\n\n\n\n'.format(ctx1))
-        return ctx
-
-    def get_object(self):
-        return get_object_or_404(get_user_model(), username=self.kwargs.get('username'))
-
-apply_notification = ApplicationNotificationView.as_view()
+invitation_notification_detail = InvitationNotificationDetailView.as_view()
 
 
 
@@ -136,9 +80,9 @@ class ApplicationNotificationDetailView(LoginRequiredMixin, OnlyYouMixin, Detail
     """
     リクエストの詳細を表示する
     """
-    template_name = 'teams/notification/apply_notification_detail.html'
+    template_name = 'teams/notification/application_notification_detail.html'
     model = Notification
-    success_url = 'teams:apply_reply_create'
+    success_url = 'teams:application_reply_create'
 
     def post(self, request, *args, **kwargs):
         """
@@ -147,7 +91,7 @@ class ApplicationNotificationDetailView(LoginRequiredMixin, OnlyYouMixin, Detail
         Notes
         -----
         承認なら ApplicationReplyCreateView での処理
-        拒否なら apply object の is_proceeded に False をセットする
+        拒否なら application object の is_proceeded に False をセットする
         """
         self.object = Notification.objects.get(id=self.kwargs.get('id'))
         if self.object.is_proceeded is True or self.object.is_proceeded is False:
@@ -161,7 +105,7 @@ class ApplicationNotificationDetailView(LoginRequiredMixin, OnlyYouMixin, Detail
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['apply'] = Notification.objects.get(id=self.kwargs.get('id'))
+        context['application'] = Notification.objects.get(id=self.kwargs.get('id'))
         return context
 
     def get_object(self):
@@ -170,4 +114,4 @@ class ApplicationNotificationDetailView(LoginRequiredMixin, OnlyYouMixin, Detail
     def get_success_url(self):
         return reverse(self.success_url, kwargs={'username': self.request.user.username, 'id': self.object.id})
 
-apply_notification_detail = ApplicationNotificationDetailView.as_view()
+application_notification_detail = ApplicationNotificationDetailView.as_view()

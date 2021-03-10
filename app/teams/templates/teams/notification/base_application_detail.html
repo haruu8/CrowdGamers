@@ -7,8 +7,8 @@
     <img src="{{ object.user_profile.icon.url }}" alt="プロフィールアイコン">
     <p>{{ object.user_profile.name }} からのメッセージ</p>
     <p><a href="{% url 'teams:account_detail' object.username %}">@{{ object.username }}</a></p>
-    <p>メッセージ：{{ apply.message }}</p>
-    <p>作成日時：{{ apply.created_at }}</p>
+    <p>メッセージ：{{ application.message }}</p>
+    <p>作成日時：{{ application.created_at }}</p>
 
     {% block form_content %}{% endblock %}
 

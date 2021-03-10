@@ -1,15 +1,15 @@
-{% extends 'teams/notification/base_apply_notification_detail.html' %}
+{% extends 'teams/notification/base_application_notification_detail.html' %}
 
 {% block form_content %}
 
   <hr>
 
-  {% if apply.is_proceeded is None %}
+  {% if application.is_proceeded is None %}
     <form action="" method='POST'>
       {% csrf_token %}
       <p>このリクエストを許可しますか？<br>（リクエストを許可した場合、招待URL入力画面に移動します。）</p>
       <button class="ui button grey" type="submit" name="approval" value="deny">拒否する</button>
-      <a href="{% url 'teams:apply_reply_create' object.username apply.id %}">
+      <a href="{% url 'teams:application_reply_create' object.username application.id %}">
         <button class="ui button btn-primary" name="approval" value="approve">許可する</button>
       </a>
     </form>
