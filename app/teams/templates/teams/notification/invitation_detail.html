@@ -5,6 +5,7 @@
 <div class="container">
   <img src="{{ object.user_profile.icon.url }}" alt="アイコン">
   <p>{{ object.user_profile.name }} からのメッセージ</p>
+  <p><a href="{% url 'teams:account_detail' object.username %}">@{{ object.username }}</a></p>
   <p>メッセージ：{{ invitation.message }}</p>
   <p>作成日時：{{ invitation.created_at }}</p>
 
