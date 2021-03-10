@@ -3,17 +3,20 @@
 {% block content %}
 
 <div class="container">
-  <p>invitation_detail.html</p>
-  <p>{{ object.user_profile.name }}</p>
-  <p><a href="{% url 'teams:account_detail' object.username %}">@{{ object.username }}</a></p>
-  <p>メッセージ：{{ application.message }}</p>
-  <p>作成日時：{{ application.created_at }}</p>
+  <img src="{{ object.user_profile.icon.url }}" alt="アイコン">
+  <p>{{ object.user_profile.name }} からのメッセージ</p>
+  <p>メッセージ：{{ invitation.message }}</p>
+  <p>作成日時：{{ invitation.created_at }}</p>
 
-  <form action="" method='POST'>
-    {% csrf_token %}
-    <button type="button" class="btn btn-primary">拒否する</button>
-    <input type="submit" class="btn btn-danger" value="承認する">
-  </form>
+  {% if invitation.is_proceeded is True or invitation.is_proceeded is False %}
+    <p>すでに結果を送信しています。</p>
+  {% else %}
+    <form action="" method='POST'>
+      {% csrf_token %}
+      <button class="ui button grey" type="submit" name="approval" value="deny">拒否する</button>
+      <button class="ui button btn-primary" name="approval" value="approve">許可する</button>
+    </form>
+  {% endif %}
 </div>
 
 {% endblock %}

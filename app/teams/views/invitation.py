@@ -9,25 +9,27 @@ from .profile import UserProfileBaseView
 
 
 
-""" ユーザー招待に関する view """
-
 class InvitationCreateView(LoginRequiredMixin, CreateView, UserProfileBaseView):
+    """
+    ユーザー招待を作成する
+    """
     template_name = 'teams/invitation_create.html'
     form_class = InvitationCreateForm
     success_url = 'teams:account_detail'
 
-    # from と to を設定
     def form_valid(self, form):
-        self.object = form.save(commit=False)
+        """
+        invitation object に必要な情報を登録する
 
-        # オーナーでなければ、プロフィールページに返す
+        Notes
+        -----
+        オーナーでなければ、プロフィールページに返す
+        """
+        self.object = form.save(commit=False)
         if self.request.user.user_profile.is_owner == False:
             return reverse(self.success_url, kwargs={'username': self.object.username})
-
-        # from_user を登録
+        self.object.mode = 'invitation'
         self.object.from_user = self.request.user
-
-        # to_user を登録
         self.object.invitation_user = get_user_model().objects.get(username=self.kwargs.get('username'))
         self.object.to_user = self.object.invitation_user
         self.object.save()

@@ -31,7 +31,6 @@ class NotificationView(LoginRequiredMixin, OnlyYouMixin,TemplateView):
             Q(from_user=self.request.user) |
             Q(to_user=self.request.user)
         ).order_by('-created_at')
-        print('\n\n\n\n\n\n{}\n\n\n\n\n\n'.format(ctx))
         return ctx
 
 notification = NotificationView.as_view()
@@ -45,6 +44,20 @@ class InvitationNotificationDetailView(LoginRequiredMixin, OnlyYouMixin, DetailV
     template_name = 'teams/notification/invitation_detail.html'
     model = Notification
     context_object_name = 'invitation'
+
+    def post(self, request, *args, **kwargs):
+        """
+        招待の承認・拒否の処理
+        """
+        self.object = Notification.objects.get(id=self.kwargs.get('id'))
+        if self.object.is_proceeded is True or self.object.is_proceeded is False:
+            pass
+        elif self.request.POST.get('approval', '') == 'approve':
+            self.object.is_proceeded = True
+        elif self.request.POST.get('approval', '') == 'deny':
+            self.object.is_proceeded = False
+        self.object.save()
+        return redirect('teams:home')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

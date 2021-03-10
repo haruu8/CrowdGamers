@@ -4,7 +4,7 @@
 
   <div class="container">
     <p>チーム申請の認可</p>
-    <img src="{{ object.user_profile.icon.url }}" alt="プロフィールアイコン">
+    <img src="{{ object.user_profile.icon.url }}" alt="アイコン">
     <p>{{ object.user_profile.name }} からのメッセージ</p>
     <p><a href="{% url 'teams:account_detail' object.username %}">@{{ object.username }}</a></p>
     <p>メッセージ：{{ application.message }}</p>

@@ -13,7 +13,7 @@
     {% if user_profile.desired_condition %}
       <p>条件：{{ user_profile.desired_condition }}</p>
       {% if request.user.user_profile.is_owner is True %}
-        <p><a href="{% url 'teams:invite_create' object.username %}">招待を送る</a></p>
+        <p><a href="{% url 'teams:invitation_create' object.username %}">招待を送る</a></p>
       {% endif %}
     {% endif %}
   {% else %}

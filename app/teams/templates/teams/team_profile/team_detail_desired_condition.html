@@ -5,7 +5,7 @@
   <h3>希望条件</h3>
   {% if team.disclosed is True %}
     <p>希望条件：{{ team.desired_condition }}</p>
-    <p><a href="{% url 'teams:apply_create' team.teamname %}">リクエストを送る</a></p>
+    <p><a href="{% url 'teams:application_create' team.teamname %}">リクエストを送る</a></p>
   {% else %}
     <p>条件は現在公開されていません。</p>
   {% endif %}

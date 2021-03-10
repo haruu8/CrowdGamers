@@ -20,14 +20,16 @@ class ApplicationCreateView(LoginRequiredMixin, CreateView, TeamDetailBaseView):
 
     def form_valid(self, form):
         """
-        application object に from_user と to_user の設定をする
+        application object に必要な情報を登録する
 
         Notes
         -----
+        mode に application を保存
         from_user に request.user を保存
         to_user にチームのオーナーを保存
         """
         self.object = form.save(commit=False)
+        self.object.mode = 'application'
         self.object.from_user = self.request.user
 
         self.object.team = Team.objects.get(teamname=self.kwargs.get('teamname'))
@@ -54,7 +56,7 @@ class ApplicationReplyCreateView(OnlyYouMixin, UpdateView):
     """
     template_name = 'teams/notification/application_reply_create.html'
     form_class = ApplicationUpdateForm
-    success_url = 'teams:application_notification'
+    success_url = 'teams:notification'
 
     def form_valid(self, form):
         """
