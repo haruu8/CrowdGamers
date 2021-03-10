@@ -5,11 +5,11 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import get_user_model
 from django.db.models import Q
 from teams.models import Team, UserProfile, Notification
-from teams.forms import InviteCreateForm, ApplyCreateForm
+from teams.forms import InvitationCreateForm, ApplicationCreateForm
 from teams.views import OnlyYouMixin
 
 
-class InviteNotificationView(LoginRequiredMixin, OnlyYouMixin, TemplateView):
+class InvitationNotificationView(LoginRequiredMixin, OnlyYouMixin, TemplateView):
     """
     招待を一覧表示する
     """
@@ -27,11 +27,11 @@ class InviteNotificationView(LoginRequiredMixin, OnlyYouMixin, TemplateView):
     def get_object(self):
         return get_object_or_404(get_user_model(), username=self.kwargs.get('username'))
 
-invite_notification = InviteNotificationView.as_view()
+invite_notification = InvitationNotificationView.as_view()
 
 
 
-class InviteNotificationDetailView(LoginRequiredMixin, OnlyYouMixin, DetailView):
+class InvitationNotificationDetailView(LoginRequiredMixin, OnlyYouMixin, DetailView):
     """
     招待の詳細を表示する
     """
@@ -47,11 +47,11 @@ class InviteNotificationDetailView(LoginRequiredMixin, OnlyYouMixin, DetailView)
     def get_object(self):
         return get_object_or_404(get_user_model(), username=self.kwargs.get('username'))
 
-invite_notification_detail = InviteNotificationDetailView.as_view()
+invite_notification_detail = InvitationNotificationDetailView.as_view()
 
 
 
-class ApplyNotificationView(LoginRequiredMixin, OnlyYouMixin, TemplateView):
+class ApplicationNotificationView(LoginRequiredMixin, OnlyYouMixin, TemplateView):
     """
     チームに対するリクエスト・メンバー追加のリクエストの両方を表示する
 
@@ -82,7 +82,7 @@ class ApplyNotificationView(LoginRequiredMixin, OnlyYouMixin, TemplateView):
     def get_object(self):
         return get_object_or_404(get_user_model(), username=self.kwargs.get('username'))
 
-apply_notification = ApplyNotificationView.as_view()
+apply_notification = ApplicationNotificationView.as_view()
 
 
 
@@ -132,7 +132,7 @@ member_approval_notification_detail = MemberApprovalNotificationDetailView.as_vi
 
 
 
-class ApplyNotificationDetailView(LoginRequiredMixin, OnlyYouMixin, DetailView):
+class ApplicationNotificationDetailView(LoginRequiredMixin, OnlyYouMixin, DetailView):
     """
     リクエストの詳細を表示する
     """
@@ -146,7 +146,7 @@ class ApplyNotificationDetailView(LoginRequiredMixin, OnlyYouMixin, DetailView):
 
         Notes
         -----
-        承認なら ApplyReplyCreateView での処理
+        承認なら ApplicationReplyCreateView での処理
         拒否なら apply object の is_proceeded に False をセットする
         """
         self.object = Notification.objects.get(id=self.kwargs.get('id'))
@@ -170,4 +170,4 @@ class ApplyNotificationDetailView(LoginRequiredMixin, OnlyYouMixin, DetailView):
     def get_success_url(self):
         return reverse(self.success_url, kwargs={'username': self.request.user.username, 'id': self.object.id})
 
-apply_notification_detail = ApplyNotificationDetailView.as_view()
+apply_notification_detail = ApplicationNotificationDetailView.as_view()

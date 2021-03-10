@@ -4,23 +4,23 @@ from django.views.generic import CreateView, FormView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import get_user_model
 from .access import OnlyYouMixin
-from teams.models import Team
-from teams.forms import ApplyCreateForm, ApplyUpdateForm
+from teams.models import Team, Notification
+from teams.forms import ApplicationCreateForm, ApplicationUpdateForm
 from .team import TeamDetailBaseView
 
 
 
-class ApplyCreateView(LoginRequiredMixin, CreateView, TeamDetailBaseView):
+class ApplicationCreateView(LoginRequiredMixin, CreateView, TeamDetailBaseView):
     """
     チームリクエストを作成する
     """
-    template_name = 'teams/apply_create.html'
-    form_class = ApplyCreateForm
+    template_name = 'teams/application_create.html'
+    form_class = ApplicationCreateForm
     success_url = 'teams:team_detail'
 
     def form_valid(self, form):
         """
-        apply object に from_user と to_user の設定をする
+        application object に from_user と to_user の設定をする
 
         Notes
         -----
@@ -40,11 +40,11 @@ class ApplyCreateView(LoginRequiredMixin, CreateView, TeamDetailBaseView):
     def get_success_url(self):
         return reverse(self.success_url, kwargs={'teamname': self.object.team.teamname})
 
-apply_create = ApplyCreateView.as_view()
+application_create = ApplicationCreateView.as_view()
 
 
 
-class ApplyReplyCreateView(OnlyYouMixin, UpdateView):
+class ApplicationReplyCreateView(OnlyYouMixin, UpdateView):
     """
     リクエストの承認とその返答に必要なURLを設定するURL
 
@@ -52,15 +52,15 @@ class ApplyReplyCreateView(OnlyYouMixin, UpdateView):
     -----
     直接URLを入力するとアクセスすることができるので、修正する
     """
-    template_name = 'teams/notification/apply_reply_create.html'
-    form_class = ApplyUpdateForm
-    success_url = 'teams:apply_notification'
+    template_name = 'teams/notification/application_reply_create.html'
+    form_class = ApplicationUpdateForm
+    success_url = 'teams:application_notification'
 
     def form_valid(self, form):
         """
         認可を True にするのとURLをDBに登録するフォーム
         """
-        self.object = Apply.objects.get(id=self.kwargs.get('id'))
+        self.object = Notification.objects.get(id=self.kwargs.get('id'))
         self.object.is_proceeded = True
         self.object.invite_url = form.cleaned_data['invite_url']
         self.object.save()
@@ -69,7 +69,7 @@ class ApplyReplyCreateView(OnlyYouMixin, UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['apply'] = Apply.objects.get(id=self.kwargs.get('id'))
+        context['application'] = Notification.objects.get(id=self.kwargs.get('id'))
         return context
 
     def get_object(self):
@@ -78,4 +78,4 @@ class ApplyReplyCreateView(OnlyYouMixin, UpdateView):
     def get_success_url(self):
         return reverse(self.success_url, kwargs={'username': self.request.user.username})
 
-apply_reply_create = ApplyReplyCreateView.as_view()
+application_reply_create = ApplicationReplyCreateView.as_view()

@@ -4,16 +4,16 @@ from django.views.generic import CreateView, FormView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import get_user_model
 from teams.models import UserProfile
-from teams.forms import InviteCreateForm
+from teams.forms import InvitationCreateForm
 from .profile import UserProfileBaseView
 
 
 
 """ ユーザー招待に関する view """
 
-class InviteCreateView(LoginRequiredMixin, CreateView, UserProfileBaseView):
-    template_name = 'teams/invite_create.html'
-    form_class = InviteCreateForm
+class InvitationCreateView(LoginRequiredMixin, CreateView, UserProfileBaseView):
+    template_name = 'teams/invitation_create.html'
+    form_class = InvitationCreateForm
     success_url = 'teams:account_detail'
 
     # from と to を設定
@@ -38,4 +38,4 @@ class InviteCreateView(LoginRequiredMixin, CreateView, UserProfileBaseView):
     def get_success_url(self):
         return reverse(self.success_url, kwargs={'username': self.object.invitation_user})
 
-invite_create = InviteCreateView.as_view()
+invitation_create = InvitationCreateView.as_view()

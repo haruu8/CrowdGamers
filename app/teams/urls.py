@@ -37,17 +37,19 @@ urlpatterns = [
     path('<str:username>/update/', views.account_profile_update, name='account_profile_update'),
 
     # 通知
-    path('<str:username>/notification/apply/', views.apply_notification, name='apply_notification'),
-    path('<str:username>/notification/apply/<uuid:id>/', views.apply_notification_detail, name='apply_notification_detail'),
+    path('<str:username>/notification/',
+                views.application_notification, name='application_notification'),
+    path('<str:username>/notification/application/<uuid:id>/',
+                views.application_notification_detail, name='application_notification_detail'),
     path('<str:username>/notification/member_approval/<uuid:id>/',
-            views.member_approval_notification_detail, name='member_approval_notification_detail'),
-    path('<str:username>/notification/invite/', views.invite_notification, name='invite_notification'),
-    path('<str:username>/notification/invite/<uuid:id>/', views.invite_notification_detail, name='invite_notification_detail'),
+                views.member_approval_notification_detail, name='member_approval_notification_detail'),
+    path('<str:username>/notification/invitation/<uuid:id>/',
+                views.invitation_notification_detail, name='invitation_notification_detail'),
 
     # リクエスト送信
-    path('team/<str:teamname>/apply/create/', views.apply_create, name='apply_create'),
-    path('<str:username>/apply/reply/create/<uuid:id>/', views.apply_reply_create, name='apply_reply_create'),
+    path('team/<str:teamname>/application/create/', views.application_create, name='application_create'),
+    path('<str:username>/application/reply/create/<uuid:id>/', views.application_reply_create, name='application_reply_create'),
 
     # 招待送信
-    path('<str:username>/invite/create/', views.invite_create, name='invite_create'),
+    path('<str:username>/invitation/create/', views.invitation_create, name='invitation_create'),
 ]
