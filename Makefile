@@ -17,10 +17,13 @@ static:
 test:
 	docker-compose exec django python3 manage.py test
 insert:
-	docker-compose exec django python3 manage.py loaddata feature_initial.json\
-	&& docker-compose exec django python3 manage.py loaddata game_initial.json\
-	&& docker-compose exec django python3 manage.py loaddata question_initial.json\
+	docker-compose exec django python3 manage.py loaddata user_initial.json \
+	&& docker-compose exec django python3 manage.py loaddata feature_initial.json \
+	&& docker-compose exec django python3 manage.py loaddata game_initial.json \
+	&& docker-compose exec django python3 manage.py loaddata question_initial.json \
 	&& docker-compose exec django python3 manage.py loaddata job_initial.json
+insert-user:
+	docker-compose exec django python3 manage.py loaddata user_initial.json
 insert-feature:
 	docker-compose exec django python3 manage.py loaddata feature_initial.json
 insert-game:

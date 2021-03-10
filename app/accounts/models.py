@@ -109,8 +109,30 @@ class User(AbstractBaseUser, PermissionsMixin):
 @receiver(post_save, sender=User)
 def create_user_profile(sender, **kwargs):
     """
-    新規ユーザー作成時に UserProfle モデルの空インスタンスをs生成
+    新規ユーザー作成時に UserProfle モデルの空インスタンスを生成
     """
     if kwargs['created']:
         from teams.models import UserProfile
         UserProfile.objects.get_or_create(user=kwargs['instance'])
+
+
+
+@receiver(post_save, sender=User)
+def create_notification(sender, **kwargs):
+    """
+    新規ユーザー作成時にプロフィールの編集を促す通知を作成
+
+    Notes
+    -----
+    from_user は運営アカウントを入れる
+
+    TODO
+    -----
+    必要な処理を書き加える
+    """
+    if kwargs['created']:
+        from teams.models import Apply
+        Apply.objects.get_or_create(
+            from_user='',
+            to_user=kwargs['instance'],
+        )
