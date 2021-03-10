@@ -133,6 +133,7 @@ def create_notification(sender, **kwargs):
     if kwargs['created']:
         from teams.models import Apply
         Apply.objects.get_or_create(
-            from_user='',
+            from_user=User.objects.get(username='CrowdGamers'),
             to_user=kwargs['instance'],
+            message='プロフィールを作成しましょう！',
         )

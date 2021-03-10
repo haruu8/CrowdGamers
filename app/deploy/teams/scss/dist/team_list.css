@@ -40,4 +40,5 @@
 .team-icon {
   width: auto;
   height: 6rem;
+  border-radius: 50%;
 }

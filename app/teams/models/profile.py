@@ -30,6 +30,7 @@ class UserProfile(models.Model):
         max_length=100,
         null=False,
         blank=False,
+        default='ニックネーム',
     )
     icon = models.ImageField(
         upload_to=user_directory_path,
