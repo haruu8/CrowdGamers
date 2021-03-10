@@ -16,8 +16,8 @@
             <p><a style="cursor:pointer;">▼ Q. {{ faq.question }}</a></p>
           </div>
           <div id="open-{{ faq.id }}" style="display:none;clear:both;">
-              {% autoescape off%}
-            <p class='awnser'>A. {{ faq.awnser }}</p>
+            {% autoescape off %}
+              <p class='awnser'>A. {{ faq.awnser }}</p>
             {% endautoescape %}
           </div>
         </div>

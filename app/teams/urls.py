@@ -37,8 +37,9 @@ urlpatterns = [
     # 通知
     path('<str:username>/notification/', views.notification, name='notification'),
     path('<str:username>/notification/application/<uuid:id>/', views.application_detail, name='application_detail'),
-    path('<str:username>/notification/member_approval/<uuid:id>/', views.member_approval_detail, name='member_approval_detail'),
     path('<str:username>/notification/invitation/<uuid:id>/', views.invitation_detail, name='invitation_detail'),
+    path('<str:username>/notification/member_approval/<uuid:id>/', views.member_approval_detail, name='member_approval_detail'),
+    path('<str:username>/notification/official/<uuid:id>/', views.official_detail, name='official_detail'),
 
     # リクエスト送信
     path('team/<str:teamname>/application/create/', views.application_create, name='application_create'),

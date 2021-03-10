@@ -18,7 +18,21 @@ class NotificationView(LoginRequiredMixin, OnlyYouMixin,TemplateView):
     -----
     全ての通知を取得する処理を書く
     """
-    pass
+    template_name = 'teams/notification/notification.html'
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        # ctx['notifications'] = Notification.objects.filter(
+        #     Q(from_user=self.request.user),
+        #     Q(is_proceeded__isnull=False) |
+        #     Q(to_user=self.request.user)
+        # ).order_by('-created_at')
+        ctx['notifications'] = Notification.objects.filter(
+            Q(from_user=self.request.user) |
+            Q(to_user=self.request.user)
+        ).order_by('-created_at')
+        print('\n\n\n\n\n\n{}\n\n\n\n\n\n'.format(ctx))
+        return ctx
 
 notification = NotificationView.as_view()
 
@@ -28,7 +42,7 @@ class InvitationNotificationDetailView(LoginRequiredMixin, OnlyYouMixin, DetailV
     """
     招待の詳細を表示する
     """
-    template_name = 'teams/notification/invitation_notification_detail.html'
+    template_name = 'teams/notification/invitation_detail.html'
     model = Notification
     context_object_name = 'invitation'
 
@@ -48,7 +62,7 @@ class MemberApprovalNotificationDetailView(LoginRequiredMixin, OnlyYouMixin, Det
     """
     チームのメンバー追加の詳細を表示する
     """
-    template_name = 'teams/notification/member_approval_notification_detail.html'
+    template_name = 'teams/notification/member_approval_detail.html'
     model = Notification
     success_url = 'teams:notification'
 
@@ -94,7 +108,7 @@ class ApplicationNotificationDetailView(LoginRequiredMixin, OnlyYouMixin, Detail
     """
     リクエストの詳細を表示する
     """
-    template_name = 'teams/notification/application_notification_detail.html'
+    template_name = 'teams/notification/application_detail.html'
     model = Notification
     success_url = 'teams:application_reply_create'
 
@@ -129,3 +143,25 @@ class ApplicationNotificationDetailView(LoginRequiredMixin, OnlyYouMixin, Detail
         return reverse(self.success_url, kwargs={'username': self.request.user.username, 'id': self.object.id})
 
 application_detail = ApplicationNotificationDetailView.as_view()
+
+
+
+class OfficialNotificationDetailView(LoginRequiredMixin, OnlyYouMixin, DetailView):
+    """
+    公式からのお知らせの詳細を表示する
+    """
+    template_name = 'teams/notification/official_detail.html'
+    model = Notification
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['official_notification'] = Notification.objects.get(id=self.kwargs.get('id'))
+        return context
+
+    def get_object(self):
+        return get_object_or_404(get_user_model(), username=self.kwargs.get('username'))
+
+    def get_success_url(self):
+        return reverse(self.success_url, kwargs={'username': self.request.user.username, 'id': self.object.id})
+
+official_detail = OfficialNotificationDetailView.as_view()

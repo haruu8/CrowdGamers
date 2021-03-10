@@ -2,14 +2,22 @@
 
 {% block content %}
 
-  <h3>リクエスト一覧</h3>
-  {% if applications %}
-    {% for application in applications %}
+  <h3>通知一覧</h3>
+  {% if notifications %}
+    {% for notification in notifications %}
     <hr>
-      <div>
-        <p><a href="{% url 'teams:account_detail' application.from_user %}">{{ application.from_user }}</a> からメッセージが届きました。</p>
-        <p><a href="{% url 'teams:application_notification_detail' user.username application.id %}">{{ application.message | truncatechars:12 }}</a></p>
-      </div>
+    <div>
+      <p><a href="{% url 'teams:account_detail' notification.from_user %}">{{ notification.from_user }}</a> からメッセージが届きました。</p>
+      {% if notification.mode == 'application' %}
+        <p><a href="{% url 'teams:application_detail' user.username notification.id %}">{{ notification.message | truncatechars:20 }}</a></p>
+      {% elif notification.mode == 'invitation' %}
+        <p><a href="{% url 'teams:invitation_detail' user.username notification.id %}">{{ notification.message | truncatechars:20 }}</a></p>
+      {% elif notification.mode == 'member_approval' %}
+        <p><a href="{% url 'teams:member_approval_detail' user.username notification.id %}">{{ notification.message | truncatechars:20 }}</a></p>
+      {% elif notification.mode == 'official' %}
+        <p><a href="{% url 'teams:official_detail' user.username notification.id %}">{{ notification.message | truncatechars:20 }}</a></p>
+      {% endif %}
+    </div>
     {% endfor %}
   {% else %}
     <p>通知は届いていません。</p>
