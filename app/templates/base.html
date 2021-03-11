@@ -19,12 +19,6 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav ml-auto">
-
-        <form class="form-inline my-2 my-lg-0">
-          <input class="form-control mr-sm-2" type="search" placeholder="検索ワードを入力" aria-label="検索">
-          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">検索</button>
-        </form>
-
         {% if user.is_authenticated %}
         <li class='nav-item'>
           <a class="nav-link" href="{% url 'teams:notification' user.username %}">
