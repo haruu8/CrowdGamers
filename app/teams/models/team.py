@@ -44,7 +44,7 @@ class Team(models.Model):
             validate_icon_image,
         ])
     url = models.URLField(null=True, blank=True)
-    description = models.CharField(max_length=255)
+    introduction = models.CharField(max_length=255)
     sponsor = models.CharField(max_length=100, null=True, blank=True)
     game_title = models.ManyToManyField(Game, related_name='team_game_title')
     feature = models.ManyToManyField(Feature, verbose_name='特徴', related_name='team_feature')

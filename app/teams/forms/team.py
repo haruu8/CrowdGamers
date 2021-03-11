@@ -7,7 +7,7 @@ class TeamCreateForm(forms.ModelForm):
 
     class Meta:
         model = Team
-        fields = ('teamname', 'name', 'icon', 'header', 'url', 'description',
+        fields = ('teamname', 'name', 'icon', 'header', 'url', 'introduction',
                     'sponsor', 'game_title','feature', 'desired_job','desired_condition', 'disclosed')
         labels = {
             'teamname': 'チームネーム',
@@ -15,7 +15,7 @@ class TeamCreateForm(forms.ModelForm):
             'icon': 'アイコン',
             'header': 'ヘッダー',
             'url': '公式のURL',
-            'description': '説明',
+            'introduction': '説明',
             'sponsor': 'スポンサー',
             'game_title': 'ゲームタイトル',
             'feature': '特徴',
@@ -32,7 +32,7 @@ class TeamCreateForm(forms.ModelForm):
     header = forms.ImageField(required=False)
     url = forms.URLField(required=False,
                             widget=forms.URLInput(attrs={'placeholder': 'チームの公式HPのURLを入力してください', 'render_value': True}))
-    description = forms.CharField(required=True,
+    introduction = forms.CharField(required=True,
                             widget=forms.Textarea(attrs={'placeholder': 'チームについて入力してください', 'render_value': True}))
     sponsor = forms.CharField(required=False,
                             widget=forms.Textarea(attrs={'placeholder': 'スポンサー名を入力してください', 'render_value': True}))
