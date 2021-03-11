@@ -69,7 +69,7 @@ class TeamListView(ListView):
         -----
         仕組みは TeamListView と同じ
         """
-        queryset = UserProfile.objects.order_by('-created_at')
+        queryset = Team.objects.order_by('-created_at')
         keyword = self.request.GET.get('keyword')
         if keyword:
             exclusion = set([' ', '　'])
@@ -79,11 +79,11 @@ class TeamListView(ListView):
                     pass
                 else:
                     q_list += i
-            query = reduce(
-                        and_, [Q(name__icontains=q) |
-                                Q(introduction__icontains=q) |
-                                Q(desired_condition__icontains=q)
-                                for q in q_list])
+            query = reduce(and_, [Q(name__icontains=q) |
+                                    Q(teamname__icontains=q) |
+                                    Q(introduction__icontains=q) |
+                                    Q(desired_condition__icontains=q)
+                                    for q in q_list])
             queryset = queryset.filter(query)
             # messages.success(self.request, '「{}」の検索結果'.format(keyword))
         return queryset

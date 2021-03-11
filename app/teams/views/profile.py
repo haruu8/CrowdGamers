@@ -92,6 +92,7 @@ class UserListView(ListView):
     Notes
     -----
     UserProfile での検索
+    仕組みは TeamListView と同じ
     """
     template_name = 'teams/accounts/accounts_list.html'
     model = UserProfile
@@ -103,10 +104,6 @@ class UserListView(ListView):
         See Also
         --------
         keyword : html検索バーから受け取った文字列
-
-        Notes
-        -----
-        仕組みは TeamListView と同じ
         """
         queryset = UserProfile.objects.order_by('-created_at')
         keyword = self.request.GET.get('keyword')
@@ -118,11 +115,10 @@ class UserListView(ListView):
                     pass
                 else:
                     q_list += i
-            query = reduce(
-                        and_, [Q(name__icontains=q) |
-                                Q(introduction__icontains=q) |
-                                Q(desired_condition__icontains=q)
-                                for q in q_list])
+            query = reduce(and_, [Q(name__icontains=q) |
+                                    Q(introduction__icontains=q) |
+                                    Q(desired_condition__icontains=q)
+                                    for q in q_list])
             queryset = queryset.filter(query)
             # messages.success(self.request, '「{}」の検索結果'.format(keyword))
         return queryset

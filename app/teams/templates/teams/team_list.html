@@ -5,20 +5,23 @@
 
 {% block content %}
 
-<form method="GET" action="{% url 'teams:accounts_list' %}">
-  <input type="text" name="keyword">
-  <button type="submit">検索</button>
-</form>
+  <div class="container">
+    <h2 class="title">チームを探す</h2>
+    <form method="GET" action="{% url 'teams:team_list' %}">
+      <input type="text" name="keyword">
+      <button type="submit">検索</button>
+    </form>
 
     <div class="team-all">
-      {% for team in object_list %}
+      {% for object in object_list %}
         <div class='team-section'>
-          <img src="{{ team.icon.url }}" alt="アイコン" class="team-icon">
-          <p class="name">{{ team.name | truncatechars:12 }}</p>
-          <p class='teamname'>{{ team.teamname }}</p>
-          <a href="{% url 'teams:team_detail' team.teamname %}"></a>
+          <img src="{{ object.icon.url }}" alt="アイコン" class="team-icon">
+          <p class="name">{{ object.name | truncatechars:12 }}</p>
+          <p class='teamname'>{{ object.teamname }}</p>
+          <a href="{% url 'teams:team_detail' object.teamname %}"></a>
         </div>
-      {% endfor %}
+        {% endfor %}
+      </div>
     </div>
   </div>
 
