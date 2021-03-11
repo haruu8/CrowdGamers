@@ -1,5 +1,5 @@
-from django.shortcuts import render
-from django.urls import reverse_lazy, reverse
+from django.shortcuts import render, redirect
+from django.urls import reverse
 from django.views.generic import CreateView, FormView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import get_user_model
@@ -27,7 +27,7 @@ class InvitationCreateView(LoginRequiredMixin, CreateView, UserProfileBaseView):
         """
         self.object = form.save(commit=False)
         if self.request.user.user_profile.is_owner == False:
-            return reverse(self.success_url, kwargs={'username': self.object.username})
+            return redirect(self.success_url, teamname=self.kwargs.get('teamname'))
         self.object.mode = 'invitation'
         self.object.from_user = self.request.user
         self.object.invitation_user = get_user_model().objects.get(username=self.kwargs.get('username'))

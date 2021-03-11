@@ -7,9 +7,10 @@ from teams.forms import UserProfileUpdateForm
 
 
 
-""" UserProfileに関するview """
-
 class UserProfileBaseView(DetailView):
+    """
+    ユーザープロフィールのデータを取得する
+    """
     template_name = 'teams/accounts/profile_extends_base.html'
     model = UserProfile
 
@@ -23,6 +24,9 @@ class UserProfileBaseView(DetailView):
 
 
 class UserProfileDetailGameView(UserProfileBaseView):
+    """
+    プロフィール下段のゲームを表示する
+    """
     template_name = 'teams/accounts/account_detail_game.html'
     model = UserProfile
 
@@ -31,6 +35,9 @@ account_detail_game = UserProfileDetailGameView.as_view()
 
 
 class UserProfileDetailFeatureView(UserProfileBaseView):
+    """
+    プロフィール下段の特徴を表示する
+    """
     template_name = 'teams/accounts/account_detail_feature.html'
     model = UserProfile
 
@@ -39,6 +46,9 @@ account_detail_feature = UserProfileDetailFeatureView.as_view()
 
 
 class UserProfileDetailDesiredConditionView(UserProfileBaseView):
+    """
+    プロフィール下段の希望条件を表示する
+    """
     template_name = 'teams/accounts/account_detail_desired_condition.html'
     model = UserProfile
 
@@ -47,6 +57,9 @@ account_detail_desired_condition = UserProfileDetailDesiredConditionView.as_view
 
 
 class UserProfileUpdateView(OnlyYouMixin, UpdateView):
+    """
+    プロフィールを更新する
+    """
     template_name = 'teams/accounts/account_profile_update.html'
     model = UserProfile
     form_class = UserProfileUpdateForm
