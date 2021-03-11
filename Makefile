@@ -15,7 +15,11 @@ showmigrations:
 static:
 	docker-compose exec django python3 manage.py collectstatic
 test:
-	docker-compose exec django python3 manage.py test
+	docker-compose exec django coverage run --source='.' manage.py test
+report:
+	docker-compose exec django coverage report
+html:
+	docker-compose exec django coverage html
 insert:
 	docker-compose exec django python3 manage.py loaddata user_initial.json \
 	&& docker-compose exec django python3 manage.py loaddata feature_initial.json \
