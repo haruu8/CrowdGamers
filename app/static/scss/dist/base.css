@@ -31,6 +31,7 @@ nav a:hover {
 nav .profile-icon {
   width: 32px;
   height: 32px;
+  border-radius: 50%;
 }
 nav .bell-icon {
   width: 24px;

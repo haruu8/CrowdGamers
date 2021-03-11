@@ -106,9 +106,12 @@ class TeamUpdateView(LoginRequiredMixin, OnlyOwnerMixin, UpdateView):
     success_url = reverse_lazy('teams:home')
 
     def form_valid(self, form):
-        result = super().form_valid(form)
-        self.object = TeamCreateForm(self.request.POST, self.request.FILES, instance=self.request.user.user_profile)
+        self.object = TeamCreateForm(self.request.POST, self.request.FILES, instance=self.kwargs.get('teamname'))
+        self.object = form.save(commit=False)
+        self.object.icon = form.cleaned_data['icon']
+        self.object.header = form.cleaned_data['header']
         self.object.save()
+        result = super().form_valid(form)
         return result
 
     def get_object(self):

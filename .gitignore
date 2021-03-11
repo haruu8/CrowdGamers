@@ -2,6 +2,7 @@
 env
 .vscode
 
+media
 app/deploy/admin/
 
 app/teams/templates/teams/support/md/
