@@ -1,8 +1,12 @@
 from django.shortcuts import render, redirect, get_object_or_404, resolve_url
 from django.urls import reverse_lazy, reverse
 from django.views.generic import TemplateView, CreateView, DetailView, ListView, UpdateView, DeleteView, FormView
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib import messages
 from django.contrib.auth import get_user_model
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import Q
+from functools import reduce
+from operator import and_
 from teams.models import Team, UserProfile, Notification
 from teams.forms import TeamCreateForm, MemberApprovalCreateForm
 from .access import OnlyYouMixin, OnlyOwnerMixin
@@ -43,8 +47,46 @@ team_create = TeamCreateView.as_view()
 
 
 class TeamListView(ListView):
+    """
+    チームを検索する
+
+    Notes
+    -----
+    仕組みは UserListView と変わらない
+    """
     template_name = 'teams/team_list.html'
     model = Team
+
+    def get_queryset(self):
+        """
+        検索の処理
+
+        See Also
+        --------
+        keyword : html検索バーから受け取った文字列
+
+        Notes
+        -----
+        仕組みは TeamListView と同じ
+        """
+        queryset = UserProfile.objects.order_by('-created_at')
+        keyword = self.request.GET.get('keyword')
+        if keyword:
+            exclusion = set([' ', '　'])
+            q_list = ''
+            for i in keyword:
+                if i in exclusion:
+                    pass
+                else:
+                    q_list += i
+            query = reduce(
+                        and_, [Q(name__icontains=q) |
+                                Q(introduction__icontains=q) |
+                                Q(desired_condition__icontains=q)
+                                for q in q_list])
+            queryset = queryset.filter(query)
+            # messages.success(self.request, '「{}」の検索結果'.format(keyword))
+        return queryset
 
 team_list = TeamListView.as_view()
 

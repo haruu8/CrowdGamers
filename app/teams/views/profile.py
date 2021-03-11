@@ -2,6 +2,9 @@ from django.shortcuts import get_object_or_404, resolve_url, redirect
 from django.views.generic import DetailView, UpdateView, ListView
 from django.contrib import messages
 from django.contrib.auth import get_user_model
+from django.db.models import Q
+from functools import reduce
+from operator import and_
 from .access import OnlyYouMixin
 from teams.models import Notification, UserProfile
 from teams.forms import UserProfileUpdateForm
@@ -88,25 +91,40 @@ class UserListView(ListView):
 
     Notes
     -----
-    User モデルでの検索ではなく、 UserProfile での検索
-
-    TODO
-    -----
-    html を編集する
+    UserProfile での検索
     """
     template_name = 'teams/accounts/accounts_list.html'
     model = UserProfile
 
     def get_queryset(self):
+        """
+        検索の処理
+
+        See Also
+        --------
+        keyword : html検索バーから受け取った文字列
+
+        Notes
+        -----
+        仕組みは TeamListView と同じ
+        """
         queryset = UserProfile.objects.order_by('-created_at')
         keyword = self.request.GET.get('keyword')
         if keyword:
-            queryset = queryset.filter(
-                            Q(name__icontains=keyword) |
-                            Q(description__icontains=keyword)
-                        )
-            messages.success(self.request, '「{}」の検索結果'.format(keyword))
-
+            exclusion = set([' ', '　'])
+            q_list = ''
+            for i in keyword:
+                if i in exclusion:
+                    pass
+                else:
+                    q_list += i
+            query = reduce(
+                        and_, [Q(name__icontains=q) |
+                                Q(introduction__icontains=q) |
+                                Q(desired_condition__icontains=q)
+                                for q in q_list])
+            queryset = queryset.filter(query)
+            # messages.success(self.request, '「{}」の検索結果'.format(keyword))
         return queryset
 
 accounts_list = UserListView.as_view()

@@ -22,8 +22,8 @@ class ApplicationCreateView(LoginRequiredMixin, CreateView, TeamDetailBaseView):
         """
         application object に必要な情報を登録する
 
-        SeeAlso
-        -----
+        See Also
+        --------
         mode : application
         to_user : チームオーナー
 
