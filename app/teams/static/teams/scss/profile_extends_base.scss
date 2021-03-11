@@ -1,0 +1,53 @@
+$blue-1-color: #1F8FFF;
+$blue-2-color: #1C81E6;
+$blue-3-color: #1872CC;
+$blue-4-color: #1564B3;
+$blue-5-color: #125699;
+$blue-6-color: #0F4780;
+$blue-7-color: #0C3966;
+$blue-8-color: #092B4D;
+$blue-9-color: #061D33;
+$blue-10-color: #030E1A;
+$twitter-color: #1DA1F2;
+$color: black;
+$sub-color: #c9c9c9;
+
+.header-img {
+  width: 100%;
+  height: 260px;
+  object-fit: cover;
+}
+
+.profile-name {
+  font-weight: bold;
+}
+
+.div-icon-img {
+  position: relative;
+  bottom: 73px;
+  width: 147px;
+  height: 147px;
+  border: 6px solid $color;
+  border-radius: 50%;
+}
+
+.icon-img {
+  width: 135px;
+  height: 135px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.username-team-section {
+  display: flex;
+  p {
+    margin-right: 0.3rem;
+  }
+  .sub_color {
+    color: $sub-color;
+  }
+}
+
+.introduction {
+  font-size: 14px;
+}

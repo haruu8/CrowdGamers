@@ -1,26 +1,33 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block stylesheet %}'{% static "teams/scss/dist/profile_extends_base.css" %}'{% endblock %}
+
 {% block content %}
 
+  <img src="{{ user_profile.header.url }}" alt='ヘッダー画像' class='header-img'>
   <div class='container'>
-    <img src="{{ user_profile.icon.url }}" alt='アイコン画像'>
-    <img src="{{ user_profile.header.url }}" alt='ヘッダー画像'>
-    <p>ユーザーネーム：@{{ object.username }}</p>
-    <p>ニックネーム：{{ user_profile.name }}</p>
-    {% if user_profile.team %}
-      <p>所属チーム<a href="{% url 'teams:team_detail' user_profile.team.teamname %}">@{{ user_profile.team.teamname }}</a></p>
-      {% if user_profile.is_owner is True %}
-        <p>オーナー</p>
+    <div class="div-icon-img">
+      <img src="{{ user_profile.icon.url }}" alt='アイコン画像' class="icon-img">
+    </div>
+    <p class='profile-name'>{{ user_profile.name }}</p>
+    <div class="username-team-section">
+      <p class='sub_color'>@{{ object.username }}</p>
+      <p>|</p>
+      {% if user_profile.team %}
+        <p class='sub_color'>team</p>
+        <p><a href="{% url 'teams:team_detail' user_profile.team.teamname %}">@{{ user_profile.team.teamname }}</a></p>
+        {% if user_profile.is_owner is True %}
+          <p class='sub_color'>owner</p>
+        {% else %}
+          <p class='sub_color'>member</p>
+        {% endif %}
       {% else %}
-        <p>メンバー</p>
+        <p class='sub_color'>無所属</p>
       {% endif %}
-      <p></p>
-    {% else %}
-      <p>無所属</p>
-    {% endif %}
-    <hr>
-    <p>説明：{{ user_profile.introduction }}</p>
+    </div>
+
+    <p class="introduction">{{ user_profile.introduction }}</p>
     {% if user_profile.clip_url %}
       <div>
         <iframe width="560" height=315 src="{{ user_profile.clip_url }}" frameborder="0" allowfullscreen></iframe>
