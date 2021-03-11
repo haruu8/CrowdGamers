@@ -27,48 +27,61 @@ CrowdGamers は、チーム・メンバーを条件別に見つけたりする�
 
 
 ## 主な利用方法
-### 1. ここに使用方法を手順で書く
-### 2. 続き
-### 3. 続き
+### チームメンバーを探したい場合
+### 1. ユーザー登録
+### 2. チームを登録
+### 3. 気になるプレイヤーに招待を送る
+
+### チームを探したい場合
+### 1. ユーザー登録
+### 2. 気になるチームを探す
+### 3. チームにリクエストを送る
 
 
 
 ### 基本機能一覧
-・Twitter認証登録機能
+* ユーザー機能
+* チーム機能
+* タグ機能
+* 検索機能
+* 通知機能
+* チームリクエスト機能
+* ユーザー招待機能
+* メンバー追加機能
 
 
 
 ## 使用技術・環境
 ### 【フロントエンド】
-・HTML5  
-・CSS (SCSS)  
-・JavaScript (jQuery)
+* HTML5  
+* CSS (SCSS)  
+* JavaScript (jQuery)
 
 
 ### 【バックエンド】
-・Python 3.8  
-・Django 3.1.5  
+* Python 3.8  
+* Django 3.1.5  
 
 
 
 ### 【データベース】
-・PostgreSQL 11.4
+* PostgreSQL 11.4
 
 
 
 ### 【開発環境】
-・Docker, docker-compose
+* Docker, docker-compose
 
 
 ### 【本番環境】
-・AWS ()  
-・Nginx, gunicorn  
-・CircleCI/CD  
+* AWS ()  
+* Nginx, gunicorn  
+* CircleCI/CD  
 
 
 
 ### 【その他使用技術】
-・Git, Github
+* Git, Github
 
 
 
@@ -76,7 +89,6 @@ CrowdGamers は、チーム・メンバーを条件別に見つけたりする�
 
 
 ## 特に力を入れた点
-
 
 ### 1. 力を入れた点をポイント別で書く
 ### 2. 続き
