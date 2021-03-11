@@ -7,7 +7,8 @@ from .notification import (
 )
 from .profile import (
     account_detail_game, account_detail_feature,
-    account_detail_desired_condition, account_profile_update
+    account_detail_desired_condition, account_profile_update,
+    accounts_list,
 )
 from .support import faq
 from .team import (

@@ -1,5 +1,6 @@
 from django.shortcuts import get_object_or_404, resolve_url, redirect
-from django.views.generic import DetailView, UpdateView
+from django.views.generic import DetailView, UpdateView, ListView
+from django.contrib import messages
 from django.contrib.auth import get_user_model
 from .access import OnlyYouMixin
 from teams.models import Notification, UserProfile
@@ -78,3 +79,34 @@ class UserProfileUpdateView(OnlyYouMixin, UpdateView):
         return get_object_or_404(UserProfile, user=self.request.user)
 
 account_profile_update = UserProfileUpdateView.as_view()
+
+
+
+class UserListView(ListView):
+    """
+    ユーザーの一覧表示・検索を行う
+
+    Notes
+    -----
+    User モデルでの検索ではなく、 UserProfile での検索
+
+    TODO
+    -----
+    html を編集する
+    """
+    template_name = 'teams/accounts/accounts_list.html'
+    model = UserProfile
+
+    def get_queryset(self):
+        queryset = UserProfile.objects.order_by('-created_at')
+        keyword = self.request.GET.get('keyword')
+        if keyword:
+            queryset = queryset.filter(
+                            Q(name__icontains=keyword) |
+                            Q(description__icontains=keyword)
+                        )
+            messages.success(self.request, '「{}」の検索結果'.format(keyword))
+
+        return queryset
+
+accounts_list = UserListView.as_view()

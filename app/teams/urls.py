@@ -16,6 +16,9 @@ urlpatterns = [
     path('privacy_policy/',
             TemplateView.as_view(template_name='teams/support/privacy_policy.html'), name='privacy_policy'),
 
+    # アカウントリスト
+    path('accounts/list/', views.accounts_list, name='accounts_list'),
+
     # チーム
     path('team/create/', views.team_create, name='team_create'),
     path('team/list/', views.team_list, name='team_list'),
