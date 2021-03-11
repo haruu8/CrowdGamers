@@ -140,5 +140,5 @@ def create_notification(sender, **kwargs):
             mode='official',
             from_user=User.objects.get(username='CrowdGamers'),
             to_user=kwargs['instance'],
-            message='プロフィールを作成しましょう！',
+            message='プロフィールへの入力をしましょう！あなただけの素敵なプロフィールを完成させましょう！編集はヘッダーのアイコンをクリックし、プロフィール画面から行うことができます。',
         )

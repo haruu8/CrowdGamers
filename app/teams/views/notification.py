@@ -22,13 +22,8 @@ class NotificationView(LoginRequiredMixin, OnlyYouMixin,TemplateView):
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
-        # ctx['notifications'] = Notification.objects.filter(
-        #     Q(from_user=self.request.user),
-        #     Q(is_proceeded__isnull=False) |
-        #     Q(to_user=self.request.user)
-        # ).order_by('-created_at')
         ctx['notifications'] = Notification.objects.filter(
-            Q(from_user=self.request.user) |
+            Q(from_user=self.request.user, is_proceeded__isnull=False) |
             Q(to_user=self.request.user)
         ).order_by('-created_at')
         return ctx
