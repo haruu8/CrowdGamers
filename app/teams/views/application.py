@@ -22,17 +22,24 @@ class ApplicationCreateView(LoginRequiredMixin, CreateView, TeamDetailBaseView):
         """
         application object に必要な情報を登録する
 
+        SeeAlso
+        -----
+        mode : application
+        to_user : チームオーナー
+
         Notes
         -----
-        mode に application を保存
-        from_user に request.user を保存
-        to_user にチームのオーナーを保存
+        同じチームに所属している場合、無効になる
         """
         self.object = form.save(commit=False)
+        self.object.team = Team.objects.get(teamname=self.kwargs.get('teamname'))
+        user_team = self.request.user.user_profile.team
+        if self.object.team == user_team:
+            return redirect(self.success_url, teamname=self.kwargs.get('teamname'))
+
         self.object.mode = 'application'
         self.object.from_user = self.request.user
 
-        self.object.team = Team.objects.get(teamname=self.kwargs.get('teamname'))
         member = self.object.team.belonging_user_profiles.all()
         owner_profile = member.filter(is_owner=True)[0]
         self.object.to_user = owner_profile.user
