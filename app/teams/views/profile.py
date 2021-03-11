@@ -64,16 +64,10 @@ class UserProfileUpdateView(OnlyYouMixin, UpdateView):
     """
     プロフィールを更新する
     """
-    template_name = 'teams/accounts/account_profile_update.html'
+    template_name = 'teams/accounts/profile_update.html'
     model = UserProfile
     form_class = UserProfileUpdateForm
     success_url = 'teams:account_detail'
-
-    def form_valid(self, form):
-        result = super().form_valid(form)
-        self.object = UserProfileUpdateForm(self.request.POST, self.request.FILES, instance=self.request.user.user_profile)
-        self.object.save()
-        return result
 
     def get_success_url(self):
         return resolve_url(self.success_url, username=self.kwargs.get('username'))
