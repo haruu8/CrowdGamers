@@ -6,31 +6,33 @@
 
 {% block profile_content %}
 
-  <div class="desired-condition-all">
-    {% if team.disclosed is True %}
+  <div class="container">
+    <div class="desired-condition-all">
+      {% if team.disclosed is True %}
 
       {% if team.desired_job %}
-        <p class="desired-job">希望枠</p>
-        <div class="job-section">
-          {% for job in team.desired_job.all %}
-            <p class='job'>{{ job }}</p>
-          {% endfor %}
-        </div>
+      <p class="desired-job">希望枠</p>
+      <div class="job-section">
+        {% for job in team.desired_job.all %}
+        <p class='job'>{{ job }}</p>
+        {% endfor %}
+      </div>
       {% else %}
-        <p class='desired-job'>希望枠は現在公開されていません</p>
+      <p class='desired-job'>希望枠は現在公開されていません</p>
       {% endif %}
 
       {% if team.desired_condition %}
-        <p>{{ team.desired_condition }}</p>
-        {% if request.user.user_profile.team is None %}
-          <p class='send-invitation'>
-            <a href="{% url 'teams:application_create' team.teamname %}" class="btn btn--blue btn--radius">リクエストを送る</a>
-          </p>
-        {% endif %}
+      <p>{{ team.desired_condition }}</p>
+      {% if request.user.user_profile.team is None %}
+      <p class='send-invitation'>
+        <a href="{% url 'teams:application_create' team.teamname %}" class="btn btn--blue btn--radius">リクエストを送る</a>
+      </p>
       {% endif %}
-    {% else %}
+      {% endif %}
+      {% else %}
       <p class="send-invitation">条件は現在公開されていません</p>
-    {% endif %}
+      {% endif %}
+    </div>
   </div>
 
 {% endblock %}

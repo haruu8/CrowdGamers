@@ -26,6 +26,10 @@ a:hover {
   color: $twitter-color;
 }
 
+img {
+  object-fit: cover;
+}
+
 .img_wrap{
   width: 76px;
   height: 32px;

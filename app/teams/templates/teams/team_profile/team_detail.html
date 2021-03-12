@@ -5,14 +5,16 @@
 
 {% block profile_content %}
 
-  <div class="game-all">
-    {% if object.game_title.all %}
-      {% for game in object.game_title.all %}
-        <p class='game'>{{ game }}</p>
-      {% endfor %}
-    {% else %}
-      <p>ゲームタイトルを現在選択していません。</p>
-    {% endif %}
+  <div class="container">
+    <div class="game-all">
+      {% if object.game_title.all %}
+        {% for game in object.game_title.all %}
+          <p class='game'>{{ game }}</p>
+        {% endfor %}
+      {% else %}
+        <p>ゲームタイトルを現在選択していません。</p>
+      {% endif %}
+    </div>
   </div>
 
 {% endblock %}
