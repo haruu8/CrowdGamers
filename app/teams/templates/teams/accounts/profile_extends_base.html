@@ -53,17 +53,17 @@
     <hr>
     <div class="lower-profile">
       <div class="game-section">
-        <img src="{% static 'img/game-icon.svg' %}" alt="ゲームアイコン" class='svg'>
+        <img src="{% static 'img/game-icon.svg' %}" alt="ゲームアイコン">
         <p>ゲーム</p>
         <a href="{% url 'teams:account_detail' object.username %}"></a>
       </div>
       <div class="feature-section">
-        <img src="{% static 'img/feature-icon.svg' %}" alt="特徴アイコン" class='svg'>
+        <img src="{% static 'img/feature-icon.svg' %}" alt="特徴アイコン">
         <p>特徴</p>
         <a href="{% url 'teams:account_detail_feature' object.username %}"></a>
       </div>
       <div class="desired-condition-section">
-        <img src="{% static 'img/desired-condition-icon.svg' %}" alt="希望条件アイコン" class='svg'>
+        <img src="{% static 'img/desired-condition-icon.svg' %}" alt="希望条件アイコン">
         <p>希望条件</p>
         <a href="{% url 'teams:account_detail_desired_condition' object.username %}"></a>
       </div>

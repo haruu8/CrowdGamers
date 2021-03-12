@@ -1,30 +1,69 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{% block stylesheet %}'{% static "teams/scss/dist/team_extends_base.css" %}'{% endblock %}
+
+{% block head %}{% endblock %}
 
 {% block content %}
 
+  <img src="{{ team.header.url }}" alt="ヘッダー画像" class='header-img'>
   <div class='container'>
+    <div class="div-icon-img">
+      <img src="{{ team.icon.url }}" alt="アイコン画像" class='icon-img'>
+    </div>
 
-    <p>名前：{{ team.name }}</p>
-    <img src="{{ team.icon.url }}" alt="アイコン">
-    <img src="{{ team.header.url }}" alt="ヘッダー">
-    <p>チームネーム：@{{ team.teamname }}</p>
+    <div class='name-edit-section'>
+      <div class="name-section">
+        <p class='profile-name'>{{ team.name }}</p>
+      </div>
+      <div class='edit-section'>
+        {% if request.user.user_profile.team.teamname == team.teamname and request.user.user_profile.is_owner is True %}
+        <p><a href="{% url 'teams:team_update' team.teamname %}" class="btn btn--blue btn--radius">編集する</a></p>
+        {% endif %}
+      </div>
+    </div>
 
-    {% if team.website %}
-      <p><a href="{{ team.url }}">HP</a></p>
-    {% endif %}
+    <div class="username-team-section">
+      <p class="sub-color">@{{ team.teamname }}</p>
+    </div>
 
-    <p>説明：{{ team.introduction }}</p>
+    <p class="introduction">{{ team.introduction }}</p>
+
+    <div class='website-date-joined'>
+      <p><a href="{{ team.website }}" target="_blank">{{ team.website | truncatechars:30 }}</a></p>
+      <p class="sub-color">{{ team.created_at | date:"Y年n月" }}に作成されました</p>
+    </div>
+
     {% if team.sponsor %}
-      <p>スポンサー：{{ team.sponsor }}</p>
+      <p class='sponsor-title'>スポンサー</p>
+      <p>{{ team.sponsor | linebreaksbr }}</p>
     {% endif %}
-    <a href="{% url 'teams:team_update' team.teamname %}">編集する</a>
-    <p class="sub-color">{{ team.created_at | date:"Y年n月" }}に作成されました</p>
+
 
     <hr>
-    <p><a href="{% url 'teams:team_detail' team.teamname %}">ゲーム</a></p>
-    <p><a href="{% url 'teams:team_detail_member' team.teamname %}">メンバー</a></p>
-    <p><a href="{% url 'teams:team_detail_feature' team.teamname %}">特徴</a></p>
-    <p><a href="{% url 'teams:team_detail_desired_condition' team.teamname %}">希望条件</a></p>
+    <div class="lower-profile">
+      <div class="game-section">
+        <img src="{% static 'img/game-icon.svg' %}" alt="ゲームアイコン" class='svg'>
+        <p>ゲーム</p>
+        <a href="{% url 'teams:team_detail' team.teamname %}"></a>
+      </div>
+      <div class="member-section">
+        <img src="{% static 'img/member-icon.svg' %}" alt="メンバーアイコン" class='svg'>
+        <p>メンバー</p>
+        <a href="{% url 'teams:team_detail_member' team.teamname %}"></a>
+      </div>
+      <div class="feature-section">
+        <img src="{% static 'img/feature-icon.svg' %}" alt="特徴アイコン" class='svg'>
+        <p>特徴</p>
+        <a href="{% url 'teams:team_detail_feature' team.teamname %}"></a>
+      </div>
+      <div class="desired-condition-section">
+        <img src="{% static 'img/desired-condition-icon.svg' %}" alt="希望条件アイコン" class='svg'>
+        <p>希望条件</p>
+        <a href="{% url 'teams:team_detail_desired_condition' team.teamname %}"></a>
+      </div>
+    </div>
     <hr>
 
     {% block profile_content %}{% endblock %}

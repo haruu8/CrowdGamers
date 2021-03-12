@@ -1,0 +1,158 @@
+.sub-color {
+  color: #c9c9c9;
+}
+
+hr {
+  background-color: white;
+  width: 100%;
+}
+
+.header-img {
+  width: 100%;
+  height: 260px;
+  object-fit: cover;
+}
+
+.container {
+  position: relative;
+  bottom: 73px;
+  padding: 0 10rem;
+}
+
+.div-icon-img {
+  width: 147px;
+  height: 147px;
+  border: 6px solid black;
+  border-radius: 50%;
+}
+
+.icon-img {
+  width: 135px;
+  height: 135px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.username-team-section {
+  display: flex;
+  margin-bottom: 0.5rem;
+}
+.username-team-section p {
+  margin-right: 0.3rem;
+  margin-bottom: 0;
+}
+
+.name-edit-section {
+  display: flex;
+  justify-content: space-between;
+}
+.name-edit-section .name-section {
+  margin-top: 0.5rem;
+  display: flex;
+}
+.name-edit-section .name-section .profile-name {
+  font-weight: bold;
+  margin-right: 0.3rem;
+}
+.name-edit-section .name-section img.twitter-icon {
+  width: 20px;
+  height: auto;
+}
+.name-edit-section .edit-section p {
+  margin: 0;
+  font-size: 14px;
+}
+.name-edit-section .edit-section a:hover {
+  text-decoration: none;
+}
+.name-edit-section .edit-section .btn--blue,
+.name-edit-section .edit-section a.btn--blue {
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  color: #fff;
+  background-color: none;
+  border: 1px solid white;
+}
+.name-edit-section .edit-section .btn--blue:hover,
+.name-edit-section .edit-section a.btn--blue:hover {
+  color: #fff;
+  background: #1C81E6;
+  border: 1px solid #1C81E6;
+}
+.name-edit-section .edit-section a.btn--radius {
+  border-radius: 100vh;
+}
+
+.introduction {
+  font-size: 14px;
+  margin-bottom: 0.5rem;
+}
+
+.website-date-joined {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  margin-bottom: 0.5rem;
+}
+
+.sponsor-title {
+  margin-bottom: 0.5rem;
+}
+
+.lower-profile {
+  display: flex;
+  justify-content: space-around;
+  text-align: center;
+  font-weight: bold;
+}
+.lower-profile p {
+  margin-top: 1rem;
+  margin-bottom: 0;
+}
+.lower-profile a {
+  color: white;
+}
+.lower-profile .game-section {
+  position: relative;
+}
+.lower-profile .game-section a {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  text-indent: -999px;
+}
+.lower-profile .member-section {
+  position: relative;
+}
+.lower-profile .member-section a {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  text-indent: -999px;
+}
+.lower-profile .feature-section {
+  position: relative;
+}
+.lower-profile .feature-section a {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  text-indent: -999px;
+}
+.lower-profile .desired-condition-section {
+  position: relative;
+}
+.lower-profile .desired-condition-section a {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  text-indent: -999px;
+}
