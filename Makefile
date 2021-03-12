@@ -30,6 +30,8 @@ insert:
 	&& docker-compose exec django python3 manage.py loaddata job_initial.json
 insert-user:
 	docker-compose exec django python3 manage.py loaddata user_initial.json
+insert-sample-data:
+	docker-compose exec django python3 manage.py loaddata sample_user_initial.json
 insert-feature:
 	docker-compose exec django python3 manage.py loaddata feature_initial.json
 insert-game:

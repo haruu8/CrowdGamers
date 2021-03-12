@@ -1,0 +1,42 @@
+[
+  {
+    "model": "accounts.user",
+    "pk": 1,
+    "fields": {
+      "username": "CrowdGamers",
+      "date_joined": "2019-01-01T12:34:56.789Z"
+    }
+  },
+  {
+    "model": "accounts.user",
+    "pk": 2,
+    "fields": {
+      "username": "Sample1",
+      "date_joined": "2019-01-01T12:34:56.789Z"
+    }
+  },
+  {
+    "model": "accounts.user",
+    "pk": 3,
+    "fields": {
+      "username": "Sample2",
+      "date_joined": "2019-01-01T12:34:56.789Z"
+    }
+  },
+  {
+    "model": "accounts.user",
+    "pk": 4,
+    "fields": {
+      "username": "Sample3",
+      "date_joined": "2019-01-01T12:34:56.789Z"
+    }
+  },
+  {
+    "model": "accounts.user",
+    "pk": 5,
+    "fields": {
+      "username": "Sample4",
+      "date_joined": "2019-01-01T12:34:56.789Z"
+    }
+  }
+]
