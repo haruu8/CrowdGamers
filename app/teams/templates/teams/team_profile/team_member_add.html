@@ -1,15 +1,24 @@
 {% extends 'teams/team_profile/team_extends_base.html' %}
 {% load static %}
 
-{% block stylesheet %}'{% static "teams/scss/dist/team_member_add.css" %}'{% endblock %}
+{% block head %}
+  <link rel="stylesheet" href="{% static 'teams/scss/team_profile/dist/team_member_add.css' %}">
+{% endblock %}
 
 {% block profile_content %}
 
-  <p>メンバー追加を申請しますか？<br>（メンバー追加を申請するとオーナーに通知が届きます。オーナーが許可するとチームのメンバー一覧に表示されるようになります。）</p>
-  <form action="{% url 'teams:team_member_add' team.teamname %}" method='POST'>
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button class="ui button btn-primary" type="submit" value="submit">送信する</button>
-  </form>
+  <div class="container">
+    <div class="form-section">
+      <p class="title">メンバー追加を申請しますか？</p>
+      <p>（メンバー追加を申請するとオーナーに通知が届きます。オーナーが許可するとチームのメンバー一覧に表示されるようになります。）</p>
+      <form action="{% url 'teams:team_member_add' team.teamname %}" method='POST'>
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div class="btn-section">
+          <button type='submit' class="btn btn--blue btn--radius">送信する</button>
+        </div>
+      </form>
+    </div>
+  </div>
 
 {% endblock %}
