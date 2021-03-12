@@ -1,13 +1,36 @@
 {% extends 'teams/team_profile/team_extends_base.html' %}
+{% load static %}
+
+{% block head %}<link rel="stylesheet" href="{% static 'teams/scss/dist/team_detail_desired_condition.css' %}">{% endblock %}
+
 
 {% block profile_content %}
 
-  <h3>希望条件</h3>
-  {% if team.disclosed is True %}
-    <p>希望条件：{{ team.desired_condition }}</p>
-    <p><a href="{% url 'teams:application_create' team.teamname %}">リクエストを送る</a></p>
-  {% else %}
-    <p>条件は現在公開されていません。</p>
-  {% endif %}
+  <div class="desired-condition-all">
+    {% if team.disclosed is True %}
+
+      {% if team.desired_job %}
+        <p class="desired-job">希望枠</p>
+        <div class="job-section">
+          {% for job in team.desired_job.all %}
+            <p class='job'>{{ job }}</p>
+          {% endfor %}
+        </div>
+      {% else %}
+        <p class='desired-job'>希望枠は現在公開されていません</p>
+      {% endif %}
+
+      {% if team.desired_condition %}
+        <p>{{ team.desired_condition }}</p>
+        {% if request.user.user_profile.team is None %}
+          <p class='send-invitation'>
+            <a href="{% url 'teams:application_create' team.teamname %}" class="btn btn--blue btn--radius">リクエストを送る</a>
+          </p>
+        {% endif %}
+      {% endif %}
+    {% else %}
+      <p class="send-invitation">条件は現在公開されていません</p>
+    {% endif %}
+  </div>
 
 {% endblock %}

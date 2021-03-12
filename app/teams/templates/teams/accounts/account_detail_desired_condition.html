@@ -7,8 +7,10 @@
 
   <div class="desired-condition-all">
     {% if user_profile.disclosed is True %}
-      {% if user_profile.desired_job is None %}
-        <p class='desired-job'>希望枠：{{ user_profile.desired_job }}</p>
+      {% if user_profile.desired_job.all %}
+        {% for job in user_profile.desired_job.all %}
+          <p class='desired-job'>希望枠：{{ job }}</p>
+        {% endfor %}
       {% else %}
         <p class='desired-job'>希望枠は現在公開されていません。</p>
       {% endif %}
