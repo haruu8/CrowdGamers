@@ -1,0 +1,11 @@
+.desired-condition-all {
+  margin: 4rem auto;
+}
+.desired-condition-all .desired-job {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+.desired-condition-all .send-invitation {
+  margin-top: 4rem;
+  text-align: center;
+}

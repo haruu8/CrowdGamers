@@ -1,23 +1,26 @@
 {% extends 'teams/accounts/profile_extends_base.html' %}
+{% load static %}
+
+{% block head %}<link rel="stylesheet" href="{% static 'teams/scss/dist/account_detail_desired_condition.css' %}">{% endblock %}
 
 {% block profile_content %}
 
-
-  <h1>希望条件</h1>
-  {% if user_profile.disclosed is True %}
-    {% if user_profile.desired_job is None %}
-      <p>希望職：{{ user_profile.desired_job }}</p>
-    {% else %}
-      <p>希望職は現在公開されていません。</p>
-    {% endif %}
-    {% if user_profile.desired_condition %}
-      <p>条件：{{ user_profile.desired_condition }}</p>
-      {% if request.user.user_profile.is_owner is True %}
-        <p><a href="{% url 'teams:invitation_create' object.username %}">招待を送る</a></p>
+  <div class="desired-condition-all">
+    {% if user_profile.disclosed is True %}
+      {% if user_profile.desired_job is None %}
+        <p class='desired-job'>希望職：{{ user_profile.desired_job }}</p>
+      {% else %}
+        <p class='desired-job'>希望職は現在公開されていません。</p>
       {% endif %}
+      {% if user_profile.desired_condition %}
+        <p>{{ user_profile.desired_condition }}</p>
+        {% if request.user.user_profile.is_owner is True %}
+          <p class='send-invitation'><a href="{% url 'teams:invitation_create' object.username %}">招待を送る</a></p>
+        {% endif %}
+      {% endif %}
+    {% else %}
+      <p class='send-invitation'>条件は現在公開されていません</p>
     {% endif %}
-  {% else %}
-    <p>条件は現在公開されていません</p>
-  {% endif %}
+  </div>
 
 {% endblock %}

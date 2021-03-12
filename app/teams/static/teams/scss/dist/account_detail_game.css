@@ -1,12 +1,7 @@
-@charset "UTF-8";
 .movie-wrap {
   text-align: center;
-  position: relative;
-  padding-bottom: 56.25%;
-  /*アスペクト比 16:9の場合の縦幅*/
-  height: 0;
   overflow: hidden;
-  margin: 4rem auto;
+  margin-top: 4rem;
 }
 .movie-wrap .movie-wrap iframe {
   position: absolute;
@@ -16,6 +11,9 @@
   height: 100%;
 }
 
-.game {
+.game-all {
+  margin: 4rem auto;
+}
+.game-all .game {
   text-align: center;
 }
