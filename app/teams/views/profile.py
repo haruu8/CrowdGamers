@@ -20,7 +20,8 @@ class UserProfileBaseView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['user_profile'] = UserProfile.objects.get(user=self.request.user)
+        user = get_user_model().objects.get(username=self.kwargs.get('username'))
+        context['user_profile'] = user.user_profile
         return context
 
     def get_object(self):
