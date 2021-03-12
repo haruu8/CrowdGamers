@@ -12,6 +12,10 @@ a:hover {
   color: #1DA1F2;
 }
 
+img {
+  object-fit: cover;
+}
+
 .img_wrap {
   width: 76px;
   height: 32px;

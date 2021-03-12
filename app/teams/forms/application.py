@@ -7,14 +7,10 @@ class ApplicationCreateForm(forms.ModelForm):
     class Meta:
         model = Notification
         fields = ('desired_job', 'message')
-        labels = {
-            'desired_job': '希望職',
-            'message': '志望理由',
-        }
 
-    desired_job = forms.ModelMultipleChoiceField(queryset=Job.objects.all(), required=True, help_text='1つまで選択することができます',
-                            widget=forms.SelectMultiple(attrs={'class': 'form-control'}))
-    message = forms.CharField(required=True,
+    desired_job = forms.ModelMultipleChoiceField(queryset=Job.objects.all(), required=True, label='希望枠',
+                            help_text='1つまで選択することができます', widget=forms.SelectMultiple(attrs={'class': 'form-control'}))
+    message = forms.CharField(required=True, label='志望理由',
                                 widget=forms.Textarea(attrs={'placeholder': '志望理由を入力してください', 'render_value': True}))
 
     def __init__(self, *args, **kwargs):
@@ -49,11 +45,8 @@ class ApplicationUpdateForm(forms.ModelForm):
     class Meta:
         model = Notification
         fields = ('invite_url',)
-        labels = {
-            'invite_url': '招待URL'
-        }
 
-    invite_url = forms.URLField(required=True,
+    invite_url = forms.URLField(required=True, label='招待URL',
                                 widget=forms.TextInput(attrs={'placeholder': '会話に使用する Discordサーバーの招待URLを入力してください', 'render_value': True}))
 
     def __init__(self, *args, **kwargs):

@@ -1,0 +1,82 @@
+.custom-container {
+  margin: auto 5rem;
+  padding: 0 5rem;
+}
+
+.member-icon {
+  width: 131px;
+  height: 131px;
+  border-radius: 50%;
+}
+
+.member-profile-all {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding-bottom: 3rem;
+  margin: auto 3rem;
+}
+
+.member-profile-section {
+  background-color: #0F4780;
+  padding: 1.55rem 3.5rem;
+  height: auto;
+  border-radius: 25%;
+  margin: 1.5rem auto;
+  position: relative;
+  text-align: center;
+}
+.member-profile-section a {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  text-indent: -999px;
+  width: 100%;
+}
+.member-profile-section .job {
+  font-size: 14px;
+  color: #c9c9c9;
+  margin-bottom: 0;
+}
+.member-profile-section .member-name {
+  margin: 0.5rem auto;
+  font-weight: bold;
+}
+.member-profile-section .member-username {
+  color: #c9c9c9;
+  font-size: 14px;
+  margin-bottom: 0;
+}
+
+.member-icon {
+  width: 6rem;
+  height: 6rem;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.application-section {
+  text-align: center;
+  margin-bottom: 5rem;
+}
+.application-section a:hover {
+  text-decoration: none;
+}
+.application-section .btn--blue,
+.application-section a.btn--blue {
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  color: #fff;
+  background-color: none;
+  border: 1px solid white;
+}
+.application-section .btn--blue:hover,
+.application-section a.btn--blue:hover {
+  color: #fff;
+  background: #1C81E6;
+  border: 1px solid #1C81E6;
+}
+.application-section a.btn--radius {
+  border-radius: 100vh;
+}

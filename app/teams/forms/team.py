@@ -9,42 +9,28 @@ class TeamCreateForm(forms.ModelForm):
         model = Team
         fields = ('teamname', 'name', 'icon', 'header', 'website', 'introduction',
                     'sponsor', 'game_title','feature', 'desired_job','desired_condition', 'disclosed')
-        labels = {
-            'teamname': 'チームネーム',
-            'name': '名前',
-            'icon': 'アイコン',
-            'header': 'ヘッダー',
-            'website': 'ウェブサイト',
-            'introduction': '説明',
-            'sponsor': 'スポンサー',
-            'game_title': 'ゲームタイトル',
-            'feature': '特徴',
-            'desired_job': '希望職',
-            'desired_condition': '希望条件',
-            'disclosed': '公開・非公開',
-        }
 
-    teamname = forms.CharField(required=True,
+    teamname = forms.CharField(required=True, label='チームネーム',
                             widget=forms.TextInput(attrs={'placeholder': 'チームのユーザーネームを入力してください', 'render_value': True}))
-    name = forms.CharField(required=True,
+    name = forms.CharField(required=True, label='名前',
                             widget=forms.TextInput(attrs={'placeholder': 'チームの名前を入力してください', 'render_value': True}))
-    icon = forms.ImageField(required=False)
+    icon = forms.ImageField(required=False, label='アイコン')
     header = forms.ImageField(required=False)
-    website = forms.URLField(required=False,
+    website = forms.URLField(required=False, label='ウェブサイト',
                             widget=forms.URLInput(attrs={'placeholder': 'ウェブサイトのURLを入力してください', 'render_value': True}))
-    introduction = forms.CharField(required=True,
+    introduction = forms.CharField(required=True, label='説明',
                             widget=forms.Textarea(attrs={'placeholder': 'チームについて入力してください', 'render_value': True}))
-    sponsor = forms.CharField(required=False,
+    sponsor = forms.CharField(required=False,label='スポンサー',
                             widget=forms.Textarea(attrs={'placeholder': 'スポンサー名を入力してください', 'render_value': True}))
-    game_title = forms.ModelMultipleChoiceField(queryset=Game.objects.all(), required=False,
+    game_title = forms.ModelMultipleChoiceField(queryset=Game.objects.all(), required=False, label='ゲームタイトル',
                             widget=forms.SelectMultiple(attrs={'class': 'form-control'}))
-    feature = forms.ModelMultipleChoiceField(queryset=Feature.objects.all(),
+    feature = forms.ModelMultipleChoiceField(queryset=Feature.objects.all(), label='特徴',
                             widget=forms.SelectMultiple(attrs={'class': 'form-control'}))
-    desired_job = forms.ModelMultipleChoiceField(queryset=Job.objects.all(),
+    desired_job = forms.ModelMultipleChoiceField(queryset=Job.objects.all(), label='希望枠',
                             widget=forms.SelectMultiple(attrs={'class': 'form-control'}))
-    desired_condition = forms.CharField(required=False,
+    desired_condition = forms.CharField(required=False, label='希望条件',
                             widget=forms.Textarea(attrs={'placeholder': '募集する選手の希望条件を入力してください', 'render_value': True}))
-    disclosed = forms.BooleanField(required=False)
+    disclosed = forms.BooleanField(required=False, label='公開・非公開')
 
     def __init__(self, *args, **kwargs):
         super(TeamCreateForm, self).__init__(*args, **kwargs)
@@ -76,5 +62,5 @@ class TeamCreateForm(forms.ModelForm):
         """
         desired_job = self.cleaned_data['desired_job']
         if len(desired_job) >= 4:
-            raise forms.ValidationError('一度に募集可能なのは3つまでです')
+            raise forms.ValidationError('希望枠は3つまでしか選択することができません')
         return desired_job

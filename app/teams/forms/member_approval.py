@@ -10,11 +10,8 @@ class MemberApprovalCreateForm(forms.ModelForm):
     class Meta:
         model = Notification
         fields = ('message',)
-        labels = {
-            'message': 'メッセージ',
-        }
 
-    message = forms.CharField(required=True,
+    message = forms.CharField(required=True, label='メッセージ',
                             widget=forms.Textarea(attrs={'placeholder': 'オーナーにわかるようにメッセージを入力してください', 'render_value': True}))
 
     def __init__(self, *args, **kwargs):
