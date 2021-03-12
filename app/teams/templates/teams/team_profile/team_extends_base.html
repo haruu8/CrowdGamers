@@ -36,9 +36,11 @@
     </div>
 
     {% if team.sponsor %}
+    <div class="sponsor-section">
       <p class='sponsor-title'>スポンサー</p>
       <p>{{ team.sponsor | linebreaksbr }}</p>
-      {% endif %}
+    </div>
+    {% endif %}
     </div>
 
     <div class="hr">

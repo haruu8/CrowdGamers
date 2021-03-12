@@ -92,10 +92,12 @@ hr {
   display: flex;
   justify-content: space-between;
   font-size: 14px;
-  margin-bottom: 0.5rem;
 }
 
-.sponsor-title {
+.sponsor-section {
+  margin-bottom: 3rem;
+}
+.sponsor-section .sponsor-title {
   margin-bottom: 0.5rem;
 }
 

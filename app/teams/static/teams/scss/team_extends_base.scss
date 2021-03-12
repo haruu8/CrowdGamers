@@ -114,12 +114,16 @@ hr {
   display: flex;
   justify-content: space-between;
   font-size: 14px;
-  margin-bottom: 0.5rem;
 }
 
-.sponsor-title {
-  margin-bottom: 0.5rem;
+.sponsor-section {
+  margin-bottom: 3rem;
+
+  .sponsor-title {
+    margin-bottom: 0.5rem;
+  }
 }
+
 
 div.hr {
   position: relative;
