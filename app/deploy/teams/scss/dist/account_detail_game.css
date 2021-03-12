@@ -1,0 +1,19 @@
+.movie-wrap {
+  text-align: center;
+  overflow: hidden;
+  margin-top: 4rem;
+}
+.movie-wrap .movie-wrap iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.game-all {
+  margin: 4rem auto;
+}
+.game-all .game {
+  text-align: center;
+}

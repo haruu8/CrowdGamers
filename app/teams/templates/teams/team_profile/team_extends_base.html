@@ -18,6 +18,7 @@
       <p>スポンサー：{{ team.sponsor }}</p>
     {% endif %}
     <a href="{% url 'teams:team_update' team.teamname %}">編集する</a>
+    <p class="sub-color">{{ team.created_at | date:"Y年n月" }}に作成されました</p>
 
     <hr>
     <p><a href="{% url 'teams:team_detail' team.teamname %}">ゲーム</a></p>
