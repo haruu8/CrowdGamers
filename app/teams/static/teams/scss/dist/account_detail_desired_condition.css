@@ -9,3 +9,20 @@
   margin-top: 4rem;
   text-align: center;
 }
+.desired-condition-all .send-invitation .btn--blue,
+.desired-condition-all .send-invitation a.btn--blue {
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  color: #fff;
+  background-color: none;
+  border: 1px solid white;
+}
+.desired-condition-all .send-invitation .btn--blue:hover,
+.desired-condition-all .send-invitation a.btn--blue:hover {
+  color: #fff;
+  background: #1C81E6;
+  border: 1px solid #1C81E6;
+}
+.desired-condition-all .send-invitation a.btn--radius {
+  border-radius: 100vh;
+}

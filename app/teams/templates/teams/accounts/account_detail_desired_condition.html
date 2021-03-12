@@ -8,14 +8,16 @@
   <div class="desired-condition-all">
     {% if user_profile.disclosed is True %}
       {% if user_profile.desired_job is None %}
-        <p class='desired-job'>希望職：{{ user_profile.desired_job }}</p>
+        <p class='desired-job'>希望枠：{{ user_profile.desired_job }}</p>
       {% else %}
-        <p class='desired-job'>希望職は現在公開されていません。</p>
+        <p class='desired-job'>希望枠は現在公開されていません。</p>
       {% endif %}
       {% if user_profile.desired_condition %}
         <p>{{ user_profile.desired_condition }}</p>
         {% if request.user.user_profile.is_owner is True %}
-          <p class='send-invitation'><a href="{% url 'teams:invitation_create' object.username %}">招待を送る</a></p>
+          <p class='send-invitation'>
+            <a href="{% url 'teams:invitation_create' object.username %}" class="btn btn--blue btn--radius">招待を送る</a>
+          </p>
         {% endif %}
       {% endif %}
     {% else %}
