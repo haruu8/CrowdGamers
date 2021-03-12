@@ -16,7 +16,7 @@
       </div>
 
       {% for member in member_profile %}
-        <div class='member-section'>
+        <div class='member-profile-section'>
           <img src="{{ member.icon.url }}" alt="アイコン" class='member-icon'>
           <p class="member-name">{{ member.name | truncatechars:12 }}</p>
           <p class="member-username">@{{ member.user.username }}</p>
@@ -30,5 +30,9 @@
       <p><a href="{% url 'teams:team_member_add' team.teamname %}" class="btn btn--blue btn--radius">メンバー追加申請をする</a></p>
     </div>
   </div>
+
+{% endblock %}
+
+{% block script %}
 
 {% endblock %}

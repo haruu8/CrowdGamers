@@ -1,6 +1,6 @@
 .custom-container {
   margin: auto 5rem;
-  padding: 0 3rem;
+  padding: 0 5rem;
 }
 
 .member-icon {
@@ -12,7 +12,9 @@
 .member-profile-all {
   display: flex;
   flex-wrap: wrap;
+  justify-content: space-between;
   padding-bottom: 3rem;
+  margin: auto 3rem;
 }
 
 .member-profile-section {
@@ -20,7 +22,7 @@
   padding: 1.55rem 3.5rem;
   height: auto;
   border-radius: 25%;
-  margin: auto 1.5rem;
+  margin: 1.5rem auto;
   position: relative;
   text-align: center;
 }
