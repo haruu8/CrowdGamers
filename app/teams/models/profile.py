@@ -36,7 +36,7 @@ class UserProfile(models.Model):
     icon = models.ImageField(
         upload_to=user_directory_path,
         blank=True,
-        default='default/profile_icon.png',
+        default='default/profile_icon.svg',
         validators=[
             validate_icon_image,
         ])
@@ -52,6 +52,7 @@ class UserProfile(models.Model):
     game_title = models.ManyToManyField(Game, related_name='user_game_title')
     feature = models.ManyToManyField(Feature, related_name='profile_feature')
     introduction = models.CharField(null=True, blank=True, max_length=140)
+    website = models.URLField(blank=True, null=True)
     clip_url = models.URLField(blank=True, null=True)
     desired_job = models.ManyToManyField(Job, related_name='profile_desired_job')
     desired_condition = models.CharField(verbose_name='希望条件', max_length=255)

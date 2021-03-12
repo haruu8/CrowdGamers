@@ -8,7 +8,7 @@ class UserProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = ('name', 'icon', 'header', 'game_title', 'feature',
-                    'introduction', 'clip_url', 'desired_job', 'desired_condition', 'disclosed')
+                    'introduction', 'website', 'clip_url', 'desired_job', 'desired_condition', 'disclosed')
         labels = {
             'name': '名前',
             'icon': 'アイコン',
@@ -16,6 +16,7 @@ class UserProfileUpdateForm(forms.ModelForm):
             'game_title': 'ゲームタイトル',
             'feature': '特徴',
             'introduction': '自己紹介',
+            'website': 'ウェブサイト',
             'clip_url': 'クリップ',
             'desired_job': '希望職',
             'desired_condition': '希望条件',
@@ -28,6 +29,8 @@ class UserProfileUpdateForm(forms.ModelForm):
     header = forms.ImageField(required=False)
     introduction = forms.CharField(required=False,
                             widget=forms.Textarea(attrs={'placeholder': '自身について入力してください', 'render_value': True}))
+    website = forms.URLField(required=False, help_text='ウェブサイトのリンクを入力してください',
+                            widget=forms.URLInput())
     clip_url = forms.URLField(required=False, help_text='埋め込みURLは普通のリンクとは違います！設定方法は<a href="https://support.google.com/youtube/answer/171780?hl=ja" target="_blank">こちら</a>からご確認ください。(リンクのみを貼り付けください)',
                             widget=forms.URLInput())
     game_title = forms.ModelMultipleChoiceField(queryset=Game.objects.all(), required=True, help_text='5つまで選択することができます。複数選択するときには Control キーを押したまま選択してください。Mac は Command キーを使ってください。',

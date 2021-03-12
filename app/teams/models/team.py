@@ -37,7 +37,7 @@ class Team(models.Model):
             validate_icon_image,
         ])
     icon = models.ImageField(
-        default='default/profile_icon.png',
+        default='default/profile_icon.svg',
         upload_to=user_directory_path,
         blank=True,
         validators=[

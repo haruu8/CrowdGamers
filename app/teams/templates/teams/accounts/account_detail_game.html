@@ -1,8 +1,18 @@
 {% extends 'teams/accounts/profile_extends_base.html' %}
+{% load static %}
 
 {% block profile_content %}
 
-  <h3>game</h3>
+  {% if user_profile.clip_url %}
+    <div>
+      <iframe width="560" height=315 src="{{ user_profile.clip_url }}" frameborder="0" allowfullscreen></iframe>
+    </div>
+  {% else %}
+    <div>
+      <img src="{% static 'img/clip_none.jpg' %}" alt="クリップ未設定の画像">
+    </div>
+  {% endif %}
+
   {% if user_profile.game_title.all %}
     {% for game in user_profile.game_title.all %}
       {{ game }}

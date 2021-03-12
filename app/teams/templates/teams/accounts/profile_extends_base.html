@@ -10,40 +10,62 @@
     <div class="div-icon-img">
       <img src="{{ user_profile.icon.url }}" alt='アイコン画像' class="icon-img">
     </div>
-    <p class='profile-name'>{{ user_profile.name }}</p>
+
+    <div class='name-edit-section'>
+      <div class="name-section">
+        <p class='profile-name'>{{ user_profile.name }}</p>
+        <a href="https://twitter.com/{{ object.username }}/" target="_blank">
+          <img src="{% static 'img/twitter-icon.svg' %}" alt="Twitterアイコン" class='twitter-icon'>
+        </a>
+      </div>
+      <div class='edit-section'>
+        {% if request.user.username == object.username %}
+            <p><a href="{% url 'teams:account_profile_update' object.username %}" class="btn btn--blue btn--radius">編集する</a></p>
+        {% endif %}
+      </div>
+    </div>
+
     <div class="username-team-section">
-      <p class='sub_color'>@{{ object.username }}</p>
+      <p class='sub-color'>@{{ object.username }}</p>
       <p>|</p>
       {% if user_profile.team %}
-        <p class='sub_color'>team</p>
+        <p class='sub-color'>team</p>
         <p><a href="{% url 'teams:team_detail' user_profile.team.teamname %}">@{{ user_profile.team.teamname }}</a></p>
         {% if user_profile.is_owner is True %}
-          <p class='sub_color'>owner</p>
+          <p class='sub-color'>owner</p>
         {% else %}
-          <p class='sub_color'>member</p>
+          <p class='sub-color'>member</p>
         {% endif %}
       {% else %}
-        <p class='sub_color'>無所属</p>
+        <p class='sub-color'>無所属</p>
       {% endif %}
     </div>
 
     <p class="introduction">{{ user_profile.introduction }}</p>
-    {% if user_profile.clip_url %}
-      <div>
-        <iframe width="560" height=315 src="{{ user_profile.clip_url }}" frameborder="0" allowfullscreen></iframe>
-      </div>
-    {% else %}
-      <img src="{% static 'img/clip_none.jpg' %}" alt="クリップ未設定の画像">
-    {% endif %}
-    <p><a href="https://twitter.com/{{ object.username }}/">twitter</a></p>
-    <p>作成日時：{{ object.date_joined }}</p>
-    {% if request.user.username == object.username %}
-      <p><a href="{% url 'teams:account_profile_update' object.username %}">編集する</a></p>
-    {% endif %}
+
+    <div class='website-date-joined'>
+      <p><a href="{{ user_profile.website }}" target="_blank">{{ user_profile.website | truncatechars:30 }}</a></p>
+      <p class="sub-color">{{ object.date_joined | date:"Y年n月" }}からCrowdGamersを利用しています</p>
+    </div>
+
     <hr>
-    <p><a href="{% url 'teams:account_detail' object.username %}">ゲーム</a></p>
-    <p><a href="{% url 'teams:account_detail_feature' object.username %}">特徴</a></p>
-    <p><a href="{% url 'teams:account_detail_desired_condition' object.username %}">希望条件</a></p>
+    <div class="lower-profile">
+      <div class="game-section">
+        <img src="{% static 'img/game-icon.svg' %}" alt="ゲームアイコン" class='svg'>
+        <p>ゲーム</p>
+        <a href="{% url 'teams:account_detail' object.username %}"></a>
+      </div>
+      <div class="feature-section">
+        <img src="{% static 'img/feature-icon.svg' %}" alt="特徴アイコン" class='svg'>
+        <p>特徴</p>
+        <a href="{% url 'teams:account_detail_feature' object.username %}"></a>
+      </div>
+      <div class="desired-condition-section">
+        <img src="{% static 'img/desired-condition-icon.svg' %}" alt="希望条件アイコン" class='svg'>
+        <p>希望条件</p>
+        <a href="{% url 'teams:account_detail_desired_condition' object.username %}"></a>
+      </div>
+    </div>
     <hr>
 
     {% block profile_content %}{% endblock %}
