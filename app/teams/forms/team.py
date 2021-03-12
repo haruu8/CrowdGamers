@@ -7,14 +7,14 @@ class TeamCreateForm(forms.ModelForm):
 
     class Meta:
         model = Team
-        fields = ('teamname', 'name', 'icon', 'header', 'url', 'introduction',
+        fields = ('teamname', 'name', 'icon', 'header', 'website', 'introduction',
                     'sponsor', 'game_title','feature', 'desired_job','desired_condition', 'disclosed')
         labels = {
             'teamname': 'チームネーム',
             'name': '名前',
             'icon': 'アイコン',
             'header': 'ヘッダー',
-            'url': '公式のURL',
+            'website': 'ウェブサイト',
             'introduction': '説明',
             'sponsor': 'スポンサー',
             'game_title': 'ゲームタイトル',
@@ -30,8 +30,8 @@ class TeamCreateForm(forms.ModelForm):
                             widget=forms.TextInput(attrs={'placeholder': 'チームの名前を入力してください', 'render_value': True}))
     icon = forms.ImageField(required=False)
     header = forms.ImageField(required=False)
-    url = forms.URLField(required=False,
-                            widget=forms.URLInput(attrs={'placeholder': 'チームの公式HPのURLを入力してください', 'render_value': True}))
+    website = forms.URLField(required=False,
+                            widget=forms.URLInput(attrs={'placeholder': 'ウェブサイトのURLを入力してください', 'render_value': True}))
     introduction = forms.CharField(required=True,
                             widget=forms.Textarea(attrs={'placeholder': 'チームについて入力してください', 'render_value': True}))
     sponsor = forms.CharField(required=False,
@@ -52,22 +52,28 @@ class TeamCreateForm(forms.ModelForm):
             field.error_messages = {'required':'{fieldname} は必須です。'.format(fieldname=field.label)}
             field.widget.attrs['class'] = 'form-control'
 
-    # 特徴を三つまでしか選択できないようにする validation
     def clean_feature(self):
+        """
+        特徴の選択上限を3つに設定する validation
+        """
         feature = self.cleaned_data['feature']
         if len(feature) >= 4:
             raise forms.ValidationError('特徴は3つまでしか選択することができません')
         return feature
 
-    # ゲームタイトルを五つまでしか選択できないようにする validation
     def clean_game_title(self):
+        """
+        ゲームタイトルの選択上限を5つに設定する validation
+        """
         game_title = self.cleaned_data['game_title']
         if len(game_title) >= 6:
             raise forms.ValidationError('ゲームタイトルは5つまでしか選択することができません')
         return game_title
 
-    # 希望職を五つまでしか選択できないようにする validation
     def clean_desired_job(self):
+        """
+        希望職の選択上限を3つに設定する validation
+        """
         desired_job = self.cleaned_data['desired_job']
         if len(desired_job) >= 4:
             raise forms.ValidationError('一度に募集可能なのは3つまでです')

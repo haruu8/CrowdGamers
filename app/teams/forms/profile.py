@@ -70,10 +70,6 @@ class UserProfileUpdateForm(forms.ModelForm):
     def clean_desired_job(self):
         """
         希望職の選択上限を1つに設定する validation
-
-        TODO
-        -----
-        他で使用している関数とまとめる
         """
         desired_job = self.cleaned_data['desired_job']
         if len(desired_job) >= 2:

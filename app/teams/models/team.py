@@ -43,7 +43,7 @@ class Team(models.Model):
         validators=[
             validate_icon_image,
         ])
-    url = models.URLField(null=True, blank=True)
+    website = models.URLField(null=True, blank=True)
     introduction = models.CharField(max_length=255)
     sponsor = models.CharField(max_length=100, null=True, blank=True)
     game_title = models.ManyToManyField(Game, related_name='team_game_title')
