@@ -1,13 +1,22 @@
 {% extends 'teams/team_profile/team_extends_base.html' %}
+{% load static %}
+
+{% block head %}
+  <link rel="stylesheet" href="{% static 'teams/scss/dist/application_create.css' %}">
+{% endblock %}
 
 {% block profile_content %}
 
   <div class="container">
-    <form action='{% url "teams:application_create" team.teamname %}' method="POST">
-      {{ form.as_p }}
-      {% csrf_token %}
-      <button type="submit">送信する</button>
-    </form>
+    <div class="form-section">
+      <form action='{% url "teams:application_create" team.teamname %}' method="POST">
+        {{ form.as_p }}
+        {% csrf_token %}
+        <div class="btn-section">
+          <button type='submit' class="btn btn--blue btn--radius">送信する</button>
+        </div>
+      </form>
+    </div>
   </div>
 
 {% endblock %}
