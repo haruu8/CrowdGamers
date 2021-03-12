@@ -5,13 +5,13 @@
 
 {% block profile_content %}
 
-  {% if user_profile.feature.all %}
   <div class="feature-all">
+  {% if user_profile.feature.all %}
     {% for feature in user_profile.feature.all %}
       <p class="feature">{{ feature }}</p>
     {% endfor %}
   {% else %}
-    <p>特徴を現在選択していません。</p>
+    <p class="feature">特徴を現在選択していません。</p>
   {% endif %}
   </div>
 
