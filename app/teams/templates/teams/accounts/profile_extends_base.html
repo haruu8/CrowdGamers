@@ -49,8 +49,12 @@
       <p><a href="{{ user_profile.website }}" target="_blank">{{ user_profile.website | truncatechars:30 }}</a></p>
       <p class="sub-color">{{ object.date_joined | date:"Y年n月" }}からCrowdGamersを利用しています</p>
     </div>
+  </div>
 
+  <div class="hr">
     <hr>
+  </div>
+  <div class="container">
     <div class="lower-profile">
       <div class="game-section">
         <img src="{% static 'img/game-icon.svg' %}" alt="ゲームアイコン">
@@ -68,11 +72,15 @@
         <a href="{% url 'teams:account_detail_desired_condition' object.username %}"></a>
       </div>
     </div>
-    <hr>
-
-    {% block profile_content %}{% endblock %}
-
   </div>
+  <div class="hr">
+    <hr>
+  </div>
+
+    <div class="container">
+      {% block profile_content %}{% endblock %}
+    </div>
+
 
 
 {% endblock %}

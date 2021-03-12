@@ -38,34 +38,39 @@
     {% if team.sponsor %}
       <p class='sponsor-title'>スポンサー</p>
       <p>{{ team.sponsor | linebreaksbr }}</p>
-    {% endif %}
+      {% endif %}
+    </div>
 
-
-    <hr>
-    <div class="lower-profile">
-      <div class="game-section">
-        <img src="{% static 'img/game-icon.svg' %}" alt="ゲームアイコン" class='svg'>
-        <p>ゲーム</p>
-        <a href="{% url 'teams:team_detail' team.teamname %}"></a>
-      </div>
-      <div class="member-section">
-        <img src="{% static 'img/member-icon.svg' %}" alt="メンバーアイコン" class='svg'>
-        <p>メンバー</p>
-        <a href="{% url 'teams:team_detail_member' team.teamname %}"></a>
-      </div>
-      <div class="feature-section">
-        <img src="{% static 'img/feature-icon.svg' %}" alt="特徴アイコン" class='svg'>
-        <p>特徴</p>
-        <a href="{% url 'teams:team_detail_feature' team.teamname %}"></a>
-      </div>
-      <div class="desired-condition-section">
-        <img src="{% static 'img/desired-condition-icon.svg' %}" alt="希望条件アイコン" class='svg'>
-        <p>希望条件</p>
-        <a href="{% url 'teams:team_detail_desired_condition' team.teamname %}"></a>
+    <div class="hr">
+      <hr>
+    </div>
+    <div class='container'>
+      <div class="lower-profile">
+        <div class="game-section">
+          <img src="{% static 'img/game-icon.svg' %}" alt="ゲームアイコン" class='svg'>
+          <p>ゲーム</p>
+          <a href="{% url 'teams:team_detail' team.teamname %}"></a>
+        </div>
+        <div class="member-section">
+          <img src="{% static 'img/member-icon.svg' %}" alt="メンバーアイコン" class='svg'>
+          <p>メンバー</p>
+          <a href="{% url 'teams:team_detail_member' team.teamname %}"></a>
+        </div>
+        <div class="feature-section">
+          <img src="{% static 'img/feature-icon.svg' %}" alt="特徴アイコン" class='svg'>
+          <p>特徴</p>
+          <a href="{% url 'teams:team_detail_feature' team.teamname %}"></a>
+        </div>
+        <div class="desired-condition-section">
+          <img src="{% static 'img/desired-condition-icon.svg' %}" alt="希望条件アイコン" class='svg'>
+          <p>希望条件</p>
+          <a href="{% url 'teams:team_detail_desired_condition' team.teamname %}"></a>
+        </div>
       </div>
     </div>
-    <hr>
-  </div>
+    <div class="hr">
+      <hr>
+    </div>
 
     {% block profile_content %}{% endblock %}
 

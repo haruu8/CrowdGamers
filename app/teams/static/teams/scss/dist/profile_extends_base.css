@@ -95,6 +95,11 @@ hr {
   margin-bottom: 0.5rem;
 }
 
+div.hr {
+  position: relative;
+  bottom: 73px;
+}
+
 .lower-profile {
   display: flex;
   justify-content: space-around;
