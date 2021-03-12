@@ -9,6 +9,7 @@
       integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <link rel='stylesheet' type='text/css' href='{% static "scss/dist/base.css" %}'>
   <link rel='stylesheet' type='text/css' href={% block stylesheet %}{% endblock %}>
+  {% block head %}{% endblock %}
 </head>
 <body>
   <nav class="navbar navbar-expand-lg">
