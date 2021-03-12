@@ -1,4 +1,6 @@
 __pycache__
+cover
+.coverage
 
 *.env
 env
