@@ -45,9 +45,9 @@ hr {
 .name-edit-section {
   display: flex;
   justify-content: space-between;
-  margin-top: 0.5rem;
 }
 .name-edit-section .name-section {
+  margin-top: 0.5rem;
   display: flex;
 }
 .name-edit-section .name-section .profile-name {
