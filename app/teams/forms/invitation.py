@@ -6,13 +6,13 @@ from teams.models import Job, Notification
 class InvitationCreateForm(forms.ModelForm):
     class Meta:
         model = Notification
-        fields = ('desired_job', 'message', 'invite_url')
+        fields = ('desired_job', 'message', 'invitation_url')
 
     desired_job = forms.ModelMultipleChoiceField(queryset=Job.objects.all(), required=True, label='希望枠',
                             help_text='1つまで選択することができます', widget=forms.SelectMultiple(attrs={'class': 'form-control'}))
     message = forms.CharField(required=True, label='メッセージ',
                                 widget=forms.Textarea(attrs={'placeholder': '招待理由を入力してください', 'render_value': True}))
-    invite_url = forms.URLField(required=True, label='招待URL',
+    invitation_url = forms.URLField(required=True, label='招待URL',
                                 widget=forms.URLInput(attrs={'placeholder': '招待が承認された後に会話するDiscordのサーバー招待URLを入力してください', 'render_value': True}))
 
     def __init__(self, *args, **kwargs):

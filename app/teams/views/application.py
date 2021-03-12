@@ -71,7 +71,7 @@ class ApplicationReplyCreateView(OnlyYouMixin, UpdateView):
         """
         self.object = Notification.objects.get(id=self.kwargs.get('id'))
         self.object.is_proceeded = True
-        self.object.invite_url = form.cleaned_data['invite_url']
+        self.object.invitation_url = form.cleaned_data['invitation_url']
         self.object.save()
         result = super().form_valid(form)
         return result

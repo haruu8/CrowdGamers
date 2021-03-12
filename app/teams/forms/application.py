@@ -44,9 +44,9 @@ class ApplicationUpdateForm(forms.ModelForm):
     """
     class Meta:
         model = Notification
-        fields = ('invite_url',)
+        fields = ('invitation_url',)
 
-    invite_url = forms.URLField(required=True, label='招待URL',
+    invitation_url = forms.URLField(required=True, label='招待URL',
                                 widget=forms.TextInput(attrs={'placeholder': '会話に使用する Discordサーバーの招待URLを入力してください', 'render_value': True}))
 
     def __init__(self, *args, **kwargs):
