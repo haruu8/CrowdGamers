@@ -1,14 +1,20 @@
 {% extends 'teams/team_profile/team_extends_base.html' %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'teams/scss/dist/team_detail_feature.css' %}">
+{% endblock %}
 
 {% block profile_content %}
 
-  <h3>特徴</h3>
-  {% if object.feature.all %}
+  <div class='feature-all'>
+    {% if object.feature.all %}
     {% for feature in object.feature.all %}
-      {{ feature }}
+    <p class="feature">{{ feature }}</p>
     {% endfor %}
-  {% else %}
+    {% else %}
     <p>特徴は現在選択されていません。</p>
-  {% endif %}
+    {% endif %}
+  </div>
 
 {% endblock %}
