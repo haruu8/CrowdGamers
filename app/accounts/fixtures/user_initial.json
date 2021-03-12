@@ -4,6 +4,7 @@
     "pk": 1,
     "fields": {
       "username": "CrowdGamers",
+      "is_superuser": "True",
       "date_joined": "2019-01-01T12:34:56.789Z"
     }
   }
