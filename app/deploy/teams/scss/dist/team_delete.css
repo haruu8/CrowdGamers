@@ -1,5 +1,9 @@
 .container {
-  margin: 3rem auto;
+  margin: 10rem auto;
+}
+
+.description {
+  text-align: center;
 }
 
 .btn-section {
@@ -11,7 +15,6 @@
   padding-left: 1.5rem;
   padding-right: 1.5rem;
   color: #fff;
-  background-color: none;
   border: 1px solid white;
 }
 .btn-section .btn--blue:hover,
@@ -44,4 +47,9 @@
 }
 .btn-delete-section a.btn--radius {
   border-radius: 100vh;
+}
+
+.btn-all {
+  display: flex;
+  justify-content: space-around;
 }

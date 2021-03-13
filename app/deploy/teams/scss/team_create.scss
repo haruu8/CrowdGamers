@@ -14,11 +14,10 @@ $sub-color: #c9c9c9;
 $danger-color: #F03030;
 
 .container {
-  margin: 10rem auto;
-}
-
-.description {
-  text-align: center;
+  margin-bottom: 5rem;
+  .title {
+    margin: 3rem auto;
+  }
 }
 
 .btn-section {
@@ -41,31 +40,5 @@ $danger-color: #F03030;
   a.btn--radius {
     border-radius: 100vh;
   }
-}
 
-.btn-delete-section {
-  text-align: center;
-  margin: 3rem auto;
-  .btn--danger,
-  a.btn--danger {
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
-    color: #fff;
-    background-color: none;
-    border: 1px solid white;
-  }
-  .btn--danger:hover,
-  a.btn--danger:hover {
-    color: #fff;
-    background: $danger-color;
-    border: 1px solid $danger-color;
-  }
-  a.btn--radius {
-    border-radius: 100vh;
-  }
-}
-
-.btn-all {
-  display: flex;
-  justify-content: space-around;
 }
