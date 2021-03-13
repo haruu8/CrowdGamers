@@ -46,12 +46,10 @@ class TeamStatusCodeTests(TestCase):
         self.user = get_user_model().objects.create_user(
             username='CrowdGamers',
         )
-        self.user_profile = UserProfile.objects.update_or_create(
-            user=self.user,
-            team=self.team,
-            desired_condition='hoge',
-            disclosed=True,
-        )
+        profile = self.user.user_profile
+        profile.team = self.team
+        profile.desired_condition = 'hoge'
+        profile.is_owner=True
 
     def test_home_status_code(self):
         url = reverse('teams:home')
@@ -108,10 +106,10 @@ class TeamStatusCodeTests(TestCase):
         response = self.client.get(url)
         self.assertEquals(response.status_code, 200)
 
-    # def test_team_detail_member_status_code(self):
-    #     url = reverse('teams:team_detail_member', args=[self.team])
-    #     response = self.client.get(url)
-    #     self.assertEquals(response.status_code, 200)
+    def test_team_detail_member_status_code(self):
+        url = reverse('teams:team_detail_member', args=[self.team])
+        response = self.client.get(url)
+        self.assertEquals(response.status_code, 200)
 
     def test_team_detail_feature_status_code(self):
         url = reverse('teams:team_detail_feature', args=[self.team])
@@ -126,17 +124,15 @@ class TeamStatusCodeTests(TestCase):
     def test_team_member_add_status_code(self):
         url = reverse('teams:team_member_add', args=[self.team])
         response = self.client.get(url)
-        self.assertEquals(response.status_code, 200)
+        self.assertEquals(response.status_code, 302)
 
     def test_team_member_delete_status_code(self):
         url = reverse('teams:team_member_delete', kwargs={'teamname': self.team, 'username': self.user})
-        # url = reverse('teams:team_member_delete', args=[self.team])
         response = self.client.get(url)
-        self.assertEquals(response.status_code, 200)
+        self.assertEquals(response.status_code, 403)
 
     def test_account_detail_status_code(self):
         url = reverse('teams:account_detail', args=[self.user])
-        # url = reverse('teams:team_member_delete', args=[self.team])
         response = self.client.get(url)
         self.assertEquals(response.status_code, 200)
 
@@ -168,6 +164,6 @@ class TeamStatusCodeTests(TestCase):
 #     """
 #     def test_home_html(self):
 #         request = HttpRequest()
-#         response = views.home(request)
+#         response = home(request)
 #         expected_html = render_to_string('teams/home.html')
 #         self.assertEqual(response.content.decode(), expected_html)

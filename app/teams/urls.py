@@ -31,7 +31,7 @@ urlpatterns = [
     path('team/<str:teamname>/member/delete/<str:username>/', views.team_member_delete, name='team_member_delete'),
 
     # プロフィール
-    path('<str:username>/', views.account_detail_game, name='account_detail'),
+    path('<str:username>/', views.account_detail, name='account_detail'),
     path('<str:username>/feature/', views.account_detail_feature, name='account_detail_feature'),
     path('<str:username>/desired_condition/', views.account_detail_desired_condition, name='account_detail_desired_condition'),
     path('<str:username>/update/', views.account_profile_update, name='account_profile_update'),

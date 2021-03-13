@@ -49,11 +49,11 @@ class TeamCreateForm(forms.ModelForm):
         teamname = self.cleaned_data['teamname']
         if len(teamname) <= 3 or len(teamname) >= 16:
             raise forms.ValidationError('チームネームは4~15字で設定してください')
-        regex=r'[a-zA-Z0-9_]'
-        if teamname in regex:
-            pass
-        else:
-            raise forms.ValidationError('使用できる文字は大文字・小文字アルファベット、数字、_(アンダーバー)のみです。')
+        # regex=r'[a-zA-Z0-9_]'
+        # if teamname in regex:
+        #     pass
+        # else:
+        #     raise forms.ValidationError('使用できる文字は大文字・小文字アルファベット、数字、_(アンダーバー)のみです。')
         return teamname
 
     def clean_feature(self):

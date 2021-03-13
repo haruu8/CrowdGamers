@@ -35,7 +35,7 @@ class UserProfileDetailGameView(UserProfileBaseView):
     template_name = 'teams/accounts/account_detail_game.html'
     model = UserProfile
 
-account_detail_game = UserProfileDetailGameView.as_view()
+account_detail = UserProfileDetailGameView.as_view()
 
 
 

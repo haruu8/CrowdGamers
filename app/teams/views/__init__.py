@@ -6,7 +6,7 @@ from .notification import (
     invitation_detail, member_approval_detail, official_detail,
 )
 from .profile import (
-    account_detail_game, account_detail_feature,
+    account_detail, account_detail_feature,
     account_detail_desired_condition, account_profile_update,
     accounts_list,
 )

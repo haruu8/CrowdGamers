@@ -17,15 +17,17 @@
         <a href="{% url 'teams:account_detail' owner_profile_user_username %}"></a>
       </div>
 
-      {% for member in member_profile %}
-        <div class='member-profile-section'>
-          <img src="{{ member.icon.url }}" alt="アイコン" class='member-icon'>
-          <p class="member-name">{{ member.name | truncatechars:12 }}</p>
-          <p class="member-username">@{{ member.user.username }}</p>
-          <p class="job">メンバー</p>
-          <a href="{% url 'teams:account_detail' member.user.username %}"></a>
-        </div>
-      {% endfor %}
+      {% if member_profile %}
+        {% for member in member_profile %}
+          <div class='member-profile-section'>
+            <img src="{{ member.icon.url }}" alt="アイコン" class='member-icon'>
+            <p class="member-name">{{ member.name | truncatechars:12 }}</p>
+            <p class="member-username">@{{ member.user.username }}</p>
+            <p class="job">メンバー</p>
+            <a href="{% url 'teams:account_detail' member.user.username %}"></a>
+          </div>
+        {% endfor %}
+      {% endif %}
     </div>
 
     <div class="application-section">
