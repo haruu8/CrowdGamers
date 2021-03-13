@@ -4,7 +4,20 @@ from .utils import GetProfileView
 
 
 
-# class FreqentlyQuestionAskedView(TemplateView):
+class HomeView(GetProfileView):
+    template_name='teams/home.html'
+
+home = HomeView.as_view()
+
+
+
+class ContactView(GetProfileView):
+    template_name='teams/support/contact.html'
+
+contact = ContactView.as_view()
+
+
+
 class FreqentlyQuestionAskedView(GetProfileView):
     """
     よくある質問を一覧表示する
@@ -17,3 +30,17 @@ class FreqentlyQuestionAskedView(GetProfileView):
         return context
 
 faq = FreqentlyQuestionAskedView.as_view()
+
+
+
+class TermsOfServiceView(TemplateView):
+    template_name = 'teams/support/terms_of_service.html'
+
+terms_of_service = TermsOfServiceView.as_view()
+
+
+
+class PrivacyPolicyView(TemplateView):
+    template_name = 'teams/support/privacy_policy.html'
+
+privacy_policy = PrivacyPolicyView.as_view()
