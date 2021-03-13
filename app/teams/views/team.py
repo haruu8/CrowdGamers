@@ -137,6 +137,7 @@ class TeamDeleteView(LoginRequiredMixin, OnlyOwnerMixin, TemplateView):
             # ここに is_owner の処理を書く
             user_profile = self.request.user.user_profile
             user_profile.is_owner = False
+            user_profile.save()
             self.object.delete()
         elif self.request.POST.get('confirm', '') == 'back':
             return redirect('teams:team_update', teamname=self.kwargs.get('teamname'))
