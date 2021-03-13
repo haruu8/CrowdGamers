@@ -16,14 +16,10 @@ class Notification(models.Model):
     member_approval : チーム登録の申請
     official : 公式情報
 
-    Notes
-    -----
-    has_read は既読管理
-    is_proceeded は承認・拒否管理
-
-    TODO
-    -----
-    accounts.models の最初の通知のクラスを変更する
+    See Also
+    --------
+    has_read : 既読管理
+    is_proceeded : 承認・拒否管理
     """
     class Meta():
         db_table = 't_notification'
