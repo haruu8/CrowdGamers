@@ -22,7 +22,7 @@ class TeamUrlRoutingTests(TestCase):
 
     def test_url_resolves_to_home(self):
         found = resolve('/')
-        self.assertEqual(found.func, GetProfileView)
+        self.assertEqual(found.func, home)
 
 
 
