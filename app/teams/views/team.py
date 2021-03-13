@@ -119,11 +119,7 @@ class TeamDeleteView(LoginRequiredMixin, OnlyOwnerMixin, TemplateView):
 
     Notes
     -----
-    デザイン上の問題で、 TemplateView の post をオーバーライドする
-
-    TODO
-    ----
-    チーム削除時、 is_owner の値を戻す
+    buttonを使用するので TemplateView の post をオーバーライドする
     """
     template_name = 'teams/team_delete.html'
     success_url = 'teams:home'
@@ -134,7 +130,6 @@ class TeamDeleteView(LoginRequiredMixin, OnlyOwnerMixin, TemplateView):
         """
         self.object = Team.objects.get(teamname=self.kwargs.get('teamname'))
         if self.request.POST.get('confirm', '') == 'delete':
-            # ここに is_owner の処理を書く
             user_profile = self.request.user.user_profile
             user_profile.is_owner = False
             user_profile.save()
