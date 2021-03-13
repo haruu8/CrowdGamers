@@ -11,12 +11,14 @@ class UserProfileUpdateForm(forms.ModelForm):
                     'introduction', 'website', 'clip_url', 'desired_job', 'desired_condition', 'disclosed')
 
     name = forms.CharField(required=True, label='名前',
+                            help_text='使用できるのは大文字・小文字アルファベット、数字、_(アンダーバー)のみです。',
                             widget=forms.TextInput(attrs={'placeholder': '名前を入力してください', 'render_value': True}))
     icon = forms.ImageField(required=False, label='アイコン')
     header = forms.ImageField(required=False, label='ヘッダー')
     introduction = forms.CharField(required=False, label='説明',
                             widget=forms.Textarea(attrs={'placeholder': '自身について入力してください', 'render_value': True}))
-    website = forms.URLField(required=False, label='ウェブサイト', help_text='ウェブサイトのリンクを入力してください',
+    website = forms.URLField(required=False, label='ウェブサイト',
+                            help_text='ウェブサイトのリンクを入力してください',
                             widget=forms.URLInput())
     clip_url = forms.URLField(required=False, label='クリップ', help_text='埋め込みURLは普通のリンクとは違います！設定方法は<a href="https://support.google.com/youtube/answer/171780?hl=ja" target="_blank">こちら</a>からご確認ください。(リンクのみを貼り付けください)',
                             widget=forms.URLInput())

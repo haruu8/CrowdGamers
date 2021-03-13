@@ -11,22 +11,26 @@ class TeamCreateForm(forms.ModelForm):
                     'sponsor', 'game_title','feature', 'desired_job','desired_condition', 'disclosed')
 
     teamname = forms.CharField(required=True, label='チームネーム',
+                            help_text='使用できるのは大文字・小文字アルファベット、数字、_(アンダーバー)のみです。',
                             widget=forms.TextInput(attrs={'placeholder': 'チームのユーザーネームを入力してください', 'render_value': True}))
     name = forms.CharField(required=True, label='名前',
                             widget=forms.TextInput(attrs={'placeholder': 'チームの名前を入力してください', 'render_value': True}))
     icon = forms.ImageField(required=False, label='アイコン')
-    header = forms.ImageField(required=False)
+    header = forms.ImageField(required=False, label='ヘッダー')
     website = forms.URLField(required=False, label='ウェブサイト',
                             widget=forms.URLInput(attrs={'placeholder': 'ウェブサイトのURLを入力してください', 'render_value': True}))
     introduction = forms.CharField(required=True, label='説明',
-                            widget=forms.Textarea(attrs={'placeholder': 'チームについて入力してください', 'render_value': True}))
+                            widget=forms.Textarea(attrs={'placeholder': 'チームについての概要を入力してください', 'render_value': True}))
     sponsor = forms.CharField(required=False,label='スポンサー',
                             widget=forms.Textarea(attrs={'placeholder': 'スポンサー名を入力してください', 'render_value': True}))
     game_title = forms.ModelMultipleChoiceField(queryset=Game.objects.all(), required=False, label='ゲームタイトル',
+                            help_text='5つまで選択することができます。複数選択するときには Control キーを押したまま選択してください。Mac は Command キーを使ってください。',
                             widget=forms.SelectMultiple(attrs={'class': 'form-control'}))
     feature = forms.ModelMultipleChoiceField(queryset=Feature.objects.all(), label='特徴',
+                            help_text='3つまで選択することができます。複数選択するときには Control キーを押したまま選択してください。Mac は Command キーを使ってください。',
                             widget=forms.SelectMultiple(attrs={'class': 'form-control'}))
     desired_job = forms.ModelMultipleChoiceField(queryset=Job.objects.all(), label='希望枠',
+                            help_text='3つまで選択することができます。複数選択するときには Control キーを押したまま選択してください。Mac は Command キーを使ってください。',
                             widget=forms.SelectMultiple(attrs={'class': 'form-control'}))
     desired_condition = forms.CharField(required=False, label='希望条件',
                             widget=forms.Textarea(attrs={'placeholder': '募集する選手の希望条件を入力してください', 'render_value': True}))
@@ -37,6 +41,20 @@ class TeamCreateForm(forms.ModelForm):
         for field in self.fields.values():
             field.error_messages = {'required':'{fieldname} は必須です。'.format(fieldname=field.label)}
             field.widget.attrs['class'] = 'form-control'
+
+    def clean_teamname(self):
+        """
+        teamname の validation
+        """
+        teamname = self.cleaned_data['teamname']
+        if len(teamname) <= 3 or len(teamname) >= 16:
+            raise forms.ValidationError('チームネームは4~15字で設定してください')
+        regex=r'[a-zA-Z0-9_]'
+        if teamname in regex:
+            pass
+        else:
+            raise forms.ValidationError('使用できる文字は大文字・小文字アルファベット、数字、_(アンダーバー)のみです。')
+        return teamname
 
     def clean_feature(self):
         """
