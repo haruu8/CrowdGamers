@@ -10,18 +10,62 @@ $blue-9-color: #061D33;
 $blue-10-color: #030E1A;
 $twitter-color: #1DA1F2;
 $color: black;
+$danger-color: #F03030;
 
 .container {
   text-align: center;
   margin: 14rem auto;
+}
 
-  .btn-section {
-    display: flex;
-    margin: 3rem 17rem;
-    justify-content: space-around;
-  }
+.description {
+  text-align: center;
+}
 
-  .cancel-btn {
-    color: $blue-1-color;
+.btn-section {
+  text-align: center;
+  margin: 3rem auto;
+
+  .btn--blue,
+  a.btn--blue {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    color: #fff;
+    border: 1px solid white;
   }
+  .btn--blue:hover,
+  a.btn--blue:hover {
+    color: #fff;
+    background: $blue-2-color;
+    border: 1px solid $blue-2-color;
+  }
+  a.btn--radius {
+    border-radius: 100vh;
+  }
+}
+
+.btn-delete-section {
+  text-align: center;
+  margin: 3rem auto;
+  .btn--danger,
+  a.btn--danger {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    color: #fff;
+    background-color: none;
+    border: 1px solid white;
+  }
+  .btn--danger:hover,
+  a.btn--danger:hover {
+    color: #fff;
+    background: $danger-color;
+    border: 1px solid $danger-color;
+  }
+  a.btn--radius {
+    border-radius: 100vh;
+  }
+}
+
+.btn-all {
+  display: flex;
+  justify-content: space-around;
 }

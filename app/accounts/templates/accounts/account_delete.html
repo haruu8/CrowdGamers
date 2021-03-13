@@ -8,21 +8,20 @@
   <div class='container'>
     <form method="post">
       {% csrf_token %}
-      <div class="description">
-        <p>あなたのアカウント [ {{ user.username }} ] を、本当に削除してもよろしいですか？</p>
-        <p>※アカウントを削除したら元に戻すことはできません</p>
-      </div>
-      <div class="btn-section">
-        <div>
+      <p class="description">あなたのアカウント『{{ user.username }}』を削除します。この動作を完了させるとデータを復元することはできません。よろしいですか？</p>
+      <div class="btn-all">
+        <div class="btn-section">
           <a href='{% url "accounts:account_settings" %}'>
-            <button type="button" class="btn btn-primary">キャンセル</button>
+            <button name='confirm' value="back" class="btn btn--blue btn--radius">戻る</button>
           </a>
         </div>
-        <div>
-          <input type="submit" class="btn btn-danger" value="削除する">
+        <div class="btn-delete-section">
+          <button type='submit' name='confirm' value="delete" class="btn btn--danger btn--radius">削除</button>
         </div>
       </div>
     </form>
   </div>
+
+
 
 {% endblock %}
