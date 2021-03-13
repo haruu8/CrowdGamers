@@ -5,14 +5,19 @@
 
 {% block content %}
 
-
   <div class='container'>
     <form method='post' enctype="multipart/form-data">
       {% csrf_token %}
       {{ form.as_p }}
-      <input type="submit" name="submit" value="Submit" />
+      <div class="btn-section">
+        <button type='submit' class="btn btn--blue btn--radius">保存する</button>
+      </div>
     </form>
-    <p><a href="{% url 'teams:team_delete' team.teamname %}">削除</a></p>
+    <div class="btn-delete-section">
+      <a href="{% url 'teams:team_delete' team.teamname %}">
+        <button class="btn btn--danger btn--radius">削除する</button>
+      </a>
+    </div>
   </div>
 
 {% endblock %}
