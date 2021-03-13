@@ -35,7 +35,6 @@ class TeamStatusCodeTests(TestCase):
     test_***_status_code で関数定義している。 *** は urls に登録してある name
     """
     def setUp(self):
-        # ここにテストデータを書く
         pass
 
     def test_home_status_code(self):
@@ -48,11 +47,10 @@ class TeamStatusCodeTests(TestCase):
         response = self.client.get(url)
         self.assertEquals(response.status_code, 200)
 
-    # アクセス時はエラーが出ないが、テスト時はエラーが出る
-    # def test_faq_status_code(self):
-    #     url = reverse('teams:faq')
-    #     response = self.client.get(url)
-    #     self.assertEquals(response.status_code, 200)
+    def test_faq_status_code(self):
+        url = reverse('teams:faq')
+        response = self.client.get(url)
+        self.assertEquals(response.status_code, 200)
 
     def test_terms_of_service_status_code(self):
         url = reverse('teams:terms_of_service')
