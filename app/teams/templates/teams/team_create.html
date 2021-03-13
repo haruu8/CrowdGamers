@@ -1,13 +1,18 @@
 {% extends 'base.html' %}
+{% load static %}
 
+{% block stylesheet %}'{% static "teams/scss/dist/team_create.css" %}'{% endblock %}
 
 {% block content %}
 
   <div class='container'>
+    <h1 class="title">チームを作成</h1>
     <form method='post' enctype="multipart/form-data">
       {% csrf_token %}
       {{ form.as_p }}
-      <input type="submit" name="submit" value="作成する" />
+      <div class="btn-section">
+        <button type='submit' class="btn btn--blue btn--radius">作成する</button>
+      </div>
     </form>
   </div>
 
