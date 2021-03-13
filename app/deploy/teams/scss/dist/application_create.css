@@ -1,0 +1,25 @@
+.form-section {
+  margin-top: 3rem;
+}
+
+.btn-section {
+  text-align: center;
+  margin: 3rem auto;
+}
+.btn-section .btn--blue,
+.btn-section a.btn--blue {
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  color: #fff;
+  background-color: none;
+  border: 1px solid white;
+}
+.btn-section .btn--blue:hover,
+.btn-section a.btn--blue:hover {
+  color: #fff;
+  background: #1C81E6;
+  border: 1px solid #1C81E6;
+}
+.btn-section a.btn--radius {
+  border-radius: 100vh;
+}

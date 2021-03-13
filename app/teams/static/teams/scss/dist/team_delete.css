@@ -1,0 +1,55 @@
+.container {
+  margin: 10rem auto;
+}
+
+.description {
+  text-align: center;
+}
+
+.btn-section {
+  text-align: center;
+  margin: 3rem auto;
+}
+.btn-section .btn--blue,
+.btn-section a.btn--blue {
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  color: #fff;
+  border: 1px solid white;
+}
+.btn-section .btn--blue:hover,
+.btn-section a.btn--blue:hover {
+  color: #fff;
+  background: #1C81E6;
+  border: 1px solid #1C81E6;
+}
+.btn-section a.btn--radius {
+  border-radius: 100vh;
+}
+
+.btn-delete-section {
+  text-align: center;
+  margin: 3rem auto;
+}
+.btn-delete-section .btn--danger,
+.btn-delete-section a.btn--danger {
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  color: #fff;
+  background-color: none;
+  border: 1px solid white;
+}
+.btn-delete-section .btn--danger:hover,
+.btn-delete-section a.btn--danger:hover {
+  color: #fff;
+  background: #F03030;
+  border: 1px solid #F03030;
+}
+.btn-delete-section a.btn--radius {
+  border-radius: 100vh;
+}
+
+.btn-all {
+  display: flex;
+  justify-content: space-around;
+}

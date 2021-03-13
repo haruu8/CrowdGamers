@@ -1,11 +1,23 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{% block stylesheet %}'{% static "teams/scss/dist/team_delete.css" %}'{% endblock %}
 
 {% block content %}
 
-  <form method="post">
-    {% csrf_token %}
-    <p>削除します。よろしいですか？</p>
-    <input class="btn btn-danger" type="submit" value="削除する">
-  </form>
+  <div class="container">
+    <form method="post">
+      {% csrf_token %}
+      <p class="description">チーム『{{ team.teamname }}』を削除します。この動作を完了させるとデータを復元することはできません。よろしいですか？</p>
+      <div class="btn-all">
+        <div class="btn-section">
+          <button name='confirm' value="back" class="btn btn--blue btn--radius">戻る</button>
+        </div>
+        <div class="btn-delete-section">
+          <button type='submit' name='confirm' value="delete" class="btn btn--danger btn--radius">削除</button>
+        </div>
+      </div>
+    </form>
+  </div>
 
 {% endblock %}

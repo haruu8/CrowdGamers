@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404, resolve_url
 from django.urls import reverse_lazy, reverse
-from django.views.generic import TemplateView, CreateView, DetailView, ListView, UpdateView, DeleteView, FormView
+from django.views.generic import TemplateView, CreateView, DetailView, ListView, UpdateView, FormView
 from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -30,7 +30,7 @@ class TeamCreateView(LoginRequiredMixin, CreateView):
         作成時はデフォルトでオーナー
         """
         profile = self.request.user.user_profile
-        if profile.is_owner is True or profile.team:
+        if profile.team:
             form.add_error(None, 'チームは1つまでしか所属できません。')
             return render(self.request, self.template_name, {'form': form})
         result = super().form_valid(form)
@@ -113,10 +113,42 @@ team_update = TeamUpdateView.as_view()
 
 
 
-class TeamDeleteView(LoginRequiredMixin, OnlyOwnerMixin, DeleteView):
+class TeamDeleteView(LoginRequiredMixin, OnlyOwnerMixin, TemplateView):
+    """
+    チームを削除する
+
+    Notes
+    -----
+    デザイン上の問題で、 TemplateView の post をオーバーライドする
+
+    TODO
+    ----
+    チーム削除時、 is_owner の値を戻す
+    """
     template_name = 'teams/team_delete.html'
-    model = Team
-    success_url = reverse_lazy('team:home')
+    success_url = 'teams:home'
+
+    def post(self, request, *args, **kwargs):
+        """
+        削除・削除キャンセルの処理
+        """
+        self.object = Team.objects.get(teamname=self.kwargs.get('teamname'))
+        if self.request.POST.get('confirm', '') == 'delete':
+            # ここに is_owner の処理を書く
+            user_profile = self.request.user.user_profile
+            user_profile.is_owner = False
+            self.object.delete()
+        elif self.request.POST.get('confirm', '') == 'back':
+            return redirect('teams:team_update', teamname=self.kwargs.get('teamname'))
+        return redirect(self.success_url)
+
+    def get_context_data(self, **kwargs):
+        """
+        確認用に見れるようにデータ取得
+        """
+        ctx = super().get_context_data(**kwargs)
+        ctx['team'] = Team.objects.get(teamname=self.kwargs.get('teamname'))
+        return ctx
 
     def get_object(self):
         teamname = self.kwargs.get("teamname")
