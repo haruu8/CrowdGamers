@@ -27,22 +27,34 @@ class TeamUrlRoutingTests(TestCase):
 
 class TeamStatusCodeTests(TestCase):
     """
-    未ログインユーザー、ログインユーザー、チームメンバー、チームオーナーのステータスコードのテスト
+    test_***_status_code_???_user で関数定義しているステータスコードのテスト
+    *** : urls に登録してる name
+    ??? : ユーザーの状態を示す
 
-    Notes
-    -----
-    test_***_status_code で関数定義している。 *** は urls に登録してある name
+    See Also
+    --------
+    関数定義の ??? の部分の命名
+    anonymous : 未ログインユーザー
+    authenticated_independent : ログインユーザー（チーム無所属）
+    authenticated_team_member : ログインユーザー（チーム所属、自身のチームへのテスト）
+    authenticated_another_team_member : ログインユーザー（チーム所属、他チームへのテスト）
+    authenticated_team_owner : ログインユーザー（チームオーナー、自身のチームへのテスト）
+    authenticated_another_team_owner : ログインユーザー（チームオーナー、他チームへのテスト）
     """
     def setUp(self):
         """
-        必要なデータをセットする
+        アクセスパーミションテストに必要なオブジェクトを作成する
 
-        See Also
-        --------
-        self.team : チームオブジェクト
-        self.user : ユーザーオブジェクト
-        self.profile : プロフィールオブジェクト
-        self.notification : 通知オブジェクト
+        Parameters
+        ----------
+        self.team : object
+            チームオブジェクト
+        self.user : object
+            ユーザーオブジェクト
+        self.profile : object
+            プロフィールオブジェクト
+        self.notification : object
+            通知オブジェクト
         """
         self.team = Team.objects.create(
             teamname='hoge',
@@ -64,95 +76,95 @@ class TeamStatusCodeTests(TestCase):
             to_user=self.user,
         )
 
-    def test_home_status_code(self):
+    def test_home_status_code_anonymous_user(self):
         """
-        未ログインユーザーの home のステータスコードは 200 になる
+        home のステータスコードは 200 になる
         """
         url = reverse('teams:home')
         response = self.client.get(url)
         self.assertEquals(response.status_code, 200)
 
-    def test_contact_status_code(self):
+    def test_contact_status_code_anonymous_user(self):
         """
-        未ログインユーザーの contact のステータスコードは 200 になる
+        contact のステータスコードは 200 になる
         """
         url = reverse('teams:contact')
         response = self.client.get(url)
         self.assertEquals(response.status_code, 200)
 
-    def test_faq_status_code(self):
+    def test_faq_status_code_anonymous_user(self):
         """
-        未ログインユーザーの faq のステータスコードは 200 になる
+        faq のステータスコードは 200 になる
         """
         url = reverse('teams:faq')
         response = self.client.get(url)
         self.assertEquals(response.status_code, 200)
 
-    def test_terms_of_service_status_code(self):
+    def test_terms_of_service_status_code_anonymous_user(self):
         """
-        未ログインユーザーの terms_of_service のステータスコードは 200 になる
+        terms_of_service のステータスコードは 200 になる
         """
         url = reverse('teams:terms_of_service')
         response = self.client.get(url)
         self.assertEquals(response.status_code, 200)
 
-    def test_privacy_policy_status_code(self):
+    def test_privacy_policy_status_code_anonymous_user(self):
         """
-        未ログインユーザーの privacy_policy のステータスコードは 200 になる
+        privacy_policy のステータスコードは 200 になる
         """
         url = reverse('teams:privacy_policy')
         response = self.client.get(url)
         self.assertEquals(response.status_code, 200)
 
-    def test_accounts_list_status_code(self):
+    def test_accounts_list_status_code_anonymous_user(self):
         """
-        未ログインユーザーの accounts_list のステータスコードは 200 になる
+        accounts_list のステータスコードは 200 になる
         """
         url = reverse('teams:accounts_list')
         response = self.client.get(url)
         self.assertEquals(response.status_code, 200)
 
-    def test_team_create_status_code(self):
+    def test_team_create_status_code_anonymous_user(self):
         """
-        未ログインユーザーの team_create のステータスコードは 302 になる
+        team_create のステータスコードは 302 になる
         """
         url = reverse('teams:team_create')
         response = self.client.get(url)
         self.assertEquals(response.status_code, 302)
 
-    def test_team_list_status_code(self):
+    def test_team_list_status_code_anonymous_user(self):
         """
-        未ログインユーザーの team_list のステータスコードは 200 になる
+        team_list のステータスコードは 200 になる
         """
         url = reverse('teams:team_list')
         response = self.client.get(url)
         self.assertEquals(response.status_code, 200)
 
-    def test_team_update_status_code(self):
+    def test_team_update_status_code_anonymous_user(self):
         """
-        未ログインユーザーの team_update のステータスコードは 403 になる
+        team_update のステータスコードは 403 になる
         """
         url = reverse('teams:team_update', args=[self.team])
         response = self.client.get(url)
         self.assertEquals(response.status_code, 403)
 
-    def test_team_delete_status_code(self):
+    def test_team_delete_status_code_anonymous_user(self):
         """
-        未ログインユーザーの team_delete のステータスコードは 403 になる
+        team_delete のステータスコードは 403 になる
         """
         url = reverse('teams:team_delete', args=[self.team])
         response = self.client.get(url)
         self.assertEquals(response.status_code, 403)
 
-    def test_team_detail_status_code(self):
+    def test_team_detail_status_code_anonymous_user(self):
         """
-        未ログインユーザーの team_detail のステータスコードは 200 になる
+        team_detail のステータスコードは 200 になる
         """
         url = reverse('teams:team_detail', args=[self.team])
         response = self.client.get(url)
         self.assertEquals(response.status_code, 200)
 
-    # def test_team_detail_member_status_code(self):
+    # def test_team_detail_member_status_code_anonymous_user(self):
     #     """
     #     TODO
     #     ----
@@ -162,129 +174,129 @@ class TeamStatusCodeTests(TestCase):
     #     response = self.client.get(url)
     #     self.assertEquals(response.status_code, 200)
 
-    def test_team_detail_feature_status_code(self):
+    def test_team_detail_feature_status_code_anonymous_user(self):
         """
-        未ログインユーザーの team_detail_feature のステータスコードは 200 になる
+        team_detail_feature のステータスコードは 200 になる
         """
         url = reverse('teams:team_detail_feature', args=[self.team])
         response = self.client.get(url)
         self.assertEquals(response.status_code, 200)
 
-    def test_team_detail_desired_condition_status_code(self):
+    def test_team_detail_desired_condition_status_code_anonymous_user(self):
         """
-        未ログインユーザーの team_detail_desired_condition のステータスコードは 200 になる
+        team_detail_desired_condition のステータスコードは 200 になる
         """
         url = reverse('teams:team_detail_desired_condition', args=[self.team])
         response = self.client.get(url)
         self.assertEquals(response.status_code, 200)
 
-    def test_team_member_add_status_code(self):
+    def test_team_member_add_status_code_anonymous_user(self):
         """
-        未ログインユーザーの team_member_add のステータスコードは 302 になる
+        team_member_add のステータスコードは 302 になる
         """
         url = reverse('teams:team_member_add', args=[self.team])
         response = self.client.get(url)
         self.assertEquals(response.status_code, 302)
 
-    def test_team_member_delete_status_code(self):
+    def test_team_member_delete_status_code_anonymous_user(self):
         """
-        未ログインユーザーの team_member_delete のステータスコードは 403 になる
+        team_member_delete のステータスコードは 403 になる
         """
         url = reverse('teams:team_member_delete', kwargs={'teamname': self.team, 'username': self.user.username})
         response = self.client.get(url)
         self.assertEquals(response.status_code, 403)
 
-    def test_account_detail_status_code(self):
+    def test_account_detail_status_code_anonymous_user(self):
         """
-        未ログインユーザーの account_detail のステータスコードは 200 になる
+        account_detail のステータスコードは 200 になる
         """
         url = reverse('teams:account_detail', args=[self.user.username])
         response = self.client.get(url)
         self.assertEquals(response.status_code, 200)
 
-    def test_account_detail_feature_status_code(self):
+    def test_account_detail_feature_status_code_anonymous_user(self):
         """
-        未ログインユーザーの team_detail_feature のステータスコードは 200 になる
+        team_detail_feature のステータスコードは 200 になる
         """
         url = reverse('teams:account_detail_feature', args=[self.user.username])
         response = self.client.get(url)
         self.assertEquals(response.status_code, 200)
 
-    def test_account_detail_desired_condition_status_code(self):
+    def test_account_detail_desired_condition_status_code_anonymous_user(self):
         """
-        未ログインユーザーの team_detail_desired_condition のステータスコードは 200 になる
+        team_detail_desired_condition のステータスコードは 200 になる
         """
         url = reverse('teams:account_detail_desired_condition', args=[self.user.username])
         response = self.client.get(url)
         self.assertEquals(response.status_code, 200)
 
-    def test_account_profile_update_status_code(self):
+    def test_account_profile_update_status_code_anonymous_user(self):
         """
-        未ログインユーザーの account_profile_update のステータスコードは 403 になる
+        account_profile_update のステータスコードは 403 になる
         """
         url = reverse('teams:account_profile_update', args=[self.user.username])
         response = self.client.get(url)
         self.assertEquals(response.status_code, 403)
 
-    def test_notification_status_code(self):
+    def test_notification_status_code_anonymous_user(self):
         """
-        未ログインユーザーの notification のステータスコードは 403 になる
+        notification のステータスコードは 403 になる
         """
         url = reverse('teams:notification', args=[self.user.username])
         response = self.client.get(url)
         self.assertEquals(response.status_code, 403)
 
-    def test_application_detail_status_code(self):
+    def test_application_detail_status_code_anonymous_user(self):
         """
-        未ログインユーザーの application_detail のステータスコードは 403 になる
+        application_detail のステータスコードは 403 になる
         """
         url = reverse('teams:application_detail', kwargs={'username': self.user.username, 'id': self.notification.id})
         response = self.client.get(url)
         self.assertEquals(response.status_code, 403)
 
-    def test_invitation_detail_status_code(self):
+    def test_invitation_detail_status_code_anonymous_user(self):
         """
-        未ログインユーザーの invitation_detail のステータスコードは 403 になる
+        invitation_detail のステータスコードは 403 になる
         """
         url = reverse('teams:invitation_detail', kwargs={'username': self.user.username, 'id': self.notification.id})
         response = self.client.get(url)
         self.assertEquals(response.status_code, 403)
 
-    def test_member_approval_detail_status_code(self):
+    def test_member_approval_detail_status_code_anonymous_user(self):
         """
-        未ログインユーザーの member_approval_detail のステータスコードは 403 になる
+        member_approval_detail のステータスコードは 403 になる
         """
         url = reverse('teams:member_approval_detail', kwargs={'username': self.user.username, 'id': self.notification.id})
         response = self.client.get(url)
         self.assertEquals(response.status_code, 403)
 
-    def test_official_detail_status_code(self):
+    def test_official_detail_status_code_anonymous_user(self):
         """
-        未ログインユーザーの official_detail のステータスコードは 403 になる
+        official_detail のステータスコードは 403 になる
         """
         url = reverse('teams:official_detail', kwargs={'username': self.user.username, 'id': self.notification.id})
         response = self.client.get(url)
         self.assertEquals(response.status_code, 403)
 
-    def test_application_create_status_code(self):
+    def test_application_create_status_code_anonymous_user(self):
         """
-        未ログインユーザーの application_create のステータスコードは 302 になる
+        application_create のステータスコードは 302 になる
         """
         url = reverse('teams:application_create', args=[self.team])
         response = self.client.get(url)
         self.assertEquals(response.status_code, 302)
 
-    def test_application_reply_create_status_code(self):
+    def test_application_reply_create_status_code_anonymous_user(self):
         """
-        未ログインユーザーの application_reply_create のステータスコードは 403 になる
+        application_reply_create のステータスコードは 403 になる
         """
         url = reverse('teams:application_reply_create', kwargs={'username': self.user.username, 'id': self.notification.id})
         response = self.client.get(url)
         self.assertEquals(response.status_code, 403)
 
-    def test_invitation_create_status_code(self):
+    def test_invitation_create_status_code_anonymous_user(self):
         """
-        未ログインユーザーの team_detail のステータスコードは 302 になる
+        team_detail のステータスコードは 302 になる
         """
         url = reverse('teams:invitation_create', args=[self.user.username])
         response = self.client.get(url)
