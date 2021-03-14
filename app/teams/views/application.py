@@ -12,7 +12,7 @@ from .team import TeamDetailBaseView
 
 class ApplicationCreateView(LoginRequiredMixin, CreateView, TeamDetailBaseView):
     """
-    チームリクエストを作成する
+    チームリクエストを作成する。
     """
     template_name = 'teams/application_create.html'
     form_class = ApplicationCreateForm
@@ -20,16 +20,15 @@ class ApplicationCreateView(LoginRequiredMixin, CreateView, TeamDetailBaseView):
 
     def form_valid(self, form):
         """
-        application object に必要な情報を登録する
+        application object に必要な情報を登録する。
+        同じチームに所属している場合、無効になる。
 
-        See Also
-        --------
-        mode : application
-        to_user : チームオーナー
-
-        Notes
-        -----
-        同じチームに所属している場合、無効になる
+        Returns
+        -------
+        redirect(self.success_url, teamname=self.kwargs.get('teamname')) : Callable
+            自身の所属するチームなら success_url にリダイレクト。
+        super().form_valid(form) : Callable
+            親クラス(CreateView)の form_valid 関数。
         """
         self.object = form.save(commit=False)
         self.object.team = Team.objects.get(teamname=self.kwargs.get('teamname'))
@@ -47,6 +46,14 @@ class ApplicationCreateView(LoginRequiredMixin, CreateView, TeamDetailBaseView):
         return super().form_valid(form)
 
     def get_success_url(self):
+        """
+        super().form_valid(form) が実行されたら実行される。
+
+        Parameters
+        ----------
+        self.object.team.teamname : str
+            form_valid 関数で取得したリクエストを送ろうとしている Team の teamname。
+        """
         return reverse(self.success_url, kwargs={'teamname': self.object.team.teamname})
 
 application_create = ApplicationCreateView.as_view()
@@ -55,11 +62,7 @@ application_create = ApplicationCreateView.as_view()
 
 class ApplicationReplyCreateView(OnlyYouMixin, UpdateView):
     """
-    リクエストの承認とその返答に必要なURLを設定するURL
-
-    TODO
-    -----
-    直接URLを入力するとアクセスすることができるので、修正する
+    リクエストの承認とその返答に必要なURLを入力するための view。
     """
     template_name = 'teams/notification/application_reply_create.html'
     form_class = ApplicationUpdateForm
@@ -67,24 +70,46 @@ class ApplicationReplyCreateView(OnlyYouMixin, UpdateView):
 
     def form_valid(self, form):
         """
-        認可を True にするのとURLをDBに登録するフォーム
+        チームリクエストオブジェクトを True にするのとURLをオブジェクトに登録する関数。
+
+        Returns
+        super().form_valid(form) : Callable
+            親クラス(UpdateView)の form_valid 関数。
         """
         self.object = Notification.objects.get(id=self.kwargs.get('id'))
         self.object.is_proceeded = True
         self.object.invitation_url = form.cleaned_data['invitation_url']
         self.object.save()
-        result = super().form_valid(form)
-        return result
+        return super().form_valid(form)
 
     def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['application'] = Notification.objects.get(id=self.kwargs.get('id'))
-        return context
+        """
+        チームリクエストオブジェクトの編集に必要なオブジェクトを取得する。
+
+        Returns
+        -------
+        ctx : dict
+            チームリクエストオブジェクト入り ctx。
+        """
+        ctx = super().get_context_data(**kwargs)
+        ctx['application'] = Notification.objects.get(id=self.kwargs.get('id'))
+        return ctx
 
     def get_object(self):
+        """
+        URL に必要なパラメータを取得する関数。
+        """
         return get_object_or_404(get_user_model(), username=self.kwargs.get('username'))
 
     def get_success_url(self):
+        """
+        super().form_valid(form) が実行されたら実行される。
+
+        Parameters
+        ----------
+        self.request.user.username : str
+            request.user の username。
+        """
         return reverse(self.success_url, kwargs={'username': self.request.user.username})
 
 application_reply_create = ApplicationReplyCreateView.as_view()

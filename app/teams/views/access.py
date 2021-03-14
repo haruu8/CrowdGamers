@@ -85,7 +85,7 @@ class CustomAccessMixin(AccessMixin):
         Returns
         -------
         redirect(home_url) : Callable
-            孫クラスで定義した home_url もしくは、 settings.LOGIN_REDIRECT_URL で定義した url。
+            孫クラスで定義した home_url もしくは、 settings.LOGIN_REDIRECT_URL で定義した urlにリダイレクト。
         """
         home_url = self.home_url or settings.LOGIN_REDIRECT_URL
         if not home_url:
