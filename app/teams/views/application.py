@@ -73,6 +73,7 @@ class ApplicationReplyCreateView(OnlyYouMixin, UpdateView):
         チームリクエストオブジェクトを True にするのとURLをオブジェクトに登録する関数。
 
         Returns
+        -------
         super().form_valid(form) : Callable
             親クラス(UpdateView)の form_valid 関数。
         """
@@ -84,7 +85,7 @@ class ApplicationReplyCreateView(OnlyYouMixin, UpdateView):
 
     def get_context_data(self, **kwargs):
         """
-        チームリクエストオブジェクトの編集に必要なオブジェクトを取得する。
+        チームリクエストオブジェクトの編集に必要なオブジェクトを取得する関数。
 
         Returns
         -------

@@ -12,15 +12,19 @@ from teams.views import OnlyYouMixin
 
 class NotificationView(LoginRequiredMixin, OnlyYouMixin,TemplateView):
     """
-    通知を一覧表示する
-
-    TODO
-    -----
-    全ての通知を取得する処理を書く
+    ログインユーザーの通知を一覧表示する。
     """
     template_name = 'teams/notification/notification.html'
 
     def get_context_data(self, **kwargs):
+        """
+        ログインユーザーの通知のデータを取得する関数。
+
+        Returns
+        -------
+        ctx : dict
+            Notification オブジェクト入り ctx。
+        """
         ctx = super().get_context_data(**kwargs)
         ctx['notifications'] = Notification.objects.filter(
             Q(from_user=self.request.user, is_proceeded__isnull=False) |
@@ -34,7 +38,7 @@ notification = NotificationView.as_view()
 
 class InvitationNotificationDetailView(LoginRequiredMixin, OnlyYouMixin, DetailView):
     """
-    招待の詳細を表示する
+    招待の詳細を表示する。
     """
     template_name = 'teams/notification/invitation_detail.html'
     model = Notification
@@ -42,7 +46,13 @@ class InvitationNotificationDetailView(LoginRequiredMixin, OnlyYouMixin, DetailV
 
     def post(self, request, *args, **kwargs):
         """
-        招待の承認・拒否の処理
+        招待の認可をオブジェクトに登録する関数。
+        ボタンの属性から認可を判断する。
+
+        Returns
+        -------
+        redirect('teams:home') : Callable
+            引数の url にリダイレクト。
         """
         self.object = Notification.objects.get(id=self.kwargs.get('id'))
         if self.object.is_proceeded is True or self.object.is_proceeded is False:
@@ -55,11 +65,22 @@ class InvitationNotificationDetailView(LoginRequiredMixin, OnlyYouMixin, DetailV
         return redirect('teams:home')
 
     def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['invitation'] = Notification.objects.get(id=self.kwargs.get('id'))
-        return context
+        """
+        招待詳細画面に表示するために必要な情報を取得する関数。
+
+        Returns
+        -------
+        ctx : dict
+            チームリクエストオブジェクト入り ctx。
+        """
+        ctx = super().get_context_data(**kwargs)
+        ctx['invitation'] = Notification.objects.get(id=self.kwargs.get('id'))
+        return ctx
 
     def get_object(self):
+        """
+        URL に必要なパラメータを取得する関数。
+        """
         return get_object_or_404(get_user_model(), username=self.kwargs.get('username'))
 
 invitation_detail = InvitationNotificationDetailView.as_view()
@@ -68,7 +89,7 @@ invitation_detail = InvitationNotificationDetailView.as_view()
 
 class MemberApprovalNotificationDetailView(LoginRequiredMixin, OnlyYouMixin, DetailView):
     """
-    チームのメンバー追加の詳細を表示する
+    チームのメンバー追加の詳細を表示する。
     """
     template_name = 'teams/notification/member_approval_detail.html'
     model = Notification
@@ -76,12 +97,13 @@ class MemberApprovalNotificationDetailView(LoginRequiredMixin, OnlyYouMixin, Det
 
     def post(self, request, *args, **kwargs):
         """
-        チームのメンバー登録申請の認可
+        チームのメンバー登録申請の認可に関するデータを登録する関数。
+        ボタンの属性から認可を判断する。
 
-        Notes
-        -----
-        self.object は memberApproval オブジェクトを管理
-        チーム登録は new_* と命名している
+        Returns
+        -------
+        redirect('teams:home') : Callable
+            引数の url にリダイレクト。
         """
         self.object = Notification.objects.get(id=self.kwargs.get('id'))
         if self.object.is_proceeded is True or self.object.is_proceeded is False:
@@ -98,14 +120,35 @@ class MemberApprovalNotificationDetailView(LoginRequiredMixin, OnlyYouMixin, Det
         return redirect('teams:home')
 
     def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['member_approval'] = Notification.objects.get(id=self.kwargs.get('id'))
-        return context
+        """
+        メンバー追加申請の詳細画面に表示するために必要な情報を取得する関数。
+
+        Returns
+        -------
+        ctx : dict
+            チームリクエストオブジェクト入り ctx。
+        """
+        ctx = super().get_context_data(**kwargs)
+        ctx['member_approval'] = Notification.objects.get(id=self.kwargs.get('id'))
+        return ctx
 
     def get_object(self):
+        """
+        URL に必要なパラメータを取得する関数。
+        """
         return get_object_or_404(get_user_model(), username=self.kwargs.get('username'))
 
     def get_success_url(self):
+        """
+        button が押されたタイミングでリダイレクトする URL を取得する関数。
+
+        Parameters
+        ----------
+        self.request.user.username : str
+            request.user の username。
+        self.object.id : str
+            同クラスの post 関数で取得した member_approval object の id。
+        """
         return reverse(self.success_url, kwargs={'username': self.request.user.username, 'id': self.object.id})
 
 member_approval_detail = MemberApprovalNotificationDetailView.as_view()
@@ -114,7 +157,7 @@ member_approval_detail = MemberApprovalNotificationDetailView.as_view()
 
 class ApplicationNotificationDetailView(LoginRequiredMixin, OnlyYouMixin, DetailView):
     """
-    リクエストの詳細を表示する
+    リクエストの詳細を表示する。
     """
     template_name = 'teams/notification/application_detail.html'
     model = Notification
@@ -122,12 +165,14 @@ class ApplicationNotificationDetailView(LoginRequiredMixin, OnlyYouMixin, Detail
 
     def post(self, request, *args, **kwargs):
         """
-        申請の認可の処理
+        詳細画面に表示される認可のデータ保存処理を行う関数。
+        ボタンの属性から認可を判断する。
+        is_proceeded が True なら 別 view での処理、 False なら application object の is_proceeded に False を登録。
 
-        Notes
-        -----
-        承認なら ApplicationReplyCreateView での処理
-        拒否なら application object の is_proceeded に False をセットする
+        Returns
+        -------
+        redirect('teams:home') : Callable
+            引数の url にリダイレクト。
         """
         self.object = Notification.objects.get(id=self.kwargs.get('id'))
         if self.object.is_proceeded is True or self.object.is_proceeded is False:
@@ -140,14 +185,35 @@ class ApplicationNotificationDetailView(LoginRequiredMixin, OnlyYouMixin, Detail
         return redirect('teams:home')
 
     def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['application'] = Notification.objects.get(id=self.kwargs.get('id'))
-        return context
+        """
+        チームリクエスト詳細画面に表示するために必要な情報を取得する関数。
+
+        Returns
+        -------
+        ctx : dict
+            チームリクエストオブジェクト入り ctx。
+        """
+        ctx = super().get_context_data(**kwargs)
+        ctx['application'] = Notification.objects.get(id=self.kwargs.get('id'))
+        return ctx
 
     def get_object(self):
+        """
+        URL に必要なパラメータを取得する関数。
+        """
         return get_object_or_404(get_user_model(), username=self.kwargs.get('username'))
 
     def get_success_url(self):
+        """
+        button が押されたタイミングでリダイレクトする URL を取得する関数。
+
+        Parameters
+        ----------
+        self.request.user.username : str
+            request.user の username。
+        self.object.id : str
+            同クラスの post 関数で取得した application object の id。
+        """
         return reverse(self.success_url, kwargs={'username': self.request.user.username, 'id': self.object.id})
 
 application_detail = ApplicationNotificationDetailView.as_view()
@@ -156,20 +222,28 @@ application_detail = ApplicationNotificationDetailView.as_view()
 
 class OfficialNotificationDetailView(LoginRequiredMixin, OnlyYouMixin, DetailView):
     """
-    公式からのお知らせの詳細を表示する
+    公式からのお知らせの詳細を表示する。
     """
     template_name = 'teams/notification/official_detail.html'
     model = Notification
 
     def get_context_data(self, **kwargs):
+        """
+        公式からのお知らせの詳細画面に表示するために必要な情報を取得する関数。
+
+        Returns
+        -------
+        ctx : dict
+            チームリクエストオブジェクト入り ctx。
+        """
         context = super().get_context_data(**kwargs)
         context['official_notification'] = Notification.objects.get(id=self.kwargs.get('id'))
         return context
 
     def get_object(self):
+        """
+        URL に必要なパラメータを取得する関数。
+        """
         return get_object_or_404(get_user_model(), username=self.kwargs.get('username'))
-
-    def get_success_url(self):
-        return reverse(self.success_url, kwargs={'username': self.request.user.username, 'id': self.object.id})
 
 official_detail = OfficialNotificationDetailView.as_view()
