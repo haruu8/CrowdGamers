@@ -4,12 +4,13 @@ from django.db import models
 
 class Job(models.Model):
     """
-    希望職の選択肢を追加する
+    希望枠のモデル。
+    アドミンページからの追加しかできない。
     """
     class Meta():
         db_table = 't_job'
-        verbose_name = 'ジョブ'
-        verbose_name_plural = 'ジョブ'
+        verbose_name = '希望枠'
+        verbose_name_plural = '希望枠'
 
     id = models.AutoField(primary_key=True, editable=False)
     job = models.CharField(max_length=50, null=False, blank=False)

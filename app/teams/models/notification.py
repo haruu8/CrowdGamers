@@ -7,7 +7,7 @@ import uuid
 
 class Notification(models.Model):
     """
-    通知関係を管理する
+    通知のモデル。
 
     MODE
     -----

@@ -5,6 +5,7 @@ from django.db import models
 class Question(models.Model):
     """
     よくある質問のモデル。
+    アドミンページからの追加しかできない。
     """
     class Meta():
         db_table = 't_question'

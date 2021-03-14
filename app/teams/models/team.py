@@ -11,7 +11,7 @@ from teams.utils import user_directory_path, validate_icon_image
 
 class Team(models.Model):
     """
-    チームモデル
+    チームのモデル。
     """
     class Meta():
         db_table = 't_team'

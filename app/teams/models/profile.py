@@ -13,11 +13,8 @@ from teams.utils import user_directory_path, validate_header_image, validate_ico
 
 class UserProfile(models.Model):
     """
-    ユーザープロフィールモデル
-
-    Notes
-    -----
-    Userが作成されたら同時にオブジェクトが生成される
+    ユーザープロフィールのモデル。
+    Userが作成されたら同時にオブジェクトが生成される。
     """
     class Meta():
         db_table = 't_user_profile'

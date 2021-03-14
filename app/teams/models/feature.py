@@ -4,7 +4,8 @@ from django.db import models
 
 class Feature(models.Model):
     """
-    特徴タグを追加できる
+    特徴タグのモデル。
+    アドミンページからの追加しかできない。
     """
     class Meta():
         db_table = 't_feature'

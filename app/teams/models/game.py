@@ -4,7 +4,8 @@ from django.db import models
 
 class Game(models.Model):
     """
-    ゲームの選択肢を追加する
+    ゲームタイトルのモデル。
+    アドミンページからの追加しかできない。
     """
     class Meta():
         db_table = 't_game'
