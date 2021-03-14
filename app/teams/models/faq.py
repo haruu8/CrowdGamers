@@ -4,7 +4,7 @@ from django.db import models
 
 class Question(models.Model):
     """
-    よくある質問を追加できる
+    よくある質問のモデル。
     """
     class Meta():
         db_table = 't_question'

@@ -4,7 +4,9 @@ from teams.models import UserProfile, Game, Feature, Job
 
 
 class UserProfileUpdateForm(forms.ModelForm):
-
+    """
+    ユーザープロフィールを編集するフォーム。
+    """
     class Meta:
         model = UserProfile
         fields = ('name', 'icon', 'header', 'game_title', 'feature',
@@ -36,6 +38,9 @@ class UserProfileUpdateForm(forms.ModelForm):
     disclosed = forms.BooleanField(required=False, label='公開・非公開')
 
     def __init__(self, *args, **kwargs):
+        """
+        一括でエラーメッセージを設定する。
+        """
         super(UserProfileUpdateForm, self).__init__(*args, **kwargs)
         for field in self.fields.values():
             field.error_messages = {'required':'{fieldname} は必須です。'.format(fieldname=field.label)}
@@ -43,7 +48,7 @@ class UserProfileUpdateForm(forms.ModelForm):
 
     def clean_feature(self):
         """
-        特徴の選択上限を3つに設定する validation
+        feature の選択上限を3つに設定する。
         """
         feature = self.cleaned_data['feature']
         if len(feature) >= 4:
@@ -52,7 +57,7 @@ class UserProfileUpdateForm(forms.ModelForm):
 
     def clean_game_title(self):
         """
-        ゲームタイトルの選択上限を5つに設定する validation
+        game_title の選択上限を5つに設定する。
         """
         game_title = self.cleaned_data['game_title']
         if len(game_title) >= 6:
@@ -61,7 +66,7 @@ class UserProfileUpdateForm(forms.ModelForm):
 
     def clean_desired_job(self):
         """
-        希望職の選択上限を1つに設定する validation
+        desired_job の選択上限を1つに設定する。
         """
         desired_job = self.cleaned_data['desired_job']
         if len(desired_job) >= 2:

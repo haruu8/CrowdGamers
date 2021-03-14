@@ -4,7 +4,9 @@ from teams.models import Team, Game, Feature, Job
 
 
 class TeamCreateForm(forms.ModelForm):
-
+    """
+    チームの作成・編集に使用するフォーム
+    """
     class Meta:
         model = Team
         fields = ('teamname', 'name', 'icon', 'header', 'website', 'introduction',
@@ -37,6 +39,9 @@ class TeamCreateForm(forms.ModelForm):
     disclosed = forms.BooleanField(required=False, label='公開・非公開')
 
     def __init__(self, *args, **kwargs):
+        """
+        一括でエラーメッセージを設定する
+        """
         super(TeamCreateForm, self).__init__(*args, **kwargs)
         for field in self.fields.values():
             field.error_messages = {'required':'{fieldname} は必須です。'.format(fieldname=field.label)}
@@ -44,21 +49,16 @@ class TeamCreateForm(forms.ModelForm):
 
     def clean_teamname(self):
         """
-        teamname の validation
+        teamname の文字数制限を設定する。
         """
         teamname = self.cleaned_data['teamname']
         if len(teamname) <= 3 or len(teamname) >= 16:
             raise forms.ValidationError('チームネームは4~15字で設定してください')
-        # regex=r'[a-zA-Z0-9_]'
-        # if teamname in regex:
-        #     pass
-        # else:
-        #     raise forms.ValidationError('使用できる文字は大文字・小文字アルファベット、数字、_(アンダーバー)のみです。')
         return teamname
 
     def clean_feature(self):
         """
-        特徴の選択上限を3つに設定する validation
+        feature の選択上限を3つに設定する。
         """
         feature = self.cleaned_data['feature']
         if len(feature) >= 4:
@@ -67,7 +67,7 @@ class TeamCreateForm(forms.ModelForm):
 
     def clean_game_title(self):
         """
-        ゲームタイトルの選択上限を5つに設定する validation
+        game_title の選択上限を5つに設定する。
         """
         game_title = self.cleaned_data['game_title']
         if len(game_title) >= 6:
@@ -76,7 +76,7 @@ class TeamCreateForm(forms.ModelForm):
 
     def clean_desired_job(self):
         """
-        希望職の選択上限を3つに設定する validation
+        desired_job の選択上限を3つに設定する。
         """
         desired_job = self.cleaned_data['desired_job']
         if len(desired_job) >= 4:

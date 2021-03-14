@@ -4,6 +4,9 @@ from teams.models import Job, Notification
 
 
 class InvitationCreateForm(forms.ModelForm):
+    """
+    ユーザー招待を作成するフォーム。
+    """
     class Meta:
         model = Notification
         fields = ('desired_job', 'message', 'invitation_url')
@@ -16,6 +19,9 @@ class InvitationCreateForm(forms.ModelForm):
                                 widget=forms.URLInput(attrs={'placeholder': '招待が承認された後に会話するDiscordのサーバー招待URLを入力してください', 'render_value': True}))
 
     def __init__(self, *args, **kwargs):
+        """
+        一括でエラーメッセージを設定する。
+        """
         super(InvitationCreateForm, self).__init__(*args, **kwargs)
         for field in self.fields.values():
             field.error_messages = {'required':'{fieldname} は必須です。'.format(fieldname=field.label)}
@@ -23,13 +29,9 @@ class InvitationCreateForm(forms.ModelForm):
 
     def clean_desired_job(self):
         """
-        希望職の選択上限を1つに設定する validation
-
-        TODO
-        -----
-        他で使用している関数とまとめる
+        希望枠の選択上限を1つに設定する。
         """
         desired_job = self.cleaned_data['desired_job']
         if len(desired_job) >= 2:
-            raise forms.ValidationError('希望職は1つまでしか選択することができません')
+            raise forms.ValidationError('希望枠は1つまでしか選択することができません')
         return desired_job

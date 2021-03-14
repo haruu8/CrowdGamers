@@ -4,6 +4,9 @@ from teams.models import Job, Notification
 
 
 class ApplicationCreateForm(forms.ModelForm):
+    """
+    チームへのリクエストを作成するフォーム。
+    """
     class Meta:
         model = Notification
         fields = ('desired_job', 'message')
@@ -14,6 +17,9 @@ class ApplicationCreateForm(forms.ModelForm):
                                 widget=forms.Textarea(attrs={'placeholder': '志望理由を入力してください', 'render_value': True}))
 
     def __init__(self, *args, **kwargs):
+        """
+        一括でエラーメッセージを設定する。
+        """
         super(ApplicationCreateForm, self).__init__(*args, **kwargs)
         for field in self.fields.values():
             field.error_messages = {'required':'{fieldname} は必須です。'.format(fieldname=field.label)}
@@ -21,26 +27,19 @@ class ApplicationCreateForm(forms.ModelForm):
 
     def clean_desired_job(self):
         """
-        希望職の選択上限を1つに設定する validation
-
-        TODO
-        -----
-        他で使用している関数とまとめる
+        希望枠の選択上限を1つに設定する。
         """
         desired_job = self.cleaned_data['desired_job']
         if len(desired_job) >= 2:
-            raise forms.ValidationError('希望職は1つまでしか選択することができません')
+            raise forms.ValidationError('希望枠は1つまでしか選択することができません')
         return desired_job
 
 
 
 class ApplicationUpdateForm(forms.ModelForm):
     """
-    チームへのリクエストを承認した場合に招待URLをセットするフォーム
-
-    Notes
-    -----
-    拒否した場合は入力しない
+    チームへのリクエストの承認時に必要フィールドを入力するフォーム。
+    リクエストを拒否した場合は入力が行われない。
     """
     class Meta:
         model = Notification
@@ -50,6 +49,9 @@ class ApplicationUpdateForm(forms.ModelForm):
                                 widget=forms.TextInput(attrs={'placeholder': '会話に使用する Discordサーバーの招待URLを入力してください', 'render_value': True}))
 
     def __init__(self, *args, **kwargs):
+        """
+        一括でエラーメッセージを設定する。
+        """
         super(ApplicationUpdateForm, self).__init__(*args, **kwargs)
         for field in self.fields.values():
             field.error_messages = {'required':'{fieldname} は必須です。'.format(fieldname=field.label)}
