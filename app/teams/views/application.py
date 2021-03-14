@@ -26,7 +26,7 @@ class ApplicationCreateView(LoginRequiredMixin, CreateView, TeamDetailBaseView):
         Returns
         -------
         redirect(self.success_url, teamname=self.kwargs.get('teamname')) : Callable
-            自身の所属するチームなら success_url にリダイレクト。
+            自身の所属するチームにリクエストを送信しようとしているなら success_url にリダイレクト。
         super().form_valid(form) : Callable
             親クラス(CreateView)の form_valid 関数。
         """
@@ -47,7 +47,7 @@ class ApplicationCreateView(LoginRequiredMixin, CreateView, TeamDetailBaseView):
 
     def get_success_url(self):
         """
-        super().form_valid(form) が実行されたら実行される。
+        super().form_valid(form) が実行された後にリダイレクトする URL を取得する関数。
 
         Parameters
         ----------
@@ -103,7 +103,7 @@ class ApplicationReplyCreateView(OnlyYouMixin, UpdateView):
 
     def get_success_url(self):
         """
-        super().form_valid(form) が実行されたら実行される。
+        super().form_valid(form) が実行された後にリダイレクトする URL を取得する関数。
 
         Parameters
         ----------
