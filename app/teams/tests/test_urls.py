@@ -1,4 +1,4 @@
-from django.test import TestCase
+from django.test import TestCase, Client
 from django.urls import resolve, reverse
 from django.http import HttpRequest
 from django.template.loader import render_to_string
@@ -47,14 +47,14 @@ class TeamStatusCodeTests(TestCase):
 
         Parameters
         ----------
-        self.team : object
-            チームオブジェクト
-        self.user : object
-            ユーザーオブジェクト
-        self.profile : object
-            プロフィールオブジェクト
-        self.notification : object
-            通知オブジェクト
+        team : object
+            Team モデルのオブジェクト
+        user : object
+            User モデルのオブジェクト
+        profile : object
+            UserProfile モデルのオブジェクト
+        notification : object
+            Notification モデルのオブジェクト
         """
         self.team = Team.objects.create(
             teamname='hoge',
@@ -75,6 +75,7 @@ class TeamStatusCodeTests(TestCase):
             from_user=self.user,
             to_user=self.user,
         )
+        self.client = Client()
 
     def test_home_status_code_anonymous_user(self):
         """
@@ -301,8 +302,6 @@ class TeamStatusCodeTests(TestCase):
         url = reverse('teams:invitation_create', args=[self.user.username])
         response = self.client.get(url)
         self.assertEquals(response.status_code, 302)
-
-
 
 # class TeamHtmlTests(TestCase):
 #     """
