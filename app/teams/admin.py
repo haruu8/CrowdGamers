@@ -4,13 +4,28 @@ from .models import Team, UserProfile, Feature, Game, Question, Job, Notificatio
 
 
 class NotificationAdmin(admin.ModelAdmin):
-    list_display = ['id', 'mode', 'from_user', 'to_user', 'message']
+    """
+    通知一覧の表示フィールドを編集
+    """
+    list_display = ['mode', 'from_user', 'to_user', 'message']
+
+
 
 class TeamAdmin(admin.ModelAdmin):
+    """
+    通知一覧の表示フィールドを編集
+    """
     list_display = ['teamname', 'name', 'created_at']
 
+
+
 class UserProfileAdmin(admin.ModelAdmin):
+    """
+    通知一覧の表示フィールドを編集
+    """
     list_display = ['user', 'name', 'team']
+
+
 
 admin.site.register(Feature)
 admin.site.register(Game)
