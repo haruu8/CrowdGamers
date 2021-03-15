@@ -1,27 +1,40 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView, UpdateView, ListView
-from django.contrib.auth import get_user_model, views as auth_views
+from django.contrib.auth import get_user_model, views as auth_views, authenticate
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.conf import settings
 from teams.views import OnlyYouMixin, AnonymousRequiredMixin
 
 
 
 class LoginView(AnonymousRequiredMixin, auth_views.LoginView):
     """
-    ログインする
+    ログインする。
     """
     template_name = 'accounts/login.html'
+
+login = LoginView.as_view()
+
+
+
+class SignupView(AnonymousRequiredMixin, auth_views.LoginView):
+    """
+    サインアップする。
+    """
+    template_name = 'accounts/signup.html'
+
+signup = SignupView.as_view()
 
 
 
 class UserDeleteView(OnlyYouMixin, LoginRequiredMixin, TemplateView):
     """
-    ユーザーを削除する
+    ユーザーを削除する。
 
     Notes
     -----
-    buttonを使用するので TemplateView の post をオーバーライドする
+    buttonを使用するので TemplateView の post をオーバーライドする。
     """
     template_name = 'accounts/account_delete.html'
     success_url = 'teams:home'
