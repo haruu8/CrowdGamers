@@ -1,0 +1,14 @@
+.container {
+  margin: 5rem auto;
+}
+
+.circle {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: #F03030;
+}
+
+.push {
+  height: 400px;
+}

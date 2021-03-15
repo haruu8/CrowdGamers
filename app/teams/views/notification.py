@@ -22,7 +22,7 @@ class NotificationView(LoginRequiredMixin, OnlyYouMixin,TemplateView):
 
         Returns
         -------
-        ctx : dict
+        dict
             Notification オブジェクト入り ctx。
         """
         ctx = super().get_context_data(**kwargs)
@@ -67,14 +67,18 @@ class InvitationNotificationDetailView(LoginRequiredMixin, OnlyYouMixin, DetailV
     def get_context_data(self, **kwargs):
         """
         招待詳細画面に表示するために必要な情報を取得する関数。
+        既読もつける。
 
         Returns
         -------
-        ctx : dict
+        dict
             チームリクエストオブジェクト入り ctx。
         """
         ctx = super().get_context_data(**kwargs)
-        ctx['invitation'] = Notification.objects.get(id=self.kwargs.get('id'))
+        notification_obj = Notification.objects.get(id=self.kwargs.get('id'))
+        notification_obj.has_read = True
+        notification_obj.save()
+        ctx['invitation'] = notification_obj
         return ctx
 
     def get_object(self):
@@ -122,14 +126,18 @@ class MemberApprovalNotificationDetailView(LoginRequiredMixin, OnlyYouMixin, Det
     def get_context_data(self, **kwargs):
         """
         メンバー追加申請の詳細画面に表示するために必要な情報を取得する関数。
+        既読もつける。
 
         Returns
         -------
-        ctx : dict
+        dict
             チームリクエストオブジェクト入り ctx。
         """
         ctx = super().get_context_data(**kwargs)
-        ctx['member_approval'] = Notification.objects.get(id=self.kwargs.get('id'))
+        notification_obj = Notification.objects.get(id=self.kwargs.get('id'))
+        notification_obj.has_read = True
+        notification_obj.save()
+        ctx['member_approval'] = notification_obj
         return ctx
 
     def get_object(self):
@@ -187,14 +195,18 @@ class ApplicationNotificationDetailView(LoginRequiredMixin, OnlyYouMixin, Detail
     def get_context_data(self, **kwargs):
         """
         チームリクエスト詳細画面に表示するために必要な情報を取得する関数。
+        既読もつける。
 
         Returns
         -------
-        ctx : dict
+        dict
             チームリクエストオブジェクト入り ctx。
         """
         ctx = super().get_context_data(**kwargs)
-        ctx['application'] = Notification.objects.get(id=self.kwargs.get('id'))
+        notification_obj = Notification.objects.get(id=self.kwargs.get('id'))
+        notification_obj.has_read = True
+        notification_obj.save()
+        ctx['application'] = notification_obj
         return ctx
 
     def get_object(self):
@@ -230,15 +242,19 @@ class OfficialNotificationDetailView(LoginRequiredMixin, OnlyYouMixin, DetailVie
     def get_context_data(self, **kwargs):
         """
         公式からのお知らせの詳細画面に表示するために必要な情報を取得する関数。
+        既読もつける。
 
         Returns
         -------
-        ctx : dict
+        dict
             チームリクエストオブジェクト入り ctx。
         """
-        context = super().get_context_data(**kwargs)
-        context['official_notification'] = Notification.objects.get(id=self.kwargs.get('id'))
-        return context
+        ctx = super().get_context_data(**kwargs)
+        notification_obj = Notification.objects.get(id=self.kwargs.get('id'))
+        notification_obj.has_read = True
+        notification_obj.save()
+        ctx['official_notification'] = notification_obj
+        return ctx
 
     def get_object(self):
         """

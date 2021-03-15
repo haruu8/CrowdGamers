@@ -1,8 +1,14 @@
-{% extends 'base.html' %}
+{% extends 'teams/notification/notification_base.html' %}
+{% load static %}
 
-{% block content %}
 
-  <div class="container">
+
+{% block head %}
+  <link rel="stylesheet" href="{% staic 'teams/scss/notification/dist/base_application_detail.css' %}">
+{% endblock %}
+
+{% block notification_content %}
+
     <p>チーム申請の認可</p>
     <img src="{{ object.user_profile.icon.url }}" alt="アイコン">
     <p>{{ object.user_profile.name }} からのメッセージ</p>
@@ -11,7 +17,5 @@
     <p>作成日時：{{ application.created_at }}</p>
 
     {% block form_content %}{% endblock %}
-
-  </div>
 
 {% endblock %}

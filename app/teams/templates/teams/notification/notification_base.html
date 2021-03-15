@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block stylesheet %}'{% static "teams/scss/notification/dist/notification_base.css" %}'{% endblock %}
+{% block head %}{% endblock %}
+
+{% block content %}
+
+  <div class="container">
+    <p><a href="{% url 'teams:notification' object.username %}">戻る</a></p>
+    {% block notification_content %}{% endblock %}
+  </div>
+
+{% endblock %}

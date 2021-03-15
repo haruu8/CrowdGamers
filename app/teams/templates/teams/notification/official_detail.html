@@ -1,13 +1,12 @@
-{% extends 'base.html' %}
+{% extends 'teams/notification/notification_base.html' %}
+{% load static %}
 
-{% block content %}
+{% block notification_content %}
 
-  <div class="container">
     <p>{{ official_notification.from_user.user_profile.name }}からのお知らせ</p>
     {% autoescape off %}
       <p>{{ official_notification.message }}</p>
     {% endautoescape %}
     <p>受け取り日時：{{ official_notification.created_at }}</p>
-  </div>
 
 {% endblock %}
