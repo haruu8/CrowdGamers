@@ -7,7 +7,7 @@ class NotificationAdmin(admin.ModelAdmin):
     """
     通知一覧の表示フィールドを編集
     """
-    list_display = ['mode', 'from_user', 'to_user', 'message']
+    list_display = ['mode', 'has_read', 'from_user', 'to_user', 'message']
 
 
 

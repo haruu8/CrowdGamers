@@ -1,0 +1,18 @@
+.container {
+  margin: 3rem auto;
+}
+
+.back-section {
+  margin-bottom: 3rem;
+}
+.back-section .arrow-icon {
+  width: 24px;
+  height: auto;
+}
+.back-section hr {
+  background-color: white;
+}
+
+.push {
+  height: 400px;
+}

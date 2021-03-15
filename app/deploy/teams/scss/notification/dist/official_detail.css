@@ -1,0 +1,35 @@
+img {
+  object-fit: cover;
+}
+
+.from-user-section {
+  display: flex;
+  margin-bottom: 2rem;
+}
+.from-user-section div {
+  margin-right: 0.5rem;
+}
+.from-user-section img {
+  width: 48px;
+  height: 48px;
+  object-fit: cover;
+}
+.from-user-section p {
+  margin-bottom: 0rem;
+}
+.from-user-section a {
+  text-decoration: none;
+}
+.from-user-section .from-user-name {
+  margin-bottom: 0;
+  color: white;
+  font-weight: bold;
+}
+.from-user-section .sub-color {
+  color: #c9c9c9;
+  font-size: 14px;
+}
+
+.main-sentence {
+  margin: 2rem auto;
+}

@@ -7,8 +7,15 @@
 {% block content %}
 
   <div class="container">
-    <p><a href="{% url 'teams:notification' object.username %}">戻る</a></p>
+    <div class="back-section">
+      <a href="#" onclick="javascript:window.history.back(-1);return false;">
+        <img src="{% static 'img/arrow-icon.svg' %}" alt="矢印" class="arrow-icon">
+      </a>
+      <hr>
+    </div>
     {% block notification_content %}{% endblock %}
   </div>
+
+  <div class="push"></div>
 
 {% endblock %}

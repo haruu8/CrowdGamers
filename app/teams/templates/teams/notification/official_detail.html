@@ -1,12 +1,30 @@
 {% extends 'teams/notification/notification_base.html' %}
 {% load static %}
 
+{% block head %}
+  <link rel="stylesheet" href="{% static 'teams/scss/notification/dist/official_detail.css' %}">
+{% endblock %}
+
 {% block notification_content %}
 
-    <p>{{ official_notification.from_user.user_profile.name }}からのお知らせ</p>
-    {% autoescape off %}
-      <p>{{ official_notification.message }}</p>
-    {% endautoescape %}
-    <p>受け取り日時：{{ official_notification.created_at }}</p>
+  <div class="from-user-section">
+    <div>
+      <a href="{% url 'teams:account_detail' official_notification.from_user.username %}">
+        <img src="{{ official_notification.from_user.user_profile.icon.url }}" alt="アイコン">
+      </a>
+    </div>
+    <div>
+      <p class="from-user-name"><a href="{% url 'teams:account_detail' official_notification.from_user.username %}" class='from-user-name'>{{ official_notification.from_user.user_profile.name }}</a>からのお知らせ</p>
+    </div>
+    <div>
+      <a href="{% url 'teams:account_detail' official_notification.from_user.username %}">
+        <p class="sub-color">@{{ official_notification.from_user.username }}</p>
+      </a>
+    </div>
+  </div>
+  {% autoescape off %}
+    <p class="main-sentence">{{ official_notification.message }}</p>
+  {% endautoescape %}
+  <p>受け取り日時：{{ official_notification.created_at }}</p>
 
 {% endblock %}

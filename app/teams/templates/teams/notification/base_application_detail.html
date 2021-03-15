@@ -1,20 +1,27 @@
 {% extends 'teams/notification/notification_base.html' %}
 {% load static %}
 
-
-
 {% block head %}
-  <link rel="stylesheet" href="{% staic 'teams/scss/notification/dist/base_application_detail.css' %}">
+  <link rel="stylesheet" href="{% static 'teams/scss/notification/dist/base_application_detail.css' %}">
 {% endblock %}
 
 {% block notification_content %}
 
-    <p>チーム申請の認可</p>
-    <img src="{{ object.user_profile.icon.url }}" alt="アイコン">
-    <p>{{ object.user_profile.name }} からのメッセージ</p>
-    <p><a href="{% url 'teams:account_detail' object.username %}">@{{ object.username }}</a></p>
-    <p>メッセージ：{{ application.message }}</p>
-    <p>作成日時：{{ application.created_at }}</p>
+  <div class="from-user-section">
+    <div>
+      <a href="{% url 'teams:account_detail' object.username %}">
+        <img src="{{ object.user_profile.icon.url }}" alt="アイコン">
+      </a>
+    </div>
+    <div>
+      <p class="from-user-name"><a href="{% url 'teams:account_detail' object.username %}" class="from-user-name">{{ object.user_profile.name }}</a></p>
+    </div>
+    <div>
+      <p><a href="{% url 'teams:account_detail' object.username %}" class="sub-color">@{{ object.username }}</a></p>
+    </div>
+  </div>
+    <p class="main-sentence">{{ application.message }}</p>
+    <p>受け取り日時：{{ application.created_at }}</p>
 
     {% block form_content %}{% endblock %}
 

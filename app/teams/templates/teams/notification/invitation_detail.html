@@ -1,22 +1,50 @@
 {% extends 'teams/notification/notification_base.html' %}
 {% load static %}
 
+{% block head %}
+  <link rel="stylesheet" href="{% static 'teams/scss/notification/dist/invitation_detail.css' %}">
+{% endblock %}
+
 {% block notification_content %}
 
-  <img src="{{ object.user_profile.icon.url }}" alt="アイコン">
-  <p>{{ object.user_profile.name }} からのメッセージ</p>
-  <p><a href="{% url 'teams:account_detail' object.username %}">@{{ object.username }}</a></p>
-  <p>メッセージ：{{ invitation.message }}</p>
-  <p>作成日時：{{ invitation.created_at }}</p>
+  <div class="from-user-section">
+    <div>
+      <a href="{% url 'teams:account_detail' object.username %}">
+        <img src="{{ object.user_profile.icon.url }}" alt="アイコン">
+      </a>
+    </div>
+    <div>
+      <p class="from-user-name"><a href="{% url 'teams:account_detail' object.username %}" class="from-user-name">{{ object.user_profile.name }}</a></p>
+    </div>
+    <div>
+      <p><a href="{% url 'teams:account_detail' object.username %}" class="sub-color">@{{ object.username }}</a></p>
+    </div>
+  </div>
 
-  {% if invitation.is_proceeded is True or invitation.is_proceeded is False %}
+  <p class="main-sentence">{{ invitation.message }}</p>
+  <p>受け取り日時：{{ invitation.created_at }}</p>
+
+  {% if invitation.is_proceeded is True %}
+  <div class="invitation_url">
+    <p>下記が、招待されたURLです。</p>
+    <p><a href="{{ invitaion.invitation_url }}">{{ invitation.invitation_url }}</a></p>
+  </div>
+  {% elif invitation.is_proceeded is False %}
     <p>すでに結果を送信しています。</p>
   {% else %}
     <form action="" method='POST'>
       {% csrf_token %}
-      <button class="ui button grey" type="submit" name="approval" value="deny">拒否する</button>
-      <button class="ui button btn-primary" name="approval" value="approve">許可する</button>
+      <p>この招待を受け取りますか？<br>この招待を受け取ると、会話に使用するSNSのURLが表示されます。チームオーナーと話をしたい場合、「受け取る」を押してください。</p>
+      <div class="all-btn">
+        <div class="btn-deny-section">
+          <button type="submit" name="approval" value="deny" class="btn btn--danger btn--radius">拒否する</button>
+        </div>
+        <div class="btn-section">
+          <button name="approval" value="approve" class="btn btn--blue btn--radius">受け取る</button>
+        </div>
+      </div>
     </form>
   {% endif %}
+
 
 {% endblock %}
