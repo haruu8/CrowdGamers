@@ -41,7 +41,7 @@
           <a href="{% url 'teams:application_detail' user.username notification.id %}"></a>
         {% elif notification.mode == 'invitation' %}
           <div class="sentence">
-            <p>チームにリクエストが届きました。</p>
+            <p>あなたに招待が届きました。</p>
             <p>{{ notification.message | truncatechars:30 }}</p>
           </div>
           <a href="{% url 'teams:invitation_detail' user.username notification.id %}"></a>

@@ -15,7 +15,7 @@ class TeamAdmin(admin.ModelAdmin):
     """
     通知一覧の表示フィールドを編集
     """
-    list_display = ['teamname', 'name', 'created_at']
+    list_display = ['teamname', 'disclosed', 'name', 'created_at']
 
 
 

@@ -22,23 +22,39 @@
   </div>
 
   <p class="main-sentence">{{ member_approval.message }}</p>
-  <p>受け取り日時：{{ member_approval.created_at }}</p>
+  {% if request.user == member_approval.from_user %}
+    <p class="date">受け取り日時：{{ member_approval.created_at }}</p>
+  {% elif request.user == member_approval.to_user %}
+    <p class="date">作成日時：{{ member_approval.created_at }}</p>
+  {% endif %}
 
-  {% if member_approval.is_proceeded is None %}
-    <form action="" method='POST'>
-      {% csrf_token %}
-      <p>このリクエストを許可しますか？<br>（このリクエストを許可すると、チームプロフィールのメンバー一覧に表示されます。チームメンバーではない場合、許可しないでください。）</p>
-      <div class="all-btn">
-        <div class="btn-deny-section">
-          <button type="submit" name="approval" value="deny" class="btn btn--danger btn--radius">拒否する</button>
+
+  {% if request.user == member_approval.to_user %}
+    {% if member_approval.is_proceeded is None %}
+      <form action="" method='POST'>
+        {% csrf_token %}
+        <p>このリクエストを許可しますか？<br>（このリクエストを許可すると、チームプロフィールのメンバー一覧に表示されます。チームメンバーではない場合、許可しないでください。）</p>
+        <div class="all-btn">
+          <div class="btn-deny-section">
+            <button type="submit" name="approval" value="deny" class="btn btn--danger btn--radius">拒否する</button>
+          </div>
+          <div class="btn-section">
+            <button name="approval" value="approve" class="btn btn--blue btn--radius">許可する</button>
+          </div>
         </div>
-        <div class="btn-section">
-          <button name="approval" value="approve" class="btn btn--blue btn--radius">許可する</button>
-        </div>
-      </div>
-    </form>
-  {% else %}
-    <p>リクエストへの認可はすでに行っています。</p>
+      </form>
+    {% elif member_approval.is_proceeded is True %}
+      <p>リクエストへの認可はすでに行っています。メンバー追加を許可しました。<br>（メンバーを削除したい場合は、<a href="#">こちら</a>から行うことができます。）</p>
+    {% elif member_approval.is_proceeded is False %}
+      <p>リクエストへの認可はすでに行っています。メンバー追加を拒否しました。<br>（メンバーに追加したい場合は、再度リクエストを送信してもらう必要があります。）</p>
+    {% endif %}
+
+  {% elif request.user == member_approval.from_user %}
+    {% if member_approval.is_proceeded is True %}
+      <p>メンバー追加の申請が承認されました！チームのメンバーページに表示されるようになります。</p>
+    {% elif member_approval.is_proceeded is False %}
+      <p>メンバー追加の申請が拒否されました。</p>
+    {% endif %}
   {% endif %}
 
 {% endblock %}

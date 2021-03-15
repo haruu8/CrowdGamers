@@ -25,6 +25,10 @@
   {% autoescape off %}
     <p class="main-sentence">{{ official_notification.message }}</p>
   {% endautoescape %}
-  <p>受け取り日時：{{ official_notification.created_at }}</p>
+  {% if request.user == official_notification.from_user %}
+    <p>受け取り日時：{{ official_notification.created_at }}</p>
+  {% elif request.user == official_notification.to_user %}
+    <p>受け取り日時：{{ official_notification.created_at }}</p>
+  {% endif %}
 
 {% endblock %}
