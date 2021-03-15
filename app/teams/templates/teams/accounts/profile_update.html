@@ -1,16 +1,18 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block stylesheet %}'{% static "teams/scss/dist/profile_update.css" %}'{% endblock %}
+{% block stylesheet %}'{% static "teams/scss/dist/team_update.css" %}'{% endblock %}
 
 {% block content %}
 
   <div class='container'>
-    <h3>ユーザーアップデート</h3>
+    <h3 class="title">プロフィールを編集</h3>
     <form method="post" enctype="multipart/form-data">
       {% csrf_token %}
       {{ form.as_p }}
-      <input type="submit" value="編集する">
+      <div class="btn-section">
+        <button type='submit' class="btn btn--blue btn--radius">保存する</button>
+      </div>
     </form>
   </div>
 

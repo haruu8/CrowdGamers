@@ -14,7 +14,10 @@ $sub-color: #c9c9c9;
 $danger-color: #F03030;
 
 .container {
-  margin: 3rem auto;
+  margin-bottom: 5rem;
+  .title {
+    margin: 3rem auto;
+  }
 }
 
 .btn-section {
