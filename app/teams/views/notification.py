@@ -76,7 +76,10 @@ class InvitationNotificationDetailView(LoginRequiredMixin, OnlyYouMixin, DetailV
         """
         ctx = super().get_context_data(**kwargs)
         notification_obj = Notification.objects.get(id=self.kwargs.get('id'))
-        notification_obj.has_read = True
+        if self.request.user == notification_obj.from_user:
+            notification_obj.sender_has_read = True
+        elif self.request.user == notification_obj.to_user:
+            notification_obj.reciever_has_read = True
         notification_obj.save()
         ctx['invitation'] = notification_obj
         return ctx
@@ -135,7 +138,10 @@ class MemberApprovalNotificationDetailView(LoginRequiredMixin, OnlyYouMixin, Det
         """
         ctx = super().get_context_data(**kwargs)
         notification_obj = Notification.objects.get(id=self.kwargs.get('id'))
-        notification_obj.has_read = True
+        if self.request.user == notification_obj.from_user:
+            notification_obj.sender_has_read = True
+        elif self.request.user == notification_obj.to_user:
+            notification_obj.reciever_has_read = True
         notification_obj.save()
         ctx['member_approval'] = notification_obj
         return ctx
@@ -204,7 +210,10 @@ class ApplicationNotificationDetailView(LoginRequiredMixin, OnlyYouMixin, Detail
         """
         ctx = super().get_context_data(**kwargs)
         notification_obj = Notification.objects.get(id=self.kwargs.get('id'))
-        notification_obj.has_read = True
+        if self.request.user == notification_obj.from_user:
+            notification_obj.sender_has_read = True
+        elif self.request.user == notification_obj.to_user:
+            notification_obj.reciever_has_read = True
         notification_obj.save()
         ctx['application'] = notification_obj
         return ctx
@@ -251,7 +260,10 @@ class OfficialNotificationDetailView(LoginRequiredMixin, OnlyYouMixin, DetailVie
         """
         ctx = super().get_context_data(**kwargs)
         notification_obj = Notification.objects.get(id=self.kwargs.get('id'))
-        notification_obj.has_read = True
+        if self.request.user == notification_obj.from_user:
+            notification_obj.sender_has_read = True
+        elif self.request.user == notification_obj.to_user:
+            notification_obj.reciever_has_read = True
         notification_obj.save()
         ctx['official_notification'] = notification_obj
         return ctx
