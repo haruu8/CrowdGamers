@@ -7,10 +7,16 @@
 
   <div class="container">
     <h2 class="title">ユーザーを探す</h2>
-    <form method="GET" action="{% url 'teams:accounts_list' %}">
-      <input type="text" name="keyword">
-      <button type="submit">検索</button>
-    </form>
+    <div class="form">
+      <form method="GET" action="{% url 'teams:accounts_list' %}">
+        <div class="input-group">
+          <input type="text" name="keyword" class="form-control" placeholder="検索ワードを入力">
+          <div class="btn-section">
+            <button type="submit" class="btn btn--blue btn--radius">検索</button>
+          </div>
+        </div>
+      </form>
+    </div>
 
     <div class="team-all">
       {% for object in object_list %}

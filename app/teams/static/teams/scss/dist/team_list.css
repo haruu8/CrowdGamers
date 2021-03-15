@@ -6,19 +6,48 @@
   margin: 5rem auto;
 }
 
+.form {
+  margin: 3rem;
+}
+
+.btn-section {
+  text-align: center;
+  margin-left: 1rem;
+}
+.btn-section .btn--blue,
+.btn-section a.btn--blue {
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  color: #fff;
+  background-color: none;
+  border: 1px solid white;
+}
+.btn-section .btn--blue:hover,
+.btn-section a.btn--blue:hover {
+  color: #fff;
+  background: #1C81E6;
+  border: 1px solid #1C81E6;
+}
+.btn-section a.btn--radius {
+  border-radius: 100vh;
+}
+
 .team-all {
   display: flex;
   flex-wrap: wrap;
+  justify-content: space-between;
   padding-bottom: 3rem;
+  margin: auto 3rem;
 }
 
 .team-section {
   background-color: #0F4780;
-  padding: 1.55rem 3.5rem;
+  padding: 1.55rem 55px;
   height: auto;
   border-radius: 25%;
-  margin: auto 1.5rem;
+  margin: 1.5rem auto;
   position: relative;
+  text-align: center;
 }
 .team-section a {
   position: absolute;
@@ -35,10 +64,12 @@
 .team-section .teamname {
   color: #c9c9c9;
   margin-bottom: 0;
+  font-size: 14px;
 }
 
 .team-icon {
   width: 6rem;
   height: 6rem;
   border-radius: 50%;
+  object-fit: cover;
 }
