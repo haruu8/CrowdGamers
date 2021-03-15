@@ -19,7 +19,8 @@ class Notification(models.Model):
 
     See Also
     --------
-    has_read : 既読管理
+    sender_has_read : from_user の既読管理
+    reciever_has_read : to_user の既読管理
     is_proceeded : 承認・拒否管理
     """
     class Meta():
@@ -53,6 +54,7 @@ class Notification(models.Model):
     desired_job = models.ManyToManyField(Job, related_name='invitation_desired_job')
     invitation_url = models.URLField(verbose_name='招待URL', null=True)
     message = models.CharField(max_length=255, null=False, blank=False)
-    has_read = models.BooleanField(verbose_name='既読', default=False)
+    sender_has_read = models.BooleanField(verbose_name='from_user の既読', default=False)
+    reciever_has_read = models.BooleanField(verbose_name='to_user の既読', default=False)
     is_proceeded = models.BooleanField(null=True)
     created_at = models.DateTimeField(auto_now_add=True)
