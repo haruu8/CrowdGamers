@@ -28,6 +28,16 @@ signup = SignupView.as_view()
 
 
 
+class LogoutView(LoginRequiredMixin, auth_views.LogoutView):
+    """
+    ログアウトする。
+    """
+    pass
+
+logout = LoginView.as_view()
+
+
+
 class UserDeleteView(OnlyYouMixin, LoginRequiredMixin, TemplateView):
     """
     ユーザーを削除する。

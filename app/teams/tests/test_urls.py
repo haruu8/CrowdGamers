@@ -143,18 +143,18 @@ class TeamStatusCodeTests(TestCase):
     """
     def setUp(self):
         """
-        アクセスパーミションテストに必要なオブジェクトを作成する
+        アクセスパーミションテストに必要なオブジェクトを作成する。
 
-        Parameters
-        ----------
+        See Also
+        --------
         team : object
-            Team モデルのオブジェクト
+            Team モデルのオブジェクト。
         user : object
-            User モデルのオブジェクト
+            User モデルのオブジェクト。
         profile : object
-            UserProfile モデルのオブジェクト
+            UserProfile モデルのオブジェクト。
         notification : object
-            Notification モデルのオブジェクト
+            Notification モデルのオブジェクト。
         """
         self.team = Team.objects.create(
             teamname='hoge',
@@ -665,28 +665,3 @@ class TeamStatusCodeTests(TestCase):
     #     url = reverse('teams:invitation_create', args=[self.user.username])
     #     response = self.client.get(url)
     #     self.assertEquals(response.status_code, 302)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# class TeamHtmlTests(TestCase):
-#     """
-#     endpointに対して使われるテンプレート(html)が正しいか
-#     """
-#     def test_home_html(self):
-#         request = HttpRequest()
-#         response = home(request)
-#         expected_html = render_to_string('teams/home.html')
-#         self.assertEqual(response.content.decode(), expected_html)
