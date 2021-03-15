@@ -1,5 +1,5 @@
 from django import forms
-from teams.models import Job, Notification
+from teams.models import Job, Notification, Game
 
 
 
@@ -9,8 +9,10 @@ class InvitationCreateForm(forms.ModelForm):
     """
     class Meta:
         model = Notification
-        fields = ('desired_job', 'message', 'invitation_url')
+        fields = ('game_title', 'desired_job', 'message', 'invitation_url')
 
+    game_title = forms.ModelMultipleChoiceField(queryset=Game.objects.all(), required=True, label='希望タイトル',
+                            help_text='1つまで選択することができます', widget=forms.SelectMultiple(attrs={'class': 'form-control'}))
     desired_job = forms.ModelMultipleChoiceField(queryset=Job.objects.all(), required=True, label='希望枠',
                             help_text='1つまで選択することができます', widget=forms.SelectMultiple(attrs={'class': 'form-control'}))
     message = forms.CharField(required=True, label='メッセージ',
@@ -26,6 +28,15 @@ class InvitationCreateForm(forms.ModelForm):
         for field in self.fields.values():
             field.error_messages = {'required':'{fieldname} は必須です。'.format(fieldname=field.label)}
             field.widget.attrs['class'] = 'form-control'
+
+    def clean_game_title(self):
+        """
+        希望タイトルの選択上限を1つに設定する。
+        """
+        game_title = self.cleaned_data['game_title']
+        if len(game_title) >= 2:
+            raise forms.ValidationError('希望タイトルは1つまでしか選択することができません')
+        return game_title
 
     def clean_desired_job(self):
         """

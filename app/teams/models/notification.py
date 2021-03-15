@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth import get_user_model
+from .game import Game
 from .job import Job
 import uuid
 
@@ -48,6 +49,7 @@ class Notification(models.Model):
         on_delete=models.CASCADE,
         related_name='reciever',
     )
+    game_title = models.ManyToManyField(Game, related_name='invitation_game_title', null=True)
     desired_job = models.ManyToManyField(Job, related_name='invitation_desired_job')
     invitation_url = models.URLField(verbose_name='招待URL', null=True)
     message = models.CharField(max_length=255, null=False, blank=False)

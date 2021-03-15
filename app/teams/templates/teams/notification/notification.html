@@ -13,10 +13,10 @@
     <hr class="title-hr">
     {% if notifications %}
       {% for notification in notifications %}
-        {% if notification.has_read is False %}
-          <div class="notification-section unread">
-        {% else %}
-          <div class="notification-section">
+        {% if notification.has_read is True %}
+        <div class="notification-section">
+        {% elif notification.has_read is False %}
+            <div class="notification-section unread">
         {% endif %}
 
         <div class="from-user-section">
