@@ -16,6 +16,10 @@ static:
 	docker-compose exec django python3 manage.py collectstatic
 test:
 	docker-compose exec django python3 manage.py test
+testdc:
+	docker-compose up -d \
+	&& docker-compose exec django python3 manage.py test \
+	&& docker-compose down
 coverage-test:
 	docker-compose exec django coverage run --source='.' manage.py test
 report:

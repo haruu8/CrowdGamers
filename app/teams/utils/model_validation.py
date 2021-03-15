@@ -4,7 +4,7 @@ from django.core.exceptions import ValidationError
 
 def user_directory_path(instance, filename):
     """
-    user ごとにディレクトリを分ける
+    user ごとにディレクトリを分ける。
     """
     return 'user_{0}/{1}'.format(instance.user.id, filename)
 
@@ -12,7 +12,7 @@ def user_directory_path(instance, filename):
 
 def validate_icon_image(fieldfile_obj):
     """
-    アイコンの画像サイズに上限を設ける
+    アイコンの画像サイズに上限を設ける。
     """
     image_size = fieldfile_obj.file.size
     megabyte_limit = 5.0
@@ -23,7 +23,7 @@ def validate_icon_image(fieldfile_obj):
 
 def validate_header_image(fieldfile_obj):
     """
-    ヘッダー画像のサイズに条件を設ける
+    ヘッダー画像のサイズに条件を設ける。
     """
     image_size = fieldfile_obj.file.size
     megabyte_limit = 5.0
