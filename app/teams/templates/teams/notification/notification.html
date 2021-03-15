@@ -9,28 +9,60 @@
 
   <div class="container">
 
-    <h3>通知</h3>
+    <h3 class="title">通知</h3>
+    <hr class="title-hr">
     {% if notifications %}
       {% for notification in notifications %}
-      <hr>
-      <div>
         {% if notification.has_read is False %}
-          <div class="circle"></div>
+          <div class="notification-section unread">
+        {% else %}
+          <div class="notification-section">
         {% endif %}
-        <p><a href="{% url 'teams:account_detail' notification.from_user %}">{{ notification.from_user }}</a> からメッセージが届きました。</p>
+
+        <div class="from-user-section">
+          <div>
+            <a href="{% url 'teams:account_detail' notification.from_user.username %}" class="inlink">
+              <img src="{{ notification.from_user.user_profile.icon.url }}" alt="アイコン">
+            </a>
+          </div>
+          <div>
+            <p class="name"><a href="{% url 'teams:account_detail' notification.from_user.username %}" class="name inlink">{{ notification.from_user.user_profile.name }}</a></p>
+          </div>
+          <div>
+            <p><a href="{% url 'teams:account_detail' notification.from_user.username %}" class="sub-color inlink">@{{ notification.from_user.username }}</a></p>
+          </div>
+        </div>
+
         {% if notification.mode == 'application' %}
-          <p><a href="{% url 'teams:application_detail' user.username notification.id %}">{{ notification.message | truncatechars:20 }}</a></p>
+          <div class="sentence">
+            <p>チームにリクエストが届きました。</p>
+            <p>{{ notification.message | truncatechars:30 }}</p>
+          </div>
+          <a href="{% url 'teams:application_detail' user.username notification.id %}"></a>
         {% elif notification.mode == 'invitation' %}
-        <p><a href="{% url 'teams:invitation_detail' user.username notification.id %}">{{ notification.message | truncatechars:20 }}</a></p>
+          <div class="sentence">
+            <p>チームにリクエストが届きました。</p>
+            <p>{{ notification.message | truncatechars:30 }}</p>
+          </div>
+          <a href="{% url 'teams:invitation_detail' user.username notification.id %}"></a>
         {% elif notification.mode == 'member_approval' %}
-        <p><a href="{% url 'teams:member_approval_detail' user.username notification.id %}">{{ notification.message | truncatechars:20 }}</a></p>
+          <div class="sentence">
+            <p>チームにメンバー追加の申請が届きました。</p>
+            <p>{{ notification.message | truncatechars:30 }}</p>
+          </div>
+          <a href="{% url 'teams:member_approval_detail' user.username notification.id %}"></a>
         {% elif notification.mode == 'official' %}
-          <p><a href="{% url 'teams:official_detail' user.username notification.id %}">{{ notification.message | truncatechars:20 }}</a></p>
-          {% endif %}
+          <div class="sentence">
+            <p>公式からのお知らせが届きました。</p>
+            <p>{{ notification.message | truncatechars:30 }}</p>
+          </div>
+          <a href="{% url 'teams:official_detail' user.username notification.id %}"></a>
+        {% endif %}
       </div>
+      <hr class="notification-hr">
       {% endfor %}
     {% else %}
-      <p>通知は届いていません。</p>
+      <p class="none-notification">通知は届いていません。</p>
     {% endif %}
   </div>
 
