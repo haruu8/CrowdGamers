@@ -55,8 +55,7 @@ class OnlyOwnerMixin(UserPassesTestMixin):
         Returns
         -------
         bool
-            True ならアクセス可能
-            False ならアクセス不可
+            True ならアクセス可能、False ならアクセス不可
         """
         user = self.request.user
         if user.is_authenticated:
@@ -84,8 +83,8 @@ class CustomAccessMixin(AccessMixin):
 
         Returns
         -------
-        redirect(home_url) : Callable
-            孫クラスで定義した home_url もしくは、 settings.LOGIN_REDIRECT_URL で定義した urlにリダイレクト。
+        Union[HttpResponsePermanentRedirect, HttpResponseRedirect]
+            孫クラスで定義した home_url もしくは、 settings.LOGIN_REDIRECT_URL に redirect。
         """
         home_url = self.home_url or settings.LOGIN_REDIRECT_URL
         if not home_url:
@@ -106,8 +105,8 @@ class CustomAccessMixin(AccessMixin):
 
         Returns
         -------
-        self.get_home_url() : Callable
-            同クラスの get_home_url 関数。
+        Union[HttpResponsePermanentRedirect, HttpResponseRedirect]
+            同クラスの get_home_url 関数の返り値の redirect。
 
         Raises
         ------
@@ -128,7 +127,7 @@ class AnonymousRequiredMixin(CustomAccessMixin):
     Examples
     --------
     AnonymousRequiredMixin を継承するのみで使用可能。
-    home_url は任意
+    home_url は任意。
 
     class SampleView(AnonymousRequiredMixin, TemplateView):
         home_url = 'views.home'
@@ -142,8 +141,9 @@ class AnonymousRequiredMixin(CustomAccessMixin):
 
         Returns
         -------
-        self.handle_no_permission : Callable
-            親クラスの handle_no_permission 関数。
+        Union[HttpResponsePermanentRedirect, HttpResponseRedirect]
+            同クラスの get_home_url 関数の返り値の redirect。
+
         super().dispatch(request, *args, **kwargs)
             親クラス(CustomAccessMixin)の dispatch 関数。
         """
