@@ -10,6 +10,14 @@ def user_directory_path(instance, filename):
 
 
 
+def team_directory_path(instance, filename):
+    """
+    チームごとにディレクトリを分ける。
+    """
+    return 'team_{0}/{1}'.format(instance.id, filename)
+
+
+
 def validate_icon_image(fieldfile_obj):
     """
     アイコンの画像サイズに上限を設ける。

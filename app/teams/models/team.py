@@ -5,7 +5,7 @@ from . import *
 from .game import Game
 from .feature import Feature
 from .job import Job
-from teams.utils import user_directory_path, validate_icon_image
+from teams.utils import team_directory_path, validate_icon_image
 from accounts.fields import LowerCharField
 
 
@@ -32,14 +32,14 @@ class Team(models.Model):
     name = models.CharField(max_length=20, null=False, blank=False)
     icon = models.ImageField(
         default='default/profile_icon.svg',
-        upload_to=user_directory_path,
+        upload_to=team_directory_path,
         blank=True,
         validators=[
             validate_icon_image,
         ])
     header = models.ImageField(
         default='default/profile_header.jpg',
-        upload_to=user_directory_path,
+        upload_to=team_directory_path,
         blank=True,
         validators=[
             validate_icon_image,
