@@ -16,7 +16,7 @@
     <div class='name-edit-section'>
       <div class="name-section">
         <p class='profile-name'>{{ user_profile.name }}</p>
-        {% if user_profile.user.is_superuser is False %}
+        {% if user_profile.user.is_superuser is False or user_profile.user.is_staff is False %}
           <a href="https://twitter.com/{{ object.username }}/" target="_blank">
             <img src="{% static 'img/twitter-icon.svg' %}" alt="Twitterアイコン" class='twitter-icon'>
           </a>

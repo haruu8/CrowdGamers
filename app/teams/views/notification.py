@@ -55,6 +55,8 @@ class InvitationNotificationDetailView(LoginRequiredMixin, OnlyYouMixin, DetailV
             引数の url にリダイレクト。
         """
         self.object = Notification.objects.get(id=self.kwargs.get('id'))
+        if self.object.from_user == self.request.user:
+            return redirect('teams:home')
         if self.object.is_proceeded is True or self.object.is_proceeded is False:
             pass
         elif self.request.POST.get('approval', '') == 'approve':
@@ -113,6 +115,8 @@ class MemberApprovalNotificationDetailView(LoginRequiredMixin, OnlyYouMixin, Det
             引数の url にリダイレクト。
         """
         self.object = Notification.objects.get(id=self.kwargs.get('id'))
+        if self.object.from_user == self.request.user:
+            return redirect('teams:home')
         if self.object.is_proceeded is True or self.object.is_proceeded is False:
             pass
         elif self.request.POST.get('approval', '') == 'approve':
@@ -156,8 +160,8 @@ class MemberApprovalNotificationDetailView(LoginRequiredMixin, OnlyYouMixin, Det
         """
         button が押されたタイミングでリダイレクトする URL を取得する関数。
 
-        Parameters
-        ----------
+        See Also
+        --------
         self.request.user.username : str
             request.user の username。
         self.object.id : str
@@ -189,6 +193,8 @@ class ApplicationNotificationDetailView(LoginRequiredMixin, OnlyYouMixin, Detail
             引数の url にリダイレクト。
         """
         self.object = Notification.objects.get(id=self.kwargs.get('id'))
+        if self.object.from_user == self.request.user:
+            return redirect('teams:home')
         if self.object.is_proceeded is True or self.object.is_proceeded is False:
             pass
         elif self.request.POST.get('approval', '') == 'approve':
@@ -228,8 +234,8 @@ class ApplicationNotificationDetailView(LoginRequiredMixin, OnlyYouMixin, Detail
         """
         button が押されたタイミングでリダイレクトする URL を取得する関数。
 
-        Parameters
-        ----------
+        See Also
+        --------
         self.request.user.username : str
             request.user の username。
         self.object.id : str

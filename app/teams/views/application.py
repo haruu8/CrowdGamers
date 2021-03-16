@@ -78,7 +78,7 @@ class ApplicationReplyCreateView(OnlyYouMixin, UpdateView):
             親クラス(UpdateView)の form_valid 関数。
         """
         self.object = Notification.objects.get(id=self.kwargs.get('id'))
-        if self.object.to_user == self.request.user:
+        if self.object.from_user == self.request.user or self.object.is_proceeded is False:
             return redirect('teams:home')
         self.object.is_proceeded = True
         self.object.invitation_url = form.cleaned_data['invitation_url']

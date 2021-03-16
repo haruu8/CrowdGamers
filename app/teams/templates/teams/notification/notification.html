@@ -27,45 +27,87 @@
           {% endif %}
         {% endif %}
 
-        <div class="from-user-section">
-          <div>
-            <a href="{% url 'teams:account_detail' notification.from_user.username %}" class="inlink">
-              <img src="{{ notification.from_user.user_profile.icon.url }}" alt="アイコン">
-            </a>
+        {% if request.user == notification.to_user %}
+          <div class="from-user-section">
+            <div>
+              <a href="{% url 'teams:account_detail' notification.from_user.username %}" class="inlink">
+                <img src="{{ notification.from_user.user_profile.icon.url }}" alt="アイコン">
+              </a>
+            </div>
+            <div>
+              <p class="name"><a href="{% url 'teams:account_detail' notification.from_user.username %}" class="name inlink">{{ notification.from_user.user_profile.name }}</a></p>
+            </div>
+            <div>
+              <p><a href="{% url 'teams:account_detail' notification.from_user.username %}" class="sub-color inlink">@{{ notification.from_user.username }}</a></p>
+            </div>
           </div>
-          <div>
-            <p class="name"><a href="{% url 'teams:account_detail' notification.from_user.username %}" class="name inlink">{{ notification.from_user.user_profile.name }}</a></p>
-          </div>
-          <div>
-            <p><a href="{% url 'teams:account_detail' notification.from_user.username %}" class="sub-color inlink">@{{ notification.from_user.username }}</a></p>
-          </div>
-        </div>
+          {% if notification.mode == 'application' %}
+            <div class="sentence">
+                <p>チームにリクエストが届きました。</p>
+              <p>{{ notification.message | truncatechars:30 }}</p>
+            </div>
+            <a href="{% url 'teams:application_detail' user.username notification.id %}"></a>
+          {% elif notification.mode == 'invitation' %}
+            <div class="sentence">
+                <p>あなたに招待が届きました。</p>
+              <p>{{ notification.message | truncatechars:30 }}</p>
+            </div>
+            <a href="{% url 'teams:invitation_detail' user.username notification.id %}"></a>
+          {% elif notification.mode == 'member_approval' %}
+            <div class="sentence">
+                <p>チームにメンバー追加の申請が届きました。</p>
+              <p>{{ notification.message | truncatechars:30 }}</p>
+            </div>
+            <a href="{% url 'teams:member_approval_detail' user.username notification.id %}"></a>
+          {% elif notification.mode == 'official' %}
+            <div class="sentence">
+              <p>公式からのお知らせが届きました。</p>
+              <p>{{ notification.message | truncatechars:30 }}</p>
+            </div>
+            <a href="{% url 'teams:official_detail' user.username notification.id %}"></a>
+          {% endif %}
 
-        {% if notification.mode == 'application' %}
-          <div class="sentence">
-            <p>チームにリクエストが届きました。</p>
-            <p>{{ notification.message | truncatechars:30 }}</p>
+        {% elif request.user == notification.from_user %}
+          <div class="from-user-section">
+            <div>
+              <a href="{% url 'teams:account_detail' notification.to_user.username %}" class="inlink">
+                <img src="{{ notification.to_user.user_profile.icon.url }}" alt="アイコン">
+              </a>
+            </div>
+            <div>
+              <p class="name"><a href="{% url 'teams:account_detail' notification.to_user.username %}" class="name inlink">{{ notification.to_user.user_profile.name }}</a></p>
+            </div>
+            <div>
+              <p><a href="{% url 'teams:account_detail' notification.to_user.username %}" class="sub-color inlink">@{{ notification.to_user.username }}</a></p>
+            </div>
           </div>
-          <a href="{% url 'teams:application_detail' user.username notification.id %}"></a>
-        {% elif notification.mode == 'invitation' %}
-          <div class="sentence">
-            <p>あなたに招待が届きました。</p>
-            <p>{{ notification.message | truncatechars:30 }}</p>
-          </div>
-          <a href="{% url 'teams:invitation_detail' user.username notification.id %}"></a>
-        {% elif notification.mode == 'member_approval' %}
-          <div class="sentence">
-            <p>チームにメンバー追加の申請が届きました。</p>
-            <p>{{ notification.message | truncatechars:30 }}</p>
-          </div>
-          <a href="{% url 'teams:member_approval_detail' user.username notification.id %}"></a>
-        {% elif notification.mode == 'official' %}
-          <div class="sentence">
-            <p>公式からのお知らせが届きました。</p>
-            <p>{{ notification.message | truncatechars:30 }}</p>
-          </div>
-          <a href="{% url 'teams:official_detail' user.username notification.id %}"></a>
+          {% if notification.mode == 'application' %}
+            <div class="sentence">
+                <p>リクエストに対する返信が届きました。</p>
+              <p>{{ notification.message | truncatechars:30 }}</p>
+            </div>
+            <a href="{% url 'teams:application_detail' user.username notification.id %}"></a>
+          {% elif notification.mode == 'invitation' %}
+            <div class="sentence">
+                <p>招待に対する返信が届きました。</p>
+              <p>{{ notification.message | truncatechars:30 }}</p>
+            </div>
+            <a href="{% url 'teams:invitation_detail' user.username notification.id %}"></a>
+          {% elif notification.mode == 'member_approval' %}
+            <div class="sentence">
+                <p>メンバー追加の申請に対する返信が届きました。</p>
+              <p>{{ notification.message | truncatechars:30 }}</p>
+            </div>
+            <a href="{% url 'teams:member_approval_detail' user.username notification.id %}"></a>
+          {% elif notification.mode == 'official' %}
+            <div class="sentence">
+              <p>公式からのお知らせが届きました。</p>
+              <p>{{ notification.message | truncatechars:30 }}</p>
+            </div>
+            <a href="{% url 'teams:official_detail' user.username notification.id %}"></a>
+          {% endif %}
         {% endif %}
+
       </div>
       <hr class="notification-hr">
       {% endfor %}

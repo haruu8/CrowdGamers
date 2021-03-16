@@ -32,4 +32,5 @@ img {
 
 .main-sentence {
   margin: 2rem auto;
+  word-wrap: break-word;
 }

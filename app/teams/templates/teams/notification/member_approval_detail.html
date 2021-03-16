@@ -21,10 +21,11 @@
     </div>
   </div>
 
-  <p class="main-sentence">{{ member_approval.message }}</p>
   {% if request.user == member_approval.from_user %}
+    <p class="main-sentence">送信したメッセージ：{{ member_approval.message }}</p>
     <p class="date">受け取り日時：{{ member_approval.created_at }}</p>
   {% elif request.user == member_approval.to_user %}
+    <p class="main-sentence">{{ member_approval.message }}</p>
     <p class="date">作成日時：{{ member_approval.created_at }}</p>
   {% endif %}
 

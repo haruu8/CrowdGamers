@@ -140,7 +140,7 @@ def create_notification(sender, **kwargs):
         from teams.models import Notification
         Notification.objects.get_or_create(
             mode='official',
-            from_user=User.objects.get(username='CrowdGamers'),
+            from_user=User.objects.get(username='crowdgamers'),
             to_user=kwargs['instance'],
             message='プロフィールを入力をしてあなただけの素敵なプロフィールを完成させましょう！編集はヘッダーのアイコンをクリックし、プロフィール画面から行うことができます。',
         )
