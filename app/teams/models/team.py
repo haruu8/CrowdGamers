@@ -29,7 +29,7 @@ class Team(models.Model):
         db_index=True,
         max_length=15,
         validators=[MinLengthValidator(4), teamname_regex])
-    name = models.CharField(max_length=100, null=False, blank=False)
+    name = models.CharField(max_length=20, null=False, blank=False)
     header = models.ImageField(
         default='default/profile_header.jpg',
         upload_to=user_directory_path,

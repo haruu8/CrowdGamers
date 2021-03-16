@@ -17,7 +17,7 @@
         <p class='desired-job'>希望枠は現在公開されていません。</p>
       {% endif %}
       {% if user_profile.desired_condition %}
-        <p>{{ user_profile.desired_condition }}</p>
+        <p class="desired-condition">{{ user_profile.desired_condition }}</p>
         {% if request.user.user_profile.is_owner is True %}
           <p class='send-invitation'>
             <a href="{% url 'teams:invitation_create' object.username %}" class="btn btn--blue btn--radius">招待を送る</a>

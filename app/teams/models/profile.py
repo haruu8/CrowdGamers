@@ -25,7 +25,7 @@ class UserProfile(models.Model):
     user = models.OneToOneField(get_user_model(), on_delete=models.CASCADE, related_name='user_profile')
     name = models.CharField(
         verbose_name='ニックネーム',
-        max_length=100,
+        max_length=20,
         null=False,
         blank=False,
         default='ニックネーム',
