@@ -30,13 +30,6 @@ class Team(models.Model):
         max_length=15,
         validators=[MinLengthValidator(4), teamname_regex])
     name = models.CharField(max_length=20, null=False, blank=False)
-    header = models.ImageField(
-        default='default/profile_header.jpg',
-        upload_to=user_directory_path,
-        blank=True,
-        validators=[
-            validate_icon_image,
-        ])
     icon = models.ImageField(
         default='default/profile_icon.svg',
         upload_to=user_directory_path,
@@ -44,8 +37,15 @@ class Team(models.Model):
         validators=[
             validate_icon_image,
         ])
-    website = models.URLField(null=True, blank=True)
+    header = models.ImageField(
+        default='default/profile_header.jpg',
+        upload_to=user_directory_path,
+        blank=True,
+        validators=[
+            validate_icon_image,
+        ])
     introduction = models.CharField(max_length=140)
+    website = models.URLField(null=True, blank=True)
     sponsor = models.CharField(max_length=100, null=True, blank=True)
     game_title = models.ManyToManyField(Game, related_name='team_game_title')
     feature = models.ManyToManyField(Feature, verbose_name='特徴', related_name='team_feature')
