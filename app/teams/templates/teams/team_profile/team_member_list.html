@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block stylesheet %}'{% static "teams/scss/team_profile/dist/team_member_list.css" %}'{% endblock %}
+
+{% block content %}
+  <div class="container">
+    <h1>チームメンバーリスト</h1>
+    <p>下記から、削除したいメンバーを選択してください。</p>
+    {% for profile in profiles %}
+      {% if profile.is_owner is False %}
+        <div class="user-section">
+          <div>
+            <a href="{% url 'teams:team_member_delete' profile.user.user_profile.team profile.user.username  %}">
+              <img src="{{ profile.icon.url }}" alt="アイコン">
+            </a>
+          </div>
+          <div>
+            <p class="name"><a href="{% url 'teams:team_member_delete' profile.user.user_profile.team profile.user.username  %}" class="name">{{ profile.name }}</a></p>
+          </div>
+          <div>
+            <p class="sub-color"><a href="{% url 'teams:team_member_delete' profile.user.user_profile.team profile.user.username  %}" class="sub-color">@{{ profile.user.username }}</a></p>
+          </div>
+        </div>
+      {% elif profile.is_owner is True %}
+        <div class="user-section">
+          <div>
+            <img src="{{ profile.icon.url }}" alt="アイコン">
+          </div>
+          <div class="name-margin">
+            <p class="name">{{ profile.name }}</p>
+          </div>
+          <div class="name-margin">
+            <p class="sub-color">@{{ profile.user.username }}</p>
+          </div>
+          <div class="sub-color name-margin">
+            <p><sup>※</sup>オーナーは削除できません</p>
+          </div>
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+  <div class="push"></div>
+{% endblock %}

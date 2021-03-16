@@ -1,0 +1,55 @@
+$blue-1-color: #1F8FFF;
+$blue-2-color: #1C81E6;
+$blue-3-color: #1872CC;
+$blue-4-color: #1564B3;
+$blue-5-color: #125699;
+$blue-6-color: #0F4780;
+$blue-7-color: #0C3966;
+$blue-8-color: #092B4D;
+$blue-9-color: #061D33;
+$blue-10-color: #030E1A;
+$twitter-color: #1DA1F2;
+$color: black;
+$sub-color: #c9c9c9;
+$danger-color: #F03030;
+
+
+
+.container {
+  margin: 5rem auto;
+}
+
+.user-section {
+  display: flex;
+  margin: 2rem auto;
+
+  div {
+    margin-right: 0.5rem;
+  }
+  img {
+    width: 48px;
+    height: 48px;
+    object-fit: cover;
+  }
+  p {
+    margin-bottom: 0;
+  }
+  a {
+    text-decoration: none;
+  }
+  .name-margin {
+    margin-top: 0.5rem;
+  }
+  .name {
+    color: white;
+    font-weight: bold;
+  }
+  .sub-color {
+    color: $sub-color;
+    font-size: 14px;
+  }
+}
+
+.push {
+  height: 400px;
+}

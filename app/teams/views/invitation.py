@@ -20,7 +20,7 @@ class InvitationCreateView(LoginRequiredMixin, CreateView, UserProfileBaseView):
     def form_valid(self, form):
         """
         invitation object に必要な情報を登録する。
-        オーナーでない場合、無効になる。
+        オーナーでない、もしくは本人に送信しようとしている場合、無効になる。
 
         Returns
         -------
@@ -37,14 +37,16 @@ class InvitationCreateView(LoginRequiredMixin, CreateView, UserProfileBaseView):
         self.object.invitation_user = get_user_model().objects.get(username=self.kwargs.get('username'))
         self.object.to_user = self.object.invitation_user
         self.object.save()
+        if self.request.user == self.object.to_user:
+            return redirect(self.success_url, teamname=self.kwargs.get('teamname'))
         return super().form_valid(form)
 
     def get_success_url(self):
         """
         super().form_valid(form) が実行された後にリダイレクトする URL を取得する関数。
 
-        Parameters
-        ----------
+        See Also
+        --------
         self.object.invitation_user : str
             招待を送ったユーザーの username
         """

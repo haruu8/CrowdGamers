@@ -8,7 +8,7 @@ from django.db.models import Q
 from functools import reduce
 from operator import and_
 from teams.models import Team, UserProfile, Notification
-from teams.forms import TeamCreateForm, MemberApprovalCreateForm
+from teams.forms import TeamCreateForm, MemberApprovalCreateForm, UserProfileUpdateForm
 from .access import OnlyYouMixin, OnlyOwnerMixin
 from .utils import GetProfileView
 from .profile import UserProfileBaseView
@@ -56,6 +56,7 @@ class TeamListView(ListView):
     """
     template_name = 'teams/team_list.html'
     model = Team
+    paginate_by = 100
 
     def get_queryset(self):
         """
@@ -262,9 +263,11 @@ class TeamMemberAddView(LoginRequiredMixin, TeamDetailBaseView, CreateView):
         """
         self.object = form.save(commit=False)
         self.object.mode = 'member_approval'
-        self.object.from_user = self.request.user
-
         self.object.team = Team.objects.get(teamname=self.kwargs.get('teamname'))
+        if self.request.user.user_profile == self.object.team:
+            return redirect(self.success_url, teamname=self.kwargs.get('teamname'))
+
+        self.object.from_user = self.request.user
         member = self.object.team.belonging_user_profiles.all()
         owner_profile = member.filter(is_owner=True)[0]
         self.object.to_user = owner_profile.user
@@ -282,39 +285,51 @@ team_member_add = TeamMemberAddView.as_view()
 
 
 
-class TeamMemberDeleteView(OnlyOwnerMixin, UpdateView):
+class TeamMemberListView(OnlyOwnerMixin, TemplateView):
     """
-    チームのメンバーから削除する
+    削除するメンバーを選ぶときに見るメンバー一覧。
+    """
+    template_name = 'teams/team_profile/team_member_list.html'
 
-    Notes
-    -----
-    オーナーは削除できない
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        team = Team.objects.get(teamname=self.kwargs.get('teamname'))
+        ctx['profiles'] = UserProfile.objects.filter(team=team)
+        return ctx
+
+team_member_list = TeamMemberListView.as_view()
+
+
+
+class TeamMemberDeleteView(OnlyOwnerMixin, DetailView):
+    """
+    チームのメンバーから削除する。
+    オーナーは削除できない。
     """
     template_name = 'teams/team_profile/team_member_delete.html'
-    model = UserProfile
-    success_url = 'teams:team_detail'
+    model = get_user_model()
 
-    def form_valid(self, form):
+    def post(self, request, *args, **kwargs):
         """
-        プロフィールの team から削除
+        プロフィールの team から削除。
+        """
+        user = get_user_model().objects.get(username=self.kwargs.get('username'))
+        if user.user_profile.is_owner == True:
+            return redirect('teams:home')
+        elif self.request.POST.get('approval', '') == 'delete':
+            user.user_profile.team = None
+            user.user_profile.save()
+        return redirect('teams:home')
 
-        TODO
-        -----
-        プロフィールのチームを削除する処理を書き加える
-        """
-        self.object.user_profile = UserProfile.objects.get(user=self.kwargs.get('user'))
-        if self.object.user_profile.is_owner == True:
-            form.add_error(None, 'チームのオーナーは削除することができません。')
-        self.object.user_profile.team = None
-        self.object.save()
-        result = super().form_valid(form)
-        return result
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        ctx['user'] = get_user_model().objects.get(username=self.kwargs.get('username'))
+        return ctx
 
     def get_object(self):
-        teamname = self.kwargs.get("teamname")
-        return get_object_or_404(Team, teamname=teamname)
-
-    def get_success_url(self):
-        return reverse(self.success_url, kwargs={'teamname': self.object.team.teamname})
+        """
+        URL に必要なパラメータを取得する関数。
+        """
+        return get_object_or_404(get_user_model(), username=self.kwargs.get('username'))
 
 team_member_delete = TeamMemberDeleteView.as_view()

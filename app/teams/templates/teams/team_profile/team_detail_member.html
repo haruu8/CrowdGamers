@@ -30,9 +30,12 @@
       {% endif %}
     </div>
 
-    <div class="application-section">
-      <p><a href="{% url 'teams:team_member_add' team.teamname %}" class="btn btn--blue btn--radius">メンバー追加申請をする</a></p>
-    </div>
+    {% if request.user.user_profile.team == team %}
+    {% else %}
+      <div class="application-section">
+        <p><a href="{% url 'teams:team_member_add' team.teamname %}" class="btn btn--blue btn--radius">メンバー追加申請をする</a></p>
+      </div>
+    {% endif %}
   </div>
 
 {% endblock %}

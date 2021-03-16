@@ -49,8 +49,8 @@ class ApplicationCreateView(LoginRequiredMixin, CreateView, TeamDetailBaseView):
         """
         super().form_valid(form) が実行された後にリダイレクトする URL を取得する関数。
 
-        Parameters
-        ----------
+        See Also
+        --------
         self.object.team.teamname : str
             form_valid 関数で取得したリクエストを送ろうとしている Team の teamname。
         """
@@ -78,6 +78,8 @@ class ApplicationReplyCreateView(OnlyYouMixin, UpdateView):
             親クラス(UpdateView)の form_valid 関数。
         """
         self.object = Notification.objects.get(id=self.kwargs.get('id'))
+        if self.object.to_user == self.request.user:
+            return redirect('teams:home')
         self.object.is_proceeded = True
         self.object.invitation_url = form.cleaned_data['invitation_url']
         self.object.save()
@@ -89,7 +91,7 @@ class ApplicationReplyCreateView(OnlyYouMixin, UpdateView):
 
         Returns
         -------
-        ctx : dict
+        dict
             チームリクエストオブジェクト入り ctx。
         """
         ctx = super().get_context_data(**kwargs)
@@ -106,8 +108,8 @@ class ApplicationReplyCreateView(OnlyYouMixin, UpdateView):
         """
         super().form_valid(form) が実行された後にリダイレクトする URL を取得する関数。
 
-        Parameters
-        ----------
+        See Also
+        --------
         self.request.user.username : str
             request.user の username。
         """

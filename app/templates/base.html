@@ -25,15 +25,15 @@
             <img src="{% static 'img/search-icon.svg' %}" alt="検索アイコン">
           </a>
         </li>
-        {% if user.is_authenticated %}
+        {% if request.user.is_authenticated %}
         <li class='nav-item'>
-          <a class="nav-link" href="{% url 'teams:notification' user.username %}">
+          <a class="nav-link" href="{% url 'teams:notification' request.user.username %}">
             <img src="{% static 'img/bell-icon.svg' %}" alt="通知アイコン" class='bell-icon'>
           </a>
         </li>
         {% endif %}
         <li class="nav-item dropdown">
-          {% if user.is_authenticated %}
+          {% if request.user.is_authenticated %}
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <img src="{{ user_profile.icon.url }}" alt="アイコン" class='profile-icon'>
             </a>
@@ -43,9 +43,9 @@
             </a>
           {% endif %}
 
-          {% if user.is_authenticated %}
+          {% if request.user.is_authenticated %}
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="{% url 'teams:account_detail' user.username %}">プロフィール</a>
+                <a class="dropdown-item" href="{% url 'teams:account_detail' request.user.username %}">プロフィール</a>
                 <a class="dropdown-item" href="{% url 'accounts:account_settings' %}">設定</a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="{% url 'accounts:account_logout' %}">ログアウト</a>
@@ -57,7 +57,7 @@
             </div>
           {% endif %}
         </li>
-        {% if user.is_authenticated %}
+        {% if request.user.is_authenticated %}
           <li class='nav-item'>
             <a class="nav-link" href="{% url 'teams:team_create' %}">
               <div class='img_wrap'>

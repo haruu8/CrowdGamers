@@ -13,7 +13,7 @@ class TeamCreateForm(forms.ModelForm):
                     'sponsor', 'game_title','feature', 'desired_job','desired_condition', 'disclosed')
 
     teamname = forms.CharField(required=True, label='チームネーム',
-                            help_text='使用できるのは大文字・小文字アルファベット、数字、_(アンダーバー)のみです。',
+                            help_text='使用できるのは小文字アルファベット、数字、_(アンダーバー)のみです。(大文字は小文字に変換されます。)',
                             widget=forms.TextInput(attrs={'placeholder': 'チームのユーザーネームを入力してください', 'render_value': True}))
     name = forms.CharField(required=True, label='名前',
                             widget=forms.TextInput(attrs={'placeholder': 'チームの名前を入力してください', 'render_value': True}))

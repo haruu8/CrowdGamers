@@ -28,6 +28,7 @@ urlpatterns = [
 
     # メンバー
     path('team/<str:teamname>/member/add/', views.team_member_add, name='team_member_add'),
+    path('team/<str:teamname>/member/list/', views.team_member_list, name='team_member_list'),
     path('team/<str:teamname>/member/delete/<str:username>/', views.team_member_delete, name='team_member_delete'),
 
     # プロフィール

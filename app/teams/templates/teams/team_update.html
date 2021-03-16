@@ -15,6 +15,11 @@
       </div>
     </form>
     <div class="btn-delete-section">
+      <a href="{% url 'teams:team_member_list' team.teamname %}">
+        <button class="btn btn--danger btn--radius">メンバー削除</button>
+      </a>
+    </div>
+    <div class="btn-delete-section">
       <a href="{% url 'teams:team_delete' team.teamname %}">
         <button class="btn btn--danger btn--radius">削除する</button>
       </a>

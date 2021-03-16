@@ -1,0 +1,37 @@
+.container {
+  margin: 5rem auto;
+}
+
+.user-section {
+  display: flex;
+  margin: 2rem auto;
+}
+.user-section div {
+  margin-right: 0.5rem;
+}
+.user-section img {
+  width: 48px;
+  height: 48px;
+  object-fit: cover;
+}
+.user-section p {
+  margin-bottom: 0;
+}
+.user-section a {
+  text-decoration: none;
+}
+.user-section .name-margin {
+  margin-top: 0.5rem;
+}
+.user-section .name {
+  color: white;
+  font-weight: bold;
+}
+.user-section .sub-color {
+  color: #c9c9c9;
+  font-size: 14px;
+}
+
+.push {
+  height: 400px;
+}

@@ -6,6 +6,7 @@ from .game import Game
 from .feature import Feature
 from .job import Job
 from teams.utils import user_directory_path, validate_icon_image
+from accounts.fields import LowerCharField
 
 
 
@@ -20,7 +21,7 @@ class Team(models.Model):
 
     id = models.AutoField(editable=False, primary_key=True)
     teamname_regex = RegexValidator(regex=r'[a-xA-Z0-9_]')
-    teamname = models.CharField(
+    teamname = LowerCharField(
         verbose_name='チームネーム',
         null=False,
         blank=False,

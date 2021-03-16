@@ -1,10 +1,27 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block stylesheet %}'{% static "teams/scss/dist/team_member_delete.css" %}'{% endblock %}
+{% block stylesheet %}'{% static "teams/scss/team_profile/dist/team_member_delete.css" %}'{% endblock %}
 
 {% block content %}
 
-  <p>team_member_delete.html</p>
+  <div class="container">
+    <h1 class="title">メンバーの削除</h1>
+    <p>メンバー『<a href="{% url 'teams:account_detail' user.username %}">@{{ user.username }}</a>』を削除しますか？</p>
+    <p><sup>※</sup>削除した後にメンバー追加をする場合は、再度申請を行ってもらう必要があります。</p>
+    <form action="" method="POST">
+      {% csrf_token %}
+      <div class="all-btn">
+        <div class="btn-section">
+          <a href="#" onclick="javascript:window.history.back(-1);return false;">
+            <button type="submit" value="cancel" class="btn btn--blue btn--radius">キャンセル</button>
+          </a>
+        </div>
+        <div class="btn-deny-section">
+          <button name="approval" value="delete" class="btn btn--danger btn--radius">削除する</button>
+        </div>
+      </div>
+    </form>
+  </div>
 
 {% endblock %}

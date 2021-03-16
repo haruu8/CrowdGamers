@@ -10,6 +10,7 @@ from django.core.validators import FileExtensionValidator, MinLengthValidator, R
 from django.core.exceptions import ValidationError
 import uuid
 from teams.utils import user_directory_path
+from accounts.fields import LowerCharField
 
 
 class CustomUserManager(UserManager):
@@ -21,7 +22,7 @@ class CustomUserManager(UserManager):
         ユーザーを作成する関数
 
         See Also
-        ----
+        --------
         normalize_email : 大文字・小文字を等しく扱うメソッド
         """
         if not username:
@@ -52,8 +53,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     """
     AbstractBaseUser を継承したカスタムユーザー
 
-    SeeAlso
-    -----
+    See Also
+    --------
     REQUIRED_FIELDS : スーパーユーザーを作るときの必須フィールド
 
     Notes
@@ -88,7 +89,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(null=True, blank=True, editable=False)
     id = models.AutoField(primary_key=True, editable=False)
     username_regex = RegexValidator(regex=r'[a-zA-Z0-9_]')
-    username = models.CharField(
+    # username = models.CharField(
+    username = LowerCharField(
         verbose_name='ユーザーネーム',
         null=False,
         blank=False,
@@ -126,9 +128,9 @@ def create_notification(sender, **kwargs):
     """
     新規ユーザー作成時にプロフィールの編集を促す通知を作成
 
-    SeeAlso
-    -----
-    from_user は公式アカウント
+    See Also
+    --------
+    from_user : 公式アカウント
 
     Notes
     -----

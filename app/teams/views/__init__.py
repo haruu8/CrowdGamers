@@ -14,6 +14,6 @@ from .support import home, contact, terms_of_service, privacy_policy, faq
 from .team import (
     team_create, team_list, team_delete, team_update,
     team_detail, team_detail_member, team_detail_feature, team_detail_desired_condition,
-    team_member_add, team_member_delete
+    team_member_add, team_member_list, team_member_delete,
 )
 from .utils import GetProfileView
