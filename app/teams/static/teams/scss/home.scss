@@ -37,6 +37,76 @@ div.catch-section {
   }
 }
 
+
+
+
+
+
+.app-introduction {
+  padding: 3rem 3rem;
+  margin: 4rem;
+  h3 {
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 6rem;
+  }
+  p {
+    text-align: center;
+    font-size: 18px;
+  }
+  .sentence {
+    padding-top: 6rem;
+    padding-bottom: 3rem;
+    text-align: center;
+  }
+  .step1 {
+    margin: 3rem auto;
+    display: flex;
+    justify-content: space-around;
+    .sentence {
+      padding-left: 4rem;
+    }
+  }
+  .step2 {
+    margin: 3rem auto;
+    justify-content: space-around;
+    display: flex;
+    .sentence {
+      padding-right: 4rem;
+    }
+  }
+  .step3 {
+    margin: 3rem auto;
+    justify-content: space-around;
+    display: flex;
+    .sentence {
+      padding-left: 4rem;
+    }
+  }
+  .btn--blue,
+  p.btn--blue {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    color: #fff;
+    background-color: none;
+    border: 1px solid white;
+  }
+  .btn--blue:hover,
+  p.btn--blue:hover {
+    color: #fff;
+  }
+  p.btn--radius {
+    border-radius: 100vh;
+  }
+}
+
+
+
+
+
+
+
+
 div.signup-prompt {
   background-color: $blue-9-color;
   text-align: center;

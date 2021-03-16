@@ -20,6 +20,64 @@ div.catch-section .header {
   height: auto;
 }
 
+.app-introduction {
+  padding: 3rem 3rem;
+  margin: 4rem;
+}
+.app-introduction h3 {
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 6rem;
+}
+.app-introduction p {
+  text-align: center;
+  font-size: 18px;
+}
+.app-introduction .sentence {
+  padding-top: 6rem;
+  padding-bottom: 3rem;
+  text-align: center;
+}
+.app-introduction .step1 {
+  margin: 3rem auto;
+  display: flex;
+  justify-content: space-around;
+}
+.app-introduction .step1 .sentence {
+  padding-left: 4rem;
+}
+.app-introduction .step2 {
+  margin: 3rem auto;
+  justify-content: space-around;
+  display: flex;
+}
+.app-introduction .step2 .sentence {
+  padding-right: 4rem;
+}
+.app-introduction .step3 {
+  margin: 3rem auto;
+  justify-content: space-around;
+  display: flex;
+}
+.app-introduction .step3 .sentence {
+  padding-left: 4rem;
+}
+.app-introduction .btn--blue,
+.app-introduction p.btn--blue {
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  color: #fff;
+  background-color: none;
+  border: 1px solid white;
+}
+.app-introduction .btn--blue:hover,
+.app-introduction p.btn--blue:hover {
+  color: #fff;
+}
+.app-introduction p.btn--radius {
+  border-radius: 100vh;
+}
+
 div.signup-prompt {
   background-color: #061D33;
   text-align: center;

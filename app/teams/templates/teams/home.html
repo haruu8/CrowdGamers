@@ -14,16 +14,34 @@
       <a href="{% url 'accounts:account_signup' %}" class="btn-push">Twitterで登録</a>
     </div>
   </div>
-  <div>
+  <div class="app-introduction">
     <h3>チーム・メンバーを探すのに便利！</h3>
-    <div>
-      <p>希望する条件を選択して検索。<br>気になるチーム・選手を選択！</p>
+    <div class="step1">
+      <div class="sentence">
+        <p class="btn btn--blue btn--radius">Step1</p>
+        <p>希望する条件を選択して検索。<br>気になるチーム・選手を選択！</p>
+      </div>
+      <div>
+        <img src="{% static 'teams/img/step1.svg' %}" alt="step1画像">
+      </div>
     </div>
-    <div>
-      <p>自分の希望条件とマッチしたら<br>メッセージを入力し送信完了！</p>
+    <div class="step2">
+      <div>
+        <img src="{% static 'teams/img/step2.svg' %}" alt="step1画像">
+      </div>
+      <div class="sentence">
+        <p class="btn btn--blue btn--radius">Step2</p>
+        <p>自分の希望条件とマッチしたら<br>メッセージを入力し送信完了！</p>
+      </div>
     </div>
-    <div>
-      <p>相手からメッセージが<br>帰ってくるのを待つだけ！</p>
+    <div class="step3">
+      <div class="sentence">
+        <p class="btn btn--blue btn--radius">Step3</p>
+        <p>相手からメッセージが<br>帰ってくるのを待つだけ！</p>
+      </div>
+      <div>
+        <img src="{% static 'teams/img/step1.svg' %}" alt="step1画像">
+      </div>
     </div>
   </div>
   <div class='signup-prompt'>
