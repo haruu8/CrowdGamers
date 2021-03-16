@@ -6,7 +6,7 @@ CrowdGamers はチーム・メンバーを探すことができるサービス�
 
 ## URL
 [crowdgamers.com](https://crowdgamers.com/)  
-【ゲストユーザーでログイン】ボタンからゲストユーザーとして簡単にログインすることができます。
+Twitterログインでボタンひとつでログインすることができます。
 
 
 
@@ -30,11 +30,13 @@ CrowdGamers はチーム・メンバーを探すことができるサービス�
 ## 主な利用方法
 
 ### 「チームメンバーを探したい場合」
+
 1. ユーザー登録
 2. チームを登録
 3. 気になるプレイヤーに招待を送る
 
 ### 「チームを探したい場合」
+
 1. ユーザー登録
 2. 気になるチームを探す
 3. チームにリクエストを送る
@@ -42,6 +44,7 @@ CrowdGamers はチーム・メンバーを探すことができるサービス�
 
 
 ### 基本機能一覧
+
 * ユーザー機能(twitter認証)
 * チーム機能
 * ゲームタグ機能
@@ -64,27 +67,33 @@ CrowdGamers はチーム・メンバーを探すことができるサービス�
 
 ## 使用技術・環境
 ### 【フロントエンド】
+
 * HTML5
 * CSS (SCSS)
 * JavaScript (jQuery)
 
 
 ### 【バックエンド】
+
 * Python 3.8
 * Django 3.1.5
 
 
 
 ### 【データベース】
+
 * PostgreSQL 11.4
 
 
 
 ### 【開発環境】
+
 * Docker, docker-compose
 
 
+
 ### 【本番環境】
+
 * AWS ()
 * Nginx, gunicorn
 * CircleCI/CD
@@ -92,25 +101,30 @@ CrowdGamers はチーム・メンバーを探すことができるサービス�
 
 
 ### 【その他使用技術】
+
 * Git, Github
 
 
 
 ## インフラ構成図
+
 ![インフラ構成図](readme/infrastructure.png)
 
 
 
 ## ER図
+
 ![ER図](readme/ER.png)
 
 
 ## 今後行いたいこと
-バックエンドを Django Rest Framework で、フロントを React を使用しロード時間短縮、UIなどの向上などに取り組みたいです。
+
+バックエンドを Django Rest Framework で書き直し、フロントを React を使用しロード時間短縮、UIなどの向上などに取り組みたいです。
 
 
 
 ## About me
+
 16歳高校一年生で、プログラミングを学習中。普段は英語とプログラミングを学習しています。  
 twitter, note, blog など様々なSNSで情報発信をしつつ、学習に励んでいます。  
 
