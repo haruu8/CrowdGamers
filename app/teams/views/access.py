@@ -18,7 +18,7 @@ class OnlyYouMixin(UserPassesTestMixin):
     Attributes
     ----------
     raise_exception : bool
-        exception を許すかの bool。
+        raise exception を許すかの bool。
     """
     raise_exception = True
 
@@ -33,7 +33,7 @@ class OnlyYouMixin(UserPassesTestMixin):
             False ならアクセス不可
         """
         user = self.request.user
-        return user.username == self.kwargs['username'] or user.is_superuser
+        return user.username == self.kwargs['username']
 
 
 
@@ -44,7 +44,7 @@ class OnlyOwnerMixin(UserPassesTestMixin):
     Attributes
     ----------
     raise_exception : bool
-        exception を許すかの bool。
+        raise exception を許すかの bool。
     """
     raise_exception = True
 
@@ -59,7 +59,7 @@ class OnlyOwnerMixin(UserPassesTestMixin):
         """
         user = self.request.user
         if user.is_authenticated:
-            return user.user_profile.is_owner == True and user.user_profile.team.teamname == self.kwargs.get('teamname') or user.is_superuser
+            return user.user_profile.is_owner == True and user.user_profile.team.teamname == self.kwargs.get('teamname')
         else:
             return False
 
@@ -142,10 +142,10 @@ class AnonymousRequiredMixin(CustomAccessMixin):
         Returns
         -------
         Union[HttpResponsePermanentRedirect, HttpResponseRedirect]
-            同クラスの get_home_url 関数の返り値の redirect。
+            親クラスの get_home_url 関数の返り値の redirect。
 
         super().dispatch(request, *args, **kwargs)
-            親クラス(CustomAccessMixin)の dispatch 関数。
+            view の親クラスの dispatch 関数。
         """
         if request.user.is_authenticated:
             return self.handle_no_permission()

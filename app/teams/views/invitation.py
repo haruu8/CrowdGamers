@@ -24,21 +24,19 @@ class InvitationCreateView(LoginRequiredMixin, CreateView, UserProfileBaseView):
 
         Returns
         -------
-        redirect(self.success_url, teamname=self.kwargs.get('teamname')) : Callable
-            自身がオーナーでなければ success_url にリダイレクト。
-        super().form_valid(form) : Callable
-            親クラス(CreateView)の form_valid 関数。
+        Union[HttpResponsePermanentRedirect, HttpResponseRedirect]
+            success_url に redirect。
         """
         self.object = form.save(commit=False)
         if self.request.user.user_profile.is_owner == False:
-            return redirect(self.success_url, teamname=self.kwargs.get('teamname'))
+            return redirect(self.success_url, username=self.kwargs.get('username'))
         self.object.mode = 'invitation'
         self.object.from_user = self.request.user
         self.object.invitation_user = get_user_model().objects.get(username=self.kwargs.get('username'))
         self.object.to_user = self.object.invitation_user
         self.object.save()
         if self.request.user == self.object.to_user:
-            return redirect(self.success_url, teamname=self.kwargs.get('teamname'))
+            return redirect(self.success_url, username=self.kwargs.get('username'))
         return super().form_valid(form)
 
     def get_success_url(self):

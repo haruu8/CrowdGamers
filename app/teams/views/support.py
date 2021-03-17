@@ -5,6 +5,9 @@ from .utils import GetProfileView
 
 
 class HomeView(GetProfileView):
+    """
+    LP を表示する。ヘッダーに表示するプロフィール情報も取得する。
+    """
     template_name='teams/home.html'
 
 home = HomeView.as_view()
@@ -12,6 +15,9 @@ home = HomeView.as_view()
 
 
 class ContactView(GetProfileView):
+    """
+    問い合わせに関する情報を表示する。ヘッダーに表示するプロフィール情報も取得する。
+    """
     template_name='teams/support/contact.html'
 
 contact = ContactView.as_view()
@@ -20,7 +26,7 @@ contact = ContactView.as_view()
 
 class FreqentlyQuestionAskedView(GetProfileView):
     """
-    よくある質問を一覧表示する
+    よくある質問を一覧表示する。ヘッダーに表示するプロフィール情報も取得する。
     """
     template_name = 'teams/support/faq.html'
 
@@ -34,6 +40,9 @@ faq = FreqentlyQuestionAskedView.as_view()
 
 
 class TermsOfServiceView(TemplateView):
+    """
+    利用規約を表示する。
+    """
     template_name = 'teams/support/terms_of_service.html'
 
 terms_of_service = TermsOfServiceView.as_view()
@@ -41,6 +50,9 @@ terms_of_service = TermsOfServiceView.as_view()
 
 
 class PrivacyPolicyView(TemplateView):
+    """
+    プライバシーポリシーを表示する。
+    """
     template_name = 'teams/support/privacy_policy.html'
 
 privacy_policy = PrivacyPolicyView.as_view()

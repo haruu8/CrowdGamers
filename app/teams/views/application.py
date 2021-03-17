@@ -25,10 +25,8 @@ class ApplicationCreateView(LoginRequiredMixin, CreateView, TeamDetailBaseView):
 
         Returns
         -------
-        redirect(self.success_url, teamname=self.kwargs.get('teamname')) : Callable
-            自身の所属するチームにリクエストを送信しようとしているなら success_url にリダイレクト。
-        super().form_valid(form) : Callable
-            親クラス(CreateView)の form_valid 関数。
+        Union[HttpResponsePermanentRedirect, HttpResponseRedirect]
+            success_url に redirect。
         """
         self.object = form.save(commit=False)
         self.object.team = Team.objects.get(teamname=self.kwargs.get('teamname'))
@@ -74,8 +72,8 @@ class ApplicationReplyCreateView(OnlyYouMixin, UpdateView):
 
         Returns
         -------
-        super().form_valid(form) : Callable
-            親クラス(UpdateView)の form_valid 関数。
+        Union[HttpResponsePermanentRedirect, HttpResponseRedirect]
+            get_success_url 関数で指定した url に redirect。
         """
         self.object = Notification.objects.get(id=self.kwargs.get('id'))
         if self.object.from_user == self.request.user or self.object.is_proceeded is False:

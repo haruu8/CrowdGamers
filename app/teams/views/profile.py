@@ -17,8 +17,17 @@ class UserProfileBaseView(DetailView):
     """
     template_name = 'teams/accounts/profile_extends_base.html'
     model = UserProfile
+    context_object_name = 'user_profile'
 
     def get_context_data(self, **kwargs):
+        """
+        ユーザープロフィール情報を取得する関数。
+
+        Returns
+        -------
+        dict
+            ユーザープロフィールオブジェクト入り ctx。
+        """
         context = super().get_context_data(**kwargs)
         user = get_user_model().objects.get(username=self.kwargs.get('username'))
         context['user_profile'] = user.user_profile
@@ -70,11 +79,17 @@ class UserProfileUpdateView(OnlyYouMixin, UpdateView):
     form_class = UserProfileUpdateForm
     success_url = 'teams:account_detail'
 
-    def get_success_url(self):
-        return resolve_url(self.success_url, username=self.kwargs.get('username'))
-
     def get_object(self):
+        """
+        URL に必要なパラメータを取得する関数。
+        """
         return get_object_or_404(UserProfile, user=self.request.user)
+
+    def get_success_url(self):
+        """
+        更新処理が完了した後に遷移する URL を取得する関数。
+        """
+        return resolve_url(self.success_url, username=self.kwargs.get('username'))
 
 account_profile_update = UserProfileUpdateView.as_view()
 
@@ -82,23 +97,25 @@ account_profile_update = UserProfileUpdateView.as_view()
 
 class UserListView(ListView):
     """
-    ユーザーの一覧表示・検索を行う
-
-    Notes
-    -----
-    UserProfile での検索
-    仕組みは TeamListView と同じ
+    ユーザーの一覧表示・検索を行う。
+    仕組みは TeamListView と同じ。
     """
     template_name = 'teams/accounts/accounts_list.html'
     model = UserProfile
+    paginate_by = 100
 
     def get_queryset(self):
         """
-        検索の処理
+        検索フォームに keyword が入力されたら、ユーザープロフィールモデルから検索をする処理。
+
+        Returns
+        -------
+        Queryset
+            検索ワードによって作られたクエリ。
 
         See Also
         --------
-        keyword : html検索バーから受け取った文字列
+        keyword : html 検索バーから受け取った文字列
         """
         queryset = UserProfile.objects.order_by('-created_at')
         keyword = self.request.GET.get('keyword')
@@ -115,7 +132,6 @@ class UserListView(ListView):
                                     Q(desired_condition__icontains=q)
                                     for q in q_list])
             queryset = queryset.filter(query)
-            # messages.success(self.request, '「{}」の検索結果'.format(keyword))
         return queryset
 
 accounts_list = UserListView.as_view()

@@ -17,8 +17,10 @@ class TeamCreateForm(forms.ModelForm):
                             widget=forms.TextInput(attrs={'placeholder': 'チームのユーザーネームを入力してください', 'render_value': True}))
     name = forms.CharField(required=True, label='名前',
                             widget=forms.TextInput(attrs={'placeholder': 'チームの名前を入力してください', 'render_value': True}))
-    icon = forms.ImageField(required=False, label='アイコン')
-    header = forms.ImageField(required=False, label='ヘッダー')
+    icon = forms.ImageField(required=False, label='アイコン',
+                            widget=forms.FileInput())
+    header = forms.ImageField(required=False, label='ヘッダー',
+                            widget=forms.FileInput())
     website = forms.URLField(required=False, label='ウェブサイト',
                             widget=forms.URLInput(attrs={'placeholder': 'ウェブサイトのURLを入力してください', 'render_value': True}))
     introduction = forms.CharField(required=True, label='説明',

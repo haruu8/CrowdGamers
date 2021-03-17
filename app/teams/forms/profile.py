@@ -15,8 +15,10 @@ class UserProfileUpdateForm(forms.ModelForm):
     name = forms.CharField(required=True, label='名前',
                             help_text='使用できるのは大文字・小文字アルファベット、数字、_(アンダーバー)のみです。',
                             widget=forms.TextInput(attrs={'placeholder': '名前を入力してください', 'render_value': True}))
-    icon = forms.ImageField(required=False, label='アイコン')
-    header = forms.ImageField(required=False, label='ヘッダー')
+    icon = forms.ImageField(required=False, label='アイコン',
+                            widget=forms.FileInput())
+    header = forms.ImageField(required=False, label='ヘッダー',
+                            widget=forms.FileInput())
     introduction = forms.CharField(required=False, label='説明',
                             widget=forms.Textarea(attrs={'placeholder': '自身について入力してください', 'render_value': True}))
     website = forms.URLField(required=False, label='ウェブサイト',

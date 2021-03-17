@@ -41,9 +41,6 @@ logout = LoginView.as_view()
 class UserDeleteView(OnlyYouMixin, LoginRequiredMixin, TemplateView):
     """
     ユーザーを削除する。
-
-    Notes
-    -----
     buttonを使用するので TemplateView の post をオーバーライドする。
     """
     template_name = 'accounts/account_delete.html'
@@ -51,7 +48,12 @@ class UserDeleteView(OnlyYouMixin, LoginRequiredMixin, TemplateView):
 
     def post(self, request, *args, **kwargs):
         """
-        削除・削除キャンセルの処理
+        ユーザー削除・キャンセルの処理をする関数。
+
+        Returns
+        -------
+        Union[HttpResponsePermanentRedirect, HttpResponseRedirect]
+            引数で指定した url に redirect。
         """
         self.object = get_user_model().objects.get(username=self.kwargs.get('username'))
         if self.request.POST.get('confirm', '') == 'delete':
@@ -66,6 +68,9 @@ class UserDeleteView(OnlyYouMixin, LoginRequiredMixin, TemplateView):
 
 
     def get_object(self):
+        """
+        URL に必要なパラメータを取得する関数。
+        """
         username = self.kwargs.get("username")
         return get_object_or_404(get_user_model(), username=username)
 
@@ -75,7 +80,7 @@ account_delete = UserDeleteView.as_view()
 
 class UserSettingsView(LoginRequiredMixin, TemplateView):
     """
-    ユーザーの設定項目を一覧表示する
+    ユーザーの設定項目を一覧表示する。
     """
     template_name = 'accounts/account_settings.html'
 

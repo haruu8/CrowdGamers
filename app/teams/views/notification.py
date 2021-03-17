@@ -51,8 +51,8 @@ class InvitationNotificationDetailView(LoginRequiredMixin, OnlyYouMixin, DetailV
 
         Returns
         -------
-        redirect('teams:home') : Callable
-            引数の url にリダイレクト。
+        Union[HttpResponsePermanentRedirect, HttpResponseRedirect]
+            引数で指定しているルーティングに redirect。
         """
         self.object = Notification.objects.get(id=self.kwargs.get('id'))
         if self.object.from_user == self.request.user:
@@ -69,7 +69,7 @@ class InvitationNotificationDetailView(LoginRequiredMixin, OnlyYouMixin, DetailV
     def get_context_data(self, **kwargs):
         """
         招待詳細画面に表示するために必要な情報を取得する関数。
-        既読もつける。
+        既読をつける処理も入っている。
 
         Returns
         -------
@@ -111,8 +111,8 @@ class MemberApprovalNotificationDetailView(LoginRequiredMixin, OnlyYouMixin, Det
 
         Returns
         -------
-        redirect('teams:home') : Callable
-            引数の url にリダイレクト。
+        Union[HttpResponsePermanentRedirect, HttpResponseRedirect]
+            引数の url に redirect。
         """
         self.object = Notification.objects.get(id=self.kwargs.get('id'))
         if self.object.from_user == self.request.user:
@@ -133,7 +133,7 @@ class MemberApprovalNotificationDetailView(LoginRequiredMixin, OnlyYouMixin, Det
     def get_context_data(self, **kwargs):
         """
         メンバー追加申請の詳細画面に表示するために必要な情報を取得する関数。
-        既読もつける。
+        既読をつける処理も入っている。
 
         Returns
         -------
@@ -189,8 +189,8 @@ class ApplicationNotificationDetailView(LoginRequiredMixin, OnlyYouMixin, Detail
 
         Returns
         -------
-        redirect('teams:home') : Callable
-            引数の url にリダイレクト。
+        Union[HttpResponsePermanentRedirect, HttpResponseRedirect]
+            引数の url に redirect。
         """
         self.object = Notification.objects.get(id=self.kwargs.get('id'))
         if self.object.from_user == self.request.user:
@@ -207,7 +207,7 @@ class ApplicationNotificationDetailView(LoginRequiredMixin, OnlyYouMixin, Detail
     def get_context_data(self, **kwargs):
         """
         チームリクエスト詳細画面に表示するために必要な情報を取得する関数。
-        既読もつける。
+        既読をつける処理も入っている。
 
         Returns
         -------
@@ -257,7 +257,7 @@ class OfficialNotificationDetailView(LoginRequiredMixin, OnlyYouMixin, DetailVie
     def get_context_data(self, **kwargs):
         """
         公式からのお知らせの詳細画面に表示するために必要な情報を取得する関数。
-        既読もつける。
+        既読をつける処理も入っている。
 
         Returns
         -------

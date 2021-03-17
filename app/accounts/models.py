@@ -14,7 +14,9 @@ from accounts.fields import LowerCharField
 
 
 class CustomUserManager(UserManager):
-    """ ユーザーマネージャー """
+    """
+    ユーザーマネージャー。
+    """
     use_in_migrations = True
 
     def _create_user(self, username, password, **extra_fields):
@@ -51,7 +53,7 @@ class CustomUserManager(UserManager):
 
 class User(AbstractBaseUser, PermissionsMixin):
     """
-    AbstractBaseUser を継承したカスタムユーザー
+    AbstractBaseUser を継承したカスタムユーザー。
 
     See Also
     --------
@@ -65,12 +67,6 @@ class User(AbstractBaseUser, PermissionsMixin):
         db_table = 't_custom_user'
         verbose_name = 'カスタムユーザー'
         verbose_name_plural = 'カスタムユーザー'
-
-    def validate_icon_image(fieldfile_obj):
-        image_size = fieldfile_obj.file.size
-        megabyte_limit = 5.0
-        if image_size > megabyte_limit*1024*1024:
-            raise ValidationError("アイコンのサイズを%sMBより小さくしてください" % str(megabyte_limit))
 
     is_staff = models.BooleanField(
         _('staff status'),
@@ -110,11 +106,11 @@ class User(AbstractBaseUser, PermissionsMixin):
 @receiver(post_save, sender=User)
 def create_user_profile(sender, **kwargs):
     """
-    新規ユーザー作成時に UserProfle モデルの空インスタンスを生成
+    新規ユーザー作成時に UserProfle モデルの空インスタンスを生成する関数。
 
     Notes
     -----
-    循環インポートが起きるため、作成の段階でインポート
+    循環インポートが起きるため、作成の段階でインポートする。
     """
     if kwargs['created']:
         from teams.models import UserProfile
@@ -125,7 +121,7 @@ def create_user_profile(sender, **kwargs):
 @receiver(post_save, sender=User)
 def create_notification(sender, **kwargs):
     """
-    新規ユーザー作成時にプロフィールの編集を促す通知を作成
+    新規ユーザー作成時にプロフィールの編集を促す通知を作成する。
 
     See Also
     --------
@@ -133,7 +129,7 @@ def create_notification(sender, **kwargs):
 
     Notes
     -----
-    循環インポートが起きるため、作成の段階でインポート
+    循環インポートが起きるため、作成の段階でインポートする。
     """
     if kwargs['created']:
         from teams.models import Notification
