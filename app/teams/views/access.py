@@ -144,7 +144,7 @@ class AnonymousRequiredMixin(CustomAccessMixin):
         Union[HttpResponsePermanentRedirect, HttpResponseRedirect]
             親クラスの get_home_url 関数の返り値の redirect。
 
-        super().dispatch(request, *args, **kwargs)
+        Any
             view の親クラスの dispatch 関数。
         """
         if request.user.is_authenticated:

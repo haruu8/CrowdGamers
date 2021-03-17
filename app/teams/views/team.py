@@ -303,7 +303,7 @@ team_member_add = TeamMemberAddView.as_view()
 
 
 
-class TeamMemberListView(OnlyOwnerMixin, TemplateView):
+class TeamMemberListView(LoginRequiredMixin, OnlyOwnerMixin, TemplateView):
     """
     削除するメンバーを選ぶときに見るメンバーを一覧表示する。
     """
@@ -327,7 +327,7 @@ team_member_list = TeamMemberListView.as_view()
 
 
 
-class TeamMemberDeleteView(OnlyOwnerMixin, DetailView):
+class TeamMemberDeleteView(LoginRequiredMixin, OnlyOwnerMixin, DetailView):
     """
     チームのメンバーから削除する。
     """

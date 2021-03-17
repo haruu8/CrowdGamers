@@ -58,7 +58,7 @@ application_create = ApplicationCreateView.as_view()
 
 
 
-class ApplicationReplyCreateView(OnlyYouMixin, UpdateView):
+class ApplicationReplyCreateView(LoginRequiredMixin, OnlyYouMixin, UpdateView):
     """
     リクエストの承認とその返答に必要なURLを入力するための view。
     """

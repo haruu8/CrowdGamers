@@ -65,8 +65,6 @@ class UserDeleteView(OnlyYouMixin, LoginRequiredMixin, TemplateView):
             return redirect('accounts:account_settings')
         return redirect(self.success_url)
 
-
-
     def get_object(self):
         """
         URL に必要なパラメータを取得する関数。

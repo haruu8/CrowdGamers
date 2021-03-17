@@ -1,6 +1,7 @@
 from django.shortcuts import get_object_or_404, resolve_url, redirect
 from django.views.generic import DetailView, UpdateView, ListView
 from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import get_user_model
 from django.db.models import Q
 from functools import reduce
@@ -70,7 +71,7 @@ account_detail_desired_condition = UserProfileDetailDesiredConditionView.as_view
 
 
 
-class UserProfileUpdateView(OnlyYouMixin, UpdateView):
+class UserProfileUpdateView(LoginRequiredMixin, OnlyYouMixin, UpdateView):
     """
     プロフィールを更新する
     """

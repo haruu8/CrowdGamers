@@ -147,3 +147,41 @@ class AccountsStatusCodeTests(TestCase):
             url = reverse('accounts:account_settings')
             response = self.client.get(url)
             self.assertEquals(response.status_code, 302)
+
+
+
+class AccountsHtmlTests(TestCase):
+    """
+    html ファイルが正しいかテストする。
+    test_***_returns_correct_html で定義している。
+    *** : view の名前
+    """
+    # def test_login_returns_correct_html(self):
+    #     request = HttpRequest()
+    #     response = login(request)
+    #     expected_html = render_to_string('accounts/login.html')
+    #     self.assertEqual(response.content.decode(), expected_html)
+
+    # def test_signup_returns_correct_html(self):
+    #     request = HttpRequest()
+    #     response = signup(request)
+    #     expected_html = render_to_string('accounts/signup.html')
+    #     self.assertEqual(response.content.decode(), expected_html)
+
+    # def test_logout_returns_correct_html(self):
+    #     request = HttpRequest()
+    #     response = logout(request)
+    #     expected_html = render_to_string('accounts/signup.html')
+    #     self.assertEqual(response.content.decode(), expected_html)
+
+    # def test_account_delete_returns_correct_html(self):
+    #     request = HttpRequest()
+    #     response = account_delete(request)
+    #     expected_html = render_to_string('accounts/account_delete.html')
+    #     self.assertEqual(response.content.decode(), expected_html)
+
+    # def test_account_settings_returns_correct_html(self):
+    #     request = HttpRequest()
+    #     response = account_settings(request)
+    #     expected_html = render_to_string('accounts/account_settings.html')
+    #     self.assertEqual(response.content.decode(), expected_html)
