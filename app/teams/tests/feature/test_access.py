@@ -32,6 +32,7 @@ def create_data():
     owner_profile.team = team
     owner_profile.desired_condition = 'hoge'
     owner_profile.is_owner = True
+    owner_profile.save()
 
     # チームメンバー作成
     member = get_user_model().objects.create_user(
@@ -42,6 +43,7 @@ def create_data():
     member_profile.team = team
     member_profile.desired_condition = 'hoge'
     member_profile.is_owner = False
+    member_profile.save()
 
     # 無所属ユーザーの作成
     independent_user = get_user_model().objects.create_user(
@@ -165,15 +167,13 @@ class TeamAnonymousUserStatusCodeTests(TestCase):
         response = self.client.get(url)
         self.assertEquals(response.status_code, 200)
 
-    # def test_team_detail_member_status_code_anonymous_user(self):
-    #     """
-    #     TODO
-    #     ----
-    #     修正する
-    #     """
-    #     url = reverse('teams:team_detail_member', args=[self.team])
-    #     response = self.client.get(url)
-    #     self.assertEquals(response.status_code, 200)
+    def test_team_detail_member_status_code_anonymous_user(self):
+        """
+        team_detail_member のステータスコードは 200 になる
+        """
+        url = reverse('teams:team_detail_member', args=[self.team])
+        response = self.client.get(url)
+        self.assertEquals(response.status_code, 200)
 
     def test_team_detail_feature_status_code_anonymous_user(self):
         """
@@ -432,15 +432,13 @@ class TeamIndependentUserStatusCodeTests(TestCase):
         response = self.client.get(url)
         self.assertEquals(response.status_code, 200)
 
-    # def test_team_detail_member_status_code(self):
-    #     """
-    #     TODO
-    #     ----
-    #     修正する
-    #     """
-    #     url = reverse('teams:team_detail_member', args=[self.team])
-    #     response = self.client.get(url)
-    #     self.assertEquals(response.status_code, 200)
+    def test_team_detail_member_status_code(self):
+        """
+        team_detail_member のステータスコードは 200 になる
+        """
+        url = reverse('teams:team_detail_member', args=[self.team])
+        response = self.client.get(url)
+        self.assertEquals(response.status_code, 200)
 
     def test_team_detail_feature_status_code(self):
         """
@@ -707,15 +705,13 @@ class TeamMemberUserStatusCodeTests(TestCase):
         response = self.client.get(url)
         self.assertEquals(response.status_code, 200)
 
-    # def test_team_detail_member_status_code(self):
-    #     """
-    #     TODO
-    #     ----
-    #     修正する
-    #     """
-    #     url = reverse('teams:team_detail_member', args=[self.team])
-    #     response = self.client.get(url)
-    #     self.assertEquals(response.status_code, 200)
+    def test_team_detail_member_status_code(self):
+        """
+        team_detail_member のステータスコードは 200 になる
+        """
+        url = reverse('teams:team_detail_member', args=[self.team])
+        response = self.client.get(url)
+        self.assertEquals(response.status_code, 200)
 
     def test_team_detail_feature_status_code(self):
         """
@@ -1029,15 +1025,13 @@ class TeamOwnerUserStatusCodeTests(TestCase):
         response = self.client.get(url)
         self.assertEquals(response.status_code, 200)
 
-    # def test_team_detail_member_status_code(self):
-    #     """
-    #     TODO
-    #     ----
-    #     修正する
-    #     """
-    #     url = reverse('teams:team_detail_member', args=[self.team])
-    #     response = self.client.get(url)
-    #     self.assertEquals(response.status_code, 200)
+    def test_team_detail_member_status_code(self):
+        """
+        team_detail_member のステータスコードは 200 になる
+        """
+        url = reverse('teams:team_detail_member', args=[self.team])
+        response = self.client.get(url)
+        self.assertEquals(response.status_code, 200)
 
     def test_team_detail_feature_status_code(self):
         """
@@ -1065,11 +1059,11 @@ class TeamOwnerUserStatusCodeTests(TestCase):
 
     def test_team_member_list_own_status_code(self):
         """
-        自チームの team_member_list のステータスコードは 403 になる
+        自チームの team_member_list のステータスコードは 200 になる
         """
         url = reverse('teams:team_member_list', kwargs={'teamname': self.team})
         response = self.client.get(url)
-        self.assertEquals(response.status_code, 403)
+        self.assertEquals(response.status_code, 200)
 
     def test_team_member_list_other_team_status_code(self):
         """
