@@ -1,3 +1,4 @@
+from unittest.mock import MagicMock
 from django.test import TestCase, Client
 from django.urls import resolve, reverse
 from django.http import HttpRequest
@@ -121,8 +122,3 @@ class TeamUrlRoutingTests(TestCase):
     def test_url_resolves_to_invitation_create(self):
         found = resolve('/hoge/invitation/create/')
         self.assertEqual(found.func, invitation_create)
-
-
-
-class TeamAnonymousUserStatusCodeTests(TestCase):
-    pass

@@ -14,4 +14,4 @@ app/teams/templates/teams/support/md/
 privacy_policy.html
 terms_of_service.html
 
-app/teams/tests/temp.py
+app/teams/tests/unit/temp.py
