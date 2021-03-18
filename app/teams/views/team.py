@@ -21,6 +21,9 @@ class TeamCreateView(LoginRequiredMixin, CreateView):
     form_class = TeamCreateForm
     success_url = reverse_lazy('teams:home')
 
+    def form_valid_for_create_view(self, form):
+        return super().form_valid(form)
+
     def form_valid(self, form):
         """
         チームに所属してなければ作成できる validation つきの保存処理。
@@ -35,7 +38,7 @@ class TeamCreateView(LoginRequiredMixin, CreateView):
         if profile.team:
             form.add_error(None, 'チームは1つまでしか所属できません。')
             return render(self.request, self.template_name, {'form': form})
-        result = super().form_valid(form)
+        result = self.form_valid_for_create_view(form)
         profile.is_owner = True
         profile.team = self.object
         profile.save()
