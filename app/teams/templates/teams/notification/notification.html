@@ -41,30 +41,58 @@
               <p><a href="{% url 'teams:account_detail' notification.from_user.username %}" class="sub-color inlink">@{{ notification.from_user.username }}</a></p>
             </div>
           </div>
-          {% if notification.mode == 'application' %}
-            <div class="sentence">
-                <p>チームにリクエストが届きました。</p>
-              <p>{{ notification.message | truncatechars:30 }}</p>
-            </div>
-            <a href="{% url 'teams:application_detail' user.username notification.id %}"></a>
-          {% elif notification.mode == 'invitation' %}
-            <div class="sentence">
-                <p>あなたに招待が届きました。</p>
-              <p>{{ notification.message | truncatechars:30 }}</p>
-            </div>
-            <a href="{% url 'teams:invitation_detail' user.username notification.id %}"></a>
-          {% elif notification.mode == 'member_approval' %}
-            <div class="sentence">
-                <p>チームにメンバー追加の申請が届きました。</p>
-              <p>{{ notification.message | truncatechars:30 }}</p>
-            </div>
-            <a href="{% url 'teams:member_approval_detail' user.username notification.id %}"></a>
-          {% elif notification.mode == 'official' %}
-            <div class="sentence">
-              <p>公式からのお知らせが届きました。</p>
-              <p>{{ notification.message | truncatechars:30 }}</p>
-            </div>
-            <a href="{% url 'teams:official_detail' user.username notification.id %}"></a>
+          {% if notification.is_proceeded is True or notification.is_proceeded is False %}
+            {% if notification.mode == 'application' %}
+              <div class="sentence">
+                  <p>チームにリクエストが届きました。<sup>※</sup>返信済み</p>
+                <p>{{ notification.message | truncatechars:30 }}</p>
+              </div>
+              <a href="{% url 'teams:application_detail' user.username notification.id %}"></a>
+            {% elif notification.mode == 'invitation' %}
+              <div class="sentence">
+                  <p>あなたに招待が届きました。<sup>※</sup>返信済み</p>
+                <p>{{ notification.message | truncatechars:30 }}</p>
+              </div>
+              <a href="{% url 'teams:invitation_detail' user.username notification.id %}"></a>
+            {% elif notification.mode == 'member_approval' %}
+              <div class="sentence">
+                  <p>チームにメンバー追加の申請が届きました。<sup>※</sup>返信済み</p>
+                <p>{{ notification.message | truncatechars:30 }}</p>
+              </div>
+              <a href="{% url 'teams:member_approval_detail' user.username notification.id %}"></a>
+            {% elif notification.mode == 'official' %}
+              <div class="sentence">
+                <p>公式からのお知らせが届きました。</p>
+                <p>{{ notification.message | truncatechars:30 }}</p>
+              </div>
+              <a href="{% url 'teams:official_detail' user.username notification.id %}"></a>
+            {% endif %}
+          {% else %}
+            {% if notification.mode == 'application' %}
+              <div class="sentence">
+                  <p>チームにリクエストが届きました。</p>
+                <p>{{ notification.message | truncatechars:30 }}</p>
+              </div>
+              <a href="{% url 'teams:application_detail' user.username notification.id %}"></a>
+            {% elif notification.mode == 'invitation' %}
+              <div class="sentence">
+                  <p>あなたに招待が届きました。</p>
+                <p>{{ notification.message | truncatechars:30 }}</p>
+              </div>
+              <a href="{% url 'teams:invitation_detail' user.username notification.id %}"></a>
+            {% elif notification.mode == 'member_approval' %}
+              <div class="sentence">
+                  <p>チームにメンバー追加の申請が届きました。</p>
+                <p>{{ notification.message | truncatechars:30 }}</p>
+              </div>
+              <a href="{% url 'teams:member_approval_detail' user.username notification.id %}"></a>
+            {% elif notification.mode == 'official' %}
+              <div class="sentence">
+                <p>公式からのお知らせが届きました。</p>
+                <p>{{ notification.message | truncatechars:30 }}</p>
+              </div>
+              <a href="{% url 'teams:official_detail' user.username notification.id %}"></a>
+            {% endif %}
           {% endif %}
 
         {% elif request.user == notification.from_user %}

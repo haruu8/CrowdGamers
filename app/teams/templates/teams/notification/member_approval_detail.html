@@ -7,31 +7,45 @@
 
 {% block notification_content %}
 
-  <div class="from-user-section">
-    <div>
-      <a href="{% url 'teams:account_detail' object.username %}">
-        <img src="{{ object.user_profile.icon.url }}" alt="アイコン">
-      </a>
+  {% if request.user == object.from_user %}
+    <div class="from-user-section">
+      <div>
+        <a href="{% url 'teams:account_detail' object.to_user.username %}">
+          <img src="{{ object.to_user.user_profile.icon.url }}" alt="アイコン">
+        </a>
+      </div>
+      <div>
+        <p class="from-user-name"><a href="{% url 'teams:account_detail' object.to_user.username %}" class="from-user-name">{{ object.to_user.user_profile.name }}</a></p>
+      </div>
+      <div>
+        <p><a href="{% url 'teams:account_detail' object.to_user.username %}" class="sub-color">@{{ object.to_user.username }}</a></p>
+      </div>
     </div>
-    <div>
-      <p class="from-user-name"><a href="{% url 'teams:account_detail' object.username %}" class="from-user-name">{{ object.user_profile.name }}</a></p>
+    <p class="main-sentence">送信したメッセージ：{{ object.message }}</p>
+    <p class="date">作成日時：{{ object.created_at }}</p>
+    {% if object.is_proceeded is True %}
+      <p>メンバー追加の申請が承認されました！チームのメンバーページに表示されるようになります。</p>
+    {% elif object.is_proceeded is False %}
+      <p>メンバー追加の申請が拒否されました。</p>
+    {% endif %}
+
+  {% elif request.user == object.to_user %}
+    <div class="from-user-section">
+      <div>
+        <a href="{% url 'teams:account_detail' object.from_user.username %}">
+          <img src="{{ object.from_user.user_profile.icon.url }}" alt="アイコン">
+        </a>
+      </div>
+      <div>
+        <p class="from-user-name"><a href="{% url 'teams:account_detail' object.from_user.username %}" class="from-user-name">{{ object.from_user.user_profile.name }}</a></p>
+      </div>
+      <div>
+        <p><a href="{% url 'teams:account_detail' object.from_user.username %}" class="sub-color">@{{ object.from_user.username }}</a></p>
+      </div>
     </div>
-    <div>
-      <p><a href="{% url 'teams:account_detail' object.username %}" class="sub-color">@{{ object.username }}</a></p>
-    </div>
-  </div>
-
-  {% if request.user == member_approval.from_user %}
-    <p class="main-sentence">送信したメッセージ：{{ member_approval.message }}</p>
-    <p class="date">作成日時：{{ member_approval.created_at }}</p>
-  {% elif request.user == member_approval.to_user %}
-    <p class="main-sentence">{{ member_approval.message }}</p>
-    <p class="date">受け取り日時：{{ member_approval.created_at }}</p>
-  {% endif %}
-
-
-  {% if request.user == member_approval.to_user %}
-    {% if member_approval.is_proceeded is None %}
+    <p class="main-sentence">{{ object.message }}</p>
+    <p class="date">受け取り日時：{{ object.created_at }}</p>
+    {% if object.is_proceeded is None %}
       <form action="" method='POST'>
         {% csrf_token %}
         <p>このリクエストを許可しますか？<br>（このリクエストを許可すると、チームプロフィールのメンバー一覧に表示されます。チームメンバーではない場合、許可しないでください。）</p>
@@ -44,17 +58,10 @@
           </div>
         </div>
       </form>
-    {% elif member_approval.is_proceeded is True %}
+    {% elif object.is_proceeded is True %}
       <p>リクエストへの認可はすでに行っています。メンバー追加を許可しました。<br>（メンバーを削除したい場合は、<a href="#">こちら</a>から行うことができます。）</p>
-    {% elif member_approval.is_proceeded is False %}
+    {% elif object.is_proceeded is False %}
       <p>リクエストへの認可はすでに行っています。メンバー追加を拒否しました。<br>（メンバーに追加したい場合は、再度リクエストを送信してもらう必要があります。）</p>
-    {% endif %}
-
-  {% elif request.user == member_approval.from_user %}
-    {% if member_approval.is_proceeded is True %}
-      <p>メンバー追加の申請が承認されました！チームのメンバーページに表示されるようになります。</p>
-    {% elif member_approval.is_proceeded is False %}
-      <p>メンバー追加の申請が拒否されました。</p>
     {% endif %}
   {% endif %}
 

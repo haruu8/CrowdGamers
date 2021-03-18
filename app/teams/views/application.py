@@ -93,7 +93,7 @@ class ApplicationReplyCreateView(LoginRequiredMixin, OnlyYouMixin, UpdateView):
             チームリクエストオブジェクト入り ctx。
         """
         ctx = super().get_context_data(**kwargs)
-        ctx['application'] = Notification.objects.get(id=self.kwargs.get('id'))
+        ctx['object'] = Notification.objects.get(id=self.kwargs.get('id'))
         return ctx
 
     def get_object(self):

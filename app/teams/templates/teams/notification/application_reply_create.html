@@ -3,11 +3,11 @@
 
 {% block form_content %}
 
-  <form action='{% url "teams:application_reply_create" user.username application.id %}' method='POST'>
+  <form action='{% url "teams:application_reply_create" object.to_user.username object.id %}' method='POST'>
     {% csrf_token %}
     {{ form.as_p }}
     <div class="btn-section">
-      <a href="{% url 'teams:application_reply_create' object.username application.id %}">
+      <a href="{% url 'teams:application_reply_create' object.from_user.username object.id %}">
         <button type="submit" name="submit" class="btn btn--blue btn--radius">送信する</button>
       </a>
     </div>

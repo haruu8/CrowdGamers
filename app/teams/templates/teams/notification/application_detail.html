@@ -3,8 +3,8 @@
 
 {% block form_content %}
 
-  {% if request.user == application.to_user %}
-    {% if application.is_proceeded is None %}
+  {% if request.user == object.to_user %}
+    {% if object.is_proceeded is None %}
     <form action="" method='POST'>
       {% csrf_token %}
       <p>このリクエストを許可しますか？<br>（「許可する」を押した場合、招待URL入力画面に移動します。）</p>
@@ -13,26 +13,26 @@
             <button type="submit" name="approval" value="deny" class="btn btn--danger btn--radius">拒否する</button>
           </div>
           <div class="btn-section">
-            <a href="{% url 'teams:application_reply_create' object.username application.id %}">
+            <a href="{% url 'teams:application_reply_create' object.from_user.username object.id %}">
               <button name="approval" value="approve" class="btn btn--blue btn--radius">許可する</button>
             </a>
           </div>
         </div>
       </form>
-    {% elif application.is_proceeded is True %}
+    {% elif object.is_proceeded is True %}
       <p>すでに招待URLを送信しています。下記が送信したURLです。</p>
-      <p><a href="{{ application.invitation_url }}">{{ application.invitation_url }}</a></p>
-    {% elif application.is_proceeded is False %}
+      <p><a href="{{ object.invitation_url }}">{{ object.invitation_url }}</a></p>
+    {% elif object.is_proceeded is False %}
       <p>すでに、リクエストの認可を行っています。</p>
     {% endif %}
 
 
 
-  {% elif request.user == application.from_user %}
-    {% if application.is_proceeded is True %}
+  {% elif request.user == object.from_user %}
+    {% if object.is_proceeded is True %}
       <p>送信したリクエストが承認されました！下記が受信したURLです。このURLから会話を始めましょう！</p>
-      <p><a href="{{ application.invitation_url }}">{{ application.invitation_url }}</a></p>
-    {% elif application.is_proceeded is False %}
+      <p><a href="{{ object.invitation_url }}">{{ object.invitation_url }}</a></p>
+    {% elif object.is_proceeded is False %}
       <p>送信したリクエストは拒否されました。他に良いチームがないか探してみましょう！</p>
       <p><a href="{% url 'teams:team_list' %}">チームを探す</a></p>
     {% endif %}

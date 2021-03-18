@@ -7,25 +7,38 @@
 
 {% block notification_content %}
 
-  <div class="from-user-section">
-    <div>
-      <a href="{% url 'teams:account_detail' object.username %}">
-        <img src="{{ object.user_profile.icon.url }}" alt="アイコン">
-      </a>
+  {% if request.user == object.from_user %}
+    <div class="from-user-section">
+      <div>
+        <a href="{% url 'teams:account_detail' object.to_user.username %}">
+          <img src="{{ object.to_user.user_profile.icon.url }}" alt="アイコン">
+        </a>
+      </div>
+      <div>
+        <p class="from-user-name"><a href="{% url 'teams:account_detail' object.to_user.username %}" class="from-user-name">{{ object.to_user.user_profile.name }}</a></p>
+      </div>
+      <div>
+        <p><a href="{% url 'teams:account_detail' object.to_user.username %}" class="sub-color">@{{ object.to_user.username }}</a></p>
+      </div>
     </div>
-    <div>
-      <p class="from-user-name"><a href="{% url 'teams:account_detail' object.username %}" class="from-user-name">{{ object.user_profile.name }}</a></p>
+    <p class="main-sentence">送信したメッセージ：{{ object.message }}</p>
+    <p class="date">作成日時：{{ object.created_at }}</p>
+  {% elif request.user == object.to_user %}
+    <div class="from-user-section">
+      <div>
+        <a href="{% url 'teams:account_detail' object.from_user.username %}">
+          <img src="{{ object.from_user.user_profile.icon.url }}" alt="アイコン">
+        </a>
+      </div>
+      <div>
+        <p class="from-user-name"><a href="{% url 'teams:account_detail' object.from_user.username %}" class="from-user-name">{{ object.from_user.user_profile.name }}</a></p>
+      </div>
+      <div>
+        <p><a href="{% url 'teams:account_detail' object.from_user.username %}" class="sub-color">@{{ object.from_user.username }}</a></p>
+      </div>
     </div>
-    <div>
-      <p><a href="{% url 'teams:account_detail' object.username %}" class="sub-color">@{{ object.username }}</a></p>
-    </div>
-  </div>
-  {% if request.user == application.from_user %}
-    <p class="main-sentence">送信したメッセージ：{{ application.message }}</p>
-    <p class="date">作成日時：{{ application.created_at }}</p>
-  {% elif request.user == application.to_user %}
-      <p class="main-sentence">{{ application.message }}</p>
-      <p class="date">受け取り日時：{{ application.created_at }}</p>
+    <p class="main-sentence">{{ object.message }}</p>
+    <p class="date">受け取り日時：{{ object.created_at }}</p>
   {% endif %}
 
     {% block form_content %}{% endblock %}
