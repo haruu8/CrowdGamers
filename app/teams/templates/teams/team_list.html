@@ -19,15 +19,21 @@
     </div>
 
     <div class="team-all">
-      {% for object in object_list %}
-        <div class='team-section'>
-          <img src="{{ object.icon.url }}" alt="アイコン" class="team-icon">
-          <p class="name">{{ object.name | truncatechars:12 }}</p>
-          <p class='teamname'>@{{ object.teamname }}</p>
-          <a href="{% url 'teams:team_detail' object.teamname %}"></a>
-        </div>
+      {% if object_list %}
+        {% for object in object_list %}
+          <div class='team-section'>
+            <img src="{{ object.icon.url }}" alt="アイコン" class="team-icon">
+            <p class="name">{{ object.name | truncatechars:12 }}</p>
+            <p class='teamname'>@{{ object.teamname }}</p>
+            <a href="{% url 'teams:team_detail' object.teamname %}"></a>
+          </div>
         {% endfor %}
+      {% else %}
+        <p class="title">チームは現在ありません。</p>
+      {% endif %}
     </div>
   </div>
+
+  <div class="push"></div>
 
 {% endblock %}

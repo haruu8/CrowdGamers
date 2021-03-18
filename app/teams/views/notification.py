@@ -36,7 +36,7 @@ notification = NotificationView.as_view()
 
 
 
-class NotificationDetailBaseView(LoginRequiredMixin, OnlyYouMixin, DetailView):
+class NotificationDetailBaseView(OnlyYouMixin, DetailView):
     """
     通知詳細画面の共通部分をまとめた view 。
     application, invitation, member_approval に対応している。
@@ -50,7 +50,7 @@ class NotificationDetailBaseView(LoginRequiredMixin, OnlyYouMixin, DetailView):
         詳細画面に表示するために必要な情報を取得する。
         """
         notification_obj = Notification.objects.get(id=self.kwargs.get('id'))
-        if self.request.user == notification_obj.from_user and notification_obj.reciever_has_read is False:
+        if self.request.user == notification_obj.from_user and notification_obj.is_proceeded is None:
             return redirect('teams:home')
         if self.request.user == notification_obj.from_user:
             notification_obj.sender_has_read = True

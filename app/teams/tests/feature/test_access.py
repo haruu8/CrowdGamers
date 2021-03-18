@@ -51,13 +51,21 @@ def create_data():
         password='independent',
     )
 
-    # 通知オブジェクトの生成
+    # 通知オブジェクトの作成
     notification = Notification.objects.create(
-        mode='official',
+        mode='invitation',
         from_user=owner,
         to_user=independent_user,
     )
-    return official, team, owner, owner_profile, member, member_profile, notification, independent_user
+
+    # to_user を変更した通知オブジェクトの作成
+    notification_to = Notification.objects.create(
+        mode='application',
+        from_user=independent_user,
+        to_user=owner,
+    )
+
+    return official, team, owner, owner_profile, member, member_profile, independent_user, notification, notification_to
 
 
 
@@ -77,7 +85,7 @@ class TeamAnonymousUserStatusCodeTests(TestCase):
         """
         必要なオブジェクトを作成する。
         """
-        self.official, self.team, self.owner, self.owner_profile, self.member, self.member_profile, self.notification, self.independent_user = create_data()
+        self.official, self.team, self.owner, self.owner_profile, self.member, self.member_profile, self.independent_user, self.notification, self.notification_to = create_data()
 
     def test_home_status_code_anonymous_user(self):
         """
@@ -340,7 +348,7 @@ class TeamIndependentUserStatusCodeTests(TestCase):
         必要なオブジェクトを作成する。
         無所属ユーザーでログインをする。
         """
-        self.official, self.team, self.owner, self.owner_profile, self.member, self.member_profile, self.notification, self.independent_user = create_data()
+        self.official, self.team, self.owner, self.owner_profile, self.member, self.member_profile, self.independent_user, self.notification, self.notification_to = create_data()
         self.client = Client()
         self.client.login(username='independent', password='independent')
 
@@ -613,57 +621,9 @@ class TeamMemberUserStatusCodeTests(TestCase):
         必要なオブジェクトを作成する。
         無所属ユーザーでログインをする。
         """
-        self.official, self.team, self.owner, self.owner_profile, self.member, self.member_profile, self.notification, self.independent_user = create_data()
+        self.official, self.team, self.owner, self.owner_profile, self.member, self.member_profile, self.independent_user, self.notification, self.notification_to = create_data()
         self.client = Client()
         self.client.login(username='member', password='member')
-
-    def test_home_status_code(self):
-        """
-        home のステータスコードは 200 になる
-        """
-        url = reverse('teams:home')
-        response = self.client.get(url)
-        self.assertEquals(response.status_code, 200)
-
-    def test_contact_status_code(self):
-        """
-        contact のステータスコードは 200 になる
-        """
-        url = reverse('teams:contact')
-        response = self.client.get(url)
-        self.assertEquals(response.status_code, 200)
-
-    def test_faq_status_code(self):
-        """
-        faq のステータスコードは 200 になる
-        """
-        url = reverse('teams:faq')
-        response = self.client.get(url)
-        self.assertEquals(response.status_code, 200)
-
-    def test_terms_of_service_status_code(self):
-        """
-        terms_of_service のステータスコードは 200 になる
-        """
-        url = reverse('teams:terms_of_service')
-        response = self.client.get(url)
-        self.assertEquals(response.status_code, 200)
-
-    def test_privacy_policy_status_code(self):
-        """
-        privacy_policy のステータスコードは 200 になる
-        """
-        url = reverse('teams:privacy_policy')
-        response = self.client.get(url)
-        self.assertEquals(response.status_code, 200)
-
-    def test_accounts_list_status_code(self):
-        """
-        accounts_list のステータスコードは 200 になる
-        """
-        url = reverse('teams:accounts_list')
-        response = self.client.get(url)
-        self.assertEquals(response.status_code, 200)
 
     def test_team_create_status_code(self):
         """
@@ -917,57 +877,9 @@ class TeamOwnerUserStatusCodeTests(TestCase):
             desired_condition='hogehoge',
             disclosed=True,
         )
-        self.official, self.team, self.owner, self.owner_profile, self.member, self.member_profile, self.notification, self.independent_user = create_data()
+        self.official, self.team, self.owner, self.owner_profile, self.member, self.member_profile, self.independent_user, self.notification, self.notification_to = create_data()
         self.client = Client()
         self.client.login(username='owner', password='owner')
-
-    def test_home_status_code(self):
-        """
-        home のステータスコードは 200 になる
-        """
-        url = reverse('teams:home')
-        response = self.client.get(url)
-        self.assertEquals(response.status_code, 200)
-
-    def test_contact_status_code(self):
-        """
-        contact のステータスコードは 200 になる
-        """
-        url = reverse('teams:contact')
-        response = self.client.get(url)
-        self.assertEquals(response.status_code, 200)
-
-    def test_faq_status_code(self):
-        """
-        faq のステータスコードは 200 になる
-        """
-        url = reverse('teams:faq')
-        response = self.client.get(url)
-        self.assertEquals(response.status_code, 200)
-
-    def test_terms_of_service_status_code(self):
-        """
-        terms_of_service のステータスコードは 200 になる
-        """
-        url = reverse('teams:terms_of_service')
-        response = self.client.get(url)
-        self.assertEquals(response.status_code, 200)
-
-    def test_privacy_policy_status_code(self):
-        """
-        privacy_policy のステータスコードは 200 になる
-        """
-        url = reverse('teams:privacy_policy')
-        response = self.client.get(url)
-        self.assertEquals(response.status_code, 200)
-
-    def test_accounts_list_status_code(self):
-        """
-        accounts_list のステータスコードは 200 になる
-        """
-        url = reverse('teams:accounts_list')
-        response = self.client.get(url)
-        self.assertEquals(response.status_code, 200)
 
     def test_team_create_status_code(self):
         """
@@ -1129,27 +1041,51 @@ class TeamOwnerUserStatusCodeTests(TestCase):
         response = self.client.get(url)
         self.assertEquals(response.status_code, 200)
 
-    def test_application_detail_own_status_code(self):
+    def test_application_detail_own_from_user_status_code(self):
         """
-        自分の application_detail のステータスコードは 200 になる
+        自分が from_user の application_detail のステータスコードは 302 になる
         """
         url = reverse('teams:application_detail', kwargs={'username': self.owner.username, 'id': self.notification.id})
         response = self.client.get(url)
-        self.assertEquals(response.status_code, 200)
+        self.assertEquals(response.status_code, 302)
 
-    def test_invitation_detail_own_status_code(self):
+    def test_invitation_detail_own_from_user_status_code(self):
         """
-        自分の invitation_detail のステータスコードは 200 になる
+        自分が from_user の invitation_detail のステータスコードは 302 になる
         """
         url = reverse('teams:invitation_detail', kwargs={'username': self.owner.username, 'id': self.notification.id})
         response = self.client.get(url)
-        self.assertEquals(response.status_code, 200)
+        self.assertEquals(response.status_code, 302)
 
-    def test_member_approval_detail_own_status_code(self):
+    def test_member_approval_detail_own_from_user_status_code(self):
         """
-        自分の member_approval_detail のステータスコードは 200 になる
+        自分が from_user の member_approval_detail のステータスコードは 302 になる
         """
         url = reverse('teams:member_approval_detail', kwargs={'username': self.owner.username, 'id': self.notification.id})
+        response = self.client.get(url)
+        self.assertEquals(response.status_code, 302)
+
+    def test_application_detail_own_to_user_status_code(self):
+        """
+        自分が to_user の application_detail のステータスコードは 200 になる
+        """
+        url = reverse('teams:application_detail', kwargs={'username': self.owner.username, 'id': self.notification_to.id})
+        response = self.client.get(url)
+        self.assertEquals(response.status_code, 200)
+
+    def test_invitation_detail_own_to_user_status_code(self):
+        """
+        自分が to_user の invitation_detail のステータスコードは 200 になる
+        """
+        url = reverse('teams:invitation_detail', kwargs={'username': self.owner.username, 'id': self.notification_to.id})
+        response = self.client.get(url)
+        self.assertEquals(response.status_code, 200)
+
+    def test_member_approval_detail_own_to_user_status_code(self):
+        """
+        自分が to_user の member_approval_detail のステータスコードは 200 になる
+        """
+        url = reverse('teams:member_approval_detail', kwargs={'username': self.owner.username, 'id': self.notification_to.id})
         response = self.client.get(url)
         self.assertEquals(response.status_code, 200)
 
