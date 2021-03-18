@@ -23,10 +23,10 @@
 
   {% if request.user == invitation.from_user %}
     <p class="main-sentence">送信したメッセージ：{{ invitation.message }}</p>
-    <p class="date">受け取り日時：{{ invitation.created_at }}</p>
+    <p class="date">作成日時：{{ invitation.created_at }}</p>
   {% elif request.user == invitation.to_user %}
     <p class="main-sentence">{{ invitation.message }}</p>
-    <p class="date">作成日時：{{ invitation.created_at }}</p>
+    <p class="date">受け取り日時：{{ invitation.created_at }}</p>
   {% endif %}
 
   {% if request.user == invitation.to_user %}

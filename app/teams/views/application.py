@@ -30,8 +30,8 @@ class ApplicationCreateView(LoginRequiredMixin, CreateView, TeamDetailBaseView):
         """
         self.object = form.save(commit=False)
         self.object.team = Team.objects.get(teamname=self.kwargs.get('teamname'))
-        user_team = self.request.user.user_profile.team
-        if self.object.team == user_team:
+        self.user_team = self.request.user.user_profile.team
+        if self.object.team == self.user_team or self.object.team.disclosed is False:
             return redirect(self.success_url, teamname=self.kwargs.get('teamname'))
 
         self.object.mode = 'application'

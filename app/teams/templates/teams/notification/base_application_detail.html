@@ -22,10 +22,10 @@
   </div>
   {% if request.user == application.from_user %}
     <p class="main-sentence">送信したメッセージ：{{ application.message }}</p>
-    <p class="date">受け取り日時：{{ application.created_at }}</p>
+    <p class="date">作成日時：{{ application.created_at }}</p>
   {% elif request.user == application.to_user %}
       <p class="main-sentence">{{ application.message }}</p>
-      <p class="date">作成日時：{{ application.created_at }}</p>
+      <p class="date">受け取り日時：{{ application.created_at }}</p>
   {% endif %}
 
     {% block form_content %}{% endblock %}

@@ -34,9 +34,9 @@ class InvitationCreateView(LoginRequiredMixin, CreateView, UserProfileBaseView):
         self.object.from_user = self.request.user
         self.object.invitation_user = get_user_model().objects.get(username=self.kwargs.get('username'))
         self.object.to_user = self.object.invitation_user
-        self.object.save()
-        if self.request.user == self.object.to_user:
+        if self.request.user == self.object.to_user or self.object.to_user.disclosed is False:
             return redirect(self.success_url, username=self.kwargs.get('username'))
+        self.object.save()
         return super().form_valid(form)
 
     def get_success_url(self):

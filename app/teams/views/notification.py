@@ -78,6 +78,8 @@ class InvitationNotificationDetailView(LoginRequiredMixin, OnlyYouMixin, DetailV
         """
         ctx = super().get_context_data(**kwargs)
         notification_obj = Notification.objects.get(id=self.kwargs.get('id'))
+        if notification_obj.reciever_has_read is False:
+            return redirect('teams:home')
         if self.request.user == notification_obj.from_user:
             notification_obj.sender_has_read = True
         elif self.request.user == notification_obj.to_user:
@@ -142,6 +144,8 @@ class MemberApprovalNotificationDetailView(LoginRequiredMixin, OnlyYouMixin, Det
         """
         ctx = super().get_context_data(**kwargs)
         notification_obj = Notification.objects.get(id=self.kwargs.get('id'))
+        if notification_obj.reciever_has_read is False:
+            return redirect('teams:home')
         if self.request.user == notification_obj.from_user:
             notification_obj.sender_has_read = True
         elif self.request.user == notification_obj.to_user:
@@ -216,6 +220,8 @@ class ApplicationNotificationDetailView(LoginRequiredMixin, OnlyYouMixin, Detail
         """
         ctx = super().get_context_data(**kwargs)
         notification_obj = Notification.objects.get(id=self.kwargs.get('id'))
+        if notification_obj.reciever_has_read is False:
+            return redirect('teams:home')
         if self.request.user == notification_obj.from_user:
             notification_obj.sender_has_read = True
         elif self.request.user == notification_obj.to_user:
