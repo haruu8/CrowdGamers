@@ -276,7 +276,7 @@ class TeamMemberAddView(LoginRequiredMixin, TeamDetailBaseView, CreateView):
         self.object = form.save(commit=False)
         self.object.mode = 'member_approval'
         self.object.team = Team.objects.get(teamname=self.kwargs.get('teamname'))
-        if self.request.user.user_profile == self.object.team:
+        if self.request.user.user_profile == self.object.team or self.request.user.user_profile.is_owner is False:
             return redirect(self.success_url, teamname=self.kwargs.get('teamname'))
 
         self.object.from_user = self.request.user

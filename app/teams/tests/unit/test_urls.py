@@ -122,3 +122,56 @@ class TeamUrlRoutingTests(TestCase):
     def test_url_resolves_to_invitation_create(self):
         found = resolve('/hoge/invitation/create/')
         self.assertEqual(found.func, invitation_create)
+
+
+
+def create_data():
+    """
+    アクセスパーミションテストに必要なオブジェクトを共通作成できる関数。
+    """
+    # ユーザー生成に必要なユーザーを作成
+    official = get_user_model().objects.create_user(
+        username='crowdgamers',
+    )
+
+    # チーム作成
+    team = Team.objects.create(
+        teamname='hoge',
+        name='hoge',
+        introduction='hoge',
+        desired_condition='hoge',
+        disclosed=True,
+    )
+
+    # チームオーナー作成
+    user = get_user_model().objects.create_user(
+        username='team_owner',
+    )
+    profile = user.user_profile
+    profile.team = team
+    profile.desired_condition = 'hoge'
+    profile.is_owner = True
+
+    # 無所属ユーザーの作成
+    independent_user = get_user_model().objects.create_user(
+        username='independent'
+    )
+
+    # 通知オブジェクトの生成
+    notification = Notification.objects.create(
+        mode='official',
+        from_user=user,
+        to_user=independent_user,
+    )
+    return official, team, user, profile, notification, independent_user
+
+
+
+class TeamAnonymousUserStatusCodeTests(TestCase):
+    def setUp(self):
+        pass
+
+
+
+class TeamIndependentUserStatusCodeTests(TestCase):
+    pass
