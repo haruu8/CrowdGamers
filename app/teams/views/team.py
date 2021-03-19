@@ -267,6 +267,9 @@ class TeamMemberAddView(LoginRequiredMixin, TeamDetailBaseView, CreateView):
     form_class = MemberApprovalCreateForm
     success_url = 'teams:team_detail'
 
+    def form_valid_for_create_view(self, form):
+        return super().form_valid(form)
+
     def form_valid(self, form):
         """
         必要な情報をオブジェクトに登録し、チームのオーナーに通知を送る関数。
@@ -287,7 +290,8 @@ class TeamMemberAddView(LoginRequiredMixin, TeamDetailBaseView, CreateView):
         owner_profile = member.filter(is_owner=True)[0]
         self.object.to_user = owner_profile.user
         self.object.save()
-        return super().form_valid(form)
+        result = self.form_valid_for_create_view(form)
+        return result
 
     def get_object(self):
         """

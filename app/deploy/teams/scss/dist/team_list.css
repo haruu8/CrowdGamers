@@ -73,3 +73,7 @@
   border-radius: 50%;
   object-fit: cover;
 }
+
+.push {
+  height: 400px;
+}
