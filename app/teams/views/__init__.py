@@ -16,4 +16,3 @@ from .team import (
     team_detail, team_detail_member, team_detail_feature, team_detail_desired_condition,
     team_member_add, team_member_list, team_member_delete,
 )
-from .utils import GetProfileView

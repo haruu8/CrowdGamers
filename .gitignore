@@ -6,6 +6,8 @@ cover
 env
 .vscode
 
+db.sqlite3
+
 media
 app/deploy/admin/
 

@@ -18,6 +18,9 @@ class ApplicationCreateView(LoginRequiredMixin, CreateView, TeamDetailBaseView):
     form_class = ApplicationCreateForm
     success_url = 'teams:team_detail'
 
+    def form_valid_for_create_view(self, form):
+        return super().form_valid(form)
+
     def form_valid(self, form):
         """
         application object に必要な情報を登録する。
@@ -41,7 +44,7 @@ class ApplicationCreateView(LoginRequiredMixin, CreateView, TeamDetailBaseView):
         owner_profile = member.filter(is_owner=True)[0]
         self.object.to_user = owner_profile.user
         self.object.save()
-        return super().form_valid(form)
+        return self.form_valid_for_create_view(form)
 
     def get_success_url(self):
         """
@@ -66,6 +69,9 @@ class ApplicationReplyCreateView(LoginRequiredMixin, OnlyYouMixin, UpdateView):
     form_class = ApplicationUpdateForm
     success_url = 'teams:notification'
 
+    def form_valid_for_create_view(self, form):
+        return super().form_valid(form)
+
     def form_valid(self, form):
         """
         チームリクエストオブジェクトを True にするのとURLをオブジェクトに登録する関数。
@@ -81,7 +87,7 @@ class ApplicationReplyCreateView(LoginRequiredMixin, OnlyYouMixin, UpdateView):
         self.object.is_proceeded = True
         self.object.invitation_url = form.cleaned_data['invitation_url']
         self.object.save()
-        return super().form_valid(form)
+        return self.form_valid_for_create_view(form)
 
     def get_context_data(self, **kwargs):
         """

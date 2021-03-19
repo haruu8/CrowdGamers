@@ -1,10 +1,9 @@
 from django.views.generic import TemplateView
 from teams.models import Question
-from .utils import GetProfileView
 
 
 
-class HomeView(GetProfileView):
+class HomeView(TemplateView):
     """
     LP を表示する。ヘッダーに表示するプロフィール情報も取得する。
     """
@@ -14,7 +13,7 @@ home = HomeView.as_view()
 
 
 
-class ContactView(GetProfileView):
+class ContactView(TemplateView):
     """
     問い合わせに関する情報を表示する。ヘッダーに表示するプロフィール情報も取得する。
     """
@@ -24,7 +23,7 @@ contact = ContactView.as_view()
 
 
 
-class FreqentlyQuestionAskedView(GetProfileView):
+class FreqentlyQuestionAskedView(TemplateView):
     """
     よくある質問を一覧表示する。ヘッダーに表示するプロフィール情報も取得する。
     """

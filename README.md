@@ -82,7 +82,7 @@ Twitterログインでボタンひとつでログインすることができま�
 
 ### 【データベース】
 
-* PostgreSQL 11.4
+* PostgreSQL 13.1
 
 
 

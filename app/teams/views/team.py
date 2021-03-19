@@ -10,7 +10,6 @@ from operator import and_
 from teams.models import Team, UserProfile, Notification
 from teams.forms import TeamCreateForm, MemberApprovalCreateForm, UserProfileUpdateForm
 from .access import OnlyYouMixin, OnlyOwnerMixin
-from .utils import GetProfileView
 from .profile import UserProfileBaseView
 
 
