@@ -1,0 +1,45 @@
+version: 2.1
+jobs:
+  build:
+    docker:
+      - image: circleci/python:3.8
+      - image: circleci/postgres:11.4
+    steps:
+      - checkout
+      - run:
+          name: キャッシュディレクトリの所有者を変更
+          command: |
+            sudo chown -R circleci:circleci /usr/local/bin
+            sudo chown -R circleci:circleci /usr/local/lib/python3.8/site-packages
+      - restore_cache:
+          key: deps-v1-{{ .Branch }}-{{ checksum "app/requirements.txt" }}
+      - run:
+          name: 依存関係のインストール
+          command: |
+            python3 -m venv venv
+            . venv/bin/activate
+            pip install -U pip
+            pip install -r app/requirements.txt
+      - save_cache:
+          key: deps-v1-{{ .Branch }}-{{ checksum "app/requirements.txt" }}
+          paths:
+            - ".venv"
+            - "/usr/local/bin"
+            - "/usr/local/lib/python3.8/site-packages"
+      - run:
+          name: テストを実行
+          command: |
+            . venv/bin/activate
+            python3 app/manage.py test
+      - store_test_results:
+          path: test-reports
+      - store_artifacts:
+          path: test-reports
+      - run:
+          name: カバレッジレポートを生成
+          command: |
+            . venv/bin/activate
+            coverage run --source='.' app/manage.py test
+            coverage html
+      - store_artifacts:
+            path: htmlcov
