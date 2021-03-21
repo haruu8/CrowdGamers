@@ -27,7 +27,7 @@ class TeamCreateForm(forms.ModelForm):
                             widget=forms.Textarea(attrs={'placeholder': 'チームについての概要を入力してください', 'render_value': True}))
     sponsor = forms.CharField(required=False,label='スポンサー',
                             widget=forms.Textarea(attrs={'placeholder': 'スポンサー名を入力してください', 'render_value': True}))
-    game_title = forms.ModelMultipleChoiceField(queryset=Game.objects.all(), required=False, label='ゲームタイトル',
+    game_title = forms.ModelMultipleChoiceField(queryset=Game.objects.all(), label='ゲームタイトル',
                             help_text='5つまで選択することができます。複数選択するときには Control キーを押したまま選択してください。Mac は Command キーを使ってください。',
                             widget=forms.SelectMultiple(attrs={'class': 'form-control'}))
     feature = forms.ModelMultipleChoiceField(queryset=Feature.objects.all(), label='特徴',

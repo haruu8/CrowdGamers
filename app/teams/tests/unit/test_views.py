@@ -77,72 +77,74 @@ class TestTeamCreate(TestCase):
 
 
 
-class InjectableTeamMemberAddView(TeamMemberAddView):
-    """
-    親クラスとの依存が強いので、依存をなるべく取り除く。
-    """
-    # form_valid_for_create_view が返す response をモックする
-    def inject_success_response(self, response):
-        self.__success_response = response
+# class InjectableTeamMemberAddView(TeamMemberAddView):
+#     """
+#     親クラスとの依存が強いので、依存をなるべく取り除く。
+#     """
+#     # form_valid_for_create_view が返す response をモックする
+#     def inject_success_response(self, response):
+#         self.__success_response = response
 
-    # super().form_valid がモックしづらいので、ここで上書きする
-    def form_valid_for_create_view(self, form):
-        return self.__success_response
+#     # super().form_valid がモックしづらいので、ここで上書きする
+#     def form_valid_for_create_view(self, form):
+#         return self.__success_response
 
-    # request を注入できるようにする
-    def inject_request(self, request):
-        self.request = request
+#     # request を注入できるようにする
+#     def inject_request(self, request):
+#         self.request = request
 
-    # team を注入できるようにする
-    def inject_object(self, object):
-        self.object = object
+#     # team を注入できるようにする
+#     def inject_object(self, object):
+#         self.object = object
 
-    def inject_kwargs(self, teamname):
-        self.kwargs = {'teamname': teamname}
+#     def inject_kwargs(self, **kwargs):
+#         return self.__init__(**kwargs)
 
 
 
-class TestTeamMemberAdd(TestCase):
-    """
-    TeamMemberAddView のテストをする。
-    """
-    def test_form_valid_save_data_securely(self):
-        request_mock = MagicMock()
-        team_mock = MagicMock()
-        request_mock.user.user_profile.team = team_mock
+# class TestTeamMemberAdd(TestCase):
+#     """
+#     TeamMemberAddView のテストをする。
+#     """
+#     def test_form_valid_save_data_securely(self):
+#         request_mock = MagicMock()
+#         team_mock = MagicMock()
+#         request_mock.user.user_profile.team = team_mock
 
-        # view いれる
-        view = InjectableTeamMemberAddView()
+#         # view いれる
+#         view = InjectableTeamMemberAddView()
 
-        #request
-        view.inject_request(request_mock)
-        # object
-        view.inject_object(team_mock)
-        # response
-        response_mock = MagicMock()
-        view.inject_success_response(response_mock)
+#         #request
+#         view.inject_request(request_mock)
+#         # kwargs
+#         view.inject_kwargs()
+#         # object
+#         view.inject_object(team_mock)
+#         # response
+#         response_mock = MagicMock()
+#         view.inject_success_response(response_mock)
 
-        form_mock = MagicMock()
-        result = view.form_valid(form_mock)
+#         form_mock = MagicMock()
+#         result = view.form_valid(form_mock)
 
-        # from_user がセットされている
-        self.assertEqual(
-            request_mock.user,
-            request_mock.object.from_user,
-            msg="from_user が正しくセットされていません"
-        )
-        # to_user がセットされている
-        self.assertEqual(
-            request_mock.user,
-            request_mock.object.to_user,
-            msg="to_user が正しくセットされていません"
-        )
-        # save されている
-        self.assertEqual(
-            request_mock.object.save.call_count,
-            1,
-            msg="notification が save されていません"
-        )
+#         # from_user がセットされている
+#         self.assertEqual(
+#             request_mock.user,
+#             request_mock.object.from_user,
+#             msg="from_user が正しくセットされていません"
+#         )
+#         # to_user がセットされている
+#         self.assertEqual(
+#             request_mock.user,
+#             request_mock.object.to_user,
+#             msg="to_user が正しくセットされていません"
+#         )
+#         # save されている
+#         self.assertEqual(
+#             request_mock.object.save.call_count,
+#             1,
+#             msg="notification が save されていません"
+#         )
 
-        # 成功レスポンスが返されている
-        self.assertEqual(result, response_mock, teamname=team_mock.teamname, msg="想定外のレスポンスが返ってきています")
+#         # 成功レスポンスが返されている
+#         self.assertEqual(result, response_mock, teamname=team_mock.teamname, msg="想定外のレスポンスが返ってきています")

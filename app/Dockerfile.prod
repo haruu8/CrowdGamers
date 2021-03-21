@@ -7,15 +7,13 @@ ENV DEBCONF_NOWARNINGS yes
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
-COPY ./requirements.prod.txt /code/app/requirements.prod.txt
 COPY ./entrypoint.sh /code/app/entrypoint.prod.sh
 COPY requirements.prod.txt /code/
 
 RUN apt-get update && apt-get install -y libpq-dev build-essential libssl-dev libffi-dev libblas3 libc6 liblapack3 gcc
 RUN apt-get install -y netcat
 RUN pip install --upgrade pip \
-    && pip install -r requirements.prod.txt \
-    pip install psycopg2
+    && pip install -r requirements.prod.txt
 RUN apt-get autoremove -y gcc
 
 COPY . /code/
