@@ -1,5 +1,4 @@
 from django.test import TestCase, RequestFactory, Client
-import factory
 from django.http.request import HttpRequest
 from django.http.response import HttpResponse, HttpResponseRedirect
 from unittest.mock import MagicMock, patch
@@ -33,7 +32,7 @@ class InjectableTeamCreateView(TeamCreateView):
 
 
 
-class TestTeamCreate(TestCase):
+class TestTeamCreateView(TestCase):
     """
     TeamCreateView をテストする。
     """
@@ -57,23 +56,14 @@ class TestTeamCreate(TestCase):
         result = view.form_valid(form_mock)
 
         # is_owner フラグが立っている
-        self.assertTrue(
-            request_mock.user.user_profile.is_owner,
-            msg="チームの作成者に is_owner フラグが立っていません"
-        )
+        self.assertTrue(request_mock.user.user_profile.is_owner,
+                            msg="チームの作成者に is_owner フラグが立っていません")
         # team がセットされている
-        self.assertEqual(
-            team_mock,
-            request_mock.user.user_profile.team,
-            msg="チーム作成者の所属チームが正しくセットされていません"
-        )
+        self.assertEqual(team_mock, request_mock.user.user_profile.team,
+                            msg="チーム作成者の所属チームが正しくセットされていません")
         # save されている
-        self.assertEqual(
-            request_mock.user.user_profile.save.call_count,
-            1,
-            msg="user_profile が save されていません"
-        )
-
+        self.assertEqual(request_mock.user.user_profile.save.call_count, 1,
+                            msg="user_profile が save されていません")
         # 成功レスポンスが返されている
         self.assertEqual(result, response_mock, msg="想定外のレスポンスが返ってきています")
 
@@ -107,21 +97,16 @@ class InjectableTeamMemberAddView(TeamMemberAddView):
 
 
 
-class TestTeamMemberAdd(TestCase):
+class TestTeamMemberAddView(TestCase):
     """
     TeamMemberAddView のテストをする。
     """
     def test_form_valid_save_data_securely(self):
-        # view いれる
         view = InjectableTeamMemberAddView()
-        #request
+        # request
         request_mock = MagicMock()
         view.inject_request(request_mock)
-        # team の mock
-        team_mock = MagicMock()
-        request_mock.user.user_profile.team = team_mock
-        request_mock.user.user_profile.is_owner = True
-        #  リダイレクトに必要な mock
+        # team model
         team_model_mock = MagicMock()
         view.inject_team_model(team_model_mock)
         # kwargs
@@ -133,27 +118,17 @@ class TestTeamMemberAdd(TestCase):
         # response
         response_mock = MagicMock()
         view.inject_success_response(response_mock)
-        # form_valid mock
         form_mock = MagicMock()
         result = view.form_valid(form_mock)
         # # from_user がセットされている
-        self.assertEqual(
-            request_mock.user,
-            notification_mock.from_user,
-            msg="from_user が正しくセットされていません"
-        )
-        # # to_user がセットされている
-        # self.assertEqual(
-        #     request_mock.user,
-        #     request_mock.object.to_user,
-        #     msg="to_user が正しくセットされていません"
-        # )
+        self.assertEqual(request_mock.user, notification_mock.from_user,
+                            msg="from_user が正しくセットされていません")
+        # to_user がセットされている
+        self.assertEqual(request_mock.user, notification_mock.to_user,
+                            msg="to_user が正しくセットされていません")
         # save されている
-        self.assertEqual(
-            request_mock.object.save.call_count,
-            1,
-            msg="notification が save されていません"
-        )
+        self.assertEqual(request_mock.object.save.call_count, 1,
+                            msg="notification が save されていません")
         # 成功レスポンスが返されている
         self.assertEqual(result, response_mock, msg="想定外のレスポンスが返ってきています")
 
@@ -196,56 +171,63 @@ class TestTeamMemberAdd(TestCase):
 #         form_mock = MagicMock()
 #         result = view.form_valid(form_mock)
 
-#         # # from_user がセットされている
-#         self.assertEqual(
-#             request_mock.user,
-#             notification_mock.from_user,
-#             msg="from_user が正しくセットされていません"
-#         )
+#         from_user がセットされている
+#         self.assertEqual(request_mock.user, notification_mock.from_user,
+#                             msg="from_user が正しくセットされていません")
 #         # to_user がセットされている
-#         self.assertEqual(
-#             request_mock.user,
-#             request_mock.object.to_user,
-#             msg="to_user が正しくセットされていません"
-#         )
+#         self.assertEqual(request_mock.user, request_mock.object.to_user,
+#                             msg="to_user が正しくセットされていません")
 #         # save されている
-#         self.assertEqual(
-#             request_mock.object.save.call_count,
-#             1,
-#             msg="notification が save されていません"
-#         )
+#         self.assertEqual(request_mock.object.save.call_count, 1,
+#                             msg="notification が save されていません")
 #         self.assertEqual(result, response_mock, msg="想定外のレスポンスが返ってきています")
 
 
 
-class InjectableInvitationCreateView(InvitationCreateView):
-    pass
+# class InjectableInvitationCreateView(InvitationCreateView):
+#     def inject_success_response(self, response):
+#         self.__success_response = response
+
+#     def from_valid_for_create_view(self, form):
+#         return self.__success_response
+
+#     def inject_team_model(self, team_model):
+#         self.team_model = team_model
+
+#     def inject_request(self, request):
+#         self.request = request
+
+#     def inject_object(self, object):
+#         self.object = object
+
+#     def inject_kwargs(self, **kwargs):
+#         self.kwargs = kwargs
 
 
 
-class TestInvitationCreateView(TestCase):
-    pass
+# class TestInvitationCreateView(TestCase):
+#     def test_form_valid_save_data_securely(self):
+#         view = InjectableApplicationCreateView()
+#         request_mock = MagicMock()
+#         view.inject_request(request_mock)
+#         team_mock = MagicMock()
+#         # ここらへんにユーザーにひつような設定を書く
+#         team_model_mock = MagicMock()
+#         view.inject_team_model(team_model_mock)
+#         notification_mock = MagicMock()
+#         view.inject_object(notification_mock)
+#         response_mock = MagicMock()
+#         view.inject_success_response(response_mock)
+#         form_mock = MagicMock()
+#         result = view.form_valid(form_mock)
 
-
-
-
-# class UserFactory(factory.django.DjangoModelFactory):
-#     class Meta:
-#         model = 'accounts.User'
-#         django_get_or_create = ('username', 'password')
-
-#     username = 'crowdgamers'
-#     password = 'password'
-
-
-
-# class TestTeamCreateView(TestCase):
-
-#     def setUp(self):
-#         user = UserFactory()
-#         self.client.login(username=user.username, password=user.password)
-
-#     @classmethod
-#     def setUpClass(cls):
-#         cls.cls_atomics = cls._enter_atomics()
-#         client = Client()
+#         from_user がセットされている
+#         self.assertEqual(request_mock.user, notification_mock.from_user,
+#                             msg="from_user が正しくセットされていません")
+#         # to_user がセットされている
+#         self.assertEqual(request_mock.user, request_mock.object.to_user,
+#                             msg="to_user が正しくセットされていません")
+#         # save されている
+#         self.assertEqual(request_mock.object.save.call_count, 1,
+#                             msg="notification が save されていません")
+#         self.assertEqual(result, response_mock, msg="想定外のレスポンスが返ってきています")

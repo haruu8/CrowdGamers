@@ -1,5 +1,6 @@
 from django.test import TestCase
 from accounts.models import User
+from accounts.fields import LowerCharField
 
 
 
@@ -11,8 +12,5 @@ class TestUser(TestCase):
         """
         LowerCharField の lower_char_field を使用すると大文字が全て小文字になる。
         """
-        # lower_char_field = LowerCharField()
-        # self.assertEqual('abc', lower_char_field.get_prep_value('ABc'))
-
-    def test_create_notification(self):
-        pass
+        lower_char_field = LowerCharField()
+        self.assertEqual('abc', lower_char_field.get_prep_value('ABc'))

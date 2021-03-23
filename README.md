@@ -99,7 +99,6 @@ Twitterログインでボタンひとつでログインすることができま�
 
 * AWS ()
 * Nginx, gunicorn
-* CircleCI/CD
 
 
 

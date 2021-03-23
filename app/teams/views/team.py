@@ -283,7 +283,8 @@ class TeamMemberAddView(LoginRequiredMixin, TeamDetailBaseView, CreateView):
         self.object = form.save(commit=False)
         self.object.mode = 'member_approval'
         self.object.team = self.team_model.objects.get(teamname=self.kwargs.get('teamname'))
-        if self.request.user.user_profile == self.object.team or self.request.user.user_profile.is_owner is False:
+        # チームが一致している、申請者がオーナーならば拒否
+        if self.request.user.user_profile == self.object.team or self.request.user.user_profile.is_owner is True:
             return redirect(self.success_url, teamname=self.kwargs.get('teamname'))
 
         self.object.from_user = self.request.user
@@ -291,7 +292,6 @@ class TeamMemberAddView(LoginRequiredMixin, TeamDetailBaseView, CreateView):
         owner_profile = member.filter(is_owner=True)[0]
         self.object.to_user = owner_profile.user
         self.object.save()
-        print(f'\n\n\n\n\n\n\n\nself.object.from_user:{self.object.from_user}\n\n\n\n\n\n\n\n\nself.request.user:{self.request.user}\n\n\n\n\n\n\n\n\n')
         result = self.form_valid_for_create_view(form)
         return result
 
