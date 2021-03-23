@@ -5,6 +5,7 @@ cover
 *.env
 env
 .vscode
+.circleci
 
 db.sqlite3
 
