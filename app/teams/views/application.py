@@ -17,6 +17,7 @@ class ApplicationCreateView(LoginRequiredMixin, CreateView, TeamDetailBaseView):
     template_name = 'teams/application_create.html'
     form_class = ApplicationCreateForm
     success_url = 'teams:team_detail'
+    team_model = Team
 
     def form_valid_for_create_view(self, form):
         return super().form_valid(form)
@@ -32,7 +33,7 @@ class ApplicationCreateView(LoginRequiredMixin, CreateView, TeamDetailBaseView):
             success_url に redirect。
         """
         self.object = form.save(commit=False)
-        self.object.team = Team.objects.get(teamname=self.kwargs.get('teamname'))
+        self.object.team = self.team_model.objects.get(teamname=self.kwargs.get('teamname'))
         self.user_team = self.request.user.user_profile.team
         if self.object.team == self.user_team or self.object.team.disclosed is False:
             return redirect(self.success_url, teamname=self.kwargs.get('teamname'))

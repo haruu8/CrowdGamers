@@ -75,7 +75,7 @@ class TeamListView(ListView):
         --------
         keyword : html検索バーから受け取った文字列
         """
-        queryset = Team.objects.order_by('-created_at')
+        queryset = self.model.objects.order_by('-created_at')
         keyword = self.request.GET.get('keyword')
         if keyword:
             exclusion = set([' ', '　'])
@@ -115,7 +115,7 @@ class TeamUpdateView(LoginRequiredMixin, OnlyOwnerMixin, UpdateView):
         URL に必要なパラメータを取得する関数。
         """
         teamname = self.kwargs.get("teamname")
-        return get_object_or_404(Team, teamname=teamname)
+        return get_object_or_404(self.model, teamname=teamname)
 
 team_update = TeamUpdateView.as_view()
 
@@ -130,6 +130,7 @@ class TeamDeleteView(LoginRequiredMixin, OnlyOwnerMixin, TemplateView):
     buttonを使用するので TemplateView の post をオーバーライドする。
     """
     template_name = 'teams/team_delete.html'
+    model = Team
     success_url = 'teams:home'
 
     def post(self, request, *args, **kwargs):
@@ -141,7 +142,7 @@ class TeamDeleteView(LoginRequiredMixin, OnlyOwnerMixin, TemplateView):
         Union[HttpResponsePermanentRedirect, HttpResponseRedirect]
             引数に指定した url に redirect。
         """
-        self.object = Team.objects.get(teamname=self.kwargs.get('teamname'))
+        self.object = self.model.objects.get(teamname=self.kwargs.get('teamname'))
         if self.request.POST.get('confirm', '') == 'delete':
             user_profile = self.request.user.user_profile
             user_profile.is_owner = False
@@ -156,7 +157,7 @@ class TeamDeleteView(LoginRequiredMixin, OnlyOwnerMixin, TemplateView):
         確認用に見れるようにデータ取得する関数。
         """
         ctx = super().get_context_data(**kwargs)
-        ctx['team'] = Team.objects.get(teamname=self.kwargs.get('teamname'))
+        ctx['team'] = self.model.objects.get(teamname=self.kwargs.get('teamname'))
         return ctx
 
     def get_object(self):
@@ -164,7 +165,7 @@ class TeamDeleteView(LoginRequiredMixin, OnlyOwnerMixin, TemplateView):
         URL に必要なパラメータを取得する関数。
         """
         teamname = self.kwargs.get("teamname")
-        return get_object_or_404(Team, teamname=teamname)
+        return get_object_or_404(self.model, teamname=teamname)
 
 team_delete = TeamDeleteView.as_view()
 
@@ -181,7 +182,7 @@ class TeamDetailBaseView(DetailView):
 
     def get_object(self):
         teamname = self.kwargs.get("teamname")
-        return get_object_or_404(Team, teamname=teamname)
+        return get_object_or_404(self.model, teamname=teamname)
 
 
 
@@ -217,7 +218,7 @@ class TeamDetailMemberView(TeamDetailBaseView):
         owner_profile で一括で取得しようとするとできないので必要なオブジェクトのみ取得。
         """
         context = super().get_context_data(**kwargs)
-        team = get_object_or_404(Team, teamname=self.kwargs.get("teamname"))
+        team = get_object_or_404(self.model, teamname=self.kwargs.get("teamname"))
         owner_profile = team.belonging_user_profiles.filter(is_owner=True)[0]
         context['owner_profile_user_username'] = owner_profile.user.username
         context['owner_profile_icon_url'] = owner_profile.icon.url
@@ -263,6 +264,7 @@ class TeamMemberAddView(LoginRequiredMixin, TeamDetailBaseView, CreateView):
     """
     template_name = 'teams/team_profile/team_member_add.html'
     model = Notification
+    team_model = Team
     form_class = MemberApprovalCreateForm
     success_url = 'teams:team_detail'
 
@@ -280,7 +282,7 @@ class TeamMemberAddView(LoginRequiredMixin, TeamDetailBaseView, CreateView):
         """
         self.object = form.save(commit=False)
         self.object.mode = 'member_approval'
-        self.object.team = Team.objects.get(teamname=self.kwargs.get('teamname'))
+        self.object.team = self.team_model.objects.get(teamname=self.kwargs.get('teamname'))
         if self.request.user.user_profile == self.object.team or self.request.user.user_profile.is_owner is False:
             return redirect(self.success_url, teamname=self.kwargs.get('teamname'))
 
@@ -289,6 +291,7 @@ class TeamMemberAddView(LoginRequiredMixin, TeamDetailBaseView, CreateView):
         owner_profile = member.filter(is_owner=True)[0]
         self.object.to_user = owner_profile.user
         self.object.save()
+        print(f'\n\n\n\n\n\n\n\nself.object.from_user:{self.object.from_user}\n\n\n\n\n\n\n\n\nself.request.user:{self.request.user}\n\n\n\n\n\n\n\n\n')
         result = self.form_valid_for_create_view(form)
         return result
 
@@ -297,7 +300,7 @@ class TeamMemberAddView(LoginRequiredMixin, TeamDetailBaseView, CreateView):
         URL に必要なパラメータを取得する関数。
         """
         teamname = self.kwargs.get("teamname")
-        return get_object_or_404(Team, teamname=teamname)
+        return get_object_or_404(self.team_model, teamname=teamname)
 
     def get_success_url(self):
         """
