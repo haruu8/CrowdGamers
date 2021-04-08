@@ -119,6 +119,7 @@ class TestTeamMemberAddView(TestCase):
         response_mock = MagicMock()
         view.inject_success_response(response_mock)
         form_mock = MagicMock()
+        form_mock.save.return_value = notification_mock
         result = view.form_valid(form_mock)
         # # from_user がセットされている
         self.assertEqual(request_mock.user, notification_mock.from_user,
