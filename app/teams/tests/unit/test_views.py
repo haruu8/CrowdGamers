@@ -114,6 +114,10 @@ class TestTeamMemberAddView(TestCase):
         view.inject_kwargs(teamname=kwargs_mock)
         # object
         notification_mock = MagicMock()
+        # owner のモック
+        owner_profile_mock = MagicMock()
+        owner_profile_mock.is_owner = True
+        notification_mock.team.belonging_user_profiles.all.return_value = [owner_profile_mock]
         view.inject_object(notification_mock)
         # response
         response_mock = MagicMock()
@@ -125,7 +129,7 @@ class TestTeamMemberAddView(TestCase):
         self.assertEqual(request_mock.user, notification_mock.from_user,
                             msg="from_user が正しくセットされていません")
         # to_user がセットされている
-        self.assertEqual(request_mock.user, notification_mock.to_user,
+        self.assertEqual(owner_profile_mock.user, notification_mock.to_user,
                             msg="to_user が正しくセットされていません")
         # save されている
         self.assertEqual(request_mock.object.save.call_count, 1,
