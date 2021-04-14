@@ -109,6 +109,11 @@ class TestTeamMemberAddView(TestCase):
         # team model
         team_model_mock = MagicMock()
         view.inject_team_model(team_model_mock)
+
+        # team_model の objects.get をモック
+        team_mock = MagicMock()
+        team_model_mock.objects.get.return_value = team_mock
+
         # kwargs
         kwargs_mock = MagicMock()
         view.inject_kwargs(teamname=kwargs_mock)
@@ -117,7 +122,11 @@ class TestTeamMemberAddView(TestCase):
         # owner のモック
         owner_profile_mock = MagicMock()
         owner_profile_mock.is_owner = True
-        notification_mock.team.belonging_user_profiles.all.return_value = [owner_profile_mock]
+        # team_mock.belonging_user_profiles.all() をモックする
+        member_mock = MagicMock()
+        team_mock.belonging_user_profiles.all.return_value = member_mock
+        # member.filter() をモックする
+        member_mock.filter.return_value = [owner_profile_mock]
         view.inject_object(notification_mock)
         # response
         response_mock = MagicMock()
@@ -132,7 +141,7 @@ class TestTeamMemberAddView(TestCase):
         self.assertEqual(owner_profile_mock.user, notification_mock.to_user,
                             msg="to_user が正しくセットされていません")
         # save されている
-        self.assertEqual(request_mock.object.save.call_count, 1,
+        self.assertEqual(notification_mock.save.call_count, 1,
                             msg="notification が save されていません")
         # 成功レスポンスが返されている
         self.assertEqual(result, response_mock, msg="想定外のレスポンスが返ってきています")

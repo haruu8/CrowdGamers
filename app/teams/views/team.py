@@ -290,7 +290,6 @@ class TeamMemberAddView(LoginRequiredMixin, TeamDetailBaseView, CreateView):
         self.object.from_user = self.request.user
         member = self.object.team.belonging_user_profiles.all()
         owner_profile = member.filter(is_owner=True)[0]
-        print(f'\n\n\nowner_profile.user: {owner_profile.user}\n\n\n')
         self.object.to_user = owner_profile.user
         self.object.save()
         result = self.form_valid_for_create_view(form)

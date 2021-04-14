@@ -10,7 +10,7 @@ from teams.views import OnlyYouMixin
 
 
 
-class NotificationView(LoginRequiredMixin, OnlyYouMixin,TemplateView):
+class NotificationView(LoginRequiredMixin, OnlyYouMixin, TemplateView):
     """
     ログインユーザーの通知を一覧表示する。
     """
