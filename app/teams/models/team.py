@@ -5,7 +5,7 @@ from . import *
 from .game import Game
 from .feature import Feature
 from .job import Job
-from teams.utils import team_directory_path, validate_icon_image
+from teams.utils import team_directory_path, validate_icon_image, validate_header_image
 from accounts.fields import LowerCharField
 
 
@@ -42,7 +42,7 @@ class Team(models.Model):
         upload_to=team_directory_path,
         blank=True,
         validators=[
-            validate_icon_image,
+            validate_header_image,
         ])
     introduction = models.CharField(max_length=140)
     website = models.URLField(null=True, blank=True)
