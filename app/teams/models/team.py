@@ -1,6 +1,5 @@
 from django.db import models
-from django.core.validators import FileExtensionValidator, MinLengthValidator, RegexValidator
-from django.contrib.auth import get_user_model
+from django.core.validators import MinLengthValidator, RegexValidator
 from . import *
 from .game import Game
 from .feature import Feature

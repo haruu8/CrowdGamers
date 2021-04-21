@@ -1,13 +1,8 @@
 from django.contrib.auth.mixins import UserPassesTestMixin
-from django.views.generic import TemplateView
-from django.shortcuts import get_object_or_404, resolve_url, redirect
+from django.shortcuts import redirect
 from django.conf import settings
-from django.urls import reverse_lazy
-from django.contrib.auth.views import redirect_to_login
 from django.core.exceptions import ImproperlyConfigured, PermissionDenied
 from django.contrib.auth.mixins import AccessMixin
-from teams.models import UserProfile
-from accounts.models import User
 
 
 

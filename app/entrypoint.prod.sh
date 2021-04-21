@@ -11,4 +11,15 @@ then
     echo "PostgreSQL started"
 fi
 
+python3 manage.py flush --no-input
+python3 manage.py migrate --run-syncdb
+python3 manage.py collectstatic --no-input --clear
+echo -e "\n Insert data now ... \n"
+python3 manage.py loaddata user_initial.json
+python3 manage.py loaddata sample_user_initial.json
+python3 manage.py loaddata feature_initial.json
+python3 manage.py loaddata game_initial.json
+python3 manage.py loaddata question_initial.json
+python3 manage.py loaddata job_initial.json
+
 exec "$@"

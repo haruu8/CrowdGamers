@@ -56,3 +56,35 @@ insert-faq:
 	docker-compose exec django python3 manage.py loaddata question_initial.json
 insert-job:
 	docker-compose exec django python3 manage.py loaddata job_initial.json
+
+# 以下、本番環境用 docker compose 使用
+migrate-prod:
+	docker-compose -f docker-compose.prod.yml exec django python3 manage.py migrate --run-syncdb
+migrations-prod:
+	docker-compose -f docker-compose.prod.yml exec django python3 manage.py makemigrations
+migrations-teams-prod:
+	docker-compose -f docker-compose.prod.yml exec django python3 manage.py makemigrations teams
+migrations-accounts-prod:
+	docker-compose -f docker-compose.prod.yml exec django python3 manage.py makemigrations accounts
+user-prod:
+	docker-compose -f docker-compose.prod.yml exec django python3 manage.py createsuperuser
+showmigrations-prod:
+	docker-compose -f docker-compose.prod.yml exec django python3 manage.py showmigrations
+static-prod:
+	docker-compose -f docker-compose.prod.yml exec django python3 manage.py collectstatic
+test-prod:
+	docker-compose -f docker-compose.prod.yml exec django python3 manage.py test
+test-accounts-prod:
+	docker-compose -f docker-compose.prod.yml exec django python3 manage.py test accounts
+test-teams-prod:
+	docker-compose -f docker-compose.prod.yml exec django python3 manage.py test teams
+testdc-prod:
+	docker-compose -f docker-compose.prod.yml up -d \
+	&& docker-compose -f docker-compose.prod.yml exec django python3 manage.py test \
+	&& docker-compose down
+coverage-prod:
+	docker-compose -f docker-compose.prod.yml exec django coverage run --source='.' manage.py test
+report-prod:
+	docker-compose -f docker-compose.prod.yml exec django coverage report
+html-prod:
+	docker-compose -f docker-compose.prod.yml exec django coverage html

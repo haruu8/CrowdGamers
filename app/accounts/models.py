@@ -1,16 +1,13 @@
 from django.db import models
-from django.core.mail import send_mail
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.contrib.auth.models import PermissionsMixin, UserManager
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.utils.translation import ugettext_lazy as _
-from django.utils import timezone
-from django.core.validators import FileExtensionValidator, MinLengthValidator, RegexValidator
-from django.core.exceptions import ValidationError
-import uuid
+from django.core.validators import MinLengthValidator, RegexValidator
 from teams.utils import user_directory_path
 from accounts.fields import LowerCharField
+
 
 
 class CustomUserManager(UserManager):
@@ -93,7 +90,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         db_index=True,
         max_length=15,
         validators=[MinLengthValidator(4), username_regex])
-    date_joined = models.DateTimeField(_('date joined'), default=timezone.now)
+    date_joined = models.DateTimeField(_('date joined'), auto_now_add=True)
 
     objects = CustomUserManager()
 

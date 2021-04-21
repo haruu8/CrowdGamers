@@ -1,9 +1,7 @@
-from django.shortcuts import render, redirect, get_object_or_404
-from django.urls import reverse_lazy
+from django.shortcuts import redirect, get_object_or_404
 from django.views.generic import TemplateView, UpdateView, ListView
-from django.contrib.auth import get_user_model, views as auth_views, authenticate
+from django.contrib.auth import get_user_model, views as auth_views
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.conf import settings
 from teams.views import OnlyYouMixin, AnonymousRequiredMixin
 
 

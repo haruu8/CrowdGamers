@@ -1,8 +1,5 @@
 from django.db import models
-from django.core.validators import FileExtensionValidator, MinLengthValidator, RegexValidator
-from django.core.exceptions import ValidationError
 from django.contrib.auth import get_user_model
-from django.dispatch import receiver
 from .team import Team
 from .job import Job
 from .game import Game
