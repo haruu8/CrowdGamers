@@ -32,7 +32,7 @@ class LogoutView(LoginRequiredMixin, auth_views.LogoutView):
     """
     pass
 
-logout = LoginView.as_view()
+logout = LogoutView.as_view()
 
 
 
