@@ -42,6 +42,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'social_django.middleware.SocialAuthExceptionMiddleware',
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -135,7 +136,13 @@ MEDIA_ROOT = Path(BASE_DIR, 'media')
 
 LOGIN_REDIRECT_URL = 'teams:home'
 LOGOUT_REDIRECT_URL = 'teams:home'
+
+SOCIAL_AUTH_TWITTER_LOGIN_URL = 'accounts:account_login'
+SOCIAL_AUTH_LOGIN_URL = 'accounts:account_login'
 LOGIN_URL = 'accounts:account_login'
+SOCIAL_AUTH_LOGIN_REDIRECT_URL = 'teams:home'
+SOCIAL_AUTH_DISCONNECT_REDIRECT_URL = 'teams:home'
+
 
 SOCIAL_AUTH_URL_NAMESPACE = 'social'
 AUTHENTICATION_BACKENDS = [

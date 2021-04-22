@@ -8,6 +8,7 @@ services:
     command: gunicorn config.wsgi:application --bind 0.0.0.0:8000
     volumes:
       - static_volume:/code/static
+      - media_volume:/code/media
     expose:
         - 8000
     env_file: env/settings.prod.env
@@ -24,11 +25,13 @@ services:
     build: ./nginx
     volumes:
       - static_volume:/code/static
+      - media_volume:/code/media
     ports:
-      - 1337:80
+      - 80:80
     depends_on:
       - django
 
 volumes:
   db:
   static_volume:
+  media_volume:
