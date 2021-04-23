@@ -49,11 +49,11 @@ class AccountsStatusCodeTests(TestCase):
 
     def test_account_logout_status_code_anonymous_user(self):
             """
-            account_logout のステータスコードは 200 になる
+            account_logout のステータスコードは 302 になる
             """
             url = reverse('accounts:account_logout')
             response = self.client.get(url)
-            self.assertEquals(response.status_code, 200)
+            self.assertEquals(response.status_code, 302)
 
     def test_account_delete_status_code_anonymous_user(self):
             """
@@ -93,12 +93,12 @@ class AccountsStatusCodeTests(TestCase):
 
     def test_account_logout_status_code_authenticated_user(self):
             """
-            account_logout のステータスコードは 200 になる
+            account_logout のステータスコードは 302 になる
             """
             self.client.login(usenrame='CrowdGamers')
             url = reverse('accounts:account_logout')
             response = self.client.get(url)
-            self.assertEquals(response.status_code, 200)
+            self.assertEquals(response.status_code, 302)
 
     def test_account_delete_status_code_authenticated_user(self):
             """
