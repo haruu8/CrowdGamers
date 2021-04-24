@@ -2,6 +2,8 @@ __pycache__
 cover
 .coverage
 
+*.pem
+
 *.env
 env
 .vscode
@@ -14,8 +16,6 @@ app/deploy/admin/
 
 app/teams/templates/teams/support/md/
 
-privacy_policy.html
-terms_of_service.html
 readme/*.desired.drawio
 readme/*.desired.png
 readme/infrastructure.drawio
