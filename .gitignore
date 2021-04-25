@@ -11,7 +11,6 @@ env
 
 db.sqlite3
 
-media
 app/deploy/admin/
 
 app/teams/templates/teams/support/md/
