@@ -116,6 +116,36 @@ application_detail = ApplicationNotificationDetailView.as_view()
 class MemberApprovalNotificationDetailView(NotificationDetailBaseView):
     template_name = 'teams/notification/member_approval_detail.html'
 
+    def post(self, request, *args, **kwargs):
+        """
+        メンバー認可の処理を行う関数。
+        ボタンの属性から認可を判断する。
+
+        Returns
+        -------
+        Union[HttpResponsePermanentRedirect, HttpResponseRedirect]
+            引数で指定しているルーティングに redirect。
+        """
+        self.object = Notification.objects.get(id=self.kwargs.get('id'))
+        if self.object.from_user == self.request.user:
+            return redirect('teams:home')
+        if self.object.is_proceeded is True or self.object.is_proceeded is False:
+            pass
+        elif self.object.mode == 'application':
+            if self.request.POST.get('approval', '') == 'approve':
+                return redirect(self.success_url, username=self.request.user.username, id=self.object.id)
+            elif self.request.POST.get('approval', '') == 'deny':
+                self.object.is_proceeded = False
+        elif self.request.POST.get('approval', '') == 'approve':
+            self.object.is_proceeded = True
+            profile = self.object.from_user.user_profile
+            profile.team = self.object.to_user.user_profile.team
+            profile.save()
+        elif self.request.POST.get('approval', '') == 'deny':
+            self.object.is_proceeded = False
+        self.object.save()
+        return redirect('teams:home')
+
 member_approval_detail = MemberApprovalNotificationDetailView.as_view()
 
 

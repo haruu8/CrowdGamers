@@ -59,7 +59,7 @@
         </div>
       </form>
     {% elif object.is_proceeded is True %}
-      <p>リクエストへの認可はすでに行っています。メンバー追加を許可しました。<br>（メンバーを削除したい場合は、<a href="#">こちら</a>から行うことができます。）</p>
+    <p>リクエストへの認可はすでに行っています。メンバー追加を許可しました。<br>（メンバーを削除したい場合は、<a href="{% url 'teams:team_member_list' object.from_user.user_profile.team %}">こちら</a>から行うことができます。）</p>
     {% elif object.is_proceeded is False %}
       <p>リクエストへの認可はすでに行っています。メンバー追加を拒否しました。<br>（メンバーに追加したい場合は、再度リクエストを送信してもらう必要があります。）</p>
     {% endif %}
