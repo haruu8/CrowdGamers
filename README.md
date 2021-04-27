@@ -5,7 +5,7 @@ CrowdGamers はチーム・メンバーを探すことができるサービス�
 
 
 ## URL
-[crowdgamers.com](https://crowdgamers.com/)  
+[crowdgamers.com](http://crowdgamers.com/)  
 Twitterログインでボタンひとつでログインすることができます。
 
 
