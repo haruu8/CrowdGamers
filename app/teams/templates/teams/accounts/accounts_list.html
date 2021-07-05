@@ -23,7 +23,7 @@
         {% for object in object_list %}
           <div class="team-section">
             <img src="{{ object.icon.url }}" alt="アイコン" class='team-icon'>
-            <p class='name'>{{ object.name | truncatechars:12 }}</p>
+            <p class='name'>{{ object.name | truncatechars:7 }}</p>
             <p class="teamname">{{ object.user.username }}</p>
             <a href="{% url 'teams:account_detail' object.user.username %}"></a>
           </div>

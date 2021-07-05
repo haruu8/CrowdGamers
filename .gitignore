@@ -3,6 +3,7 @@ cover
 .coverage
 
 *.pem
+ssl_certs
 
 *.env
 env
