@@ -5,7 +5,7 @@ CrowdGamers はチーム・メンバーを探すことができるサービス�
 
 
 ## URL
-[crowdgamers.com](https://crowdgamers.com/)  
+[crowdgamers.com](http://crowdgamers.com/)  
 Twitterログインでボタンひとつでログインすることができます。
 
 
@@ -23,7 +23,7 @@ Twitterログインでボタンひとつでログインすることができま�
 性別：　特になし  
 年齢：　10代前半から30代後半  
 移住地：　日本  
-ゲーム歴：　ゲーム繋がりがあまりない人  
+特徴：　ゲーム繋がりがあまりない人  
 
 
 
@@ -67,6 +67,11 @@ Twitterログインでボタンひとつでログインすることができま�
 一度アプリケーションの設計を文字としてまとめ、それを参考にコーディングを進めていきました。しかし、コーディングを進めていく中で、まとめられる部分を発見しました。その部分を放置せず、再コーディングしコードを省略することができました。
 
 
+### docstring を充実させる
+
+自分で改修するとき、自分がどのような理由でそのコードを書いたかわかるように Numpy の docstring の書き方を参考にし docstring を書きました。
+
+
 
 ## 使用技術・環境
 ### 【フロントエンド】
@@ -92,33 +97,14 @@ Twitterログインでボタンひとつでログインすることができま�
 ### 【開発環境】
 
 * Docker, docker-compose
+* Git
 
 
 
 ### 【本番環境】
 
-* AWS ()
-* Nginx, gunicorn
-
-
-
-### 【その他使用技術】
-
-* Git, Github
-
-
-
-## インフラ構成
-#### 【開発環境】
-* Docker
-* docker-compose
-
-#### 【本番環境】
-* docker-compose
 * conoHa VPS
-* nginx
-* gunicorn
-
+* Nginx, gunicorn
 
 
 
@@ -135,9 +121,8 @@ Twitterログインでボタンひとつでログインすることができま�
 
 ## About me
 
-16歳高校一年生で、プログラミングを学習中。普段は英語とプログラミングを学習しています。  
-twitter, note, blog など様々なSNSで情報発信をしつつ、学習に励んでいます。  
+17歳高校２年生で、プログラミングを学習中。普段は英語とプログラミングを学習しています。  
+2社でインターン経験あります。
 
 * [twitter](https://twitter.com/haruu_iq/)  
 * [note](https://note.com/haruu_iq/)  
-* [ブログ](https://haru-no-blog.com/)
