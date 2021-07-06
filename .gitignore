@@ -13,10 +13,10 @@ env
 db.sqlite3
 
 media
-app/deploy/admin/
+web/deploy/admin/
 
-app/teams/templates/teams/support/md/
-app/static/admin
+web/teams/templates/teams/support/md/
+web/static/admin
 
 readme/*.desired.drawio
 readme/*.desired.png
