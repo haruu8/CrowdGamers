@@ -13,7 +13,7 @@ env
 db.sqlite3
 
 media
-web/deploy/admin/
+web/deploy/*
 
 web/teams/templates/teams/support/md/
 web/static/admin
