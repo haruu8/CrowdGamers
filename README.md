@@ -6,7 +6,7 @@ CrowdGamers はチーム・メンバーを探すことができるサービス�
 
 ## URL
 [crowdgamers.com](http://crowdgamers.com/)  
-Twitterログインでボタンひとつでログインすることができます。
+*現在サービスを停止しています。
 
 
 
@@ -126,3 +126,4 @@ Twitterログインでボタンひとつでログインすることができま�
 
 * [twitter](https://twitter.com/haruu_iq/)  
 * [note](https://note.com/haruu_iq/)  
+* [Zenn](https://zenn.dev/haruu_iq/)  
